@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  height: 100vh;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.diggi{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  .batik{
+    max-height: 100vh; 
+  }
+  .tree{
+    position: absolute;
+    top:0;
+    left:0;
+  }
+}
