@@ -14,9 +14,49 @@
   .batik{
     max-height: 100vh; 
   }
-  .tree{
-    position: absolute;
-    top:0;
-    left:0;
+  
+}
+.tree{
+  position: absolute;
+  top:0;
+  left:0;
+}
+.menu {
+  position: absolute;
+  top:0;
+  right:0;
+  margin:2%;
+  z-index: 1;
+}
+.projects{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  &.hide{
+    display: none;
+  }
+}
+
+.dropdown {
+  animation: dropdown 1s cubic-bezier(.44,.89,.6,1.02) forwards;
+  @keyframes dropdown {
+    70% {
+      transform:translateY(10px) scaleY(0.8) rotate(-2deg);
+    }
+    90% {
+      transform:translateY(5px) rotate(0deg);
+    }
+    100% {
+      transform:translateY(0) scaleY(1) rotate(0deg);
+      
+    }
+  }
+}
+.order {
+  animation: order 1s cubic-bezier(.44,.89,.6,1.02) forwards;
+  @keyframes order {
+    100% {
+      left:0,
+    }
   }
 }
