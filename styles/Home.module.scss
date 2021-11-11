@@ -32,23 +32,27 @@
   position: absolute;
   display: flex;
   flex-direction: column;
+  z-index: 2;
   &.hide{
     display: none;
   }
 }
 
 .dropdown {
-  animation: dropdown 1s cubic-bezier(.44,.89,.6,1.02) forwards;
+  animation: dropdown 1.2s linear forwards;
   @keyframes dropdown {
+    
     70% {
-      transform:translateY(10px) scaleY(0.8) rotate(-2deg);
+      transform: translateY(10px) scaleY(0.8) ;
     }
-    90% {
-      transform:translateY(5px) rotate(0deg);
+    95% {
+      transform:translateY(5px) skewX(2deg) scaleY(1);
+    }
+    95% {
+      transform:skewX(-2deg);
     }
     100% {
-      transform:translateY(0) scaleY(1) rotate(0deg);
-      
+      transform:translateY(0px) scaleY(1) skewX(0deg) rotate(0deg); 
     }
   }
 }
@@ -57,6 +61,18 @@
   @keyframes order {
     100% {
       left:0,
+    }
+  }
+}
+
+.rotate {
+  animation: diggity 3s linear infinite;
+  @keyframes diggity {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }
