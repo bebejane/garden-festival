@@ -56,10 +56,9 @@ export default function Home() {
     let currentX = bgX;
     anime.set(targets, {
       translateY: () =>  -2000,
-      left: (el) => {
-        const {clientWidth : w} = el;
+      left: (el, i) => {
         const left = currentX;
-        currentX += w + space
+        currentX += el.clientWidth + space
         return left
       },
       top: (el) => {
@@ -74,7 +73,6 @@ export default function Home() {
       easing: 'spring(0.4, 100, 10, 0)',
       loop: false,      
     }).add({translateY: 0})
-    
   }
   
   return (

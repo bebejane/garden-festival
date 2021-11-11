@@ -1,32 +1,71 @@
 .container {
+  position: fixed;
   display: flex;
   height: 100vh;
+  width: 100vw;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 0;
+  flex-direction: row;
+  overflow-y: scroll;
 }
-
 .diggi{
-  display: flex;
   position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  flex: 1 1 auto;
   .batik{
     max-height: 100vh; 
   }
-  
+  .trees{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    .tree{
+      position: absolute;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      top:0;
+      left:0;
+      img{
+        height: 100%;
+      }
+      .label{
+        width:0;
+        overflow: hidden;
+        font-size: 0.8rem;
+        color:#000;
+        max-width: 200px;
+        z-index: 1000;
+        h1{
+          font-size: 1.3rem;
+          margin: 0;
+          font-weight: bold;
+        }
+        height: 100%;
+        margin-left: 1rem;
+      }
+    }
+    
+  }
 }
-.tree{
-  position: absolute;
-  top:0;
-  left:0;
-}
+
 .menu {
   position: absolute;
   top:0;
   right:0;
-  margin:2%;
+  
   z-index: 1;
+  button {
+    padding:10px;
+    font-size: 1.5rem;
+    margin:20px;
+    margin-left: 0px;
+  }
 }
 .projects{
   position: absolute;
