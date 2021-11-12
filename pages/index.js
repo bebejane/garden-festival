@@ -149,13 +149,13 @@ const Tree = React.forwardRef((props, ref) => {
     if(selected === index) console.log('selected:',selected, index)
     anime({
       targets : ref.current,
-      scale : selected === index ? 1.5 : 1,
+      height : selected === index ? '150%' : '100%',
       duration:200
     })
   }, [selected])
 
   const isSelected = selected === index;
-  const labelStyle = isSelected || menu ? {width:200} : {width:0, zIndex:1}
+  const labelStyle = isSelected || menu ? {width:200, marginLeft:20} : {width:0, zIndex:1}
 
   return (
     <div 

@@ -37,11 +37,15 @@
       flex-direction: row;
       top:0;
       left:0;
+      user-select: none;
       img{
         cursor: pointer;
         height: 100%;
+
       }
       .label{
+
+        position: relative;
         pointer-events: none;
         width:0;
         overflow: hidden;
