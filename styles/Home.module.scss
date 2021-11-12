@@ -1,15 +1,21 @@
 .container {
-  position: fixed;
   display: flex;
+  align-items: flex-start;
   height: 100vh;
   width: 100vw;
-  min-height: 100vh;
+  min-height: 400vh;
   padding: 0;
   flex-direction: row;
   overflow-y: scroll;
+  .scroller {
+    height: 100%;
+    width:100%;
+    
+  }
 }
 .diggi{
-  position: relative;
+  position: fixed;
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,9 +38,11 @@
       top:0;
       left:0;
       img{
+        cursor: pointer;
         height: 100%;
       }
       .label{
+        pointer-events: none;
         width:0;
         overflow: hidden;
         font-size: 0.8rem;
@@ -47,7 +55,7 @@
           font-weight: bold;
         }
         height: 100%;
-        margin-left: 1rem;
+        //margin-left: 1rem;
       }
     }
     
@@ -55,7 +63,7 @@
 }
 
 .menu {
-  position: absolute;
+  position: fixed;
   top:0;
   right:0;
   
