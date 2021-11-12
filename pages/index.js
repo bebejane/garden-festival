@@ -16,6 +16,7 @@ export default function Home() {
   const [loaded, setLoaded] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState()
+  const [page, setPage] = useState(1)
   const [scrollRef, {scroll, scrollStep, totalSteps}] = useVisibility('scroller', 0, 4)
 
   const [trees, setTrees] = useState(new Array(12).fill(0).map((x, i) => { 
@@ -38,8 +39,8 @@ export default function Home() {
 
   
   
-  const toMap = () => {
-    
+  const toMap = (p) => {
+    setPage(p)
     anime.set(`.${styles.label}`, {width: 0, marginLeft:0})
     const pad = 100;
     const bounds = getBounds()
@@ -61,7 +62,7 @@ export default function Home() {
         const top = Math.max(bounds.y+treeHeight, ((Math.random()*bounds.h)-treeHeight+bounds.y)-treeHeight)
         return top
       },
-      filter:`hue-rotate(${scrollStep*90}deg)`
+      filter:`hue-rotate(${page*90}deg)`
     });
     
     var tl = anime.timeline({
@@ -104,10 +105,12 @@ export default function Home() {
   useEffect(()=> toMap(1), [loaded])
 
   useEffect(()=> {
-    const t = 1/totalSteps;
+    const p = Math.ceil((scroll*totalSteps)+0.3)
+    if(p !== page){
+      toMap(p)
+    }
 
-    toMap(scrollStep)
-  }, [scrollStep])
+  }, [scroll, scrollStep])
   
   return (
     <div className={styles.container}>
