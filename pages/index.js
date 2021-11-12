@@ -39,8 +39,8 @@ export default function Home() {
 
   
   
-  const toMap = (p) => {
-    setPage(p)
+  const toMap = (page) => {
+    setPage(page)
     anime.set(`.${styles.label}`, {width: 0, marginLeft:0})
     const pad = 100;
     const bounds = getBounds()
@@ -105,11 +105,10 @@ export default function Home() {
   useEffect(()=> toMap(1), [loaded])
 
   useEffect(()=> {
-    const p = Math.ceil((scroll*totalSteps)+0.3)
+    const p = Math.ceil((scroll*totalSteps)+0.5)
     if(p !== page){
       toMap(p)
     }
-
   }, [scroll, scrollStep])
   
   return (
