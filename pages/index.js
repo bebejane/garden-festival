@@ -45,12 +45,14 @@ export default function Home() {
   }
   
   const toMap = (page) => {
+    
     setPage(page)
     
     const bounds = getBounds()
     const targets = document.querySelectorAll(`.${styles.tree}`)
     const totalTreeWidth = trees.reduce((acc, t) => t.ref.current.clientWidth + acc, 0)
-    const pos = []
+
+    let pos = []
     const rows = 3;
     const cols = trees.length/rows;
     const colWidth = bounds.w/cols
@@ -62,15 +64,12 @@ export default function Home() {
       const { clientHeight : h, clientWidth: w} = el;
       const left = bounds.x + randomInt((col-1)*colWidth, (((col-1)*colWidth)+colWidth)-w)
       const top = bounds.y + randomInt((row-1)*colHeight, (((row-1)*colHeight)+colHeight)-h) //((row-1)*colHeight)
-      pos.push({left, top})
-      //const left = ((bounds.w-(pad))*Math.random())+bounds.x;
-      //const top = Math.max(bounds.y+treeHeight, ((Math.random()*bounds.h)-treeHeight+bounds.y)-treeHeight)
-      
+      pos.push({left, top})  
     })
     
-    //console.log(pos)
+    pos = pos.sort((a, b)=> Math.random() > 0.5)
+
     anime.set(`.${styles.label}`, {width: 0, marginLeft:0})
-    
     anime.set(targets, {
       translateY: () =>  '-100vh',
       left: (el, i) => pos[i].left,
@@ -105,7 +104,7 @@ export default function Home() {
       loop: false,
       scale: 1
     }); 
-    anime({
+    anime.set({
       targets: `.${styles.label}`,
       width:200,
       marginLeft:20,
@@ -136,27 +135,31 @@ export default function Home() {
      
     setShowMenu(false)
   }
+  
+  useEffect(()=> {
+    if(!positions) return
+    const p = Math.ceil((scroll*totalSteps)+0.5)
+    const targets = document.querySelectorAll(`.${styles.tree}`)
+    const { innerHeight } = window;
+    if(scrollStep !== page)  return toMap(p)
+    anime({
+      targets,
+      top: (el, i) => {
+        const top = positions[i].top - ((innerHeight/2) * (1-scrollStepRatio))
+        return top < 100 ?  - innerHeight : top
+      },
+      duration:(el, i) => {
+        return 1000
+      }
+    })
+  }, [scroll, scrollStep, scrollStepRatio])
+  
   useEffect(()=> {
     setBounds(getBounds())
     toMap(1)
   }, [loaded])
 
-  useEffect(()=> {
-    if(!positions) return
-    const p = Math.ceil((scroll*totalSteps)+0.5)
-    const targets = document.querySelectorAll(`.${styles.tree}`)
-    /*
-    console.log(scrollStepRatio, scrollStep)
-    anime({
-      targets,
-      top: (el, i) => positions[i].top * scrollStepRatio-1
-    })
-*/
-    if(p !== page) 
-      toMap(p)
 
-  }, [scroll, scrollStep, scrollStepRatio])
-  
   return (
     <div className={styles.container}>
       <div className={styles.scroller} ref={scrollRef}></div>
@@ -195,7 +198,6 @@ const Tree = React.forwardRef((props, ref) => {
 
   useEffect(()=>{
     if(selected === undefined) return
-    if(selected === index) console.log('selected:',selected, index)
     anime({
       targets : ref.current,
       height : selected === index ? '150%' : '100%',
