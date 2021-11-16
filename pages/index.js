@@ -5,7 +5,7 @@ import cn from 'classnames'
 import React, { useState, useEffect, useRef } from 'react'
 import anime from 'animejs';
 import useVisibility from 'lib/hooks/useVisibility'
-import diggiBatik from '../public/diggibatik.png'
+
 
 export default function Home() {
 
@@ -17,7 +17,10 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState()
   const [page, setPage] = useState(1)
-  const [scrollRef, {scroll, scrollStep, totalSteps}] = useVisibility('scroller', 0, 4)
+  const [bounds, setBounds] = useState({})
+  const [showBounds, setShowBounds] = useState(false)
+  const [positions, setPositions] = useState()
+  const [scrollRef, {scroll, scrollStep, scrollStepRatio, totalSteps}] = useVisibility('scroller', 0, 4)
 
   const [trees, setTrees] = useState(new Array(12).fill(0).map((x, i) => { 
     return {
@@ -34,93 +37,137 @@ export default function Home() {
   }))
   const getBounds = () => {
     const{ clientWidth : w, clientHeight : h, offsetTop : y, offsetLeft: x} = batikRef.current
-    return {w, h, x, y}
+    const pad = 100;
+    return {w:w-(pad*2), h:h-(pad*2), x:x+pad, y:y+pad}
   }
-
-  
+  const randomInt= (min, max) => { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
   
   const toMap = (page) => {
     setPage(page)
-    anime.set(`.${styles.label}`, {width: 0, marginLeft:0})
-    const pad = 100;
+    
     const bounds = getBounds()
     const targets = document.querySelectorAll(`.${styles.tree}`)
     const totalTreeWidth = trees.reduce((acc, t) => t.ref.current.clientWidth + acc, 0)
-    const space = ((bounds.w-totalTreeWidth)-(pad*2))/trees.length
-    let currentX = bounds.x + pad;
+    const pos = []
+    const rows = 3;
+    const cols = trees.length/rows;
+    const colWidth = bounds.w/cols
+    const colHeight = bounds.h/rows
+
+    targets.forEach((el, idx)=>{
+      const row = Math.ceil((idx+1)/(rows*cols)*(rows))
+      const col = (idx+1)-((row-1)*cols)
+      const { clientHeight : h, clientWidth: w} = el;
+      const left = bounds.x + randomInt((col-1)*colWidth, (((col-1)*colWidth)+colWidth)-w)
+      const top = bounds.y + randomInt((row-1)*colHeight, (((row-1)*colHeight)+colHeight)-h) //((row-1)*colHeight)
+      pos.push({left, top})
+      //const left = ((bounds.w-(pad))*Math.random())+bounds.x;
+      //const top = Math.max(bounds.y+treeHeight, ((Math.random()*bounds.h)-treeHeight+bounds.y)-treeHeight)
+      
+    })
+    
+    //console.log(pos)
+    anime.set(`.${styles.label}`, {width: 0, marginLeft:0})
     
     anime.set(targets, {
       translateY: () =>  '-100vh',
-      height:treeHeight,
-      left: (el, i) => {
-        return ((bounds.w-(pad))*Math.random())+bounds.x;
-        const left = currentX;
-        currentX += el.clientWidth + space
-        return left
-      },
-      top: (el) => {
-        const top = Math.max(bounds.y+treeHeight, ((Math.random()*bounds.h)-treeHeight+bounds.y)-treeHeight)
-        return top
-      },
+      left: (el, i) => pos[i].left,
+      top: (el, i) => pos[i].top,
+      height: treeHeight,
       filter:`hue-rotate(${page*90}deg)`
     });
     
-    var tl = anime.timeline({
+    anime.timeline({
       targets,
       delay: function(el, i) { return i * 20 },
       easing: 'easeOutExpo',
       easing: 'spring(0.4, 100, 10, 0)',
-      loop: false,  
-      
+      loop: false,
     })
-    .add({
-      translateY: 0,
-      //translateZ : (el, i) => { return Math.random()*100 }    
-    })
-    
+    .add({translateY: 0})
     setShowMenu(false)
+    setPositions(pos)
   }
   const toMenu = () => {
+    if(showMenu) return toMapFromMenu()
     const menuTreeHeight = treeHeight/2;
-    var tl = anime({
+
+    anime({
       targets: `.${styles.tree}`,
-      delay: (el, i) => i * 20,
-      duration: 500,
-      easing: 'easeOutExpo',
       left:padding,
       height:menuTreeHeight,
       top: anime.stagger([padding, trees.length*((menuTreeHeight)+padding)]),
+      delay: (el, i) => i * 20,
+      duration: 500,
+      easing: 'easeOutExpo',
       loop: false,
-      scale: 1,
+      scale: 1
     }); 
     anime({
       targets: `.${styles.label}`,
       width:200,
       marginLeft:20,
       loop: false,
-      
     }); 
     setShowMenu(true)
   }
-  useEffect(()=> toMap(1), [loaded])
+  const toMapFromMenu = () => {
+    const menuTreeHeight = treeHeight/2;
+
+    anime.set({
+      targets: `.${styles.label}`,
+      width:0,
+      marginLeft:0,
+      loop: false
+    });
+    anime({
+      targets: `.${styles.tree}`,
+      left:(el, i) => positions[i].left,
+      top: (el, i) => positions[i].top,
+      height:treeHeight,
+      delay: (el, i) => i * 20,
+      duration: 500,
+      easing: 'easeOutExpo',
+      loop: false,
+      scale: 1,
+    }); 
+     
+    setShowMenu(false)
+  }
+  useEffect(()=> {
+    setBounds(getBounds())
+    toMap(1)
+  }, [loaded])
 
   useEffect(()=> {
+    if(!positions) return
     const p = Math.ceil((scroll*totalSteps)+0.5)
-    if(p !== page){
+    const targets = document.querySelectorAll(`.${styles.tree}`)
+    /*
+    console.log(scrollStepRatio, scrollStep)
+    anime({
+      targets,
+      top: (el, i) => positions[i].top * scrollStepRatio-1
+    })
+*/
+    if(p !== page) 
       toMap(p)
-    }
-  }, [scroll, scrollStep])
+
+  }, [scroll, scrollStep, scrollStepRatio])
   
   return (
     <div className={styles.container}>
       <div className={styles.scroller} ref={scrollRef}></div>
-      
       <div className={styles.menu}>
         <button onClick={toMap}>dripp</button>
         <button onClick={toMenu}>menu</button>
+        <button onClick={()=> setShowBounds(!showBounds)}>bounds</button>
       </div>
       <div className={styles.diggi} >
         <img src={'/diggibatik.png'} ref={batikRef} className={cn(styles.batik, styles.diggity)}/>
+        {showBounds && <div className={styles.bounds} style={{left:bounds.x, top:bounds.y, width:bounds.w, height:bounds.h}}></div> }
         <div className={styles.trees}>
           {trees.map(t => 
             <Tree 
