@@ -12,7 +12,7 @@ export default function Home() {
   const batikRef = useRef()
   const treeHeight = 120;
   const padding = 20;
-
+  
   const [loaded, setLoaded] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [selected, setSelected] = useState()
@@ -21,6 +21,8 @@ export default function Home() {
   const [showBounds, setShowBounds] = useState(false)
   const [positions, setPositions] = useState()
   const [scrollRef, {scroll, scrollStep, scrollStepRatio, totalSteps}] = useVisibility('scroller', 0, 4)
+
+  let menuAnimation;
 
   const [trees, setTrees] = useState(new Array(12).fill(0).map((x, i) => { 
     return {
@@ -75,13 +77,12 @@ export default function Home() {
       left: (el, i) => pos[i].left,
       top: (el, i) => pos[i].top,
       height: treeHeight,
-      filter:`hue-rotate(${page*90}deg)`
+      filter:`hue-rotate(${page*45}deg)`
     });
     
     anime.timeline({
       targets,
-      delay: function(el, i) { return i * 20 },
-      easing: 'easeOutExpo',
+      delay: function(el, i) { return i * 70 },
       easing: 'spring(0.4, 100, 10, 0)',
       loop: false,
     })
@@ -92,7 +93,7 @@ export default function Home() {
   const toMenu = () => {
     if(showMenu) return toMapFromMenu()
     const menuTreeHeight = treeHeight/2;
-
+    
     anime({
       targets: `.${styles.tree}`,
       left:padding,
@@ -104,11 +105,13 @@ export default function Home() {
       loop: false,
       scale: 1
     }); 
+    
     anime.set({
       targets: `.${styles.label}`,
       width:200,
       marginLeft:20,
       loop: false,
+      easing: 'spring(0.4, 100, 10, 0)',
     }); 
     setShowMenu(true)
   }
