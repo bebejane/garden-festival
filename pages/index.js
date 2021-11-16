@@ -141,7 +141,7 @@ export default function Home() {
     const p = Math.ceil((scroll*totalSteps)+0.5)
     const targets = document.querySelectorAll(`.${styles.tree}`)
     const { innerHeight } = window;
-    if(scrollStep !== page)  return toMap(p)
+    if(scrollStep !== page) return toMap(p)
     anime({
       targets,
       top: (el, i) => {
@@ -159,12 +159,11 @@ export default function Home() {
     toMap(1)
   }, [loaded])
 
-
   return (
     <div className={styles.container}>
       <div className={styles.scroller} ref={scrollRef}></div>
       <div className={styles.menu}>
-        <button onClick={toMap}>dripp</button>
+        <button onClick={()=>{ window.scroll(0,0); toMap()}}>dripp</button>
         <button onClick={toMenu}>menu</button>
         <button onClick={()=> setShowBounds(!showBounds)}>bounds</button>
       </div>
