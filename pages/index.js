@@ -1,5 +1,3 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import cn from 'classnames'
 import React, { useState, useEffect, useRef } from 'react'
@@ -10,7 +8,8 @@ import {useWindowSize} from "rooks"
 export default function Home() {
 
   const batikRef = useRef()
-  const treeHeight = 170;
+  const totalPages = 10;
+  const treeHeight = 130;
   const padding = 10;
   
   const [loaded, setLoaded] = useState(0)
@@ -22,8 +21,6 @@ export default function Home() {
   const [positions, setPositions] = useState()
   const [scrollRef, {scroll, scrollStep, scrollStepRatio, totalSteps}] = useVisibility('scroller', 0, 4)
   const { innerWidth } = useWindowSize();
-
-  let menuAnimation;
 
   const [trees, setTrees] = useState(new Array(12).fill(0).map((x, i) => { 
     return {
@@ -81,12 +78,12 @@ export default function Home() {
       left: (el, i) => pos[i].left,
       top: (el, i) => pos[i].top,
       height: treeHeight,
-      filter:`hue-rotate(${page*45}deg)`
+      filter:`hue-rotate(${page*(360/totalPages)}deg)`
     });
     
     anime.timeline({
       targets,
-      delay: (el, i) => i * 70,
+      delay: (el, i) => i * 20,
       easing: 'spring(0.4, 100, 10, 0)',
       loop: false,
     })
@@ -173,7 +170,7 @@ export default function Home() {
   }, [innerWidth])
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{minHeight: totalPages*100 + 'vh'}}>
       <div className={styles.scroller} ref={scrollRef}></div>
       <div className={styles.menu}>
         <button onClick={dripIt}>dripp</button>
@@ -184,9 +181,10 @@ export default function Home() {
         <img src={'/diggibatik.png'} ref={batikRef} className={cn(styles.batik, styles.diggity)}/>
         {showBounds && <div className={styles.bounds} style={{left:bounds.x, top:bounds.y, width:bounds.w, height:bounds.h}}></div> }
         <div className={styles.trees}>
-          {trees.map(t => 
+          {trees.map((t, index) => 
             <Tree 
               {...t} 
+              index={index}
               ref={t.ref} 
               menu={showMenu} 
               setLoaded={setLoaded} 
