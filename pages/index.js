@@ -5,13 +5,13 @@ import cn from 'classnames'
 import React, { useState, useEffect, useRef } from 'react'
 import anime from 'animejs';
 import useVisibility from 'lib/hooks/useVisibility'
-
+import {useWindowSize} from "rooks"
 
 export default function Home() {
 
   const batikRef = useRef()
-  const treeHeight = 120;
-  const padding = 20;
+  const treeHeight = 170;
+  const padding = 10;
   
   const [loaded, setLoaded] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
@@ -21,6 +21,7 @@ export default function Home() {
   const [showBounds, setShowBounds] = useState(false)
   const [positions, setPositions] = useState()
   const [scrollRef, {scroll, scrollStep, scrollStepRatio, totalSteps}] = useVisibility('scroller', 0, 4)
+  const { innerWidth } = useWindowSize();
 
   let menuAnimation;
 
@@ -45,10 +46,13 @@ export default function Home() {
   const randomInt= (min, max) => { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
-  
+  const dripIt = () => {
+    window.scroll(0,0); 
+    toMap();
+  }
   const toMap = (page) => {
     
-    setPage(page)
+    
     
     const bounds = getBounds()
     const targets = document.querySelectorAll(`.${styles.tree}`)
@@ -82,22 +86,25 @@ export default function Home() {
     
     anime.timeline({
       targets,
-      delay: function(el, i) { return i * 70 },
+      delay: (el, i) => i * 70,
       easing: 'spring(0.4, 100, 10, 0)',
       loop: false,
     })
     .add({translateY: 0})
     setShowMenu(false)
     setPositions(pos)
+    setPage(page)
   }
+
   const toMenu = () => {
     if(showMenu) return toMapFromMenu()
     const menuTreeHeight = treeHeight/2;
+    const maxTreeWidth = trees.sort((a,b) => a.ref.current.clientWidth < b.ref.current.clientWidth)[0].ref.current.clientWidth
     
     anime({
       targets: `.${styles.tree}`,
-      left:padding,
-      height:menuTreeHeight,
+      left: (el, i) => ((maxTreeWidth - el.clientWidth)/2)+padding,
+      height: menuTreeHeight,
       top: anime.stagger([padding, trees.length*((menuTreeHeight)+padding)]),
       delay: (el, i) => i * 20,
       duration: 500,
@@ -117,7 +124,6 @@ export default function Home() {
   }
   const toMapFromMenu = () => {
     const menuTreeHeight = treeHeight/2;
-
     anime.set({
       targets: `.${styles.label}`,
       width:0,
@@ -161,12 +167,16 @@ export default function Home() {
     setBounds(getBounds())
     toMap(1)
   }, [loaded])
+  useEffect(()=> {
+    dripIt()
+    setBounds(getBounds())
+  }, [innerWidth])
 
   return (
     <div className={styles.container}>
       <div className={styles.scroller} ref={scrollRef}></div>
       <div className={styles.menu}>
-        <button onClick={()=>{ window.scroll(0,0); toMap()}}>dripp</button>
+        <button onClick={dripIt}>dripp</button>
         <button onClick={toMenu}>menu</button>
         <button onClick={()=> setShowBounds(!showBounds)}>bounds</button>
       </div>
