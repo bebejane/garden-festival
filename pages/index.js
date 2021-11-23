@@ -4,8 +4,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import anime from 'animejs';
 import useVisibility from 'lib/hooks/useVisibility'
 import {useWindowSize} from "rooks"
+import { withGlobalProps } from 'lib/utils';
+import { GetEvents } from '/graphql';
 
-export default function Home() {
+export default function Home(props) {
+  console.log(props)
 
   const batikRef = useRef()
   const totalPages = 10;
@@ -19,7 +22,7 @@ export default function Home() {
   const [bounds, setBounds] = useState({})
   const [showBounds, setShowBounds] = useState(false)
   const [positions, setPositions] = useState()
-  const [scrollRef, {scroll, scrollStep, scrollStepRatio, totalSteps}] = useVisibility('scroller', 0, 4)
+  const [scrollRef, {scroll, scrollStep, scrollStepRatio, totalSteps}] = useVisibility('scroller', 0, 10)
   const { innerWidth } = useWindowSize();
 
   const [trees, setTrees] = useState(new Array(12).fill(0).map((x, i) => { 
@@ -49,8 +52,6 @@ export default function Home() {
   }
   const toMap = (page) => {
     
-    
-    
     const bounds = getBounds()
     const targets = document.querySelectorAll(`.${styles.tree}`)
     const totalTreeWidth = trees.reduce((acc, t) => t.ref.current.clientWidth + acc, 0)
@@ -62,9 +63,9 @@ export default function Home() {
     const colHeight = bounds.h/rows
 
     targets.forEach((el, idx)=>{
+      const { clientHeight : h, clientWidth: w} = el;
       const row = Math.ceil((idx+1)/(rows*cols)*(rows))
       const col = (idx+1)-((row-1)*cols)
-      const { clientHeight : h, clientWidth: w} = el;
       const left = bounds.x + randomInt((col-1)*colWidth, (((col-1)*colWidth)+colWidth)-w)
       const top = bounds.y + randomInt((row-1)*colHeight, (((row-1)*colHeight)+colHeight)-h) //((row-1)*colHeight)
       pos.push({left, top})  
@@ -93,33 +94,42 @@ export default function Home() {
     setPage(page)
   }
 
-  const toMenu = () => {
+  const toMenu = async () => {
     if(showMenu) return toMapFromMenu()
     const menuTreeHeight = treeHeight/2;
     const maxTreeWidth = trees.sort((a,b) => a.ref.current.clientWidth < b.ref.current.clientWidth)[0].ref.current.clientWidth
     
-    anime({
+    await anime({
       targets: `.${styles.tree}`,
       left: (el, i) => ((maxTreeWidth - el.clientWidth)/2)+padding,
       height: menuTreeHeight,
       top: anime.stagger([padding, trees.length*((menuTreeHeight)+padding)]),
       delay: (el, i) => i * 20,
-      duration: 500,
-      easing: 'easeOutExpo',
+      duration: 200,
+      easing: 'linear',
       loop: false,
       scale: 1
-    }); 
+    }).finished;
     
     anime.set({
       targets: `.${styles.label}`,
       width:200,
+      opacity:0,
       marginLeft:20,
-      loop: false,
       easing: 'spring(0.4, 100, 10, 0)',
     }); 
+    
+    anime({
+      targets: `.${styles.label}`,
+      opacity:1,
+      duration:200,
+      easing: 'linear',
+    }); 
+    
     setShowMenu(true)
   }
-  const toMapFromMenu = () => {
+  const toMapFromMenu = async () => {
+    setShowMenu(false)
     const menuTreeHeight = treeHeight/2;
     anime.set({
       targets: `.${styles.label}`,
@@ -138,8 +148,7 @@ export default function Home() {
       loop: false,
       scale: 1,
     }); 
-     
-    setShowMenu(false)
+    
   }
   
   useEffect(()=> {
@@ -239,3 +248,5 @@ const Tree = React.forwardRef((props, ref) => {
   )
 
 })
+
+export const getStaticProps = withGlobalProps({ query: GetEvents, model: "event" });

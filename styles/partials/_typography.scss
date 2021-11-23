@@ -1,0 +1,142 @@
+$headline-size-big: 6vw;
+$headline-size: 3.2vw;
+$headline-size-mobile: 26px;
+$headline-size-mid: 60px;
+
+$intro-size: 3.2vw;
+
+$body-size: 22px;
+$body-large: 22px;
+$mid-size: 22px;
+
+$small-size: 18px;
+$nav-size: 22px;
+
+$line-height: 1.3em;
+$line-height-headline: 1.25em;
+
+$icon-font: "IconFont";
+
+h1 {
+  font-size: $headline-size-mobile;
+  line-height: $line-height-headline * 0.8;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  padding-bottom: 0.2em;
+
+  @include mq($from: tablet) {
+    font-size: $headline-size-big;
+    font-family: $headline-font-thin;
+  }
+}
+
+h2,
+h2 p {
+  font-size: $headline-size-mobile;
+  line-height: $line-height-headline;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  padding-bottom: 0.2em;
+  font-family: $headline-font-mobile;
+
+  @include mq($from: tablet) {
+    font-family: $headline-font;
+  }
+
+  &.tight {
+    @include mq($from: tablet) {
+      line-height: $line-height-headline * 0.9;
+    }
+  }
+
+  @include mq($from: tablet) {
+    font-size: $headline-size;
+  }
+
+  @include mq($from: wide) {
+    font-size: 48px;
+  }
+
+  strong {
+    font-weight: normal;
+  }
+}
+
+h3 {
+  text-transform: uppercase;
+  font-family: $body-font;
+  font-weight: normal;
+  letter-spacing: 0.07em;
+  padding-bottom: 1em;
+  font-size: $nav-size - 7px;
+
+  @include mq($from: tablet) {
+    font-size: $nav-size - 2px;
+  }
+}
+
+p {
+  line-height: $line-height;
+  font-size: $body-size - 2px;
+
+  @include mq($from: tablet) {
+    font-size: $body-large;
+  }
+
+  &.big {
+    font-size: 1.9vw;
+    font-family: $headline-font-mobile;
+    line-height: $line-height-headline * 1.1;
+  }
+}
+
+footer,
+p.small {
+  font-size: $small-size;
+}
+
+nav,
+button {
+  font-family: $body-font;
+  font-size: $body-size - 4px;
+
+  @include mq($from: tablet) {
+    font-size: $nav-size;
+  }
+}
+
+nav li {
+  @include mq($until: tablet) {
+    font-size: $headline-size-mobile;
+    line-height: $line-height-headline;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    font-family: $headline-font-mobile;
+  }
+}
+
+strong,
+.strong {
+  font-weight: 600;
+  font-family: $body-font;
+}
+
+em,
+i {
+  font-weight: 400;
+  font-style: italic;
+  font-stretch: normal;
+}
+
+form,
+input {
+  font-size: $body-size;
+  font-family: $body-font;
+
+  @include mq($from: tablet) {
+    font-size: $body-large;
+  }
+}
