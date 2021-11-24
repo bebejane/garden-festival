@@ -14,7 +14,7 @@ export default function Participant({participant, event}) {
       <Content show={true}>
         <div>
           <h3>{participant.title}</h3>
-          <p>{event.title}</p>
+          {event && <p>{event.title}</p>}
         </div>
       </Content>
       <Garden/>
