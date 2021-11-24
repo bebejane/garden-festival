@@ -1,0 +1,100 @@
+query GetEvents {
+  events: allEvents {
+    slug
+    title
+    summary
+    startTime
+    releaseTime
+    id
+    endTime
+    participant{
+      id
+    }
+    content {
+      blocks {
+        content {
+          blocks {
+            title
+            summary
+            startTime
+            releaseTime
+            id
+            endTime
+            createdAt
+          }
+        }
+        endTime
+        id
+        startTime
+        summary
+        title
+        createdAt
+      } 
+    }
+  }
+}
+
+query GetEvent ($id: ItemId ){
+  event(filter : {id: { eq:$id }}) {
+    id
+    slug
+    title
+    summary
+    startTime
+    releaseTime
+    endTime
+    content {
+      blocks {
+        content {
+          blocks {
+            title
+            summary
+            startTime
+            releaseTime
+            id
+            endTime
+            createdAt
+          }
+        }
+        endTime
+        id
+        startTime
+        summary
+        title
+        createdAt
+      }
+    }
+  }
+}
+query GetEventBySlug ($slug: String ){
+  event(filter : { slug: { eq: $slug }}) {
+    id
+    slug
+    title
+    summary
+    startTime
+    releaseTime
+    endTime
+    content {
+      blocks {
+        content {
+          blocks {
+            title
+            summary
+            startTime
+            releaseTime
+            id
+            endTime
+            createdAt
+          }
+        }
+        endTime
+        id
+        startTime
+        summary
+        title
+        createdAt
+      }
+    }
+  }
+}

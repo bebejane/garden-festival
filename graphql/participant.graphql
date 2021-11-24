@@ -1,0 +1,40 @@
+#import "./fragments/ImageFragment.graphql"
+
+query GetParticipants {
+  participants: allParticipants {
+    id
+    slug
+    title
+    summary
+    externalLink
+    symbol {
+      ...ImageFragment
+    }
+  }
+}
+
+query GetParticipant ($id: ItemId ){
+  participant(filter : {id: { eq:$id }}) {
+    id
+    slug
+    title
+    summary
+    externalLink
+    symbol {
+      ...ImageFragment
+    }
+  }
+}
+
+query GetParticipantBySlug ($slug: String ){
+  participant(filter : {slug: { eq: $slug }}) {
+    id
+    slug
+    title
+    summary
+    externalLink
+    symbol {
+      ...ImageFragment
+    }
+  }
+}

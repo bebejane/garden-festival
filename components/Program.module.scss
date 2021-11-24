@@ -1,0 +1,10 @@
+.program {
+  display: flex;
+  flex-direction: column;
+  width: 100%; 
+  .event{  
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+}

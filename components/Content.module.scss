@@ -1,0 +1,29 @@
+.contentWrap {
+  position: fixed;
+  left:0;
+  top:100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 999;
+  min-height: 100vh; 
+  padding: 40px;
+  width: 100%; 
+  box-sizing: border-box;
+  .content{
+    position: relative;  
+    background-color: #fff;
+    color:#000;
+    border: 1px solid #000;
+    min-height: calc(100vh - 190px);
+    padding: 40px;
+    flex: 1 1 100%;
+  }
+  .close{
+    position: absolute;
+    top:0;
+    right:0;
+    margin:40px;
+    cursor: pointer;
+  }
+}

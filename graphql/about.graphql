@@ -1,0 +1,10 @@
+query GetAbouts {
+  abouts: allAbouts {
+    id
+    position
+    title
+    content {
+      value
+    }
+  }
+}
