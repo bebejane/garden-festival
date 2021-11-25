@@ -13,7 +13,7 @@ export default function Participant({participant, event, show}) {
       <Menu/>
       <Content show={true}>
         <div>
-          <h3>{participant.title}</h3>
+          <h3>{participant && participant.title}</h3>
           {event && 
             <p>
               {event.title}<br/>
