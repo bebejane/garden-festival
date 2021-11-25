@@ -10,7 +10,7 @@ export default function Garden({events, setEvent, event, view}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
-	const treeHeight = 130;
+	const treeHeight = 160;
 	const padding = 10;
 
 	const [loaded, setLoaded] = useState(0);
@@ -79,8 +79,7 @@ export default function Garden({events, setEvent, event, view}) {
 			translateY: () => "-100vh",
 			left: (el, i) => pos[i].left,
 			top: (el, i) => pos[i].top,
-			height: treeHeight,
-			filter: `hue-rotate(${page * (360 / totalPages)}deg)`,
+			height: treeHeight
 		});
 
 		anime
