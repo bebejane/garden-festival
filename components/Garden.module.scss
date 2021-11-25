@@ -30,40 +30,33 @@
   }  
 }
 
-.trees{
+.tree{
   position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
   top:0;
   left:0;
-  width: 100%;
-  height: 100%;
-  z-index: 3;
-  .tree{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    top:0;
-    left:0;
-    user-select: none;
-    img{
+  z-index: 4;
+  user-select: none;
+  img{
+    cursor: pointer;
+    height: 100%;
+  }
+  .label{
+    position: relative;
+    font-size: 0.8rem;
+    height: 100%;
+    color:#000;
+    visibility: hidden;
+    max-width: 400px;
+    h1{
+      font-size: 1.3rem;
+      margin: 0;
+      font-weight: bold;
       cursor: pointer;
-      height: 100%;
     }
-    .label{
-      position: relative;
-      font-size: 0.8rem;
-      height: 100%;
-      color:#000;
-      visibility: hidden;
-      max-width: 400px;
-      h1{
-        font-size: 1.3rem;
-        margin: 0;
-        font-weight: bold;
-        cursor: pointer;
-      }
-      
-    }
+    
   }
 }
 .controller {

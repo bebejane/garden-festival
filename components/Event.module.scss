@@ -1,0 +1,14 @@
+.event {
+  display: flex;
+  flex-direction: row;
+  width: 100%; 
+  .info{
+    flex: 1 1 80%;
+  }
+  .symbol{
+    img{
+      width:300px;
+      visibility: hidden;
+    }
+  }
+}

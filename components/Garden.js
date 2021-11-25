@@ -6,7 +6,7 @@ import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize } from "rooks";
 
-export default function Garden({events, setEvent, view}) {
+export default function Garden({events, setEvent, event, view}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
@@ -15,7 +15,7 @@ export default function Garden({events, setEvent, view}) {
 
 	const [loaded, setLoaded] = useState(0);
 	const [showMenu, setShowMenu] = useState(false);
-	const [selected, setSelected] = useState();
+	
 	const [page, setPage] = useState(1);
 	const [bounds, setBounds] = useState({});
 	const [showBounds, setShowBounds] = useState(false);
@@ -26,7 +26,7 @@ export default function Garden({events, setEvent, view}) {
 	const [trees, setTrees] = useState(
 		(events || []).map((ev, i) => {
 			return {
-				...ev,
+				event:ev,
 				index: i,
 				ref: React.createRef(),
 				url: ev.participant.symbol.url,
@@ -135,6 +135,27 @@ export default function Garden({events, setEvent, view}) {
 		});
 	};
 
+	const toEvent = async () => {
+		
+		const menuTreeHeight = treeHeight / 2;
+		const targets = document.querySelectorAll("[id^='gasymbol-']")
+		const endTarget = document.querySelector(`[id^='evsymbol-${event.id}']`)
+		const bounds = endTarget.getBoundingClientRect()
+		console.log(bounds)
+		anime({
+			targets,
+			left: (el, i) => el.getAttribute('eventId') === event.id ? bounds.left : undefined,
+			top: (el, i) => el.getAttribute('eventId') === event.id ? bounds.top : undefined,
+			height: (el, i) =>  el.getAttribute('eventId') === event.id ? bounds.height: undefined,
+			width: (el, i) => el.getAttribute('eventId') === event.id ? bounds.width: undefined,
+			scale: (el, i) => el.getAttribute('eventId') === event.id ? 1 : 0,
+			delay: (el, i) => i * 20,
+			duration: 500,
+			easing: "easeOutExpo",
+			loop: false,
+			
+		});
+	};
 	const toProgram = async () => {
 		
 		const menuTreeHeight = treeHeight / 2;
@@ -175,7 +196,7 @@ export default function Garden({events, setEvent, view}) {
 			targets,
 			left: (el, i) => endTargets[i].left,
 			top: (el, i) => endTargets[i].top,
-			//height: (el, i) =>  endTargets[i].clientHeight,
+			height: (el, i) =>  treeHeight,
 			//width: (el, i) => endTargets[i].clientWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
@@ -184,6 +205,7 @@ export default function Garden({events, setEvent, view}) {
 			scale: 1,
 		});
 	};
+	
 	useEffect(() => {
 		if (!positions) return;
 		const p = Math.ceil(scroll * totalSteps + 0.5);
@@ -212,12 +234,17 @@ export default function Garden({events, setEvent, view}) {
 	}, [innerWidth]);
 
 	useEffect(() => {
+	
 		if(view === 'program')
 			toProgram()
 		if(view === 'participants')
 			toParticipants()
 		if(view === 'garden')
 			toMapFromMenu()
+		if(view === 'event')
+			toEvent()
+		
+		
 	}, [view]);
 	
 	return (
@@ -239,20 +266,18 @@ export default function Garden({events, setEvent, view}) {
 					<button onClick={() => setShowBounds(!showBounds)}>bounds</button>
 				</div>
 			</div>
-			<div className={styles.trees}>
-				{trees.map((t, index) => (
-					<Tree
-						{...t}
-						index={index}
-						ref={t.ref}
-						menu={showMenu}
-						setLoaded={setLoaded}
-						selected={selected}
-						setSelected={(index) => setSelected(index)}
-						setEvent={setEvent}
-					/>
-				))}
-			</div>
+			{trees.map((t, index) => (
+				<Tree
+					{...t}
+					event={t.event}
+					index={index}
+					ref={t.ref}
+					menu={showMenu}
+					setLoaded={setLoaded}
+					setEvent={setEvent}
+					selectedEvent={event}
+				/>
+			))}
 		</>
 	);
 }

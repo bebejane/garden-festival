@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { withGlobalProps } from "lib/utils";
 import { GetEvents, GetEvent, GetParticipants, GetAbouts } from "/graphql";
 import { apiQuery } from "/lib/api";
@@ -8,6 +8,7 @@ import Garden from "/components/Garden"
 import Content from "/components/Content";
 import Program from "/components/Program";
 import Participants from "/components/Participants";
+import Event from "/components/Event";
 
 export default function Home({events, participants, abouts}) {
   
@@ -20,15 +21,21 @@ export default function Home({events, participants, abouts}) {
       participant: participants.filter( p => ev.participant?.id === p.id)[0]
     }
   })
-  
+  useEffect(()=> setView(event ? 'event' : 'garden'), [event])
 	return (
     <>
-      <Menu view={view} setView={setView}/>
-      <Content show={['program', 'participants'].includes(view)}>
+      <Menu view={view} setView={setView}/>      
+      <Content show={view !== 'garden'} setView={setView}>
         <Program events={events} show={view === 'program'}/>
         <Participants participants={participants} show={view === 'participants'}/>
+        <Event event={event} show={event !== undefined && view === 'event'}/>
       </Content>
-      <Garden setEvent={setEvent} events={events} view={view}/>
+      <Garden 
+        setEvent={setEvent} 
+        event={event} 
+        events={events} 
+        view={view}
+      />
     </>
   )
 }
