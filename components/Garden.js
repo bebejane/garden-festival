@@ -207,7 +207,7 @@ export default function Garden({events, setEvent, event, view}) {
 	};
 	
 	useEffect(() => {
-		if (!positions) return;
+		if (!positions || view !== 'garden') return;
 		const p = Math.ceil(scroll * totalSteps + 0.5);
 		const targets = document.querySelectorAll(`.${styles.tree}`);
 		const { innerHeight } = window;

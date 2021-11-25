@@ -5,6 +5,7 @@ import { apiQuery } from "lib/api";
 import Menu from "/components/Menu"
 import Garden from "/components/Garden"
 import Content from "components/Content";
+import Event from "components/Event";
 
 export default function Participant({participant, event, show}) {
   

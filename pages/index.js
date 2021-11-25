@@ -10,7 +10,7 @@ import Program from "/components/Program";
 import Participants from "/components/Participants";
 import Event from "/components/Event";
 
-export default function Home({events, participants, abouts}) {
+export default function Home({events, participants, abouts, event}) {
   
   const [event, setEvent] = useState()
   const [view, setView] = useState('garden')
