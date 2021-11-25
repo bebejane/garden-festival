@@ -28,7 +28,7 @@ export default function Home({events, participants, abouts}) {
       <Content show={view !== 'garden'} setView={setView}>
         <Program events={events} show={view === 'program'}/>
         <Participants participants={participants} show={view === 'participants'}/>
-        <Event event={event} show={event !== undefined && view === 'event'}/>
+        <Event event={event} show={view === 'event'}/>
       </Content>
       <Garden 
         setEvent={setEvent} 

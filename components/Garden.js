@@ -1,5 +1,6 @@
 import Tree from "./Tree"
 import styles from "./Garden.module.scss"
+import treeStyles from "./Tree.module.scss"
 import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import anime from "animejs";
@@ -10,7 +11,7 @@ export default function Garden({events, setEvent, event, view}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
-	const treeHeight = 160;
+	const treeWidth = 200;
 	const padding = 10;
 
 	const [loaded, setLoaded] = useState(0);
@@ -29,35 +30,60 @@ export default function Garden({events, setEvent, event, view}) {
 				event:ev,
 				index: i,
 				ref: React.createRef(),
-				url: ev.participant.symbol.url,
+				url: ev.participant.symbol.url + '?w=' + treeWidth,
 				state: "map",
 				style: {
-					height: `${treeHeight}px`,
-					top: `${treeHeight * i}px`,
+					width: `${treeWidth}px`
 				},
 			};
 		})
 	);
+
 	const getBounds = () => {
 		const { clientWidth: w, clientHeight: h, offsetTop: y, offsetLeft: x } = batikRef.current;
 		const pad = 100;
 		return { w: w - pad * 2, h: h - pad * 2, x: x + pad, y: y + pad };
 	};
+
 	const randomInt = (min, max) => {
 		// min and max included
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	};
+
 	const dripIt = () => {
 		window.scroll(0, 0);
 		toMap();
 	};
+
+	const toggleView = (view) => {
+		window.scrollTo(0,0);
+		switch (view) {
+			case 'program':
+				toProgram()
+				break;
+			case 'garden':
+				toGarden()
+				break;
+			case 'participants':
+				toParticipants()
+				break;
+			case 'event':
+				toEvent()
+				break;
+			default:
+				break;
+		}
+	}
+	
+	useEffect(() => setTimeout(()=>toggleView(view), 100), [view]);
+
 	const toMap = (page) => {
 		const bounds = getBounds();
-		const targets = document.querySelectorAll(`.${styles.tree}`);
+		const targets = document.querySelectorAll(`.${treeStyles.tree}`);
 		const totalTreeWidth = trees.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
 
 		let pos = [];
-		const rows = 3;
+		const rows = 1;
 		const cols = trees.length / rows;
 		const colWidth = bounds.w / cols;
 		const colHeight = bounds.h / rows;
@@ -66,66 +92,42 @@ export default function Garden({events, setEvent, event, view}) {
 			const { clientHeight: h, clientWidth: w } = el;
 			const row = Math.ceil(((idx + 1) / (rows * cols)) * rows);
 			const col = idx + 1 - (row - 1) * cols;
-			const left = bounds.x + randomInt((col - 1) * colWidth, (col - 1) * colWidth + colWidth - w);
-			const top =
-				bounds.y + randomInt((row - 1) * colHeight, (row - 1) * colHeight + colHeight - h); //((row-1)*colHeight)
+			const left = bounds.x + randomInt((col - 1) * colWidth, ((col - 1) * colWidth) + (colWidth - w));
+			const top = bounds.y + randomInt((row - 1) * colHeight, ((row -1) * colHeight) + (colHeight - h)); //((row-1)*colHeight)
 			pos.push({ left, top });
 		});
 
 		pos = pos.sort((a, b) => Math.random() > 0.5);
 
-
 		anime.set(targets, {
 			translateY: () => "-100vh",
 			left: (el, i) => pos[i].left,
 			top: (el, i) => pos[i].top,
-			height: treeHeight
+			width: treeWidth
 		});
 
-		anime
-			.timeline({
-				targets,
-				delay: (el, i) => i * 20,
-				easing: "spring(0.4, 100, 10, 0)",
-				loop: false,
-			})
-			.add({ translateY: 0 });
+		anime.timeline({
+			targets,
+			delay: (el, i) => i * 20,
+			easing: "spring(0.4, 100, 10, 0)",
+			loop: false,
+		}).add({ translateY: 0 });
+
 		setShowMenu(false);
 		setPositions(pos);
 		setPage(page);
 	};
 
-	const toMenu = async () => {
-		if (showMenu) return toMapFromMenu();
-		const menuTreeHeight = treeHeight / 2;
-		const maxTreeWidth = trees.sort(
-			(a, b) => a.ref.current.clientWidth < b.ref.current.clientWidth
-		)[0].ref.current.clientWidth;
+	
+	const toGarden = async () => {
 
-		await anime({
-			targets: `.${styles.tree}`,
-			left: (el, i) => (maxTreeWidth - el.clientWidth) / 2 + padding,
-			height: menuTreeHeight,
-			top: anime.stagger([padding, trees.length * (menuTreeHeight + padding)]),
-			delay: (el, i) => i * 20,
-			duration: 200,
-			easing: "linear",
-			loop: false,
-			scale: 1,
-		}).finished;
-
-		setShowMenu(true);
-	};
-	const toMapFromMenu = async () => {
-		
 		if(!positions) return
-
-		const menuTreeHeight = treeHeight / 2;
+		
 		anime({
-			targets: `.${styles.tree}`,
+			targets: `.${treeStyles.tree}`,
 			left: (el, i) => positions[i].left,
 			top: (el, i) => positions[i].top,
-			height: treeHeight,
+			width: treeWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
 			easing: "easeOutExpo",
@@ -136,32 +138,26 @@ export default function Garden({events, setEvent, event, view}) {
 
 	const toEvent = async () => {
 		
-		const menuTreeHeight = treeHeight / 2;
+		const isSelected = (el) => el.getAttribute('eventId') === event.id
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTarget = document.querySelector(`[id^='evsymbol-${event.id}']`)
 		const bounds = endTarget.getBoundingClientRect()
-		console.log(bounds)
+		
 		anime({
 			targets,
-			left: (el, i) => el.getAttribute('eventId') === event.id ? bounds.left : undefined,
-			top: (el, i) => el.getAttribute('eventId') === event.id ? bounds.top : undefined,
-			height: (el, i) =>  el.getAttribute('eventId') === event.id ? bounds.height: undefined,
-			width: (el, i) => el.getAttribute('eventId') === event.id ? bounds.width: undefined,
-			scale: (el, i) => el.getAttribute('eventId') === event.id ? 1 : 0,
-			delay: (el, i) => i * 20,
+			left: (el, i) => isSelected(el) ? bounds.left : false,
+			top: (el, i) => isSelected(el) ? bounds.top : false,
+			height: (el, i) =>  isSelected(el) ? bounds.height: false,
+			width: (el, i) => isSelected(el) ? bounds.width: false,
+			scale: (el, i) => isSelected(el) ? 1 : 0,
+			delay: (el, i) => isSelected(el) ? 0 : i * 100,
 			duration: 500,
-			easing: "easeOutExpo",
-			loop: false,
-			
+			easing: "easeOutExpo"
 		});
 	};
 	const toProgram = async () => {
-		
-		const menuTreeHeight = treeHeight / 2;
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTargets = document.querySelectorAll("[id^='prsymbol-']")
-		console.log(endTargets[0])
-		console.log(targets)
 		anime({
 			targets,
 			left: (el, i) => endTargets[i].getBoundingClientRect().left,
@@ -177,8 +173,6 @@ export default function Garden({events, setEvent, event, view}) {
 	};
 
 	const toParticipants = async () => {
-		
-		const menuTreeHeight = treeHeight / 2;
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTargets = []
 
@@ -187,7 +181,7 @@ export default function Garden({events, setEvent, event, view}) {
 			const b = t.getBoundingClientRect()
 			endTargets.push({
 				left:b.left,
-				top:b.top + menuTreeHeight,
+				top:b.top,
 			})			
 		})
 		
@@ -195,8 +189,7 @@ export default function Garden({events, setEvent, event, view}) {
 			targets,
 			left: (el, i) => endTargets[i].left,
 			top: (el, i) => endTargets[i].top,
-			height: (el, i) =>  treeHeight,
-			//width: (el, i) => endTargets[i].clientWidth,
+			width: (el, i) =>  treeWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
 			easing: "easeOutExpo",
@@ -208,7 +201,7 @@ export default function Garden({events, setEvent, event, view}) {
 	useEffect(() => {
 		if (!positions || view !== 'garden') return;
 		const p = Math.ceil(scroll * totalSteps + 0.5);
-		const targets = document.querySelectorAll(`.${styles.tree}`);
+		const targets = document.querySelectorAll(`.${treeStyles.tree}`);
 		const { innerHeight } = window;
 		if (scrollStep !== page) return toMap(p);
 		anime({
@@ -232,23 +225,11 @@ export default function Garden({events, setEvent, event, view}) {
 		setBounds(getBounds());
 	}, [innerWidth]);
 
-	useEffect(() => {
 	
-		if(view === 'program')
-			toProgram()
-		if(view === 'participants')
-			toParticipants()
-		if(view === 'garden')
-			toMapFromMenu()
-		if(view === 'event')
-			toEvent()
-		
-		
-	}, [view]);
 	
 	return (
 		<>
-			<div className={styles.container} style={{ minHeight: totalPages * 100 + "vh" }}>
+			<div className={styles.container} style={ view === 'garden' ? { minHeight:`${totalPages * 100}vh`} : { }}>
 				<div className={styles.scroller} ref={scrollRef}></div>
 				<div className={styles.diggi}>
 					<img src={"/diggibatik.png"} ref={batikRef} className={cn(styles.batik, styles.diggity)} />
@@ -261,7 +242,7 @@ export default function Garden({events, setEvent, event, view}) {
 				</div>
 				<div className={styles.controller}>
 					<button onClick={dripIt}>dripp</button>
-					<button onClick={toMenu}>menu</button>
+					
 					<button onClick={() => setShowBounds(!showBounds)}>bounds</button>
 				</div>
 			</div>

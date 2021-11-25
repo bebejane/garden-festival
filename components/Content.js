@@ -13,7 +13,9 @@ export default function Content({show, children, setShow, setView}) {
 					onClick={()=>setView('garden')}
 				>×</div>
 			</div>
-			
+			<div className={styles.footer}>
+				Footer
+			</div>				
 		</div>
 	);
 }
