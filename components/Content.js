@@ -6,14 +6,16 @@ import anime from "animejs";
 import Link from "next/link"
 
 export default function Content({show, children, setShow}) {
-	const [internalShow, setInternalShow] = useState(true)
 
-  if(!show || !internalShow) return null
+  if(!show ) return null
 	return (
 		<div className={styles.contentWrap}>
       <div className={styles.content}>
 				{children}
-				<div className={styles.close} onClick={()=>setInternalShow(false)}>CLOSE</div>
+				<div 
+					className={styles.close} 
+					onClick={()=>setShow && setShow(false)}
+				>×</div>
 			</div>
 			
 		</div>

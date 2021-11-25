@@ -6,7 +6,7 @@ import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize } from "rooks";
 
-export default function Garden({events, setEvent}) {
+export default function Garden({events, setEvent, view}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
@@ -74,7 +74,7 @@ export default function Garden({events, setEvent}) {
 
 		pos = pos.sort((a, b) => Math.random() > 0.5);
 
-		anime.set(`.${styles.label}`, { width: 0, marginLeft: 0 });
+
 		anime.set(targets, {
 			translateY: () => "-100vh",
 			left: (el, i) => pos[i].left,
@@ -115,32 +115,13 @@ export default function Garden({events, setEvent}) {
 			scale: 1,
 		}).finished;
 
-		anime.set({
-			targets: `.${styles.label}`,
-			width: 200,
-			opacity: 0,
-			marginLeft: 20,
-			easing: "spring(0.4, 100, 10, 0)",
-		});
-
-		anime({
-			targets: `.${styles.label}`,
-			opacity: 1,
-			duration: 200,
-			easing: "linear",
-		});
-
 		setShowMenu(true);
 	};
 	const toMapFromMenu = async () => {
-		setShowMenu(false);
+		
+		if(!positions) return
+
 		const menuTreeHeight = treeHeight / 2;
-		anime.set({
-			targets: `.${styles.label}`,
-			width: 0,
-			marginLeft: 0,
-			loop: false,
-		});
 		anime({
 			targets: `.${styles.tree}`,
 			left: (el, i) => positions[i].left,
@@ -154,6 +135,55 @@ export default function Garden({events, setEvent}) {
 		});
 	};
 
+	const toProgram = async () => {
+		
+		const menuTreeHeight = treeHeight / 2;
+		const targets = document.querySelectorAll("[id^='gasymbol-']")
+		const endTargets = document.querySelectorAll("[id^='prsymbol-']")
+		console.log(endTargets[0])
+		console.log(targets)
+		anime({
+			targets,
+			left: (el, i) => endTargets[i].getBoundingClientRect().left,
+			top: (el, i) => endTargets[i].getBoundingClientRect().top,
+			height: (el, i) =>  endTargets[i].clientHeight,
+			width: (el, i) => endTargets[i].clientWidth,
+			delay: (el, i) => i * 20,
+			duration: 500,
+			easing: "easeOutExpo",
+			loop: false,
+			scale: 1,
+		});
+	};
+
+	const toParticipants = async () => {
+		
+		const menuTreeHeight = treeHeight / 2;
+		const targets = document.querySelectorAll("[id^='gasymbol-']")
+		const endTargets = []
+
+		targets.forEach((el) =>{
+			const t = document.querySelector(`[id='pasymbol-${el.getAttribute('participant')}']`)
+			const b = t.getBoundingClientRect()
+			endTargets.push({
+				left:b.left,
+				top:b.top + menuTreeHeight,
+			})			
+		})
+		
+		anime({
+			targets,
+			left: (el, i) => endTargets[i].left,
+			top: (el, i) => endTargets[i].top,
+			//height: (el, i) =>  endTargets[i].clientHeight,
+			//width: (el, i) => endTargets[i].clientWidth,
+			delay: (el, i) => i * 20,
+			duration: 500,
+			easing: "easeOutExpo",
+			loop: false,
+			scale: 1,
+		});
+	};
 	useEffect(() => {
 		if (!positions) return;
 		const p = Math.ceil(scroll * totalSteps + 0.5);
@@ -180,38 +210,49 @@ export default function Garden({events, setEvent}) {
 		dripIt();
 		setBounds(getBounds());
 	}, [innerWidth]);
+
+	useEffect(() => {
+		if(view === 'program')
+			toProgram()
+		if(view === 'participants')
+			toParticipants()
+		if(view === 'garden')
+			toMapFromMenu()
+	}, [view]);
 	
 	return (
-		<div className={styles.container} style={{ minHeight: totalPages * 100 + "vh" }}>
-			<div className={styles.scroller} ref={scrollRef}></div>
-			<div className={styles.diggi}>
-				<img src={"/diggibatik.png"} ref={batikRef} className={cn(styles.batik, styles.diggity)} />
-				{showBounds && (
-					<div
-						className={styles.bounds}
-						style={{ left: bounds.x, top: bounds.y, width: bounds.w, height: bounds.h }}
-					></div>
-				)}
-				<div className={styles.trees}>
-					{trees.map((t, index) => (
-						<Tree
-							{...t}
-							index={index}
-							ref={t.ref}
-							menu={showMenu}
-							setLoaded={setLoaded}
-							selected={selected}
-							setSelected={(index) => setSelected(index)}
-							setEvent={setEvent}
-						/>
-					))}
+		<>
+			<div className={styles.container} style={{ minHeight: totalPages * 100 + "vh" }}>
+				<div className={styles.scroller} ref={scrollRef}></div>
+				<div className={styles.diggi}>
+					<img src={"/diggibatik.png"} ref={batikRef} className={cn(styles.batik, styles.diggity)} />
+					{showBounds && (
+						<div
+							className={styles.bounds}
+							style={{ left: bounds.x, top: bounds.y, width: bounds.w, height: bounds.h }}
+						></div>
+					)}
+				</div>
+				<div className={styles.controller}>
+					<button onClick={dripIt}>dripp</button>
+					<button onClick={toMenu}>menu</button>
+					<button onClick={() => setShowBounds(!showBounds)}>bounds</button>
 				</div>
 			</div>
-      <div className={styles.controller}>
-				<button onClick={dripIt}>dripp</button>
-				<button onClick={toMenu}>menu</button>
-				<button onClick={() => setShowBounds(!showBounds)}>bounds</button>
+			<div className={styles.trees}>
+				{trees.map((t, index) => (
+					<Tree
+						{...t}
+						index={index}
+						ref={t.ref}
+						menu={showMenu}
+						setLoaded={setLoaded}
+						selected={selected}
+						setSelected={(index) => setSelected(index)}
+						setEvent={setEvent}
+					/>
+				))}
 			</div>
-		</div>
+		</>
 	);
 }

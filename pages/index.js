@@ -6,10 +6,13 @@ import { apiQuery } from "/lib/api";
 import Menu from "/components/Menu"
 import Garden from "/components/Garden"
 import Content from "/components/Content";
+import Program from "/components/Program";
+import Participants from "/components/Participants";
 
 export default function Home({events, participants, abouts}) {
   
   const [event, setEvent] = useState()
+  const [view, setView] = useState('garden')
   
   events = events.map((ev) => {
     return {
@@ -20,15 +23,12 @@ export default function Home({events, participants, abouts}) {
   
 	return (
     <>
-      <Menu/>
-      <Content show={event ? true : false}>
-        {event && 
-          <div>
-            {event.title}
-          </div>
-        }
+      <Menu view={view} setView={setView}/>
+      <Content show={['program', 'participants'].includes(view)}>
+        <Program events={events} show={view === 'program'}/>
+        <Participants participants={participants} show={view === 'participants'}/>
       </Content>
-      <Garden setEvent={setEvent} events={events}/>
+      <Garden setEvent={setEvent} events={events} view={view}/>
     </>
   )
 }

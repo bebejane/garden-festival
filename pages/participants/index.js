@@ -5,7 +5,7 @@ import { apiQuery } from "/lib/api";
 import Menu from "/components/Menu"
 import Garden from "/components/Garden"
 import Content from "components/Content";
-import Participants from "components/Partisipants";
+import Participants from "components/Participants";
 
 export default function ParticipantsPage({events, participants}) {
   events = events.map((ev) => {
@@ -18,7 +18,7 @@ export default function ParticipantsPage({events, participants}) {
     <>
       <Menu/>
       <Content show={true}>
-        <Participants participants={participants} />
+        <Participants participants={participants} show={true}/>
       </Content>
       <Garden events={events}/>
     </>

@@ -10,7 +10,6 @@
   .scroller {
     height: 100%;
     width:100%;
-    
   }
 }
 .diggi{
@@ -28,60 +27,54 @@
     top:0;
     left:0;
     border: 4px solid greenyellow;
-  }
-  .trees{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    .tree{
-      position: absolute;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      top:0;
-      left:0;
-      user-select: none;
-      img{
-        cursor: pointer;
-        height: 100%;
-
-      }
-      .label{
-
-        position: relative;
-        
-        width:0;
-        overflow: hidden;
-        font-size: 0.8rem;
-        color:#000;
-        max-width: 200px;
-        
-        h1{
-          font-size: 1.3rem;
-          margin: 0;
-          font-weight: bold;
-          cursor: pointer;
-        }
-        height: 100%;
-        //margin-left: 1rem;
-      }
-    }
-    
-  }
+  }  
 }
 
+.trees{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  .tree{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    top:0;
+    left:0;
+    user-select: none;
+    img{
+      cursor: pointer;
+      height: 100%;
+    }
+    .label{
+      position: relative;
+      font-size: 0.8rem;
+      height: 100%;
+      color:#000;
+      visibility: hidden;
+      max-width: 400px;
+      h1{
+        font-size: 1.3rem;
+        margin: 0;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      
+    }
+  }
+}
 .controller {
   position: fixed;
   bottom:0;
   right:0;
-  
   z-index: 1;
   button {
     padding:10px;
-    font-size: 1.5rem;
-    margin:20px;
+    font-size: 1rem;
+    margin:10px;
     margin-left: 0px;
   }
 }
