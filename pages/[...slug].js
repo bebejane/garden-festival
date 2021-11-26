@@ -27,20 +27,28 @@ export default Home;
 export const getStaticProps = withGlobalProps({ queries: [GetParticipants, GetEvents] }, async (data) => {
   
   const {
-    props:{participants, events},
-    context,
+    props:{
+      participants, 
+      events
+    },
+    context : {
+      params :{
+        slug
+      }
+    },
     revalidate
   } = data;
-  const { slug } = context.params
-  const { participant } = await apiQuery(GetParticipantBySlug, {slug:slug[0]});
-  const { event } = slug.length > 1 ? await apiQuery(GetEventBySlug, {slug:slug[1]}) : {};
 
+  const participantSlug = slug[0]
+  const eventSlug = slug.length > 1 ? slug[1] : false
+  const { participant } = await apiQuery(GetParticipantBySlug, {slug:participantSlug});
+  const { event } = eventSlug ? await apiQuery(GetEventBySlug, {slug:eventSlug}) : {};
+  
   const props = {
     participant,
     events,
     participants,
-    defaultView : 'event'
-
+    defaultView : event ? 'event' : 'participants'
   }
   if(event) 
     props.defaultEvent = {...event, participant};

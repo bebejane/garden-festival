@@ -1,4 +1,5 @@
 import styles from "./Program.module.scss"
+import contentStyles from "./Content.module.scss"
 import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
@@ -39,7 +40,7 @@ export default function Program({events, participants, show}) {
       <>
         <div className={styles.event}>
           <div className={styles.symbol}>
-            <img id={`prsymbol-${ev.id}`} src={ev.participant.symbol.url}/>
+            <img id={`prsymbol-${ev.id}`} src={ev.participant.symbol.url} className={contentStyles.placeholderSymbol}/>
           </div>
           <div className={styles.info}>
             {eventDate && <h2 className={styles.weekday}>{format(eventDate, 'EEEE MMMM d, yyyy ')}</h2>}

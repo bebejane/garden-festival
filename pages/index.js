@@ -12,8 +12,8 @@ import Event from "/components/Event";
 
 export default function Home({events, participants, abouts, defaultEvent, defaultView = 'garden'}) {
   
-  const [event, setEvent] = useState(defaultEvent)
-  const [view, setView] = useState(defaultView)
+  const [event, setEvent] = useState()
+  const [view, setView] = useState()
   
   events = events.map((ev) => {
     return {
@@ -22,6 +22,8 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
     }
   })
   useEffect(()=> setView(event ? 'event' : 'garden'), [event])
+  useEffect(()=> setEvent(defaultEvent), [defaultEvent])
+  useEffect(()=> setView(defaultView), [defaultView])
 	return (
     <>
       <Menu view={view} setView={setView}/>      

@@ -1,8 +1,7 @@
-import Tree from "./Tree"
 import styles from "./Participants.module.scss"
+import contentStyles from "./Content.module.scss"
 import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
-import anime from "animejs";
 import Link from "next/link"
 
 export default function Participants({participants, show}) {
@@ -11,7 +10,7 @@ export default function Participants({participants, show}) {
 		<div className={styles.participants}>
       {participants.map(p =>
         <div className={styles.participant}>
-          <div id={`pasymbol-${p.id}`} participant={p.id} className={styles.symbols}></div>
+          <div id={`pasymbol-${p.id}`} participant={p.id} className={cn(styles.symbols, contentStyles.placeholderSymbol)}></div>
           <div className={styles.participantInfo}>
             <h3>{p.title}<  /h3>
             <p>{p.summary}</p>
