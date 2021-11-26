@@ -23,13 +23,13 @@
   .batik{
     max-height: 100vh;
     &.loading{
-      animation: pumpit linear 2s infinite;
+      animation: pumpit linear 2s infinite alternate;
       @keyframes pumpit {
         from{
           filter: hue-rotate(0deg)
         }
         from{
-          filter: hue-rotate(360deg)
+          filter: hue-rotate(45deg)
         }
       }
     }  

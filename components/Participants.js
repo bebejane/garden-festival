@@ -8,8 +8,8 @@ export default function Participants({participants, show}) {
   if(!show) return null
 	return (
 		<div className={styles.participants}>
-      {participants.map(p =>
-        <div className={styles.participant}>
+      {participants.map((p, idx) =>
+        <div key={idx} className={styles.participant}>
           <div 
             id={`pasymbol-${p.id}`} 
             className={cn(styles.symbols, contentStyles.placeholderSymbol)}

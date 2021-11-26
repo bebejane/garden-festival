@@ -24,11 +24,7 @@ $top-margin: 160px;
     color:#000;
     padding: 40px;
     flex: 1 1 100%;
-  }
-  .footer{
-    background-color: #000;
-    color:#fff;
-    padding:40px;
+    min-height: calc(100vh - $top-margin);
   }
   .close{
     display: none;
@@ -44,10 +40,11 @@ $top-margin: 160px;
 }
 
 .popup {
+  width:90%;
   background-color: #fff;
-  padding-left:10%;
-  padding-right:10%;
-  
+  border: 1px solid gray;
+  margin-left:5%;
+  margin-right:5%;
 }
 .placeholderSymbol{
   visibility: hidden;

@@ -6,8 +6,8 @@ import Link from "next/link"
 
 export default function Footer({abouts}) {
 	return (
-		<div className={styles.footer} >
-      
+		<div className={styles.footer}>
+			Footer
 		</div>
 	);
 }

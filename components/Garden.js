@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize } from "rooks";
+import { position } from "dom-helpers";
 
 export default function Garden({events, setEvent, event, view}) {
 	
@@ -51,6 +52,8 @@ export default function Garden({events, setEvent, event, view}) {
 	const toggleView = (view) => {
 		window.scrollTo(0,0);
 		console.log('transition to', view)
+		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
+		anime.set(targets, {visibility:'visible'})
 		switch (view) {
 			case 'program':
 				toProgram()
@@ -69,12 +72,9 @@ export default function Garden({events, setEvent, event, view}) {
 		}
 	}
 	
-	useEffect(() => setTimeout(()=>toggleView(view), 200), [view]);
+	useEffect(() => !loading && setTimeout(()=>toggleView(view), 200), [loading, view]);
 
-	const toMap = async (page) => {
-		
-		if(view !== 'garden') return console.log('blocked')
-		
+	const initSymbols = () => {
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		const totalsymbolWidth = symbols.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
@@ -97,28 +97,38 @@ export default function Garden({events, setEvent, event, view}) {
 		positions = positions.sort((a, b) => Math.random() > 0.5);
 
 		anime.set(targets, {
-			translateY: () => '-100vh',
 			left: (el, i) => positions[i].left,
 			top: (el, i) => positions[i].top,
-			width: symbolWidth
+			width: symbolWidth,
+			visibility:'hidden'
 		});
+		setPositions(positions);
+	}
 
+	const toMap = async (page) => {
+		
+		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
+		anime.set(targets, {
+			translateY:'-100vh',
+			visibility:'visible'
+		})
 		await anime.timeline({
 			targets,
 			delay: (el, i) => i * 20,
 			duration:1000,
-			easing: "spring(0.4, 100, 10, 0)"
+			easing: "spring(0.4, 100, 10, 0)",
+			
 		}).add({ 
-			translateY: 0 
-		}).finished
-		setPositions(positions);
+			translateY: 0,
+		}).finished	
 		setPage(page);
+
 	};
 
 	
 	const toGarden = async () => {
 
-		if(!positions) return
+		if(!positions || !positions.length) return
 		
 		anime({
 			targets: `.${symbolStyles.symbol}`,
@@ -139,8 +149,6 @@ export default function Garden({events, setEvent, event, view}) {
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTarget = document.querySelector(`[id^='evsymbol-${event.id}']`)
 		const bounds = endTarget.getBoundingClientRect()
-		
-		//endTarget.style.visibility = 'hidden'
 
 		anime({
 			targets,
@@ -154,6 +162,7 @@ export default function Garden({events, setEvent, event, view}) {
 			easing: "easeOutExpo"
 		});
 	};
+
 	const toProgram = async () => {
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTargets = document.querySelectorAll("[id^='prsymbol-']")
@@ -218,10 +227,11 @@ export default function Garden({events, setEvent, event, view}) {
 	useEffect(() => {
 		if(loaded !== (symbols.length+1)) return 
 		setBounds(getBounds());
-		setTimeout(()=>{
-			setLoading(false)
-			toMap(1)
-		}, 1000)
+		initSymbols();
+		setLoading(false)
+		if(view== 'garden')
+			setTimeout(()=>toMap(1), 300)
+
 	}, [loaded]);
 
 	useEffect(() => {
