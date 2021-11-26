@@ -10,9 +10,13 @@ export default function Participants({participants, show}) {
 		<div className={styles.participants}>
       {participants.map(p =>
         <div className={styles.participant}>
-          <div id={`pasymbol-${p.id}`} participant={p.id} className={cn(styles.symbols, contentStyles.placeholderSymbol)}></div>
+          <div 
+            id={`pasymbol-${p.id}`} 
+            className={cn(styles.symbols, contentStyles.placeholderSymbol)}
+            participant={p.id} 
+          ></div>
           <div className={styles.participantInfo}>
-            <h3>{p.title}<  /h3>
+            <h3>{p.title}</h3>
             <p>{p.summary}</p>
             <p>
               <Link href={p.externalLink}>

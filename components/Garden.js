@@ -136,7 +136,7 @@ export default function Garden({events, setEvent, event, view}) {
 
 	const toEvent = async () => {
 		
-		const isSelected = (el) => el.getAttribute('eventId') === event.id
+		const isSelected = (el) => el.getAttribute('eventid') === event.id
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTarget = document.querySelector(`[id^='evsymbol-${event.id}']`)
 		const bounds = endTarget.getBoundingClientRect()
@@ -248,6 +248,7 @@ export default function Garden({events, setEvent, event, view}) {
 			</div>
 			{symbols.map((t, index) => (
 				<Symbol
+					key={index}
 					{...t}
 					event={t.event}
 					index={index}

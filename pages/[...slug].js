@@ -3,25 +3,7 @@ import { GetEvents, GetEvent, GetEventBySlug, GetParticipants, GetParticipantByS
 import { apiQuery } from "lib/api";
 
 import Home from "./index"
-import Menu from "/components/Menu"
-import Garden from "/components/Garden"
-import Content from "components/Content";
-import Event from "components/Event";
 
-/*
-export default function Participant({participant, event, show}) {
-  
-	return (
-    <>
-      <Menu/>
-      <Content show={true}>
-        <Event show={true} event={event}/>
-      </Content>
-      <Garden/>
-    </>
-  )
-}
-*/
 export default Home;
 
 export const getStaticProps = withGlobalProps({ queries: [GetParticipants, GetEvents] }, async (data) => {

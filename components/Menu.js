@@ -10,9 +10,9 @@ export default function Menu() {
         The Community Garden Festival
       </h1>
 			<ul>
-        <Link href={'/'}><li className={router.pathname === '/' && styles.selected}>Garden</li></Link>
-        <Link href={'/participants'}><li className={router.pathname === '/participants' && styles.selected}>Participants</li></Link>
-        <Link href={'/program'}><li className={router.pathname === '/program' && styles.selected}>Program</li></Link>
+        <Link href={'/'}><li className={router.pathname === '/' ? styles.selected : undefined }>Garden</li></Link>
+        <Link href={'/participants'}><li className={router.pathname === '/participants' ? styles.selected : undefined }>Participants</li></Link>
+        <Link href={'/program'}><li className={router.pathname === '/program' ? styles.selected : undefined }>Program</li></Link>
       </ul>
 		</div>
 	);

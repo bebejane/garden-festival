@@ -16,7 +16,7 @@ export default function Event({event, show, placeholder = true}) {
         <img 
           id={`evsymbol-${event.id}`} 
           src={event.participant.symbol.url} 
-          className={placeholder && contentStyles.placeholderSymbol}
+          className={contentStyles.placeholderSymbol}
         />
       </div>
 		</div>

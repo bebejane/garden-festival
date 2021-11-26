@@ -2,7 +2,42 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%; 
+  width: 100%;
+  .menu{
+    margin-bottom:40px;
+    ul{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      text-align: center;
+      padding-left: 10%;
+      padding-right: 10%;
+      li{
+        padding: 10px;
+        border:4px solid #000;
+        margin-right: 10px;
+        background-color: #fff;
+        cursor: pointer;
+        &:last-child{
+          margin-right: 0px;
+        }
+        &.selected{
+          background-color: #000;
+          color:#fff;
+        }
+      }
+    }
+    .timezone {
+      position: absolute;
+      right:0;
+      top:0;
+      z-index: 2;
+    }
+  }
   .weekday{
     margin-top: 0;
     margin-bottom: 0.3rem;
@@ -28,10 +63,5 @@
       }
     }
   }
-  .timezone {
-    position: absolute;
-    right:0;
-    top:0;
-    z-index: 2;
-  }
+  
 }

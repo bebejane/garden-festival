@@ -27,10 +27,9 @@ const Symbol = React.forwardRef((props, ref) => {
 		<Link href={`${event.participant.slug}/${event.slug}`}>
 			<div
 				id={`gasymbol-${id}`}
-				eventId={event.id}
+				eventid={event.id}
 				participant={participant.id}
 				className={styles.symbol}
-				//onMouseDown={handleMouse}
 			>
 				<img 
 					key={index}

@@ -1,11 +1,12 @@
+import { FESTIVAL_START_DATE, FESTIVAL_END_DATE } from "lib/utils/constant";
 import styles from "./Program.module.scss"
 import contentStyles from "./Content.module.scss"
 import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
-import { format } from 'date-fns'
-import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone'
 import Select from 'react-select'
+import { format, eachDayOfInterval, isSameDay } from 'date-fns'
+import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone'
 
 const timeZones = [
   { value: 'GMT', label: 'GMT', timeZone: 'Europe/London' },
@@ -13,37 +14,48 @@ const timeZones = [
   { value: 'EST', label: 'EST', timeZone: 'America/New_York' }
 ]
 
-const isSameDay = (d1, d2) =>{
-  if(!d1 || !d2) return false
-  return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate()
-}
-
 export default function Program({events, participants, show}) {
   if(!show) return null
-  
-  const [tz, setTZ] = useState(timeZones[0]);
 
-  let currentDate;
-  events = events.sort((a,b) => a.startTime > b.startTime)
+  const [tz, setTZ] = useState(timeZones[0]);
+  const [date, setDate] = useState(FESTIVAL_START_DATE)
+
+  useEffect(()=>{
+    const id = format(date, 'yyyy-MM-dd')
+    document.getElementById(`${id}`)?.scrollIntoView({ 
+      block: "start", 
+      inline: "nearest", 
+      behavior: "smooth" 
+    });
+  }, [date])
+
   
-  const program = events.map((ev) => {
+  let currentDate;
+
+  const program = events.sort((a,b) => a.startTime > b.startTime).map((ev, idx) => {
     
     let eventDate;
     if(!isSameDay(currentDate, new Date(ev.startTime))){
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
-
     const fDate = formatToTimeZone(ev.startTime, 'HH:mm', { timeZone: tz.value })
-
     return (
-      <>
-        <div className={styles.event}>
+      
+        <div key={idx} className={styles.event}>
           <div className={styles.symbol}>
-            <img id={`prsymbol-${ev.id}`} src={ev.participant.symbol.url} className={contentStyles.placeholderSymbol}/>
+            <img 
+              id={`prsymbol-${ev.id}`} 
+              src={ev.participant.symbol.url} 
+              className={contentStyles.placeholderSymbol}
+            />
           </div>
           <div className={styles.info}>
-            {eventDate && <h2 className={styles.weekday}>{format(eventDate, 'EEEE MMMM d, yyyy ')}</h2>}
+            {eventDate && 
+              <h2 id={format(eventDate, 'yyyy-MM-dd')} className={styles.weekday}>
+                {format(eventDate, 'EEEE MMMM d, yyyy ')}
+              </h2>
+            }
             <p>
               {ev.startTime && <span>{fDate} ({tz.value}) </span>}
               <h3>{ev.title}</h3>
@@ -57,19 +69,31 @@ export default function Program({events, participants, show}) {
             </p>
           </div>
         </div>
-      </>      
+      
     )
   })
-
 	return (
 		<div className={styles.program}>
-      <div className={styles.timezone}>
-        <Select  
-          value={tz}
-          onChange={setTZ}
-          defaultValue={tz}
-          options={timeZones}
-        />
+      <div className={styles.menu}>
+        <ul>
+          {eachDayOfInterval({start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE}).map( (d, idx) =>
+            <li 
+              key={idx} 
+              className={isSameDay(d, date) ? styles.selected : undefined }
+              onClick={()=>setDate(d)} 
+            >
+              {format(d, 'EEE MM/dd')}
+            </li>
+          )}
+        </ul>
+        <div className={styles.timezone}>
+          <Select  
+            value={tz}
+            onChange={setTZ}
+            defaultValue={tz}
+            options={timeZones}
+          />
+        </div>
       </div>
       <div className={styles.program}>
         {program}
