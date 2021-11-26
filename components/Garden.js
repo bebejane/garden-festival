@@ -49,7 +49,8 @@ export default function Garden({events, setEvent, event, view}) {
 	const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 	const toggleView = (view) => {
-		//window.scrollTo(0,0);
+		window.scrollTo(0,0);
+		console.log('transition to', view)
 		switch (view) {
 			case 'program':
 				toProgram()
