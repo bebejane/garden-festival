@@ -6,13 +6,11 @@ import Link from "next/link";
 
 const Symbol = React.forwardRef((props, ref) => {
 	
-	const { index, url, event, selectedEvent, setLoaded, loaded, setEvent, menu, onLoad } = props;
+	const { index, url, event, selectedEvent, setLoaded, loaded, setEvent,  onLoad } = props;
 	const { id, title, summary, slug, participant} = event;
 
 	const isSelected = () => selectedEvent && selectedEvent.id === id;
 	const handleMouse = ({ type }) => setEvent(type === "mousedown" && !isSelected() ? event : undefined);
-
-	const labelStyle = isSelected() || menu ? { visibility:'hidden' } : { visibility:'hidden' };
 
 	useEffect(() => {
 		if (selectedEvent === undefined) return;
@@ -35,7 +33,7 @@ const Symbol = React.forwardRef((props, ref) => {
 					key={index}
 					src={url} 
 					ref={ref} 
-					onLoad={onLoad} 
+					onLoad={()=>onLoad()} 
 				/>
 			</div>
 		</Link>

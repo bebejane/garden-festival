@@ -19,15 +19,30 @@
   align-items: center;
   width: 100%;
   flex: 1 1 auto;
+  
   .batik{
-    max-height: 100vh; 
+    max-height: 100vh;
+    &.loading{
+      animation: pumpit linear 2s infinite;
+      @keyframes pumpit {
+        from{
+          filter: hue-rotate(0deg)
+        }
+        from{
+          filter: hue-rotate(360deg)
+        }
+      }
+    }  
   }
+  
+  
   .bounds {
     position: absolute;
     top:0;
     left:0;
     border: 4px solid greenyellow;
-  }  
+  }
+  
 }
 .controller {
   display: none;
@@ -79,14 +94,23 @@
   }
 }
 
-.rotate {
-  animation: diggity 3s linear infinite;
-  @keyframes diggity {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+
+
+.loader{
+  position: absolute;
+  top:0;
+  left:0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color:#fff;
+  z-index: 10;
+  div{
+    padding: 40px;
+    background-color: hotpink;
+    color:#fff;
   }
 }
+

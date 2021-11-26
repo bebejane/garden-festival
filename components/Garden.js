@@ -15,7 +15,8 @@ export default function Garden({events, setEvent, event, view}) {
 	const padding = 10;
 
 	const [loaded, setLoaded] = useState(0);
-	const [showMenu, setShowMenu] = useState(false);
+	const [loading, setLoading] = useState(true);
+	
 	
 	const [page, setPage] = useState(1);
 	const [bounds, setBounds] = useState({});
@@ -217,36 +218,36 @@ export default function Garden({events, setEvent, event, view}) {
 	}, [scroll, scrollStep, scrollStepRatio]);
 
 	useEffect(() => {
-		if(loaded !== symbols.length) return 
+		if(loaded !== (symbols.length+1)) return 
 		setBounds(getBounds());
-		toMap(1);	
+		setTimeout(()=>{
+			setLoading(false)
+			toMap(1)
+		}, 1000)
 	}, [loaded]);
 
 	useEffect(() => {
 		setBounds(getBounds());
-		dripIt();
+		toMap(page)
 	}, [innerWidth]);
 
-	
+	const handleImageLoaded = (e) => {
+		setLoaded(loaded+1)
+	}
 	
 	return (
 		<>
 			<div className={styles.container} style={ view === 'garden' ? { minHeight:`${totalPages * 100}vh`} : { }}>
 				<div className={styles.scroller} ref={scrollRef}></div>
 				<div className={styles.diggi}>
-					<img src={"/diggibatik.png"} ref={batikRef} className={cn(styles.batik, styles.diggity)} />
-					{showBounds && (
-						<div
-							className={styles.bounds}
-							style={{ left: bounds.x, top: bounds.y, width: bounds.w, height: bounds.h }}
-						></div>
-					)}
+					<img 
+						src={"https://www.datocms-assets.com/58832/1637937430-diggibatik.png"} 
+						onLoad={handleImageLoaded}
+						ref={batikRef} 
+						className={cn(styles.batik, loading && styles.loading)} 
+					/>
 				</div>
-				<div className={styles.controller}>
-					<button onClick={dripIt}>dripp</button>
-					
-					<button onClick={() => setShowBounds(!showBounds)}>bounds</button>
-				</div>
+				
 			</div>
 			{symbols.map((t, index) => (
 				<Symbol
@@ -255,10 +256,9 @@ export default function Garden({events, setEvent, event, view}) {
 					event={t.event}
 					index={index}
 					ref={t.ref}
-					menu={showMenu}
-					onLoad={()=>setLoaded(loaded+1)}
 					setEvent={setEvent}
 					selectedEvent={event}
+					onLoad={handleImageLoaded}
 				/>
 			))}
 		</>
