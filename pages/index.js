@@ -42,15 +42,15 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
   )
 }
 
-export const getStaticProps = withGlobalProps({ query: GetEvents, model: "event" }, async (data) => {
+export const getStaticProps = withGlobalProps({ queries: [GetEvents, GetAbouts, GetParticipants] }, async (data) => {
   const {
-    props,
+    props :{
+      events,
+      participants,
+      abouts
+    },
     revalidate
   } = data;
-
-  const { abouts } = await apiQuery(GetAbouts);
-  const { participants } = await apiQuery(GetParticipants);
-  const { events } = await apiQuery(GetEvents);
 
   return {
     props:{
