@@ -15,7 +15,7 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
   const [event, setEvent] = useState()
   const [view, setView] = useState()
   
-  events = events.map((ev) => {
+  events = !events ? [] : events.map((ev) => {
     return {
       ...ev,
       participant: participants.filter( p => ev.participant?.id === p.id)[0]
