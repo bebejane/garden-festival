@@ -1,6 +1,7 @@
 import styles from "./Content.module.scss"
 import cn from "classnames";
-import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+
 
 export default function Content({show, children, setShow, setView}) {
 
@@ -8,10 +9,7 @@ export default function Content({show, children, setShow, setView}) {
 		<div className={cn(styles.contentWrap, show && styles.show)}>
       <div className={styles.content}>
 				{children}
-				<div 
-					className={styles.close} 
-					onClick={()=>setView('garden')}
-				>×</div>
+				<Link href={'/'}><div className={styles.close}>×</div></Link>
 			</div>
 			<div className={styles.footer}>
 				Footer

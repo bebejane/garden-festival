@@ -1,10 +1,10 @@
-import styles from "./Tree.module.scss"
+import styles from "./Symbol.module.scss"
 import React, { useState, useEffect } from "react";
 import cn from "classnames"
 import anime from "animejs"
 import Link from "next/link";
 
-const Tree = React.forwardRef((props, ref) => {
+const Symbol = React.forwardRef((props, ref) => {
 	
 	const { index, url, event, selectedEvent, setLoaded, loaded, setEvent, menu } = props;
 	const { id, title, summary, slug, participant} = event;
@@ -29,7 +29,7 @@ const Tree = React.forwardRef((props, ref) => {
 				id={`gasymbol-${id}`}
 				eventId={event.id}
 				participant={participant.id}
-				className={styles.tree}
+				className={styles.symbol}
 				//onMouseDown={handleMouse}
 			>
 				<img 
@@ -43,4 +43,4 @@ const Tree = React.forwardRef((props, ref) => {
 	);
 });
 
-export default Tree;
+export default Symbol;

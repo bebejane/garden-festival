@@ -1,6 +1,6 @@
-import Tree from "./Tree"
+import Symbol from "./Symbol"
 import styles from "./Garden.module.scss"
-import treeStyles from "./Tree.module.scss"
+import symbolStyles from "./Symbol.module.scss"
 import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import anime from "animejs";
@@ -11,7 +11,7 @@ export default function Garden({events, setEvent, event, view}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
-	const treeWidth = 200;
+	const symbolWidth = 200;
 	const padding = 10;
 
 	const [loaded, setLoaded] = useState(0);
@@ -24,16 +24,16 @@ export default function Garden({events, setEvent, event, view}) {
 	const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,10);
 	const { innerWidth } = useWindowSize();
 
-	const [trees, setTrees] = useState(
+	const [symbols, setSymbols] = useState(
 		(events || []).map((ev, i) => {
 			return {
 				event:ev,
 				index: i,
 				ref: React.createRef(),
-				url: ev.participant.symbol.url + '?w=' + treeWidth,
+				url: ev.participant.symbol.url + '?w=' + symbolWidth,
 				state: "map",
 				style: {
-					width: `${treeWidth}px`
+					width: `${symbolWidth}px`
 				},
 			};
 		})
@@ -77,12 +77,12 @@ export default function Garden({events, setEvent, event, view}) {
 
 	const toMap = (page) => {
 		const bounds = getBounds();
-		const targets = document.querySelectorAll(`.${treeStyles.tree}`);
-		const totalTreeWidth = trees.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
+		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
+		const totalsymbolWidth = symbols.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
 
 		let pos = [];
 		const rows = 1;
-		const cols = trees.length / rows;
+		const cols = symbols.length / rows;
 		const colWidth = bounds.w / cols;
 		const colHeight = bounds.h / rows;
 
@@ -101,7 +101,7 @@ export default function Garden({events, setEvent, event, view}) {
 			translateY: () => "-100vh",
 			left: (el, i) => pos[i].left,
 			top: (el, i) => pos[i].top,
-			width: treeWidth
+			width: symbolWidth
 		});
 
 		anime.timeline({
@@ -122,10 +122,10 @@ export default function Garden({events, setEvent, event, view}) {
 		if(!positions) return
 		
 		anime({
-			targets: `.${treeStyles.tree}`,
+			targets: `.${symbolStyles.symbol}`,
 			left: (el, i) => positions[i].left,
 			top: (el, i) => positions[i].top,
-			width: treeWidth,
+			width: symbolWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
 			easing: "easeOutExpo",
@@ -189,7 +189,7 @@ export default function Garden({events, setEvent, event, view}) {
 			targets,
 			left: (el, i) => endTargets[i].left,
 			top: (el, i) => endTargets[i].top,
-			width: (el, i) =>  treeWidth,
+			width: (el, i) =>  symbolWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
 			easing: "easeOutExpo",
@@ -201,7 +201,7 @@ export default function Garden({events, setEvent, event, view}) {
 	useEffect(() => {
 		if (!positions || view !== 'garden') return;
 		const p = Math.ceil(scroll * totalSteps + 0.5);
-		const targets = document.querySelectorAll(`.${treeStyles.tree}`);
+		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		const { innerHeight } = window;
 		if (scrollStep !== page) return toMap(p);
 		anime({
@@ -246,8 +246,8 @@ export default function Garden({events, setEvent, event, view}) {
 					<button onClick={() => setShowBounds(!showBounds)}>bounds</button>
 				</div>
 			</div>
-			{trees.map((t, index) => (
-				<Tree
+			{symbols.map((t, index) => (
+				<Symbol
 					{...t}
 					event={t.event}
 					index={index}
