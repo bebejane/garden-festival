@@ -41,35 +41,34 @@ export default function Program({events, participants, show}) {
     }
     const fDate = formatToTimeZone(ev.startTime, 'HH:mm', { timeZone: tz.value })
     return (
-      
-        <div key={idx} className={styles.event}>
-          <div className={styles.symbol}>
-            <img 
-              id={`prsymbol-${ev.id}`} 
-              src={ev.participant.symbol.url} 
-              className={contentStyles.placeholderSymbol}
-            />
-          </div>
-          <div className={styles.info}>
-            {eventDate && 
-              <h2 id={format(eventDate, 'yyyy-MM-dd')} className={styles.weekday}>
-                {format(eventDate, 'EEEE MMMM d, yyyy ')}
-              </h2>
-            }
-            <p>
-              {ev.startTime && <span>{fDate} ({tz.value}) </span>}
-              <h3>{ev.title}</h3>
-              <br/>
-              {ev.summary}
-            </p>
-            <p>
-              <Link href={`${ev.participant.slug}/${ev.slug}`}>
-                <a>Go to event</a>
-              </Link>
-            </p>
-          </div>
+      <div key={idx} className={styles.event}>
+        <div className={styles.symbol}>
+          <img 
+            id={`prsymbol-${ev.id}`} 
+            eventid={ev.id}
+            src={ev.participant.symbol.url} 
+            className={contentStyles.placeholderSymbol}
+          />
         </div>
-      
+        <div className={styles.info}>
+          {eventDate && 
+            <h2 id={format(eventDate, 'yyyy-MM-dd')} className={styles.weekday}>
+              {format(eventDate, 'EEEE MMMM d, yyyy ')}
+            </h2>
+          }
+          <p>
+            {ev.startTime && <span>{fDate} ({tz.value}) </span>}
+            <h3>{ev.title}</h3>
+            <br/>
+            {ev.summary}
+          </p>
+          <p>
+            <Link href={`${ev.participant.slug}/${ev.slug}`}>
+              <a>Go to event</a>
+            </Link>
+          </p>
+        </div>
+      </div>
     )
   })
 	return (

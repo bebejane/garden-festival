@@ -6,8 +6,6 @@ import React, { useState, useEffect, useRef } from "react";
 import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize } from "rooks";
-import { position } from "dom-helpers";
-import { vi } from "date-fns/locale";
 
 export default function Garden({events, setEvent, event, view}) {
 	
@@ -18,7 +16,6 @@ export default function Garden({events, setEvent, event, view}) {
 	const [loading, setLoading] = useState(true);	
 	const [page, setPage] = useState(1);
 	const [bounds, setBounds] = useState({});
-	const [showBounds, setShowBounds] = useState(false);
 	const [positions, setPositions] = useState();
 	const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,10);
 	const { innerWidth } = useWindowSize();
@@ -26,7 +23,7 @@ export default function Garden({events, setEvent, event, view}) {
 	const [symbols, setSymbols] = useState(
 		(events || []).map((ev, i) => {
 			return {
-				event:ev,
+				event: ev,
 				index: i,
 				ref: React.createRef(),
 				url: ev.participant.symbol.url + '?w=' + symbolWidth,
@@ -38,13 +35,14 @@ export default function Garden({events, setEvent, event, view}) {
 		})
 	);
 
+	const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 	const getBounds = () => {
 		const { clientWidth: w, clientHeight: h, offsetTop: y, offsetLeft: x } = batikRef.current;
 		const pad = 100;
 		return { w: w - pad * 2, h: h - pad * 2, x: x + pad, y: y + pad };
 	};
 
-	const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+	
 
 	const toggleView = (view) => {
 		window.scrollTo(0,0);
@@ -69,7 +67,7 @@ export default function Garden({events, setEvent, event, view}) {
 		}
 	}
 	
-	useEffect(() => !loading && setTimeout(()=>toggleView(view), 200), [loading, view]);
+	useEffect(() => !loading && toggleView(view), [loading, view]);
 
 	const initSymbols = () => {
 		const bounds = getBounds();
@@ -121,21 +119,20 @@ export default function Garden({events, setEvent, event, view}) {
 		setPage(page);
 
 	};
-
 	
 	const toGarden = async () => {
-
-		if(!positions || !positions.length) return
 		
+		if(!positions || !positions.length) return
+		const targets = document.querySelectorAll("[id^='gasymbol-']")
+		targets.forEach(el => el.style.visibility = 'visible')
 		anime({
-			targets: `.${symbolStyles.symbol}`,
+			targets,
 			left: (el, i) => positions[i].left,
 			top: (el, i) => positions[i].top,
 			width: symbolWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
 			easing: "easeOutExpo",
-			loop: false,
 			scale: 1,
 		});
 	};
@@ -146,8 +143,9 @@ export default function Garden({events, setEvent, event, view}) {
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTarget = document.querySelector(`[id^='evsymbol-${event.id}']`)
 		const bounds = endTarget.getBoundingClientRect()
-
-		anime({
+		endTarget.style.visibility = 'hidden'
+		targets.forEach(el => el.style.visibility = 'visible')
+		await anime({
 			targets,
 			left: (el, i) => isSelected(el) ? bounds.left : false,
 			top: (el, i) => isSelected(el) ? bounds.top : false,
@@ -157,13 +155,19 @@ export default function Garden({events, setEvent, event, view}) {
 			delay: (el, i) => isSelected(el) ? 0 : i * 100,
 			duration: 500,
 			easing: "easeOutExpo"
-		});
+		}).finished
+		endTarget.style.visibility = 'visible'
+		targets.forEach(el => el.style.visibility = 'hidden')
 	};
 
 	const toProgram = async () => {
+
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTargets = document.querySelectorAll("[id^='prsymbol-']")
-		anime({
+		
+		endTargets.forEach(el => el.style.visibility = 'hidden')
+		targets.forEach(el => el.style.visibility = 'visible')
+		await anime({
 			targets,
 			left: (el, i) => endTargets[i].getBoundingClientRect().left,
 			top: (el, i) => endTargets[i].getBoundingClientRect().top,
@@ -174,33 +178,43 @@ export default function Garden({events, setEvent, event, view}) {
 			easing: "easeOutExpo",
 			loop: false,
 			scale: 1,
-		});
+		}).finished
+		
+		endTargets.forEach(el => el.style.visibility = 'visible')
+		targets.forEach(el => el.style.visibility = 'hidden')
+
 	};
 
 	const toParticipants = async () => {
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
-		const endTargets = []
+		const endTargets = document.querySelectorAll("[id^='pasymbol-']")
 
-		targets.forEach((el) =>{
-			const t = document.querySelector(`[id='pasymbol-${el.getAttribute('participant')}']`)
-			const b = t.getBoundingClientRect()
-			endTargets.push({
-				left:b.left,
-				top:b.top,
-			})			
-		})
-		
-		anime({
+		const eventToPart = (el) => {
+			const participantId = el.getAttribute('participantid');
+			let element = null;
+			endTargets.forEach((elt)=>{
+				if(participantId === elt.getAttribute('participantid')){
+					element = elt;
+				}	
+			})
+			return element
+		}
+		endTargets.forEach(el => el.style.visibility = 'hidden')
+		targets.forEach(el => el.style.visibility = 'visible')
+		await anime({
 			targets,
-			left: (el, i) => endTargets[i].left,
-			top: (el, i) => endTargets[i].top,
-			width: (el, i) =>  symbolWidth,
+			left: (el, i) => eventToPart(el).getBoundingClientRect().left,
+			top: (el, i) => eventToPart(el).getBoundingClientRect().top,
+			height: (el, i) =>  eventToPart(el).clientHeight,
+			width: (el, i) => eventToPart(el).clientWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
 			easing: "easeOutExpo",
 			loop: false,
 			scale: 1,
-		});
+		}).finished
+		endTargets.forEach(el => el.style.visibility = 'visible')
+		targets.forEach(el => el.style.visibility = 'hidden')
 	};
 	
 	useEffect(() => {
@@ -227,12 +241,12 @@ export default function Garden({events, setEvent, event, view}) {
 		initSymbols();
 		setLoading(false)
 		if(view== 'garden')
-			setTimeout(()=>toMap(1), 300)
+			toMap(1)
 	}, [loaded]);
 
 	useEffect(() => {
-		setBounds(getBounds());
-		toMap(page)
+		//setBounds(getBounds());
+		//toMap(page)
 	}, [innerWidth]);
 
 	useEffect(() => {
@@ -244,10 +258,8 @@ export default function Garden({events, setEvent, event, view}) {
 			else 
 				ref.current.onload = () => { setLoaded(++preLoaded)}
 		})
-
 	},[])
 
-	
 	return (
 		<>
 			<div className={styles.container} style={ view === 'garden' ? { minHeight:`${totalPages * 100}vh`} : { }}>

@@ -16,7 +16,9 @@
     .symbols {
       flex: 0 0 30%;
       //border: 1px solid #000;
-      margin-right: 40px;
+      img{
+        max-width: 300px;
+      }
       
     }
   }

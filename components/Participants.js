@@ -6,15 +6,19 @@ import Link from "next/link"
 
 export default function Participants({participants, show}) {
   if(!show) return null
+  
 	return (
 		<div className={styles.participants}>
       {participants.map((p, idx) =>
         <div key={idx} className={styles.participant}>
-          <div 
-            id={`pasymbol-${p.id}`} 
-            className={cn(styles.symbols, contentStyles.placeholderSymbol)}
-            participant={p.id} 
-          ></div>
+          <div className={styles.symbols}>
+            <img 
+              id={`pasymbol-${p.id}`} 
+              participantid={p.id} 
+              src={p.symbol.url} 
+              className={contentStyles.placeholderSymbol}
+            />
+          </div>
           <div className={styles.participantInfo}>
             <h3>{p.title}</h3>
             <p>{p.summary}</p>

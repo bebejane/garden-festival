@@ -26,7 +26,7 @@ const Symbol = React.forwardRef((props, ref) => {
 			<div
 				id={`gasymbol-${id}`}
 				eventid={event.id}
-				participant={participant.id}
+				participantid={participant.id}
 				className={styles.symbol}
 			>
 				<img 
