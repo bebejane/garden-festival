@@ -1,0 +1,25 @@
+#import "./ImageFragment.graphql"
+
+fragment EventFragment on EventRecord {
+  endTime
+  id
+  releaseTime
+  slug
+  startTime
+  summary
+  title
+  createdAt
+  participant{
+    id
+  }
+  content{
+    blocks{
+      ... on ImageGalleryRecord {
+        _modelApiKey
+        images {
+          ...ImageFragment
+        }
+      }
+    }
+  }
+}

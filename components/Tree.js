@@ -25,20 +25,20 @@ const Tree = React.forwardRef((props, ref) => {
 	
 	return (
 		<Link href={`${event.participant.slug}/${event.slug}`}>
-		<div
-			id={`gasymbol-${id}`}
-			eventId={event.id}
-			participant={participant.id}
-			className={cn(styles.tree)}
-			//onMouseDown={handleMouse}
-		>
-			<img 
-				key={index}
-				src={url} 
-				ref={ref} 
-				onLoad={(e) => setLoaded(loaded + 1)} 
-			/>
-		</div>
+			<div
+				id={`gasymbol-${id}`}
+				eventId={event.id}
+				participant={participant.id}
+				className={styles.tree}
+				//onMouseDown={handleMouse}
+			>
+				<img 
+					key={index}
+					src={url} 
+					ref={ref} 
+					onLoad={(e) => setLoaded(loaded + 1)} 
+				/>
+			</div>
 		</Link>
 	);
 });
