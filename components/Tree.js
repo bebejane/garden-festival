@@ -2,6 +2,7 @@ import styles from "./Tree.module.scss"
 import React, { useState, useEffect } from "react";
 import cn from "classnames"
 import anime from "animejs"
+import Link from "next/link";
 
 const Tree = React.forwardRef((props, ref) => {
 	
@@ -23,12 +24,13 @@ const Tree = React.forwardRef((props, ref) => {
 	}, [event]);
 	
 	return (
+		<Link href={`${event.participant.slug}/${event.slug}`}>
 		<div
 			id={`gasymbol-${id}`}
 			eventId={event.id}
 			participant={participant.id}
 			className={cn(styles.tree)}
-			onMouseDown={handleMouse}
+			//onMouseDown={handleMouse}
 		>
 			<img 
 				key={index}
@@ -36,11 +38,8 @@ const Tree = React.forwardRef((props, ref) => {
 				ref={ref} 
 				onLoad={(e) => setLoaded(loaded + 1)} 
 			/>
-			<div className={styles.label} style={labelStyle} onMouseDown={(e)=> e.stopPropagation()}>
-				<h1><a onClick={()=>setEvent(event)}>{title}</a></h1>
-				{summary}
-			</div>
 		</div>
+		</Link>
 	);
 });
 
