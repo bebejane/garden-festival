@@ -7,6 +7,7 @@ import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize } from "rooks";
 import { position } from "dom-helpers";
+import { vi } from "date-fns/locale";
 
 export default function Garden({events, setEvent, event, view}) {
 	
@@ -225,13 +226,12 @@ export default function Garden({events, setEvent, event, view}) {
 	}, [scroll, scrollStep, scrollStepRatio]);
 
 	useEffect(() => {
-		if(loaded !== (symbols.length+1)) return 
+		if(loaded < (symbols.length+1)) return 
 		setBounds(getBounds());
 		initSymbols();
 		setLoading(false)
 		if(view== 'garden')
 			setTimeout(()=>toMap(1), 300)
-
 	}, [loaded]);
 
 	useEffect(() => {
@@ -243,6 +243,9 @@ export default function Garden({events, setEvent, event, view}) {
 		setLoaded(loaded+1)
 	}
 	
+	useEffect(() => {
+		symbols.map((i)=> i.ref).concat(batikRef).forEach(ref => ref.current.complete && handleImageLoaded())
+	}, [])
 	return (
 		<>
 			<div className={styles.container} style={ view === 'garden' ? { minHeight:`${totalPages * 100}vh`} : { }}>

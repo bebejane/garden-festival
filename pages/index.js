@@ -11,8 +11,8 @@ import Program from "/components/Program";
 import Participants from "/components/Participants";
 import Event from "/components/Event";
 
-export default function Home({events, participants, abouts, defaultEvent, defaultView = 'garden'}) {
-  
+export default function Home({events, participants, abouts, defaultEvent, defaultView}) {
+  console.log(defaultView)
   const [event, setEvent] = useState()
   const [view, setView] = useState()
   
@@ -22,7 +22,7 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
       participant: participants.filter( p => ev.participant?.id === p.id)[0]
     }
   })
-  useEffect(()=> setView(event ? 'event' : 'garden'), [event])
+  //useEffect(()=> setView(event ? 'event' : 'garden'), [event])
   useEffect(()=> setEvent(defaultEvent), [defaultEvent])
   useEffect(()=> setView(defaultView), [defaultView])
   
