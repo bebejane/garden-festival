@@ -33,7 +33,6 @@ const Symbol = React.forwardRef((props, ref) => {
 					key={index}
 					src={url} 
 					ref={ref} 
-					onLoad={()=>onLoad()} 
 				/>
 			</div>
 		</Link>

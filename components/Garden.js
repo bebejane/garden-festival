@@ -14,12 +14,8 @@ export default function Garden({events, setEvent, event, view}) {
 	const batikRef = useRef();
 	const totalPages = 10;
 	const symbolWidth = 200;
-	const padding = 10;
-
 	const [loaded, setLoaded] = useState(0);
-	const [loading, setLoading] = useState(true);
-	
-	
+	const [loading, setLoading] = useState(true);	
 	const [page, setPage] = useState(1);
 	const [bounds, setBounds] = useState({});
 	const [showBounds, setShowBounds] = useState(false);
@@ -239,13 +235,19 @@ export default function Garden({events, setEvent, event, view}) {
 		toMap(page)
 	}, [innerWidth]);
 
-	const handleImageLoaded = (e) => {
-		setLoaded(loaded+1)
-	}
-	
 	useEffect(() => {
-		symbols.map((i)=> i.ref).concat(batikRef).forEach(ref => ref.current.complete && handleImageLoaded())
-	}, [])
+		let preLoaded = 0;
+		const images = symbols.map((i)=> i.ref).concat(batikRef);
+		images.forEach((ref) => {
+			if(ref.current.complete)
+			 	setLoaded(++preLoaded)
+			else 
+				ref.current.onload = () => { setLoaded(++preLoaded)}
+		})
+
+	},[])
+
+	
 	return (
 		<>
 			<div className={styles.container} style={ view === 'garden' ? { minHeight:`${totalPages * 100}vh`} : { }}>
@@ -253,7 +255,6 @@ export default function Garden({events, setEvent, event, view}) {
 				<div className={styles.diggi}>
 					<img 
 						src={"https://www.datocms-assets.com/58832/1637937430-diggibatik.png"} 
-						onLoad={handleImageLoaded}
 						ref={batikRef} 
 						className={cn(styles.batik, loading && styles.loading)} 
 					/>
@@ -269,7 +270,6 @@ export default function Garden({events, setEvent, event, view}) {
 					ref={t.ref}
 					setEvent={setEvent}
 					selectedEvent={event}
-					onLoad={handleImageLoaded}
 				/>
 			))}
 		</>
