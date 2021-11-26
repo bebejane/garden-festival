@@ -12,4 +12,7 @@
       //visibility: hidden;
     }
   }
+  &[hidden=true]{
+    visibility: hidden;
+  }
 }

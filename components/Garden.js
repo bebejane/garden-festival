@@ -49,7 +49,7 @@ export default function Garden({events, setEvent, event, view}) {
 	const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 	const toggleView = (view) => {
-		window.scrollTo(0,0);
+		//window.scrollTo(0,0);
 		switch (view) {
 			case 'program':
 				toProgram()
@@ -68,10 +68,10 @@ export default function Garden({events, setEvent, event, view}) {
 		}
 	}
 	
-	useEffect(() => setTimeout(()=>toggleView(view), 100), [view]);
+	useEffect(() => setTimeout(()=>toggleView(view), 200), [view]);
 
 	const toMap = async (page) => {
-		console.log('map')
+		
 		if(view !== 'garden') return console.log('blocked')
 		
 		const bounds = getBounds();

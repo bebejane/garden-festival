@@ -23,7 +23,7 @@ export default function Program({events, participants, show}) {
   useEffect(()=>{
     const id = format(date, 'yyyy-MM-dd')
     document.getElementById(`${id}`)?.scrollIntoView({ 
-      block: "start", 
+      block: "nearest", 
       inline: "nearest", 
       behavior: "smooth" 
     });

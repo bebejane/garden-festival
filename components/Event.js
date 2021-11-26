@@ -5,6 +5,7 @@ import { format } from "date-fns";
 
 export default function Event({event, show}) {
   if(!show || !event) return null
+  
 	return (
 		<div className={styles.event}>
       <div className={styles.info}>
