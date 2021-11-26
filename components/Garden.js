@@ -255,7 +255,7 @@ export default function Garden({events, setEvent, event, view}) {
 						className={cn(styles.batik, loading && styles.loading)} 
 					/>
 				</div>
-				
+				{loading && <div className={styles.loader}>loading...</div>}
 			</div>
 			{symbols.map((t, index) => (
 				<Symbol
