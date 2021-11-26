@@ -45,10 +45,8 @@ export default function Garden({events, setEvent, event, view}) {
 		return { w: w - pad * 2, h: h - pad * 2, x: x + pad, y: y + pad };
 	};
 
-	const randomInt = (min, max) => {
-		// min and max included
-		return Math.floor(Math.random() * (max - min + 1) + min);
-	};
+	const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
 
 	const dripIt = () => {
 		window.scroll(0, 0);
@@ -143,6 +141,8 @@ export default function Garden({events, setEvent, event, view}) {
 		const endTarget = document.querySelector(`[id^='evsymbol-${event.id}']`)
 		const bounds = endTarget.getBoundingClientRect()
 		
+		//endTarget.style.visibility = 'hidden'
+
 		anime({
 			targets,
 			left: (el, i) => isSelected(el) ? bounds.left : false,

@@ -10,10 +10,10 @@ import Program from "/components/Program";
 import Participants from "/components/Participants";
 import Event from "/components/Event";
 
-export default function Home({events, participants, abouts}) {
+export default function Home({events, participants, abouts, defaultEvent, defaultView = 'garden'}) {
   
-  const [event, setEvent] = useState()
-  const [view, setView] = useState('garden')
+  const [event, setEvent] = useState(defaultEvent)
+  const [view, setView] = useState(defaultView)
   
   events = events.map((ev) => {
     return {
@@ -28,7 +28,7 @@ export default function Home({events, participants, abouts}) {
       <Content show={view !== 'garden'} setView={setView}>
         <Program events={events} show={view === 'program'}/>
         <Participants participants={participants} show={view === 'participants'}/>
-        <Event event={event} show={view === 'event'}/>
+        <Event event={event} show={view === 'event'} placeholder={defaultEvent && false}/>
       </Content>
       <Garden 
         setEvent={setEvent} 

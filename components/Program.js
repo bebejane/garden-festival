@@ -3,11 +3,13 @@ import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
 import { format } from 'date-fns'
+import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone'
 import Select from 'react-select'
 
 const timeZones = [
-  { value: 'CET', label: 'CET' },
-  { value: 'EST', label: 'EST' }
+  { value: 'GMT', label: 'GMT', timeZone: 'Europe/London' },
+  { value: 'CET', label: 'CET', timeZone: 'Europe/London' },
+  { value: 'EST', label: 'EST', timeZone: 'America/New_York' }
 ]
 
 const isSameDay = (d1, d2) =>{
@@ -18,17 +20,21 @@ const isSameDay = (d1, d2) =>{
 export default function Program({events, participants, show}) {
   if(!show) return null
   
-  const [tz, setTZ] = useState('CET');
+  const [tz, setTZ] = useState(timeZones[0]);
 
   let currentDate;
   events = events.sort((a,b) => a.startTime > b.startTime)
   
-  const program = events.map((ev) =>{
+  const program = events.map((ev) => {
+    
     let eventDate;
     if(!isSameDay(currentDate, new Date(ev.startTime))){
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
+
+    const fDate = formatToTimeZone(ev.startTime, 'HH:mm', { timeZone: tz.value })
+
     return (
       <>
         <div className={styles.event}>
@@ -38,7 +44,7 @@ export default function Program({events, participants, show}) {
           <div className={styles.info}>
             {eventDate && <h2 className={styles.weekday}>{format(eventDate, 'EEEE MMMM d, yyyy ')}</h2>}
             <p>
-              {ev.startTime && <span>{format(new Date(ev.startTime), 'HH:mm')} ({tz}) </span>}
+              {ev.startTime && <span>{fDate} ({tz.value}) </span>}
               <h3>{ev.title}</h3>
               <br/>
               {ev.summary}
@@ -58,7 +64,8 @@ export default function Program({events, participants, show}) {
 		<div className={styles.program}>
       <div className={styles.timezone}>
         <Select  
-          value={timeZones[0]}
+          value={tz}
+          onChange={setTZ}
           defaultValue={tz}
           options={timeZones}
         />

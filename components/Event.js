@@ -1,10 +1,9 @@
 import styles from "./Event.module.scss"
+import contentStyles from "./Content.module.scss"
 import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
-import anime from "animejs";
-import Link from "next/link"
 
-export default function Event({event, show}) {
+export default function Event({event, show, placeholder = true}) {
   if(!show || !event) return null
 	return (
 		<div className={styles.event}>
@@ -14,7 +13,11 @@ export default function Event({event, show}) {
         <p>{event.summary}</p>
       </div>
       <div className={styles.symbol}>
-        <img id={`evsymbol-${event.id}`} src={event.participant.symbol.url}/>
+        <img 
+          id={`evsymbol-${event.id}`} 
+          src={event.participant.symbol.url} 
+          className={placeholder && contentStyles.placeholderSymbol}
+        />
       </div>
 		</div>
 	);
