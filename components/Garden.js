@@ -75,12 +75,12 @@ export default function Garden({events, setEvent, event, view}) {
 	
 	useEffect(() => setTimeout(()=>toggleView(view), 100), [view]);
 
-	const toMap = (page) => {
+	const toMap = async (page) => {
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		const totalsymbolWidth = symbols.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
 
-		let pos = [];
+		let positions = [];
 		const rows = 1;
 		const cols = symbols.length / rows;
 		const colWidth = bounds.w / cols;
@@ -91,28 +91,28 @@ export default function Garden({events, setEvent, event, view}) {
 			const row = Math.ceil(((idx + 1) / (rows * cols)) * rows);
 			const col = idx + 1 - (row - 1) * cols;
 			const left = bounds.x + randomInt((col - 1) * colWidth, ((col - 1) * colWidth) + (colWidth - w));
-			const top = bounds.y + randomInt((row - 1) * colHeight, ((row -1) * colHeight) + (colHeight - h)); //((row-1)*colHeight)
-			pos.push({ left, top });
+			const top = bounds.y + randomInt((row - 1) * colHeight, ((row -1) * colHeight) + (colHeight - h)); 
+			positions.push({ left, top });
 		});
 
-		pos = pos.sort((a, b) => Math.random() > 0.5);
+		positions = positions.sort((a, b) => Math.random() > 0.5);
 
 		anime.set(targets, {
-			translateY: () => "-100vh",
-			left: (el, i) => pos[i].left,
-			top: (el, i) => pos[i].top,
+			translateY: () => '-100vh',
+			left: (el, i) => positions[i].left,
+			top: (el, i) => positions[i].top,
 			width: symbolWidth
 		});
 
-		anime.timeline({
+		await anime.timeline({
 			targets,
 			delay: (el, i) => i * 20,
-			easing: "spring(0.4, 100, 10, 0)",
-			loop: false,
-		}).add({ translateY: 0 });
-
-		setShowMenu(false);
-		setPositions(pos);
+			duration:1000,
+			easing: "spring(0.4, 100, 10, 0)"
+		}).add({ 
+			translateY: 0 
+		}).finished
+		setPositions(positions);
 		setPage(page);
 	};
 
@@ -217,12 +217,14 @@ export default function Garden({events, setEvent, event, view}) {
 	}, [scroll, scrollStep, scrollStepRatio]);
 
 	useEffect(() => {
+		if(loaded !== symbols.length) return 
 		setBounds(getBounds());
-		toMap(1);
+		toMap(1);	
 	}, [loaded]);
+
 	useEffect(() => {
-		dripIt();
 		setBounds(getBounds());
+		dripIt();
 	}, [innerWidth]);
 
 	
@@ -254,7 +256,7 @@ export default function Garden({events, setEvent, event, view}) {
 					index={index}
 					ref={t.ref}
 					menu={showMenu}
-					setLoaded={setLoaded}
+					onLoad={()=>setLoaded(loaded+1)}
 					setEvent={setEvent}
 					selectedEvent={event}
 				/>

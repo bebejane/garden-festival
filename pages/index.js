@@ -1,3 +1,4 @@
+import styles from '/styles/Home.module.scss'
 import { useEffect, useState } from "react";
 import { withGlobalProps } from "lib/utils";
 import { GetEvents, GetEvent, GetParticipants, GetAbouts } from "/graphql";
@@ -26,9 +27,9 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
   useEffect(()=> setView(defaultView), [defaultView])
   
 	return (
-    <>
+    <div className={styles.container}>
       <Menu view={view} setView={setView}/>      
-      <Content show={view !== 'garden'} setView={setView}>
+      <Content show={view !== 'garden'} setView={setView} popup={view === 'event'}>
         <Program events={events} show={view === 'program'}/>
         <Participants participants={participants} show={view === 'participants'}/>
         <Event event={event} show={view === 'event'} placeholder={defaultEvent && false}/>
@@ -39,7 +40,7 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
         events={events} 
         view={view}
       />
-    </>
+    </div>
   )
 }
 

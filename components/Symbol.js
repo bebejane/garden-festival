@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Symbol = React.forwardRef((props, ref) => {
 	
-	const { index, url, event, selectedEvent, setLoaded, loaded, setEvent, menu } = props;
+	const { index, url, event, selectedEvent, setLoaded, loaded, setEvent, menu, onLoad } = props;
 	const { id, title, summary, slug, participant} = event;
 
 	const isSelected = () => selectedEvent && selectedEvent.id === id;
@@ -35,7 +35,7 @@ const Symbol = React.forwardRef((props, ref) => {
 					key={index}
 					src={url} 
 					ref={ref} 
-					onLoad={(e) => setLoaded(loaded + 1)} 
+					onLoad={onLoad} 
 				/>
 			</div>
 		</Link>
