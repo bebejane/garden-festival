@@ -75,7 +75,7 @@ export default function Garden({events, setEvent, event, view}) {
 		console.log('transition to', view, positions)
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		anime.set(targets, {visibility:'visible'})
-		
+
 		switch (view) {
 			case 'program':
 				toProgram()
@@ -97,7 +97,7 @@ export default function Garden({events, setEvent, event, view}) {
 		}
 	}
 	
-	const initSymbols = () => {
+	const initSymbols = async () => {
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		const totalsymbolWidth = symbols.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
@@ -126,8 +126,9 @@ export default function Garden({events, setEvent, event, view}) {
 			visibility:'hidden'
 		});
 		setPositions(positions);
+		await toMap(1)
 		setReady(true)
-		toMap(1)
+		
 		
 	}
 
