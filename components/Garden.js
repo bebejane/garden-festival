@@ -7,12 +7,39 @@ import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize } from "rooks";
 
+const sortNodeList = (list, sorter) => {
+	return Array.prototype.slice.call(list, 0).sort(sorter);
+}
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+const transitionTo = async (targets, endTargets, opt) => {
+		
+	targets.forEach(el => el.style.visibility = 'visible')
+	endTargets.forEach(el => el.style.visibility = 'hidden')
+
+	await anime({
+		targets,
+		left: (el, i) => eventToPart(el).getBoundingClientRect().left,
+		top: (el, i) => eventToPart(el).getBoundingClientRect().top,
+		height: (el, i) =>  eventToPart(el).clientHeight,
+		width: (el, i) => eventToPart(el).clientWidth,
+		delay: (el, i) => i * 20,
+		duration: 500,
+		easing: "easeOutExpo",
+		scale: 1,
+	}).finished
+	
+	endTargets.forEach(el => el.style.visibility = 'visible')
+	targets.forEach(el => el.style.visibility = 'hidden')
+}
+
 export default function Garden({events, setEvent, event, view}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
 	const symbolWidth = 200;
 	const [loaded, setLoaded] = useState(0);
+	const [ready, setReady] = useState(false);
 	const [loading, setLoading] = useState(true);	
 	const [page, setPage] = useState(1);
 	const [bounds, setBounds] = useState({});
@@ -35,26 +62,29 @@ export default function Garden({events, setEvent, event, view}) {
 		})
 	);
 
-	const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+	
 	const getBounds = () => {
 		const { clientWidth: w, clientHeight: h, offsetTop: y, offsetLeft: x } = batikRef.current;
 		const pad = 100;
 		return { w: w - pad * 2, h: h - pad * 2, x: x + pad, y: y + pad };
 	};
 
-	
-
 	const toggleView = (view) => {
+		if(!ready) return
 		window.scrollTo(0,0);
-		console.log('transition to', view)
+		console.log('transition to', view, positions)
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		anime.set(targets, {visibility:'visible'})
+		
 		switch (view) {
 			case 'program':
 				toProgram()
 				break;
 			case 'garden':
 				toGarden()
+				break;
+			case 'map':
+				toMap()
 				break;
 			case 'participants':
 				toParticipants()
@@ -96,6 +126,9 @@ export default function Garden({events, setEvent, event, view}) {
 			visibility:'hidden'
 		});
 		setPositions(positions);
+		setReady(true)
+		toMap(1)
+		
 	}
 
 	const toMap = async (page) => {
@@ -117,31 +150,7 @@ export default function Garden({events, setEvent, event, view}) {
 		setPage(page);
 
 	};
-
-	const sortNodeList = (list, sorter) => {
-		return Array.prototype.slice.call(list, 0).sort(sorter);
-	}
-
-	const transitionTo = async (targets, endTargets, opt) => {
-		
-		targets.forEach(el => el.style.visibility = 'visible')
-		endTargets.forEach(el => el.style.visibility = 'hidden')
-
-		await anime({
-			targets,
-			left: (el, i) => eventToPart(el).getBoundingClientRect().left,
-			top: (el, i) => eventToPart(el).getBoundingClientRect().top,
-			height: (el, i) =>  eventToPart(el).clientHeight,
-			width: (el, i) => eventToPart(el).clientWidth,
-			delay: (el, i) => i * 20,
-			duration: 500,
-			easing: "easeOutExpo",
-			scale: 1,
-		}).finished
-		
-		endTargets.forEach(el => el.style.visibility = 'visible')
-		targets.forEach(el => el.style.visibility = 'hidden')
-	}
+	
 	const toGarden = async () => {
 		
 		if(!positions || !positions.length) return
@@ -267,11 +276,11 @@ export default function Garden({events, setEvent, event, view}) {
 	}, [scroll, scrollStep, scrollStepRatio]);
 
 	useEffect(() => {
-		if(loaded < (symbols.length+1)) return 
+		const images = symbols.map((i)=> i.ref).concat(batikRef);
+		if(loaded < images.length) return 
 		setBounds(getBounds());
 		initSymbols();
 		setLoading(false)
-		if(view === 'garden') toMap(1)
 	}, [loaded]);
 
 	useEffect(() => {
@@ -289,6 +298,7 @@ export default function Garden({events, setEvent, event, view}) {
 				ref.current.onload = () => { setLoaded(++preLoaded)}
 		})
 	},[])
+
 
 	useEffect(() => !loading && toggleView(view), [loading, view]);
 

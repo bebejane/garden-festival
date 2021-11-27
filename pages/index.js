@@ -51,7 +51,7 @@ export const getStaticProps = withGlobalProps({ queries: [GetEvents, GetAbouts, 
     props:{
       abouts,
       participants,
-      events
+      events,
     },
     revalidate,
   };
