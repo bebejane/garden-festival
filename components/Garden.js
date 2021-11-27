@@ -102,11 +102,12 @@ export default function Garden({events, setEvent, event, view}) {
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		const totalsymbolWidth = symbols.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
 
-		let positions = [];
 		const rows = 1;
 		const cols = symbols.length / rows;
 		const colWidth = bounds.w / cols;
 		const colHeight = bounds.h / rows;
+
+		let positions = [];
 
 		targets.forEach((el, idx) => {
 			const { clientHeight: h, clientWidth: w } = el;
@@ -128,11 +129,9 @@ export default function Garden({events, setEvent, event, view}) {
 		setPositions(positions);
 		await toMap(1)
 		setReady(true)
-		
-		
 	}
 
-	const toMap = async (page) => {
+	const toMap = async (page = 1) => {
 		
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		anime.set(targets, {
@@ -149,7 +148,6 @@ export default function Garden({events, setEvent, event, view}) {
 			translateY: 0,
 		}).finished	
 		setPage(page);
-
 	};
 	
 	const toGarden = async () => {
