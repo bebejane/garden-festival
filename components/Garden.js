@@ -6,10 +6,8 @@ import React, { useState, useEffect, useRef } from "react";
 import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
-import { vi } from "date-fns/locale";
 
-
-export default function Garden({events, setEvent, event, view}) {
+export default function Garden({events, setEvent, event, view, defaultView}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
@@ -24,7 +22,6 @@ export default function Garden({events, setEvent, event, view}) {
 	const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,10);
 	const { innerWidth } = useWindowSize();
   
-
 	const [symbols, setSymbols] = useState(
 		(events || []).map((ev, i) => {
 			return {
@@ -39,7 +36,6 @@ export default function Garden({events, setEvent, event, view}) {
 			};
 		})
 	);
-
 	
 	const getBounds = () => {
 		const { clientWidth: w, clientHeight: h, offsetTop: y, offsetLeft: x } = batikRef.current;
@@ -51,8 +47,9 @@ export default function Garden({events, setEvent, event, view}) {
 		if(!ready) return
 		window.scrollTo(0,0);
 		console.log('transition to', view, currentView, positions)
-
+		
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
+		//if(defaultView === view && !currentView ) return setCurrentView(view)
 		anime.set(targets, {opacity:1})
 
 		switch (view) {
@@ -109,8 +106,7 @@ export default function Garden({events, setEvent, event, view}) {
 		});
 		
 		setPositions(positions);
-		if(view === 'garden') 
-			await toMap(1)
+		if(view === 'garden') await toMap(1)
 		setReady(true)
 		toggleView(view)
 		console.log('done init garden', view)

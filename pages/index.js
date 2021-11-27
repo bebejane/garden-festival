@@ -30,6 +30,7 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
         event={event} 
         events={events} 
         view={view}
+        defaultView={defaultView}
       />
     </div>
   )

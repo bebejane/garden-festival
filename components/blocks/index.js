@@ -12,7 +12,6 @@ export default function StructuredContent({content}) {
     <StructuredText 
       data={content} 
       renderBlock={({ record }) => {
-        console.log(record.__typename)
         switch (record.__typename) {
           case 'ImageRecord':
             return <Image data={record.image.responsiveImage} />;
@@ -36,12 +35,6 @@ export default function StructuredContent({content}) {
       }}
       renderLinkToRecord={({ record, children, transformedMeta }) => {
         switch (record.__typename) {
-          case 'TeamMemberRecord':
-            return (
-              <a {...transformedMeta} href={`/team/${record.slug}`}>
-                {children}
-              </a>
-            );
           default:
             return null;
         }
@@ -49,10 +42,3 @@ export default function StructuredContent({content}) {
     />
 	);
 }
-
-export {default as Annotation} from './Annotation'
-export {default as Sound } from './Sound'
-export {default as ExternalLink } from './ExternalLink'
-export {default as Image } from './Image'
-export {default as ImageGallery} from './ImageGallery'
-export {default as Video } from './Video'
