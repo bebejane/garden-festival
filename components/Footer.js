@@ -8,7 +8,7 @@ export default function Footer({abouts}) {
 	return (
 		<div className={styles.footer}>
 			<ul>
-				{abouts.map((a) =>
+				{abouts && abouts.map((a) =>
 					<li>{a.title}</li>
 				)}
 			</ul>
