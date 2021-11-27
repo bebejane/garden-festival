@@ -1,6 +1,20 @@
 .imageGallery{
-  display: block;
+  display: flex;
+  justify-content: center;
   max-width: 100%;
   width:100%;
-
+  .thumbWrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:1px solid rgb(208, 208, 208);
+    padding:10px;
+    max-width: 70px;
+    max-height: 70px;
+    cursor: pointer;
+    img{
+      width:auto;
+      height: 50px;
+    }
+  }
 }

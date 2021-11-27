@@ -117,7 +117,31 @@ export default function Garden({events, setEvent, event, view}) {
 		setPage(page);
 
 	};
-	
+
+	const sortNodeList = (list, sorter) => {
+		return Array.prototype.slice.call(list, 0).sort(sorter);
+	}
+
+	const transitionTo = async (targets, endTargets, opt) => {
+		
+		targets.forEach(el => el.style.visibility = 'visible')
+		endTargets.forEach(el => el.style.visibility = 'hidden')
+
+		await anime({
+			targets,
+			left: (el, i) => eventToPart(el).getBoundingClientRect().left,
+			top: (el, i) => eventToPart(el).getBoundingClientRect().top,
+			height: (el, i) =>  eventToPart(el).clientHeight,
+			width: (el, i) => eventToPart(el).clientWidth,
+			delay: (el, i) => i * 20,
+			duration: 500,
+			easing: "easeOutExpo",
+			scale: 1,
+		}).finished
+		
+		endTargets.forEach(el => el.style.visibility = 'visible')
+		targets.forEach(el => el.style.visibility = 'hidden')
+	}
 	const toGarden = async () => {
 		
 		if(!positions || !positions.length) return
@@ -166,15 +190,11 @@ export default function Garden({events, setEvent, event, view}) {
 		const eventToPart = (el) => {
 			const participantId = el.getAttribute('participantid');
 			const eventId = el.getAttribute('eventid');
-			let element = null;
-			endTargets.forEach((elt)=>{
-				if(participantId === elt.getAttribute('participantid') && eventId === elt.getAttribute('eventid')){
-					element = elt;
-				}	
-			})
-			return element
+			for (let i = 0; i < endTargets.length; i++) {
+				if(participantId === endTargets[i].getAttribute('participantid') && eventId === endTargets[i].getAttribute('eventid'))
+					return endTargets[i];
+			}
 		}
-
 		endTargets.forEach(el => el.style.visibility = 'hidden')
 		targets.forEach(el => el.style.visibility = 'visible')
 

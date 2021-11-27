@@ -13,9 +13,15 @@ export default function ImageGallery({images}) {
 			<Carousel
 				showThumbs={true}
 				showStatus={false}
+				dynamicHeight={false}
+				renderThumbs={(children) => images.map((image)=>
+					<div className={styles.thumbWrap}>
+						<img src={`${image.url}?h=50`} />
+					</div>
+				)}
 			>
 				{images.map((image)=>
-					<Image  data={image.responsiveImage}/>
+					<Image data={image.responsiveImage}/>
 				)}
 			</Carousel>
  		</div>

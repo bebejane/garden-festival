@@ -15,3 +15,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.thumb{
+  border:0px !important;
+}
