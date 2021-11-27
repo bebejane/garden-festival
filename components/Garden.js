@@ -5,33 +5,8 @@ import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
-import { useWindowSize } from "rooks";
+import { useWindowSize, useDebounce  } from "rooks";
 
-const sortNodeList = (list, sorter) => {
-	return Array.prototype.slice.call(list, 0).sort(sorter);
-}
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-
-const transitionTo = async (targets, endTargets, opt) => {
-		
-	targets.forEach(el => el.style.visibility = 'visible')
-	endTargets.forEach(el => el.style.visibility = 'hidden')
-
-	await anime({
-		targets,
-		left: (el, i) => eventToPart(el).getBoundingClientRect().left,
-		top: (el, i) => eventToPart(el).getBoundingClientRect().top,
-		height: (el, i) =>  eventToPart(el).clientHeight,
-		width: (el, i) => eventToPart(el).clientWidth,
-		delay: (el, i) => i * 20,
-		duration: 500,
-		easing: "easeOutExpo",
-		scale: 1,
-	}).finished
-	
-	endTargets.forEach(el => el.style.visibility = 'visible')
-	targets.forEach(el => el.style.visibility = 'hidden')
-}
 
 export default function Garden({events, setEvent, event, view}) {
 	
@@ -46,6 +21,7 @@ export default function Garden({events, setEvent, event, view}) {
 	const [positions, setPositions] = useState();
 	const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,10);
 	const { innerWidth } = useWindowSize();
+  
 
 	const [symbols, setSymbols] = useState(
 		(events || []).map((ev, i) => {
@@ -126,10 +102,14 @@ export default function Garden({events, setEvent, event, view}) {
 			width: symbolWidth,
 			visibility:'hidden'
 		});
+		
 		setPositions(positions);
 		await toMap(1)
 		setReady(true)
+		console.log('done init garden')
 	}
+	const debounceResize = useDebounce(initSymbols, 100);
+	useEffect(() => debounceResize(), [innerWidth]);
 
 	const toMap = async (page = 1) => {
 		
@@ -256,6 +236,8 @@ export default function Garden({events, setEvent, event, view}) {
 		targets.forEach(el => el.style.visibility = 'hidden')
 	};
 	
+	
+
 	useEffect(() => {
 		if (!positions || view !== 'garden') return;
 		const p = Math.ceil(scroll * totalSteps + 0.5);
@@ -282,10 +264,7 @@ export default function Garden({events, setEvent, event, view}) {
 		setLoading(false)
 	}, [loaded]);
 
-	useEffect(() => {
-		//setBounds(getBounds());
-		//toMap(page)
-	}, [innerWidth]);
+	
 
 	useEffect(() => {
 		let preLoaded = 0;
@@ -327,4 +306,30 @@ export default function Garden({events, setEvent, event, view}) {
 			))}
 		</>
 	);
+}
+
+const sortNodeList = (list, sorter) => {
+	return Array.prototype.slice.call(list, 0).sort(sorter);
+}
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+const transitionTo = async (targets, endTargets, opt) => {
+		
+	targets.forEach(el => el.style.visibility = 'visible')
+	endTargets.forEach(el => el.style.visibility = 'hidden')
+
+	await anime({
+		targets,
+		left: (el, i) => eventToPart(el).getBoundingClientRect().left,
+		top: (el, i) => eventToPart(el).getBoundingClientRect().top,
+		height: (el, i) =>  eventToPart(el).clientHeight,
+		width: (el, i) => eventToPart(el).clientWidth,
+		delay: (el, i) => i * 20,
+		duration: 500,
+		easing: "easeOutExpo",
+		scale: 1,
+	}).finished
+	
+	endTargets.forEach(el => el.style.visibility = 'visible')
+	targets.forEach(el => el.style.visibility = 'hidden')
 }

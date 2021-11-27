@@ -23,7 +23,7 @@ export default function StructuredContent({content}) {
           case 'SoundRecord':
             return <Sound {...record}/>;
           case 'VideoRecord':
-            return <Video {...record}/>;
+            return <Video {...record.url}/>;
           default:
             return null;
         }
