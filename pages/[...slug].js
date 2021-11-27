@@ -26,11 +26,10 @@ export const getStaticProps = withGlobalProps(async (data) => {
     ...data.props,
     participant,
     event : event || null,
-    defaultView : event ? 'event' : 'participants'
+    defaultView : event ? 'event' : 'participants',
+    defaultEvent : event || null
   }
-  if(event) 
-    props.defaultEvent = {...event, participant};
-
+  
   return {
     props,
     revalidate
