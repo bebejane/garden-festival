@@ -10,7 +10,6 @@ export default function ImageGallery({images}) {
 	
 	return (
 		<div className={styles.imageGallery}>
-			
 			<Carousel
 				showThumbs={true}
 				showStatus={false}
@@ -19,7 +18,6 @@ export default function ImageGallery({images}) {
 					<Image  data={image.responsiveImage}/>
 				)}
 			</Carousel>
-			
  		</div>
 	);
 }

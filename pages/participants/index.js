@@ -4,7 +4,7 @@ import Home from '../index';
 
 export default Home;
 
-export const getStaticProps = withGlobalProps({ queries: [GetEvents, GetAbouts, GetParticipants, GetAbouts] }, async (data) => {
+export const getStaticProps = withGlobalProps({ queries: [GetEvents, GetAbouts, GetParticipants] }, async (data) => {
   const {
     props :{
       events,
