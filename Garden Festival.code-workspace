@@ -4,5 +4,20 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.exclude": {
+			"node_modules": true,
+			".next": true,
+			"docs": true,
+			"jsconfig.json": true,
+			"package-lock.json": true,
+			"package.json": true,
+			"README.md": true,
+			"next.config.js": true,
+			".gitignore": true,
+			".env.local": true,
+			"Garden Festival.code-workspace": true
+		},
+		"workspace.isHidden": true
+	}
 }

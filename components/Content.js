@@ -3,7 +3,7 @@ import cn from "classnames";
 import Link from "next/link";
 import Footer from "./Footer";
 
-export default function Content({show, children, setShow, setView, popup = false}) {
+export default function Content({show, children, setShow, setView, popup = false, abouts}) {
 
 	return (
 		<>
@@ -12,7 +12,7 @@ export default function Content({show, children, setShow, setView, popup = false
 					{children}
 					<Link href={'/'}><div className={styles.close}>×</div></Link>
 				</div>
-				<Footer/>	
+				<Footer abouts={abouts}/>	
 			</div>
 			
 		</>

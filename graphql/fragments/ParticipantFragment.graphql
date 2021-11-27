@@ -1,0 +1,12 @@
+#import "./ImageFragment.graphql"
+
+fragment ParticipantFragment on ParticipantRecord {
+  id
+  slug
+  title
+  summary
+  externalLink
+  symbol {
+    ...ImageFragment
+  }
+}

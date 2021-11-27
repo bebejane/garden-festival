@@ -7,7 +7,11 @@ import Link from "next/link"
 export default function Footer({abouts}) {
 	return (
 		<div className={styles.footer}>
-			Footer
+			<ul>
+				{abouts.map((a) =>
+					<li>{a.title}</li>
+				)}
+			</ul>
 		</div>
 	);
 }

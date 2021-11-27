@@ -1,4 +1,5 @@
 #import "./ImageFragment.graphql"
+#import "./ParticipantFragment.graphql"
 
 fragment EventFragment on EventRecord {
   endTime
@@ -10,14 +11,43 @@ fragment EventFragment on EventRecord {
   title
   createdAt
   participant{
-    id
+    ...ParticipantFragment
   }
   content{
+    value
     blocks{
+      __typename
       ... on ImageGalleryRecord {
-        _modelApiKey
+        id
         images {
           ...ImageFragment
+        }
+      }
+      ... on ImageRecord {
+        id
+        image {
+          ...ImageFragment
+        }
+      }
+      ... on ExternalLinkRecord {
+        id
+        linkText
+        url
+      }
+      ... on SoundRecord {
+        id
+        soundcloudUrl
+      }
+      ... on VideoRecord {
+        id
+        url {
+          height
+          provider
+          providerUid
+          thumbnailUrl
+          title
+          url
+          width
         }
       }
     }

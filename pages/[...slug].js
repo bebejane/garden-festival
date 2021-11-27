@@ -1,17 +1,18 @@
 import { withGlobalProps } from "lib/utils";
-import { GetEvents, GetEvent, GetEventBySlug, GetParticipants, GetParticipantBySlug } from "/graphql";
+import { GetEvents, GetEvent, GetAbouts, GetEventBySlug, GetParticipants, GetParticipantBySlug } from "/graphql";
 import { apiQuery } from "lib/api";
 
 import Home from "./index"
 
 export default Home;
 
-export const getStaticProps = withGlobalProps({ queries: [GetParticipants, GetEvents] }, async (data) => {
+export const getStaticProps = withGlobalProps({ queries: [GetParticipants, GetEvents, GetAbouts] }, async (data) => {
   
   const {
     props:{
       participants, 
-      events
+      events,
+      abouts
     },
     context : {
       params :{
@@ -30,6 +31,7 @@ export const getStaticProps = withGlobalProps({ queries: [GetParticipants, GetEv
     participant,
     events,
     participants,
+    abouts,
     defaultView : event ? 'event' : 'participants'
   }
   if(event) 

@@ -31,10 +31,12 @@
     "react-dom": "17.0.2",
     "react-intersection-observer": "^8.32.2",
     "react-markdown": "^7.1.0",
+    "react-responsive-carousel": "^3.2.22",
     "react-select": "^5.2.1",
     "remark-gfm": "^3.0.1",
     "rooks": "^5.8.0",
-    "sass": "^1.43.5"
+    "sass": "^1.43.5",
+    "swiper": "^7.3.1"
   },
   "devDependencies": {
     "eslint": "7.32.0",

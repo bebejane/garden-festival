@@ -1,4 +1,5 @@
 #import "./fragments/EventFragment.graphql"
+
 query GetEvent ($id: ItemId ){
   event(filter : {id: { eq:$id }}) {
     ...EventFragment

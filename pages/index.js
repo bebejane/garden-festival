@@ -16,20 +16,13 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
   const [event, setEvent] = useState()
   const [view, setView] = useState()
   
-  events = !events ? [] : events.map((ev) => {
-    return {
-      ...ev,
-      participant: participants.filter( p => ev.participant?.id === p.id)[0]
-    }
-  })
-  
   useEffect(()=> setEvent(defaultEvent), [defaultEvent])
   useEffect(()=> setView(defaultView), [defaultView])
   
 	return (
     <div className={styles.container}>
       <Menu view={view} setView={setView}/>      
-      <Content show={view !== 'garden'} setView={setView} popup={view === 'event'}>
+      <Content show={view !== 'garden'} setView={setView} popup={view === 'event'} abouts={abouts}>
         <Program events={events} show={view === 'program'}/>
         <Participants participants={participants} show={view === 'participants'}/>
         <Event event={event} show={view === 'event'} placeholder={defaultEvent && false}/>
