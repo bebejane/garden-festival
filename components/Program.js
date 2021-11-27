@@ -30,11 +30,8 @@ export default function Program({events, participants, show}) {
   }, [date])
 
   
-  let currentDate;
-
-  const program = events.sort((a,b) => a.startTime > b.startTime).map((ev, idx) => {
-    
-    let eventDate;
+  let currentDate, eventDate;
+  const program = events.sort((a,b) => a.startTime > b.startTime).map((ev, idx) => {    
     if(!isSameDay(currentDate, new Date(ev.startTime))){
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
@@ -43,12 +40,17 @@ export default function Program({events, participants, show}) {
     return (
       <div key={idx} className={styles.event}>
         <div className={styles.symbol}>
-          <img 
-            id={`prsymbol-${ev.id}`} 
-            eventid={ev.id}
-            src={ev.participant.symbol.url} 
-            className={contentStyles.placeholderSymbol}
-          />
+          <Link href={`${ev.participant.slug}/${ev.slug}`}>
+            <a>
+            <img 
+              id={`prsymbol-${ev.id}`}
+              eventid={ev.id}
+              participantid={ev.participant.id}
+              src={ev.participant.symbol.url} 
+              className={contentStyles.placeholderSymbol}
+            />
+            </a>
+          </Link>
         </div>
         <div className={styles.info}>
           {eventDate && 

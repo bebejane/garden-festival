@@ -67,8 +67,6 @@ export default function Garden({events, setEvent, event, view}) {
 		}
 	}
 	
-	useEffect(() => !loading && toggleView(view), [loading, view]);
-
 	const initSymbols = () => {
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
@@ -165,14 +163,27 @@ export default function Garden({events, setEvent, event, view}) {
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTargets = document.querySelectorAll("[id^='prsymbol-']")
 		
+		const eventToPart = (el) => {
+			const participantId = el.getAttribute('participantid');
+			const eventId = el.getAttribute('eventid');
+			let element = null;
+			endTargets.forEach((elt)=>{
+				if(participantId === elt.getAttribute('participantid') && eventId === elt.getAttribute('eventid')){
+					element = elt;
+				}	
+			})
+			return element
+		}
+
 		endTargets.forEach(el => el.style.visibility = 'hidden')
 		targets.forEach(el => el.style.visibility = 'visible')
+
 		await anime({
 			targets,
-			left: (el, i) => endTargets[i].getBoundingClientRect().left,
-			top: (el, i) => endTargets[i].getBoundingClientRect().top,
-			height: (el, i) =>  endTargets[i].clientHeight,
-			width: (el, i) => endTargets[i].clientWidth,
+			left: (el, i) => eventToPart(el).getBoundingClientRect().left,
+			top: (el, i) => eventToPart(el).getBoundingClientRect().top,
+			height: (el, i) =>  eventToPart(el).clientHeight,
+			width: (el, i) => eventToPart(el).clientWidth,
 			delay: (el, i) => i * 20,
 			duration: 500,
 			easing: "easeOutExpo",
@@ -240,8 +251,7 @@ export default function Garden({events, setEvent, event, view}) {
 		setBounds(getBounds());
 		initSymbols();
 		setLoading(false)
-		if(view== 'garden')
-			toMap(1)
+		if(view === 'garden') toMap(1)
 	}, [loaded]);
 
 	useEffect(() => {
@@ -259,6 +269,8 @@ export default function Garden({events, setEvent, event, view}) {
 				ref.current.onload = () => { setLoaded(++preLoaded)}
 		})
 	},[])
+
+	useEffect(() => !loading && toggleView(view), [loading, view]);
 
 	return (
 		<>
