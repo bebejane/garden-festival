@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
+import { vi } from "date-fns/locale";
 
 
 export default function Garden({events, setEvent, event, view}) {
@@ -17,6 +18,7 @@ export default function Garden({events, setEvent, event, view}) {
 	const [ready, setReady] = useState(false);
 	const [loading, setLoading] = useState(true);	
 	const [page, setPage] = useState(1);
+	const [currentView, setCurrentView] = useState();
 	const [bounds, setBounds] = useState({});
 	const [positions, setPositions] = useState();
 	const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,10);
@@ -45,12 +47,13 @@ export default function Garden({events, setEvent, event, view}) {
 		return { w: w - pad * 2, h: h - pad * 2, x: x + pad, y: y + pad };
 	};
 
-	const toggleView = (view) => {
+	const toggleView = (view, force) => {
 		if(!ready) return
 		window.scrollTo(0,0);
-		console.log('transition to', view, positions)
+		console.log('transition to', view, currentView, positions)
+
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
-		anime.set(targets, {visibility:'visible'})
+		anime.set(targets, {opacity:1})
 
 		switch (view) {
 			case 'program':
@@ -71,9 +74,11 @@ export default function Garden({events, setEvent, event, view}) {
 			default:
 				break;
 		}
+		setCurrentView(view)
 	}
 	
 	const initSymbols = async () => {
+		
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		const totalsymbolWidth = symbols.reduce((acc, t) => t.ref.current.clientWidth + acc, 0);
@@ -95,28 +100,30 @@ export default function Garden({events, setEvent, event, view}) {
 		});
 
 		positions = positions.sort((a, b) => Math.random() > 0.5);
-
+		
 		anime.set(targets, {
+			opacity:0,
 			left: (el, i) => positions[i].left,
 			top: (el, i) => positions[i].top,
 			width: symbolWidth,
-			visibility:'hidden'
 		});
 		
 		setPositions(positions);
-		await toMap(1)
+		if(view === 'garden') 
+			await toMap(1)
 		setReady(true)
-		console.log('done init garden')
+		toggleView(view)
+		console.log('done init garden', view)
 	}
-	const debounceResize = useDebounce(initSymbols, 100);
-	useEffect(() => debounceResize(), [innerWidth]);
+	//const debounceResize = useDebounce(initSymbols, 100);
+	//useEffect(() => debounceResize(), [innerWidth]);
 
 	const toMap = async (page = 1) => {
 		
 		const targets = document.querySelectorAll(`.${symbolStyles.symbol}`);
 		anime.set(targets, {
 			translateY:'-100vh',
-			visibility:'visible'
+			opacity:1,
 		})
 		await anime.timeline({
 			targets,
@@ -134,7 +141,7 @@ export default function Garden({events, setEvent, event, view}) {
 		
 		if(!positions || !positions.length) return
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
-		targets.forEach(el => el.style.visibility = 'visible')
+		targets.forEach(el => el.style.opacity = 1)
 		anime({
 			targets,
 			left: (el, i) => positions[i].left,
@@ -153,8 +160,8 @@ export default function Garden({events, setEvent, event, view}) {
 		const targets = document.querySelectorAll("[id^='gasymbol-']")
 		const endTarget = document.querySelector(`[id^='evsymbol-${event.id}']`)
 		const bounds = endTarget.getBoundingClientRect()
-		endTarget.style.visibility = 'hidden'
-		targets.forEach(el => el.style.visibility = 'visible')
+		endTarget.style.opacity = 0
+		targets.forEach(el => el.style.opacity = 1)
 		await anime({
 			targets,
 			left: (el, i) => isSelected(el) ? bounds.left : false,
@@ -166,8 +173,8 @@ export default function Garden({events, setEvent, event, view}) {
 			duration: 500,
 			easing: "easeOutExpo"
 		}).finished
-		endTarget.style.visibility = 'visible'
-		targets.forEach(el => el.style.visibility = 'hidden')
+		endTarget.style.opacity = 1
+		targets.forEach(el => el.style.opacity = 0)
 	};
 
 	const toProgram = async () => {
@@ -183,8 +190,8 @@ export default function Garden({events, setEvent, event, view}) {
 					return endTargets[i];
 			}
 		}
-		endTargets.forEach(el => el.style.visibility = 'hidden')
-		targets.forEach(el => el.style.visibility = 'visible')
+		endTargets.forEach(el => el.style.opacity = 0)
+		targets.forEach(el => el.style.opacity = 1)
 
 		await anime({
 			targets,
@@ -199,8 +206,8 @@ export default function Garden({events, setEvent, event, view}) {
 			scale: 1,
 		}).finished
 		
-		endTargets.forEach(el => el.style.visibility = 'visible')
-		targets.forEach(el => el.style.visibility = 'hidden')
+		endTargets.forEach(el => el.style.opacity = 1)
+		targets.forEach(el => el.style.opacity = 0)
 
 	};
 
@@ -218,8 +225,8 @@ export default function Garden({events, setEvent, event, view}) {
 			})
 			return element
 		}
-		endTargets.forEach(el => el.style.visibility = 'hidden')
-		targets.forEach(el => el.style.visibility = 'visible')
+		endTargets.forEach(el => el.style.opacity = 0)
+		targets.forEach(el => el.style.opacity = 1)
 		await anime({
 			targets,
 			left: (el, i) => eventToPart(el).getBoundingClientRect().left,
@@ -232,8 +239,8 @@ export default function Garden({events, setEvent, event, view}) {
 			loop: false,
 			scale: 1,
 		}).finished
-		endTargets.forEach(el => el.style.visibility = 'visible')
-		targets.forEach(el => el.style.visibility = 'hidden')
+		endTargets.forEach(el => el.style.opacity = 1)
+		targets.forEach(el => el.style.opacity = 0)
 	};
 	
 	
@@ -315,8 +322,8 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min
 
 const transitionTo = async (targets, endTargets, opt) => {
 		
-	targets.forEach(el => el.style.visibility = 'visible')
-	endTargets.forEach(el => el.style.visibility = 'hidden')
+	targets.forEach(el => el.style.opacity = 1)
+	endTargets.forEach(el => el.style.opacity = 0)
 
 	await anime({
 		targets,
@@ -330,6 +337,6 @@ const transitionTo = async (targets, endTargets, opt) => {
 		scale: 1,
 	}).finished
 	
-	endTargets.forEach(el => el.style.visibility = 'visible')
-	targets.forEach(el => el.style.visibility = 'hidden')
+	endTargets.forEach(el => el.style.opacity = 1)
+	targets.forEach(el => el.style.opacity = 0)
 }

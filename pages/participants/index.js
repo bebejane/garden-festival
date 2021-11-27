@@ -1,25 +1,14 @@
 import { withGlobalProps } from "lib/utils";
-import { GetEvents, GetEvent, GetParticipants, GetAbouts } from "/graphql";
 import Home from '../index';
 
 export default Home;
 
-export const getStaticProps = withGlobalProps({ queries: [GetEvents, GetAbouts, GetParticipants] }, async (data) => {
-  const {
-    props :{
-      events,
-      participants,
-      abouts
-    },
-    revalidate
-  } = data;
-
+export const getStaticProps = withGlobalProps(async ({props, revalidate}) => {
   return {
     props:{
-      abouts,
-      participants,
-      events,
+      ...props,
       defaultView: 'participants'
+
     },
     revalidate,
   };

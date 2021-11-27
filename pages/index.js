@@ -1,8 +1,6 @@
 import styles from '/styles/Home.module.scss'
 import { useEffect, useState } from "react";
 import { withGlobalProps } from "lib/utils";
-import { GetEvents, GetEvent, GetParticipants, GetAbouts } from "/graphql";
-import { apiQuery } from "/lib/api";
 
 import Menu from "/components/Menu"
 import Garden from "/components/Garden"
@@ -37,22 +35,9 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
   )
 }
 
-export const getStaticProps = withGlobalProps({ queries: [GetEvents, GetAbouts, GetParticipants] }, async (data) => {
-  const {
-    props :{
-      events,
-      participants,
-      abouts
-    },
-    revalidate
-  } = data;
-
+export const getStaticProps = withGlobalProps(async ({props, revalidate}) => {
   return {
-    props:{
-      abouts,
-      participants,
-      events,
-    },
+    props,
     revalidate,
   };
 });
