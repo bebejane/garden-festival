@@ -5,17 +5,32 @@ import { useEffect, useRef, useState } from "react";
 export default function Video({provider, providerUid, title, url, thumbnailUrl}) {
 	const ref = useRef()
 	const [height, setHeight] = useState(360);
-	useEffect(()=>setHeight((ref.current?.clientWidth/16)*9), [])
-	
+	useEffect(()=>setHeight((ref.current?.clientWidth/16)*9), []) // Set to 16:9
+
 	return (
-		<iframe 
-			ref={ref}
-			id="ytplayer" 
-			type="text/html" 
-			width="100%" 
-			height={height}
-			src={`https://www.youtube.com/embed/${providerUid}?autoplay=0&origin=http://example.com`}
-			frameborder="0"
-		/>
+		provider === 'youtube' ?
+			<iframe 
+				ref={ref}
+				id="ytplayer" 
+				type="text/html" 
+				width="100%" 
+				height={height}
+				allow="autoplay; fullscreen; picture-in-picture" 
+				src={`https://www.youtube.com/embed/${providerUid}?autoplay=0&origin=http://example.com`}
+				frameborder="0"
+			/>
+		: provider === 'vimeo' ?  
+			<iframe 
+				ref={ref}
+				type="text/html" 
+				src={`https://player.vimeo.com/video/${providerUid}`} 
+				width="100%" 
+				height={height}
+				frameborder="0" 
+				allow="autoplay; fullscreen; picture-in-picture" 
+				allowfullscreen 
+			/>
+		:
+			<span>Video {provider} not supported!</span>
 	);	
 }

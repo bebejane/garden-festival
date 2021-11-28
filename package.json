@@ -33,9 +33,11 @@
     "react-markdown": "^7.1.0",
     "react-responsive-carousel": "^3.2.22",
     "react-select": "^5.2.1",
+    "react-slick": "^0.28.1",
     "remark-gfm": "^3.0.1",
     "rooks": "^5.8.0",
     "sass": "^1.43.5",
+    "slick-carousel": "^1.8.1",
     "swiper": "^7.3.1"
   },
   "devDependencies": {

@@ -10,9 +10,8 @@ import Participants from "/components/Participants";
 import Event from "/components/Event";
 
 export default function Home({events, participants, abouts, event, defaultView = 'garden'}) {
-  const [view, setView] = useState(defaultView)
+  const [view, setView] = useState()
   
-  //useEffect(()=> setEvent(defaultEvent), [defaultEvent])
   useEffect(()=> setView(defaultView), [defaultView])
   
 	return (
@@ -29,6 +28,7 @@ export default function Home({events, participants, abouts, event, defaultView =
         view={view}
         defaultView={defaultView}
       />
+      
     </div>
   )
 }
