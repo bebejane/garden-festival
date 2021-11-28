@@ -10,7 +10,6 @@ export default function Content({show, children, setShow, setView, popup = false
 			<div className={cn(styles.contentWrap, show && styles.show)}>
 				<div className={cn(styles.content, popup && styles.popup)}>
 					{children}
-					<Link href={'/'}><div className={styles.close}>×</div></Link>
 				</div>
 				<Footer abouts={abouts}/>	
 			</div>

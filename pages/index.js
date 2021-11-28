@@ -10,7 +10,7 @@ import Participants from "/components/Participants";
 import Event from "/components/Event";
 
 export default function Home({events, participants, abouts, defaultEvent, defaultView = 'garden'}) {
-  
+  //console.log(events)
   const [event, setEvent] = useState()
   const [view, setView] = useState(defaultView)
   

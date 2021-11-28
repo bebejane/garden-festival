@@ -5,9 +5,6 @@ import { format } from "date-fns";
 import StructuredContent from "/components/blocks"
 
 export default function Event({event, show}) {
-  
-  //console.log(event)
-
 	return (
 		<div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
@@ -25,6 +22,7 @@ export default function Event({event, show}) {
           id={`event-symbol-${event?.id}`} 
           src={event?.participant.symbol.url} 
           className={contentStyles.placeholderSymbol}
+          style={{width:'300px', height:'300px'}}
         />
       </div>
 		</div>

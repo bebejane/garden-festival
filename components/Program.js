@@ -21,17 +21,17 @@ export default function Program({events, participants, show}) {
   const [date, setDate] = useState(FESTIVAL_START_DATE)
 
   useEffect(()=>{
-    const id = format(date, 'yyyy-MM-dd')
+    const id = format(date, 'yyyy-MM-d')
+    console.log(id)
     document.getElementById(`${id}`)?.scrollIntoView({ 
-      block: "nearest", 
-      inline: "nearest", 
       behavior: "smooth" 
     });
   }, [date])
 
   
-  let currentDate, eventDate;
-  const program = events.sort((a,b) => a.startTime > b.startTime).map((ev, idx) => {    
+  let currentDate;
+  const program = events.sort((a,b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {    
+    let eventDate;
     if(!isSameDay(currentDate, new Date(ev.startTime))){
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
@@ -54,7 +54,7 @@ export default function Program({events, participants, show}) {
         </div>
         <div className={styles.info}>
           {eventDate && 
-            <h2 id={format(eventDate, 'yyyy-MM-dd')} className={styles.weekday}>
+            <h2 id={format(eventDate, 'yyyy-MM-d')} className={styles.weekday}>
               {format(eventDate, 'EEEE MMMM d, yyyy ')}
             </h2>
           }

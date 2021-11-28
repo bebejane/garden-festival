@@ -49,6 +49,9 @@
   user-select: none;
   line-height: 0; 
   opacity: 0;
+  &.garden{
+    z-index: 1;
+  }
 }
 .controller {
   display: none;
