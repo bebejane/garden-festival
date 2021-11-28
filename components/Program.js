@@ -40,17 +40,13 @@ export default function Program({events, participants, show}) {
     return (
       <div key={idx} className={styles.event}>
         <div className={styles.symbol}>
-          <Link href={`${ev.participant.slug}/${ev.slug}`}>
-            <a>
-            <img 
-              id={`program-symbol-${ev.id}`}
-              eventid={ev.id}
-              participantid={ev.participant.id}
-              src={ev.participant.symbol.url} 
-              className={contentStyles.placeholderSymbol}
-            />
-            </a>
-          </Link>
+          <img 
+            id={`program-symbol-${ev.id}`}
+            eventid={ev.id}
+            participantid={ev.participant.id}
+            src={ev.participant.symbol.url} 
+            className={contentStyles.placeholderSymbol}
+          />
         </div>
         <div className={styles.info}>
           {eventDate && 

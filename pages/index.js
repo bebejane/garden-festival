@@ -9,12 +9,10 @@ import Program from "/components/Program";
 import Participants from "/components/Participants";
 import Event from "/components/Event";
 
-export default function Home({events, participants, abouts, defaultEvent, defaultView = 'garden'}) {
-  //console.log(events)
-  const [event, setEvent] = useState()
+export default function Home({events, participants, abouts, event, defaultView = 'garden'}) {
   const [view, setView] = useState(defaultView)
   
-  useEffect(()=> setEvent(defaultEvent), [defaultEvent])
+  //useEffect(()=> setEvent(defaultEvent), [defaultEvent])
   useEffect(()=> setView(defaultView), [defaultView])
   
 	return (
@@ -23,10 +21,9 @@ export default function Home({events, participants, abouts, defaultEvent, defaul
       <Content show={view !== 'garden'} setView={setView} popup={view === 'event'} abouts={abouts}>
         <Program events={events} show={view === 'program'}/>
         <Participants participants={participants} show={view === 'participants'}/>
-        <Event event={event} show={view === 'event'} placeholder={defaultEvent && false}/>
+        <Event event={event} show={view === 'event'}/>
       </Content>
       <Garden 
-        setEvent={setEvent} 
         event={event} 
         events={events} 
         view={view}

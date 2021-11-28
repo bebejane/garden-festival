@@ -10,7 +10,7 @@ import { useWindowSize, useDebounce  } from "rooks";
 const sortNodeList = (list, sorter) => Array.prototype.slice.call(list, 0).sort(sorter);
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-export default function Garden({events, setEvent, event, view, defaultView}) {
+export default function Garden({events, event, view, defaultView}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
