@@ -18,12 +18,14 @@ export default function Event({event, show}) {
         }
       </div>
       <div className={styles.symbol}>
-        <img 
-          id={`event-symbol-${event?.id}`} 
-          src={event?.participant.symbol.url} 
-          className={contentStyles.placeholderSymbol}
-          style={{width:'300px', height:'300px'}}
-        />
+        {event &&
+          <img 
+            id={`event-symbol-${event?.id}`} 
+            src={event?.participant.symbol.url} 
+            className={contentStyles.placeholderSymbol}
+            style={{width:'300px', height:'300px'}}
+          />
+        }
       </div>
 		</div>
 	);
