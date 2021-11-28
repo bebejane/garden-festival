@@ -12,7 +12,7 @@ import Event from "/components/Event";
 export default function Home({events, participants, abouts, defaultEvent, defaultView = 'garden'}) {
   
   const [event, setEvent] = useState()
-  const [view, setView] = useState()
+  const [view, setView] = useState(defaultView)
   
   useEffect(()=> setEvent(defaultEvent), [defaultEvent])
   useEffect(()=> setView(defaultView), [defaultView])

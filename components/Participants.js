@@ -13,7 +13,7 @@ export default function Participants({participants, show}) {
         <div key={idx} className={styles.participant}>
           <div className={styles.symbols}>
             <img 
-              id={`pasymbol-${p.id}`} 
+              id={`participant-symbol-${p.id}`} 
               participantid={p.id} 
               src={p.symbol.url} 
               className={contentStyles.placeholderSymbol}

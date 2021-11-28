@@ -43,7 +43,7 @@ export default function Program({events, participants, show}) {
           <Link href={`${ev.participant.slug}/${ev.slug}`}>
             <a>
             <img 
-              id={`prsymbol-${ev.id}`}
+              id={`program-symbol-${ev.id}`}
               eventid={ev.id}
               participantid={ev.participant.id}
               src={ev.participant.symbol.url} 

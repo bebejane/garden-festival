@@ -22,7 +22,7 @@ export default function Event({event, show}) {
       </div>
       <div className={styles.symbol}>
         <img 
-          id={`evsymbol-${event?.id}`} 
+          id={`event-symbol-${event?.id}`} 
           src={event?.participant.symbol.url} 
           className={contentStyles.placeholderSymbol}
         />
