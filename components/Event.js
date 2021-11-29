@@ -19,13 +19,11 @@ export default function Event({event, show}) {
         
       </div>
       <div className={styles.symbol}>
-        
-          <img 
-            id={`event-symbol-${event?.id}`} 
-            src={event.participant.symbol.url} 
-            className={cn(styles.symbol, contentStyles.placeholderSymbol)}
-          />
-        
+        <img 
+          id={`event-symbol-${event?.id}`} 
+          src={event.participant.symbol.url} 
+          className={cn(styles.symbol, contentStyles.placeholderSymbol)}
+        />
       </div>
 		</div>
 	);

@@ -12,12 +12,16 @@ export default function Participants({participants, show}) {
       {participants.map((p, idx) =>
         <div key={idx} className={styles.participant}>
           <div className={styles.symbols}>
-            <img 
-              id={`participant-symbol-${p.id}`} 
-              participantid={p.id} 
-              src={p.symbol.url} 
-              className={contentStyles.placeholderSymbol}
-            />
+            <Link href={`/${p.slug}`}>
+              <a>
+                <img 
+                  id={`participants-symbol-${p.id}`} 
+                  participantid={p.id} 
+                  src={p.symbol.url} 
+                  className={contentStyles.placeholderSymbol}
+                />
+              </a>
+            </Link>
           </div>
           <div className={styles.participantInfo}>
             <h3>{p.title}</h3>
@@ -26,6 +30,9 @@ export default function Participants({participants, show}) {
               <Link href={p.externalLink}>
                 <a href={p.externalLink}>{p.externalLink}</a>
               </Link>
+            </p>
+            <p>
+              <Link href={`/${p.slug}`}><a>Go to participant</a></Link>
             </p>
           </div>
         </div>

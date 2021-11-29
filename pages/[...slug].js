@@ -26,7 +26,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
     ...data.props,
     participant,
     event : event || null,
-    defaultView : event ? 'event' : 'participants',
+    defaultView : event ? 'event' : 'participant',
     defaultEvent : event || null
   }
   

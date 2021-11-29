@@ -6,11 +6,13 @@ import anime from "animejs";
 import Link from "next/link";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
+import Participant from "./Participant";
 
+const nodesToArray = (elements) => Array.prototype.slice.call(elements, 0)
 const sortNodeList = (list, sorter) => Array.prototype.slice.call(list, 0).sort(sorter);
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-export default function Garden({events, event, view, defaultView}) {
+export default function Garden({events, event, participant, view, defaultView}) {
 	
 	const batikRef = useRef();
 	const totalPages = 10;
@@ -119,6 +121,9 @@ export default function Garden({events, event, view, defaultView}) {
 			case 'map':
 				initMap()
 				break;
+			case 'participant':
+				toParticipant()
+				break;
 			case 'participants':
 				toParticipants()
 				break;
@@ -141,22 +146,28 @@ export default function Garden({events, event, view, defaultView}) {
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
 		anime.set(lastTargets, {opacity:0})
 		anime.set(endTargets, {opacity:0})
-		anime.set(targets, {opacity:1})
+		anime.set(targets, {opacity:1, zIndex:5})
 		
+		//if(!Array.isArray(endTargets))endTargets = nodesToArray(targets).map(() => endTargets)
+		
+		const elementByIndex = (i) => {
+			return Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets[i] : endTargets
+		}
+
 		const animation = anime({
 			targets,
-			left: (el, i) => endTargets[i].getBoundingClientRect().left,
-			top: (el, i) => endTargets[i].getBoundingClientRect().top,
-			height: (el, i) =>  endTargets[i].clientHeight,
-			width: (el, i) => endTargets[i].clientWidth,
+			left: (el, i) => elementByIndex(i).getBoundingClientRect().left,
+			top: (el, i) => elementByIndex(i).getBoundingClientRect().top,
+			height: (el, i) =>  elementByIndex(i).clientHeight,
+			width: (el, i) => elementByIndex(i).clientWidth,
 			delay: (el, i) => i * defaultDelay,
 			easing: "easeOutExpo",
 			scale: 1,
 			duration: !currentView ? 0 : defaultDuration,
 			...opt,
 			complete: () =>{
+				anime.set(targets, {opacity:0, zIndex:0})
 				anime.set(endTargets, {opacity:1})
-				anime.set(targets, {opacity:0})
 				setCurrentAnimation(undefined)
 				setCurrentView(view);
 				console.log('transition from', currentView, '>', view, opt)		
@@ -187,7 +198,7 @@ export default function Garden({events, event, view, defaultView}) {
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = document.querySelectorAll("[id^='program-symbol-']")
 		
-		const eTargets = Array.prototype.slice.call(targets, 0).map(el => {
+		const eTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');
 			const eventId = el.getAttribute('eventid');
 			for (let i = 0; i < endTargets.length; i++) {
@@ -200,9 +211,9 @@ export default function Garden({events, event, view, defaultView}) {
 
 	const toParticipants = async () => {
 		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = document.querySelectorAll("[id^='participant-symbol-']")
+		const endTargets = document.querySelectorAll("[id^='participants-symbol-']")
 
-		const eTargets = Array.prototype.slice.call(targets, 0).map(el => {
+		const eTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');
 			for (let i = 0; i < endTargets.length; i++) {
 				if(participantId === endTargets[i].getAttribute('participantid'))
@@ -212,13 +223,32 @@ export default function Garden({events, event, view, defaultView}) {
 		return transitionTo(targets, eTargets)
 	};
 
+	const toParticipant = async () => {
+
+		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
+		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
+
+		/*	
+		const eTargets = Array.prototype.slice.call(targets, 0).map(el => {
+			const participantId = el.getAttribute('participantid');
+			for (let i = 0; i < endTargets.length; i++) {
+				if(participantId === endTargets[i].getAttribute('participantid'))
+					return endTargets[i];
+			}
+		})
+		*/
+		console.log(targets)
+		//console.log(eTargets)
+
+		return transitionTo(targets, endTarget)
+	};
+
 	const toEvent = async () => {
 		const targets = document.querySelectorAll(`[id^='symbol-']:not([eventid='${event.id}'])`)
 		const endTargets = document.querySelectorAll(`[id^='event-symbol-']:not([eventid='${event.id}'])`)
 		const target = document.getElementById(`symbol-${event.id}`)
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
-		console.log(event.id, target, endTarget)
-
+		
 		if(!target)
 			anime.set(endTarget, {opacity:1})
 		else
@@ -287,28 +317,28 @@ export default function Garden({events, event, view, defaultView}) {
 				</div>
 			</div>
 			{symbols.map((t, index) => (
-				<>					
-					<img 
-						id={`garden-symbol-${t.event.id}`}
-						key={`garden-symbol-${index}`}
-						src={t.url}
-						ref={t.ref}
-						eventid={t.event.id}
-						participantid={t.event.participant.id}
-						className={cn(styles.symbol, styles.garden, contentStyles.placeholderSymbol)}
-					/>
+				<>			
 					<Link href={`/${t.event.participant.slug}/${t.event.slug}`}>
 						<a>
 							<img 
-								id={`symbol-${t.event.id}`}
-								key={`symbol-${index}`}
+								id={`garden-symbol-${t.event.id}`}
+								key={`garden-symbol-${index}`}
 								src={t.url}
+								ref={t.ref}
 								eventid={t.event.id}
 								participantid={t.event.participant.id}
-								className={cn(styles.symbol)}
+								className={cn(styles.symbol, styles.garden, contentStyles.placeholderSymbol)}
 							/>
 						</a>
 					</Link>
+					<img 
+						id={`symbol-${t.event.id}`}
+						key={`symbol-${index}`}
+						src={t.url}
+						eventid={t.event.id}
+						participantid={t.event.participant.id}
+						className={cn(styles.symbol)}
+					/>
 				</>
 			))}
 		</>
