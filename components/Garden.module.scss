@@ -66,6 +66,25 @@
 		z-index: 1;
 	}
 }
+.symbolPopup{
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	top:0;
+	left:0;
+	padding: 15px;
+	max-width: 300px;
+	background-color:#fff;
+	z-index: 5;
+	transform: scale(0);
+	transition: transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+	border-radius: 20px;
+
+	&.show{
+		border:2px solid #000;
+		transform: scale(1);
+	}
+}
 .controller {
 	display: none;
 	position: fixed;

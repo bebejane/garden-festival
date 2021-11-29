@@ -7,6 +7,7 @@ import Link from "next/link";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
 import { nodesToArray, randomInt } from "lib/utils";
+import { format } from "date-fns";
 
 export default function Garden({events, event, participant, view, defaultView}) {
 	
@@ -223,19 +224,6 @@ export default function Garden({events, event, participant, view, defaultView}) 
 
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
-
-		/*	
-		const eTargets = Array.prototype.slice.call(targets, 0).map(el => {
-			const participantId = el.getAttribute('participantid');
-			for (let i = 0; i < endTargets.length; i++) {
-				if(participantId === endTargets[i].getAttribute('participantid'))
-					return endTargets[i];
-			}
-		})
-		*/
-		console.log(targets)
-		//console.log(eTargets)
-
 		return transitionTo(targets, endTarget)
 	};
 
@@ -253,6 +241,14 @@ export default function Garden({events, event, participant, view, defaultView}) 
 		transitionTo(targets, targets, {scale:0})
 	};
 
+	const handlePopup = ({type, target, target : {id, attributes}}) => {
+		const eventId = target.getAttribute('eventid');
+		const popup = document.getElementById(`garden-popup-${eventId}`)
+		const bounds = target.getBoundingClientRect()
+		popup.style.top = `${bounds.y-50}px`;
+		popup.style.left = `${bounds.x+bounds.width-(bounds.width/4)}px`;
+		popup.classList.toggle(styles.show, type === 'mouseenter')			
+	}
 	useEffect(() => ready && view && toggleView(view), [view, ready]);
 	
 	// wait for images to load then init
@@ -327,9 +323,16 @@ export default function Garden({events, event, participant, view, defaultView}) 
 								eventid={t.event.id}
 								participantid={t.event.participant.id}
 								className={cn(styles.symbol, styles.garden, contentStyles.placeholderSymbol)}
+								onMouseEnter={handlePopup} onMouseLeave={handlePopup}
 							/>
 						</a>
 					</Link>
+					<div id={`garden-popup-${t.event.id}`} className={styles.symbolPopup}>
+						
+						<h3>{t.event.title}</h3>
+						<p>{t.event.summary.split('.')[0]}</p>
+						{format(new Date(t.event.startTime), 'EEEE MMMM d, yyyy ')}
+					</div>
 					<img 
 						id={`symbol-${t.event.id}`}
 						key={`symbol-${index}`}

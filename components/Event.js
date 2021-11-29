@@ -11,7 +11,7 @@ export default function Event({event, show}) {
       <div className={styles.info}>
         
           <>
-            <h3>{event.title}</h3>
+            <h1>{event.title}</h1>
             {format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}
             <p>{event.summary}</p>
             <StructuredContent content={event.content}/>
