@@ -6,11 +6,7 @@ import anime from "animejs";
 import Link from "next/link";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
-import Participant from "./Participant";
-
-const nodesToArray = (elements) => Array.prototype.slice.call(elements, 0)
-const sortNodeList = (list, sorter) => Array.prototype.slice.call(list, 0).sort(sorter);
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+import { nodesToArray, randomInt } from "lib/utils";
 
 export default function Garden({events, event, participant, view, defaultView}) {
 	

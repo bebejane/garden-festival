@@ -1,14 +1,9 @@
 import styles from "./Background.module.scss"
 import cn from "classnames";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import anime from "animejs";
 import React from "react";
-import { vi } from "date-fns/locale";
-import { style } from "dom-helpers";
-
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+import { randomInt } from "lib/utils";
 
 const defaultViews = {
   garden:{},
