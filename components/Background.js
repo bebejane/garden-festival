@@ -30,10 +30,21 @@ export default function Background({view}) {
     const next = document.getElementById(`background-${view}`)
     const rest = document.querySelectorAll(`.${styles.image}:not([id='${next?.id}']):not([id='${last?.id}'])`)
     setLastView(view)
-    anime.set(rest, {opacity:0})    
-    anime({targets:next, opacity:1, duration:4000})
-    await anime({targets:last, opacity:0, rotate:3, scale:1.2, filter:'hue-rotate(360deg)', duration:4000}).finished
-    anime.set(last, {filter:'hue-rotate(0deg)', opacity:0, rotate:0, scale:1})
+    console.log(rest)
+    anime.set(rest, {opacity:0, rotate:0, scale:1})    
+    anime({targets:next, opacity:1, duration:1000})
+    await anime({
+      targets:last, 
+      opacity:0, 
+      scale:2,
+      filter:`hue-rotate(${randomInt(60, 360)}deg)`, 
+      duration:1300,
+      easing:'easeInQuad',
+      complete:()=>{
+        anime.set(last, {filter:'hue-rotate(0deg)',  scale:1, opacity:0})
+      }
+    }).finished
+    
     
   }, [view])
 	return (	
