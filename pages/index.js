@@ -4,6 +4,7 @@ import { withGlobalProps } from "lib/utils";
 
 import Menu from "/components/Menu"
 import Garden from "/components/Garden"
+import Background from "/components/Background"
 import Content from "/components/Content";
 import Program from "/components/Program";
 import Participants from "/components/Participants";
@@ -24,7 +25,7 @@ export default function Home({events, participants, participant, abouts, event, 
       <Content show={view !== 'garden'} setView={setView} popup={['event', 'participant'].includes(view)} abouts={abouts}>
         <Program events={events} show={view === 'program'}/>
         <Participants participants={participants} show={view === 'participants'}/>
-        <Participant participant={participant} show={view === 'participant'}/>
+        <Participant participant={participant} events={events} show={view === 'participant'}/>
         <Event event={event} show={view === 'event'}/>
       </Content>
       <Garden 
@@ -35,6 +36,7 @@ export default function Home({events, participants, participant, abouts, event, 
         view={view}
         defaultView={defaultView}
       />
+      <Background view={view} />
     </div>
   )
 }

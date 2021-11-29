@@ -24,8 +24,8 @@ export default function Menu({onSelectDate, onSelectTimezone, showProgram = fals
       <div className={styles.menu} >
         <ul>
           <Link href={'/'}><li className={router.pathname === '/' ? styles.selected : undefined }>Garden</li></Link>
-          <Link href={'/participants'}><li className={router.pathname === '/participants' ? styles.selected : undefined }>Participants</li></Link>
           <Link href={'/program'}><li className={router.pathname === '/program' ? styles.selected : undefined }>Program</li></Link>
+          <Link href={'/participants'}><li className={router.pathname === '/participants' ? styles.selected : undefined }>Participants</li></Link>
         </ul>
       </div>
       {showProgram && 

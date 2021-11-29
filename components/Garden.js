@@ -110,7 +110,7 @@ export default function Garden({events, event, participant, view, defaultView}) 
 
 	const toggleView = (view, force) => {
 		if(!ready) return
-		window.scrollTo(0,0);
+		//window.scrollTo(0,0);
 		switch (view) {
 			case 'program':
 				toProgram()
@@ -308,6 +308,9 @@ export default function Garden({events, event, participant, view, defaultView}) 
 		<>
 			<div className={styles.container}>
 				<div className={styles.scroller} ref={scrollRef}></div>
+				<div className={cn(styles.header, view !== 'garden' && styles.hidden)}>
+					<img src={'/images/The Community Garden Festival.png'}/>
+				</div>
 				<div className={styles.diggi}>
 					<img 
 						src={"https://www.datocms-assets.com/58832/1637937430-diggibatik.png"} 
