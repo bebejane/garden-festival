@@ -1,11 +1,11 @@
 import '../styles/globals.css'
-import { UIProvider } from "/lib/context/ui";
+import { AppStateProvider } from "/lib/context/appstate";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <UIProvider>
+    <AppStateProvider>
       <Component {...pageProps} />
-    </UIProvider>
+    </AppStateProvider>
   )
 }
 
