@@ -47,12 +47,7 @@
 			}
 		}
 	}
-	.bounds {
-		position: absolute;
-		top: 0;
-		left: 0;
-		border: 4px solid greenyellow;
-	}
+	
 }
 .symbol {
 	position: absolute;
@@ -150,4 +145,14 @@
 		//background-color: hotpink;
 		color: #fff;
 	}
+}
+
+.bounds {
+	position: absolute;
+	top: 0;
+	left: 0;
+	//background-color: rgba(250, 67, 159, 0.584);
+	z-index: 10;
+	border: 2px solid limegreen;
+	pointer-events: none;
 }

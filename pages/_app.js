@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '/styles/globals.css'
 import { AppStateProvider } from "/lib/context/appstate";
 
 function MyApp({ Component, pageProps }) {

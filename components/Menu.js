@@ -4,12 +4,10 @@ import { FESTIVAL_START_DATE, FESTIVAL_END_DATE, timeZones } from "lib/utils/con
 import Link from "next/link"
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
-import Select from 'react-select'
 import { format, eachDayOfInterval, isSameDay } from 'date-fns'
-import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone'
 import { useAppState, AppAction } from "/lib/context/appstate";
 
-export default function Menu({onSelectDate, onSelectTimezone, showProgram = false}) {
+export default function Menu({view, onSelectDate, onSelectTimezone, weekday, showProgram = false}) {
 
   const [appState, setAppState] = useAppState();
   const router = useRouter()
@@ -20,25 +18,26 @@ export default function Menu({onSelectDate, onSelectTimezone, showProgram = fals
   useEffect(()=> setAppState({ type: AppAction.SET_TIMEZONE, value:tz }), [tz])
   
 	return (
-		<div className={styles.container} >
+		<div id="menu" className={styles.container} >
       <div className={styles.menu} >
         <ul>
           <Link href={'/'}><li className={router.pathname === '/' ? styles.selected : undefined }>Garden</li></Link>
-          <Link href={'/program'}><li className={router.pathname === '/program' ? styles.selected : undefined }>Program</li></Link>
-          <Link href={'/participants'}><li className={router.pathname === '/participants' ? styles.selected : undefined }>Participants</li></Link>
+          <Link href={'/program'}><li className={router.pathname.startsWith('/program') ? styles.selected : undefined }>Festival</li></Link>
+          <Link href={'/participants'}><li className={router.pathname === '/participants' ? styles.selected : undefined }>Community</li></Link>
         </ul>
       </div>
-      {showProgram && 
+      {['program', 'weekday'].includes(view) && 
         <div className={styles.programMenu}>
           <ul>
             {eachDayOfInterval({start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE}).map( (d, idx) =>
-              <li 
-                key={idx} 
-                className={isSameDay(d, date) ? styles.selected : undefined }
-                onClick={()=>setDate(d)} 
-              >
-                {format(d, 'EEEE')}<br/>{format(d, 'MMMM dd')}
-              </li>
+              <Link href={`/program/${format(d, 'EEEE').toLowerCase()}`}>
+                <li 
+                  key={idx} 
+                  className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined }
+                >
+                  {format(d, 'EEEE')}<br/>{format(d, 'MMMM dd')}
+                </li>
+              </Link>
             )}
             <TimeZoneDropdown setTimezone={setTimezone} tz={tz} />
           </ul>  

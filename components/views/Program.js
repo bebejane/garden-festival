@@ -1,6 +1,6 @@
 import styles from "./Program.module.scss"
-import contentStyles from "./Content.module.scss"
-import Button from "./Button";
+import contentStyles from "../Content.module.scss"
+import Button from "../Button";
 import cn from "classnames";
 import { useAppState, AppAction } from "/lib/context/appstate"
 import { format, isSameDay } from 'date-fns'
@@ -8,18 +8,23 @@ import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone'
 import { useEffect } from "react";
 import Link from "next/link"
 
-export default function Program({events, participants, date, timeZone, show}) {
+export default function Program({events, dayEvents, participants, date, timeZone, show}) {
   if(!show) return null
 
   const [appState, setAppState] = useAppState();
   useEffect(()=>{
+    return
+    count++;
+    if(count === 1) return
     const el = document.getElementById(`${format(appState.date, 'yyyy-MM-d')}`)
     el?.scrollIntoView({ block:"center", behavior: "smooth"})
+    console.log('scroll')
+    
   }, [appState.date])
 
   
   let currentDate;
-  const program = events.sort((a,b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {    
+  const program = (dayEvents || events).sort((a,b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {    
     let eventDate;
     if(!isSameDay(currentDate, new Date(ev.startTime))){
       currentDate = new Date(ev.startTime);
@@ -58,7 +63,7 @@ export default function Program({events, participants, date, timeZone, show}) {
               {ev.summary}
             </p>
             <p>
-            <Button href={`${ev.participant.slug}/${ev.slug}`}>  
+            <Button href={`/${ev.participant.slug}/${ev.slug}`}>  
               Go to event
             </Button>
             </p>

@@ -1,8 +1,8 @@
 import styles from "./Participants.module.scss"
-import contentStyles from "./Content.module.scss"
+import contentStyles from "../Content.module.scss"
 import cn from "classnames";
 import Link from "next/link"
-import Button from "./Button";
+import Button from "../Button";
 
 export default function Participants({participants, show}) {
   if(!show) return null

@@ -1,10 +1,10 @@
 import styles from "./Participant.module.scss"
-import contentStyles from "./Content.module.scss"
+import contentStyles from "../Content.module.scss"
 import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
 import { format } from 'date-fns'
-import Button from "./Button";
+import Button from "../Button";
 
 export default function Participant({participant, events : evts, show}) {
   if(!show || !participant) return null

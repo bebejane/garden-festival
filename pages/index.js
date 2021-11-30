@@ -1,29 +1,28 @@
 import styles from '/styles/Home.module.scss'
 import { useEffect, useState } from "react";
-import { withGlobalProps } from "lib/utils";
+import { withGlobalProps } from "/lib/utils";
 
 import Menu from "/components/Menu"
-import Garden from "/components/Garden"
+import Garden from "/components/views/Garden"
+import Participants from "/components/views/Participants";
+import Participant from "/components/views/Participant";
+import Event from "/components/views/Event";
+import Program from "/components/views/Program";
+
 import Background from "/components/Background"
 import Content from "/components/Content";
-import Program from "/components/Program";
-import Participants from "/components/Participants";
-import Participant from "/components/Participant";
-import Event from "/components/Event";
 
-export default function Home({events, participants, participant, abouts, event, defaultView = 'garden'}) {
-
+export default function Home({events, participants, participant, abouts, event, dayEvents, weekday, defaultView = 'garden'}) {
+  
   const [view, setView] = useState()
-  const [selectedDate, setSelectedDate] = useState()
-  const [selectedTimezone, setSelectedTimezone] = useState()
   
   useEffect(()=> setView(defaultView), [defaultView])
   
 	return (
     <div className={styles.container}>
-      <Menu view={view} setView={setView} showProgram={view === 'program'}/>      
+      <Menu view={view} setView={setView} weekday={weekday}/>      
       <Content show={view !== 'garden'} setView={setView} popup={['event', 'participant'].includes(view)} abouts={abouts}>
-        <Program events={events} show={view === 'program'}/>
+        <Program events={events} dayEvents={dayEvents} weekday={weekday} show={view === 'program' || view === 'weekday'}/>
         <Participants participants={participants} show={view === 'participants'}/>
         <Participant participant={participant} events={events} show={view === 'participant'}/>
         <Event event={event} show={view === 'event'}/>

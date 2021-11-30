@@ -3,7 +3,6 @@ import { GetParticipants, GetEvents, GetEventBySlug, GetParticipantBySlug } from
 import { apiQuery } from "lib/api";
 
 import Home from "./index"
-
 export default Home;
 
 export const getStaticProps = withGlobalProps(async (data) => {
