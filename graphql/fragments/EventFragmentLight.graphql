@@ -1,7 +1,7 @@
 #import "./ImageFragment.graphql"
 #import "./ParticipantFragment.graphql"
 
-fragment EventLightFragment on EventRecord {
+fragment EventFragmentLight on EventRecord {
   id
   startTime
   endTime

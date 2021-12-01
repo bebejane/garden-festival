@@ -1,5 +1,5 @@
 #import "./fragments/EventFragment.graphql"
-#import "./fragments/EventLightFragment.graphql"
+#import "./fragments/EventFragmentLight.graphql"
 
 query GetEvent ($id: ItemId ){
   event(filter : {id: { eq:$id }}) {
@@ -13,6 +13,6 @@ query GetEventBySlug ($slug: String ){
 }
 query GetEvents {
   events: allEvents {
-    ...EventLightFragment
+    ...EventFragmentLight
   }
 }

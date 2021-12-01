@@ -1,11 +1,48 @@
+#import "./fragments/ImageFragment.graphql"
 query GetAbouts {
   abouts: allAbouts {
     id
     position
     title
     slug
-    content {
-      value
+    content{
+    value
+    blocks{
+      __typename
+      ... on ImageGalleryRecord {
+        id
+        images {
+          ...ImageFragment
+        }
+      }
+      ... on ImageRecord {
+        id
+        image {
+          ...ImageFragment
+        }
+      }
+      ... on ExternalLinkRecord {
+        id
+        linkText
+        url
+      }
+      ... on SoundRecord {
+        id
+        soundcloudUrl
+      }
+      ... on VideoRecord {
+        id
+        url {
+          height
+          provider
+          providerUid
+          thumbnailUrl
+          title
+          url
+          width
+        }
+      }
     }
+  }
   }
 }
