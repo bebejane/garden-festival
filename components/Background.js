@@ -11,7 +11,8 @@ const defaultViews = {
   community:{},
   participant:{},
   event:{},
-  weekday:{}
+  weekday:{},
+  about:{}
 }
 
 export default function Background({view}) {
