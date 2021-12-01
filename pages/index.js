@@ -176,10 +176,7 @@ export default function Home({events, participants, participant, event, dayEvent
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
 
 		const elementByIndex = (i, el) => {
-			return Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets[i] : endTargets
-		}
-		const elementByEventId = (el) => {	
-			return Array.isArray(endTargets) || endTargets instanceof NodeList ? nodesToArray(endTargets).filter(e => e.getAttribute('eventid') === el.getAttribute('eventid'))[0] : endTargets
+			return Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
 		}
 		
 		anime.set(lastTargets, {opacity:0})
@@ -269,6 +266,7 @@ export default function Home({events, participants, participant, event, dayEvent
 	const toParticipant = async () => {
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
+		console.log(targets, endTarget)
 		return transitionTo(targets, endTarget)
 	};
 
