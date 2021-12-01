@@ -8,7 +8,7 @@ export default function Community({participants, show}) {
   if(!show) return null
   
 	return (
-		<div className={styles.container}>
+		<div key={'community'} className={styles.container}>
       <h1>Participants</h1>
       <div className={styles.community}>
         {participants.map((p, idx) =>

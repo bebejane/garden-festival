@@ -4,7 +4,7 @@ import LinkButton from "../LinkButton";
 import cn from "classnames";
 import { useAppState, AppAction } from "/lib/context/appstate"
 import { format, isSameDay } from 'date-fns'
-import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone'
+import { formatToTimeZone } from 'date-fns-timezone'
 import { useEffect } from "react";
 import Link from "next/link"
 
@@ -23,8 +23,9 @@ export default function Festival({events, dayEvents, participants, date, timeZon
   }, [appState.date])
 
   
+  
   let currentDate;
-  const festival = (dayEvents || events).sort((a,b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {    
+  const schedule = [...(dayEvents || events)].sort((a,b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {    
     let eventDate;
     if(!isSameDay(currentDate, new Date(ev.startTime))){
       currentDate = new Date(ev.startTime);
@@ -45,7 +46,7 @@ export default function Festival({events, dayEvents, participants, date, timeZon
                   id={`festival-symbol-${ev.id}`}
                   eventid={ev.id}
                   participantid={ev.participant.id}
-                  src={ev.participant.symbol.url} 
+                  src={`${ev.participant.symbol.url}?w=200`} 
                   className={contentStyles.placeholderSymbol}
                 />
               </a>
@@ -74,9 +75,7 @@ export default function Festival({events, dayEvents, participants, date, timeZon
   })
 	return (
 		<div className={styles.festival}>
-      
-        {festival}
-      
+      {schedule}
 		</div>
 	);
 }

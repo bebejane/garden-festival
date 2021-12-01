@@ -10,7 +10,7 @@ import { useAppState, AppAction } from "/lib/context/appstate";
 export default function Menu({view, onSelectDate, onSelectTimezone, weekday, showProgram = false}) {
 
   const [appState, setAppState] = useAppState();
-  const router = useRouter()
+  const { pathname } = useRouter()
   const [date, setDate] = useState(FESTIVAL_START_DATE)
   const [tz, setTimezone] = useState(timeZones[0]);
 
@@ -21,9 +21,9 @@ export default function Menu({view, onSelectDate, onSelectTimezone, weekday, sho
 		<div id="menu" className={styles.container} >
       <div className={styles.menu} >
         <ul>
-          <Link href={'/'}><li className={router.pathname === '/' ? styles.selected : undefined }>Garden</li></Link>
-          <Link href={'/festival'}><li className={router.pathname.startsWith('/festival') ? styles.selected : undefined }>Festival</li></Link>
-          <Link href={'/community'}><li className={router.pathname === '/community' ? styles.selected : undefined }>Community</li></Link>
+          <Link href={'/'}><li className={pathname === '/' ? styles.selected : undefined }>Garden</li></Link>
+          <Link href={'/festival'}><li className={pathname.startsWith('/festival') ? styles.selected : undefined }>Festival</li></Link>
+          <Link href={'/community'}><li className={pathname === '/community' ? styles.selected : undefined }>Community</li></Link>
         </ul>
       </div>
       {['festival', 'weekday'].includes(view) && 

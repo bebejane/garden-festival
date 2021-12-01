@@ -18,6 +18,7 @@ export default function Video({provider, providerUid, title, url, thumbnailUrl})
 				type="text/html" 
 				width="100%" 
 				height={height}
+				allowFullscreen
 				allow="autoplay; fullscreen; picture-in-picture" 
 				src={`https://www.youtube.com/embed/${providerUid}?autoplay=0&origin=http://example.com`}
 				frameborder="0"
@@ -31,7 +32,7 @@ export default function Video({provider, providerUid, title, url, thumbnailUrl})
 				height={height}
 				frameborder="0" 
 				allow="autoplay; fullscreen; picture-in-picture" 
-				allowfullscreen 
+				allowFullscreen 
 			/>
 		:
 			<span>Video {provider} not supported!</span>
