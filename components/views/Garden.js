@@ -1,6 +1,7 @@
 import styles from "./Garden.module.scss"
 import Symbol from "../Symbol";
 import cn from "classnames";
+const isDev = process.env.NODE_ENV === 'development'
 
 export default function Garden({events, event, participant, view, symbolSize, bounds}) {
 
@@ -12,7 +13,7 @@ export default function Garden({events, event, participant, view, symbolSize, bo
 				</div>
 			</div>
 			{view === 'garden' && <div className={styles.bounds} style={bounds}></div>}
-			{events && events.map((event, index) => <Symbol event={event} symbolSize={symbolSize}/>)}
+			{events && isDev && events.map((event, index) => <Symbol event={event} symbolSize={symbolSize}/>)}
 		</>
 	);
 }

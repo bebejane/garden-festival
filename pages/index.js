@@ -19,7 +19,6 @@ import { nodesToArray, randomInt } from "lib/utils";
 
 const symbolsPerPage = 16;
 const symbolSize = 200;
-const isDev = process.env.NODE_ENV === 'development'
 
 export default function Home({events, participants, participant, event, dayEvents, weekday, abouts, about, defaultView = 'garden'}) {
   

@@ -8,7 +8,6 @@ export const getStaticProps = withGlobalProps(async ({props, revalidate}) => {
     props:{
       ...props,
       defaultView: 'participants'
-
     },
     revalidate,
   };

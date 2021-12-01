@@ -6,13 +6,8 @@ import Home from "./index"
 export default Home;
 
 export const getStaticProps = withGlobalProps(async (data) => {
-  
   const {
-    context : {
-      params :{
-        slug
-      }
-    },
+    context : { params : { slug }},
     revalidate
   } = data;
   
@@ -28,7 +23,6 @@ export const getStaticProps = withGlobalProps(async (data) => {
     defaultView : event ? 'event' : 'participant',
     defaultEvent : event || null
   }
-  
   return {
     props,
     revalidate
