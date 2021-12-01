@@ -3,11 +3,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  
   width: 100%;
   z-index: 5;
   margin-top:40px;
-  .menu, .programMenu{
+  .menu, .festivalMenu{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -53,8 +52,7 @@
       }
     }
   }
-  
-  .programMenu {
+  .festivalMenu {
     ul{
       font-size: 0.9rem;
       

@@ -22,15 +22,15 @@ export default function Menu({view, onSelectDate, onSelectTimezone, weekday, sho
       <div className={styles.menu} >
         <ul>
           <Link href={'/'}><li className={router.pathname === '/' ? styles.selected : undefined }>Garden</li></Link>
-          <Link href={'/program'}><li className={router.pathname.startsWith('/program') ? styles.selected : undefined }>Festival</li></Link>
-          <Link href={'/participants'}><li className={router.pathname === '/participants' ? styles.selected : undefined }>Community</li></Link>
+          <Link href={'/festival'}><li className={router.pathname.startsWith('/festival') ? styles.selected : undefined }>Festival</li></Link>
+          <Link href={'/community'}><li className={router.pathname === '/community' ? styles.selected : undefined }>Community</li></Link>
         </ul>
       </div>
-      {['program', 'weekday'].includes(view) && 
-        <div className={styles.programMenu}>
+      {['festival', 'weekday'].includes(view) && 
+        <div className={styles.festivalMenu}>
           <ul>
             {eachDayOfInterval({start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE}).map( (d, idx) =>
-              <Link href={`/program/${format(d, 'EEEE').toLowerCase()}`}>
+              <Link href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
                 <li 
                   key={idx} 
                   className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined }

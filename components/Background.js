@@ -7,8 +7,8 @@ import { randomInt } from "/lib/utils";
 
 const defaultViews = {
   garden:{},
-  program:{},
-  participants:{},
+  festival:{},
+  community:{},
   participant:{},
   event:{},
   weekday:{}

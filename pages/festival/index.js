@@ -7,7 +7,7 @@ export const getStaticProps = withGlobalProps(async ({props, revalidate}) => {
   return {
     props:{
       ...props,
-      defaultView: 'participants'
+      defaultView: 'festival'
     },
     revalidate,
   };

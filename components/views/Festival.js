@@ -1,4 +1,4 @@
-import styles from "./Program.module.scss"
+import styles from "./Festival.module.scss"
 import contentStyles from "../Content.module.scss"
 import Button from "../Button";
 import cn from "classnames";
@@ -8,7 +8,7 @@ import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone'
 import { useEffect } from "react";
 import Link from "next/link"
 
-export default function Program({events, dayEvents, participants, date, timeZone, show}) {
+export default function Festival({events, dayEvents, participants, date, timeZone, show}) {
   if(!show) return null
 
   const [appState, setAppState] = useAppState();
@@ -24,7 +24,7 @@ export default function Program({events, dayEvents, participants, date, timeZone
 
   
   let currentDate;
-  const program = (dayEvents || events).sort((a,b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {    
+  const festival = (dayEvents || events).sort((a,b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {    
     let eventDate;
     if(!isSameDay(currentDate, new Date(ev.startTime))){
       currentDate = new Date(ev.startTime);
@@ -42,7 +42,7 @@ export default function Program({events, dayEvents, participants, date, timeZone
             <Link href={`/${ev.participant.slug}/${ev.slug}`}>
               <a>
                 <img 
-                  id={`program-symbol-${ev.id}`}
+                  id={`festival-symbol-${ev.id}`}
                   eventid={ev.id}
                   participantid={ev.participant.id}
                   src={ev.participant.symbol.url} 
@@ -73,10 +73,10 @@ export default function Program({events, dayEvents, participants, date, timeZone
     )
   })
 	return (
-		<div className={styles.program}>
-      <div className={styles.program}>
-        {program}
-      </div>
+		<div className={styles.festival}>
+      
+        {festival}
+      
 		</div>
 	);
 }

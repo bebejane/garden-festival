@@ -2,10 +2,10 @@ import styles from '/styles/Home.module.scss'
 
 import Menu from "/components/Menu"
 import Garden from "/components/views/Garden"
-import Participants from "/components/views/Participants";
+import Community from "/components/views/Community";
 import Participant from "/components/views/Participant";
 import Event from "/components/views/Event";
-import Program from "/components/views/Program";
+import Festival from "/components/views/Festival";
 import Background from "/components/Background"
 import Content from "/components/Content";
 import About from "/components/About";
@@ -37,8 +37,8 @@ export default function Home({events, participants, participant, event, dayEvent
   const toggleView = (view, force) => {
 		if(!ready) return
 		switch (view) {
-			case 'program':
-				toProgram()
+			case 'festival':
+				toFestival()
 				break;
 			case 'weekday':
 				toWeekday()
@@ -49,8 +49,8 @@ export default function Home({events, participants, participant, event, dayEvent
 			case 'participant':
 				toParticipant()
 				break;
-			case 'participants':
-				toParticipants()
+			case 'community':
+				toCommunity()
 				break;
 			case 'event':
 				toEvent()
@@ -229,9 +229,9 @@ export default function Home({events, participants, participant, event, dayEvent
 		return transitionTo(targets, endTargets)
 	};
 	
-	const toProgram = async () => {
+	const toFestival = async () => {
 		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = sortTargetSymbols(targets, document.querySelectorAll("[id^='program-symbol-']"))
+		const endTargets = sortTargetSymbols(targets, document.querySelectorAll("[id^='festival-symbol-']"))
 		/*
 		const eTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');
@@ -250,7 +250,7 @@ export default function Home({events, participants, participant, event, dayEvent
 
 	const toWeekday = async () => {
 		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = document.querySelectorAll("[id^='program-symbol-']")
+		const endTargets = document.querySelectorAll("[id^='festival-symbol-']")
 		
 		const eTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');
@@ -264,9 +264,9 @@ export default function Home({events, participants, participant, event, dayEvent
 		return transitionTo(rTargets, eTargets)
 	};
 	
-	const toParticipants = async () => {
+	const toCommunity = async () => {
 		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = document.querySelectorAll("[id^='participants-symbol-']")
+		const endTargets = document.querySelectorAll("[id^='community-symbol-']")
 
 		const eTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');
@@ -334,8 +334,8 @@ export default function Home({events, participants, participant, event, dayEvent
         popup={['event', 'participant'].includes(view)} 
         abouts={abouts}
       >
-        <Program events={events} dayEvents={dayEvents} weekday={weekday} show={view === 'program' || view === 'weekday'}/>
-        <Participants participants={participants} show={view === 'participants'}/>
+        <Festival events={events} dayEvents={dayEvents} weekday={weekday} show={view === 'festival' || view === 'weekday'}/>
+        <Community participants={participants} show={view === 'community'}/>
         <Participant participant={participant} events={events} show={view === 'participant'}/>
         <Event event={event} show={view === 'event'}/>
       </Content>
