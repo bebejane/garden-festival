@@ -6,9 +6,10 @@ import Community from "/components/views/Community";
 import Participant from "/components/views/Participant";
 import Event from "/components/views/Event";
 import Festival from "/components/views/Festival";
+import About from "/components/views/About";
 import Background from "/components/Background"
 import Content from "/components/Content";
-import About from "/components/About";
+
 
 import { useEffect, useState,  } from "react";
 import { withGlobalProps } from "/lib/utils";

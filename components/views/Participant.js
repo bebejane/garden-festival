@@ -4,7 +4,7 @@ import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
 import { format } from 'date-fns'
-import Button from "../Button";
+import LinkButton from "../LinkButton";
 
 export default function Participant({participant, events : evts, show}) {
   if(!show || !participant) return null
@@ -39,7 +39,7 @@ export default function Participant({participant, events : evts, show}) {
             {format(new Date(ev.startTime), 'EEEE MMMM d, yyyy')}
             <h3>{ev.title}</h3>
             <p>{ev.summary}</p>
-            <Button href={`${ev.participant.slug}/${ev.slug}`}>Go to event</Button>
+            <LinkButton href={`${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
           </div>
         )}
       </div>

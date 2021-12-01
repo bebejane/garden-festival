@@ -2,7 +2,7 @@ import styles from "./Community.module.scss"
 import contentStyles from "../Content.module.scss"
 import cn from "classnames";
 import Link from "next/link"
-import Button from "../Button";
+import LinkButton from "../LinkButton";
 
 export default function Community({participants, show}) {
   if(!show) return null
@@ -34,7 +34,7 @@ export default function Community({participants, show}) {
                 </Link>
               </p>
               <p>
-                <Button href={`/${p.slug}`}>Go to participant</Button>
+                <LinkButton href={`/${p.slug}`}>Go to participant</LinkButton>
               </p>
             </div>
           </div>

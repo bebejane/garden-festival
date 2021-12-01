@@ -1,6 +1,6 @@
 import styles from "./Festival.module.scss"
 import contentStyles from "../Content.module.scss"
-import Button from "../Button";
+import LinkButton from "../LinkButton";
 import cn from "classnames";
 import { useAppState, AppAction } from "/lib/context/appstate"
 import { format, isSameDay } from 'date-fns'
@@ -63,9 +63,9 @@ export default function Festival({events, dayEvents, participants, date, timeZon
               {ev.summary}
             </p>
             <p>
-            <Button href={`/${ev.participant.slug}/${ev.slug}`}>  
+            <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>  
               Go to event
-            </Button>
+            </LinkButton>
             </p>
           </div>
         </div>
