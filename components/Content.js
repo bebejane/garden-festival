@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Footer from "./Footer";
 
-export default function Content({show, children, setShow, setView, popup = false, abouts}) {
+export default function Content({show, children, setShow, setAbout, setView, popup = false, abouts}) {
 	const router = useRouter()
 	return (
 		<>
@@ -13,7 +13,7 @@ export default function Content({show, children, setShow, setView, popup = false
 					{children}
 					{popup && <div className={styles.close} onClick={router.back}>×</div>}
 				</div>
-				<Footer abouts={abouts}/>	
+				<Footer abouts={abouts}/>
 			</div>	
 		</>
 	);

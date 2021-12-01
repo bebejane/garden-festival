@@ -11,22 +11,25 @@ const Symbol = React.forwardRef((props, ref) => {
 	const {event, symbolSize, index} = props
 	const timeout = null;
 	const router = useRouter()
+	const [disabled, setDisabled] = useState(false)
 
 	const togglePopup = ({type, target, target : {id, attributes}}) => {
 		clearTimeout(timeout)
+		if(disabled) return
 		timeout = setTimeout(()=>{
 			const eventId = target.getAttribute('eventid');
 			const popup = document.getElementById(`garden-popup-${eventId}`)
 			const {offsetTop : top, offsetLeft : left, clientWidth: width} = target
-			popup.style.top = `${top-(popup.clientHeight/1.5)}px`;
-			popup.style.left = `${left+width-(50)}px`;
+			popup.style.top = `${top-(symbolSize/1.5)}px`;
+			popup.style.left = `${left+width-(symbolSize/3)}px`;
 			popup.classList.toggle(styles.show, type === 'mouseenter')
 		}, type === 'mouseenter' ? 300 : 0)
-		
 	}
 	const clearPopup = () => {
 		const popup = document.getElementById(`garden-popup-${event.id}`)
 		popup.classList.remove(styles.show)
+		setDisabled(true)
+		setTimeout(()=>setDisabled(false), 1000)
 	}
 	useEffect(() => {
 		router.events.on('routeChangeStart', clearPopup)

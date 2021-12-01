@@ -3,6 +3,7 @@ query GetAbouts {
     id
     position
     title
+    slug
     content {
       value
     }
