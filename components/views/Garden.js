@@ -14,6 +14,7 @@ export default function Garden({events, participant, view, symbolSize, bounds}) 
 			</div>
 			{events && events.map((event, index) => 
 				<Symbol 
+					key={index}
 					index={index} 
 					event={event} 
 					symbolSize={symbolSize}

@@ -10,7 +10,7 @@ export default function Sound({soundcloudUrl}) {
 				width="100%" 
 				height="auto" 
 				scrolling="no" 
-				frameborder="no" 
+				frameBorder="no" 
 			/>
  		</div>
 	);

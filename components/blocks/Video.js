@@ -18,10 +18,10 @@ export default function Video({provider, providerUid, title, url, thumbnailUrl})
 				type="text/html" 
 				width="100%" 
 				height={height}
-				allowFullscreen
+				allowFullScreen
 				allow="autoplay; fullscreen; picture-in-picture" 
 				src={`https://www.youtube.com/embed/${providerUid}?autoplay=0&origin=http://example.com`}
-				frameborder="0"
+				frameBorder="0"
 			/>
 		: provider === 'vimeo' ?  
 			<iframe 
@@ -30,9 +30,9 @@ export default function Video({provider, providerUid, title, url, thumbnailUrl})
 				src={`https://player.vimeo.com/video/${providerUid}`} 
 				width="100%" 
 				height={height}
-				frameborder="0" 
+				frameBorder="0" 
 				allow="autoplay; fullscreen; picture-in-picture" 
-				allowFullscreen 
+				allowFullScreen 
 			/>
 		:
 			<span>Video {provider} not supported!</span>

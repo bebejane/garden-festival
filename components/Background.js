@@ -43,10 +43,11 @@ export default function Background({view}) {
   }, [view])
 	return (	
     <div className={styles.background}>
-      {Object.keys(views).map((name) => 
+      {Object.keys(views).map((name, idx) => 
         <img 
           id={`background-${name}`}
           className={cn(styles.image)} 
+          key={idx}
           ref={(ref)=>handleRef(name, ref)} 
           src={`/images/digitalbatik-${name}.png`} 
         />

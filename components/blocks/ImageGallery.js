@@ -12,22 +12,24 @@ export default function ImageGallery({images}) {
 				showThumbs={true}
 				showStatus={false}
 				dynamicHeight={false}
-				renderThumbs={(children) => images.map((image)=>
-					<div className={styles.thumbWrap}>
+				renderThumbs={(children) => images.map((image, index)=>
+					<div className={styles.thumbWrap} key={index}>
 						<img src={`${image.url}?h=50`} />
 					</div>
 				)}
-				renderIndicator={(onClick, selected)=>{
+				renderIndicator={(onClick, selected, index)=>{
+					console.log(index)
 					return (
 						<span 
+							key={index}
 							className={cn(styles.indicator, selected && styles.selected)} 
 							onClick={onClick}>
 						</span>
 					)
 				}}
 			>
-				{images.map((image)=>
-					<Image data={image.responsiveImage}/>
+				{images.map((image, i)=>
+					<Image key={i} data={image.responsiveImage}/>
 				)}
 			</Carousel>
  		</div>
