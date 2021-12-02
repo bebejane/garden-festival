@@ -16,7 +16,8 @@ import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
 import { nodesToArray, randomInt } from "lib/utils";
-import { vi } from 'date-fns/locale';
+import Path from 'svg-path-generator';
+const SvgPath = require('path-svg/svg-path');
 
 const symbolsPerPage = 16;
 const symbolSize = 200;
@@ -163,7 +164,74 @@ export default function Home({events, participants, participant, event, dayEvent
 		}
 		setPositions(newPositions)
 	}
+/*
+	const transitionTo = async (targets, endTargets, opt = {}) => {
+		
+		if(currentAnimation) currentAnimation.pause()
+		
+		targets = sortTargetsByEventId(targets)
+		endTargets = sortTargetsByEventId(endTargets)
 
+		const defaultDuration = 800;
+		const defaultDelay = 0;
+		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
+
+		const elementByIndex = (i, el) => {
+			const endEl =  Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
+			return endEl
+		}
+		
+		const generatePath = (el, i) => {
+			console.log(el)
+			const b1 = el.getBoundingClientRect()
+			const b2 = elementByIndex(i).getBoundingClientRect()
+
+			console.log(b1.x, b1.y, b2.x, b2.y)
+			var path2 = SvgPath().to(b1).rel().bezier3(b1.x, b1.y, b2.x, b2.y).str();
+			console.log(path2)
+			const p = document.getElementById('svgpath')
+			p.setAttribute('d', path2)
+			
+			const path = Path()
+				.moveTo(b1.x, b1.y)
+				.bezierCurveTo(b2.x, b2.y)
+				.end();
+			console.log(path)
+			
+			return anime.path('#svgpath');
+		}
+		
+		anime.set(lastTargets, {opacity:0})
+		anime.set(endTargets, {opacity:0})
+		anime.set(targets, {opacity:1, zIndex:5})
+		console.log('start', currentView, '>', view)	
+
+		const animation = anime({
+			targets,
+			//left: (el, i) => elementByIndex(i, el).getBoundingClientRect().left,
+			//top: (el, i) => elementByIndex(i, el).getBoundingClientRect().top + window.scrollY,
+			//height: (el, i) =>  elementByIndex(i, el).clientHeight,
+			//width: (el, i) => elementByIndex(i, el).clientWidth,
+			delay: (el, i) => i * defaultDelay,
+			top: (el, i)=> generatePath(el, i),
+			left: (el, i)=> generatePath(el, i),
+			//rotate: (el, i)=> generatePath(el, i),
+			easing: "linear",//"easeOutExpo",
+			scale: 1,
+			duration: 1000,//!currentView ? 0 : defaultDuration,
+			...opt,
+			complete: () =>{
+				anime.set(targets, {opacity:0, zIndex:0})
+				anime.set(endTargets, {opacity:1})
+				setCurrentAnimation(undefined)
+				setCurrentView(view);
+				console.log('complete', currentView, '>', view)		
+			}
+		})
+		setCurrentAnimation(animation)
+		return animation.finished
+	}
+	*/
 	const transitionTo = async (targets, endTargets, opt = {}) => {
 		
 		if(currentAnimation) currentAnimation.pause()
@@ -191,7 +259,7 @@ export default function Home({events, participants, participant, event, dayEvent
 			height: (el, i) =>  elementByIndex(i, el).clientHeight,
 			width: (el, i) => elementByIndex(i, el).clientWidth,
 			delay: (el, i) => i * defaultDelay,
-			easing: "easeOutExpo",
+			easing: "easeInOutQuad",//"easeOutExpo",
 			scale: 1,
 			duration: !currentView ? 0 : defaultDuration,
 			...opt,
@@ -206,6 +274,7 @@ export default function Home({events, participants, participant, event, dayEvent
 		setCurrentAnimation(animation)
 		return animation.finished
 	}
+	
 	const sortTargetsByEventId = (targets) => {
 		return nodesToArray(targets).sort((a, b)=>parseInt(a.getAttribute('eventid')) < parseInt(b.getAttribute('eventid')))
 	}

@@ -28,7 +28,11 @@ export default function Menu({view, onSelectDate, onSelectTimezone, weekday, sho
       </div>
       {['festival', 'weekday'].includes(view) && 
         <div className={styles.festivalMenu}>
+          
           <ul>
+            <Link href={`/festival/pre-party`}>
+              <li className={weekday === 'pre-party' ? styles.selected : undefined }>Pre<br/>Party</li>
+            </Link>
             {eachDayOfInterval({start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE}).map( (d, idx) =>
               <Link href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
                 <li 
@@ -39,7 +43,10 @@ export default function Menu({view, onSelectDate, onSelectTimezone, weekday, sho
                 </li>
               </Link>
             )}
-            <TimeZoneDropdown setTimezone={setTimezone} tz={tz} />
+            <Link href={`/festival/after-party`}>
+              <li className={weekday === 'after-party' ? styles.selected : undefined }>After<br/>Party</li>
+            </Link>
+            {/*<TimeZoneDropdown setTimezone={setTimezone} tz={tz} />*/}
           </ul>  
         </div>
         }
