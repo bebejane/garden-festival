@@ -23,9 +23,8 @@ export async function getStaticPaths() {
   const {abouts} = await apiQuery(GetAbouts, {}, false);
   const paths = [];
   
-  abouts.forEach(a => {
-    paths.push({ params: { slug: [a.slug] }})
-  })
+  abouts.forEach(a => paths.push({ params: { slug: [a.slug] }}))
+
   return {
 		paths:paths,
 		fallback: true,

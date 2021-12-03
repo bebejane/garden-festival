@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default function Footer({abouts, setAbout}) {
 	return (
-		<div className={styles.footer}>
+		<footer className={styles.footer}>
 			<ul>
 				{abouts && abouts.map((a, idx) =>
 					<Link key={idx} href={`/about/${a.slug}`}>
@@ -13,6 +13,6 @@ export default function Footer({abouts, setAbout}) {
 					</Link>
 				)}
 			</ul>
-		</div>
+		</footer>
 	);
 }

@@ -10,12 +10,14 @@ import About from "/components/views/About";
 import Background from "/components/Background"
 import Content from "/components/Content";
 
+import cn from 'classnames';
 import { useEffect, useState,  } from "react";
 import { withGlobalProps } from "/lib/utils";
 import anime from "animejs";
 import useVisibility from "lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
 import { nodesToArray, randomInt } from "lib/utils";
+
 import Path from 'svg-path-generator';
 const SvgPath = require('path-svg/svg-path');
 
@@ -383,13 +385,22 @@ export default function Home({events, participants, participant, event, dayEvent
 
 	return (
     <div className={styles.container}>
-      <Menu view={view} setView={setView} weekday={weekday}/>      
+      <Menu 
+				view={view} 
+				setView={setView} 
+				weekday={weekday}
+			/>
       <Content 
         show={view !== 'garden'}  
         popup={['event', 'participant'].includes(view)} 
         abouts={abouts}
       >
-        <Festival events={events} dayEvents={dayEvents} weekday={weekday} show={view === 'festival' || view === 'weekday'}/>
+        <Festival 
+					show={view === 'festival' || view === 'weekday'}
+					events={events} 
+					dayEvents={dayEvents} 
+					weekday={weekday}
+				/>
         <Community participants={participants} show={view === 'community'}/>
         <Participant participant={participant} events={events} show={view === 'participant'}/>
         <Event event={event} show={view === 'event'}/>
@@ -402,8 +413,8 @@ export default function Home({events, participants, participant, event, dayEvent
         symbolSize={symbolSize}
         bounds={bounds}
       />
-      <About about={about}/>
-      <Background view={view} />
+			<About about={about}/>
+			<Background view={view} />
     </div>
   )
 }

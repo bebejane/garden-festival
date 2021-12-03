@@ -16,3 +16,11 @@ query GetEvents {
     ...EventFragmentLight
   }
 }
+query GetEventsByRange($startTime: String, $endTime: String ) {
+  events: allEventst(filter : { 
+    startTime: { ge: $startTime }, 
+    endTime: { le: $endTime }, 
+  }) {
+    ...EventFragmentLight
+  }
+}

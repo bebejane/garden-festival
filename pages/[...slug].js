@@ -16,15 +16,16 @@ export const getStaticProps = withGlobalProps(async (data) => {
   const { participant } = await apiQuery(GetParticipantBySlug, {slug:participantSlug});
   const { event } = eventSlug ? await apiQuery(GetEventBySlug, {slug:eventSlug}) : {};
   
-  const props = {
-    ...data.props,
-    participant,
-    event : event || null,
-    defaultView : event ? 'event' : 'participant',
-    defaultEvent : event || null
-  }
+  if(!event && !participant) return { notFound: true } 
+
   return {
-    props,
+    props :{
+      ...data.props,
+      participant,
+      event : event || null,
+      defaultView : event ? 'event' : 'participant',
+      defaultEvent : event || null
+    },
     revalidate
   };
 });

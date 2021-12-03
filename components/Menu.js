@@ -19,16 +19,15 @@ export default function Menu({view, onSelectDate, onSelectTimezone, weekday, sho
   
 	return (
 		<div id="menu" className={styles.container} >
-      <div className={styles.menu} >
+      <nav className={styles.menu} >
         <ul>
           <Link href={'/'}><li className={pathname === '/' ? styles.selected : undefined }>Garden</li></Link>
           <Link href={'/festival'}><li className={pathname.startsWith('/festival') ? styles.selected : undefined }>Festival</li></Link>
           <Link href={'/community'}><li className={pathname === '/community' ? styles.selected : undefined }>Community</li></Link>
         </ul>
-      </div>
+      </nav>
       {['festival', 'weekday'].includes(view) && 
-        <div className={styles.festivalMenu}>
-          
+        <nav className={styles.festivalMenu}>
           <ul>
             <Link href={`/festival/pre-party`}>
               <li className={weekday === 'pre-party' ? styles.selected : undefined }>Pre<br/>Party</li>
@@ -48,7 +47,7 @@ export default function Menu({view, onSelectDate, onSelectTimezone, weekday, sho
             </Link>
             {/*<TimeZoneDropdown setTimezone={setTimezone} tz={tz} />*/}
           </ul>  
-        </div>
+        </nav>
         }
 		</div>
 	);
