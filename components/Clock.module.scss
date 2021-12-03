@@ -1,0 +1,61 @@
+$size: 90px;
+
+.clock{
+  position: fixed;
+  top:0;
+  left:0;
+  margin:20px;
+  z-index: 10;
+  width: $size;
+  height: $size;
+  transform: rotate(-90deg);
+  .circle{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 4px solid #000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    .center {
+      width: 8px;
+      height: 8px;
+      background-color: #000;
+      border-radius: 50%;
+    }
+  }
+  .hour, .minute, .second{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 50%;
+    height: 1px;
+    transition: transform 0.2s linear;
+  }
+  .hour{
+    background-color: #000;
+    width: 44%;
+    border-radius:2px;
+    transform-origin: math.div($size, 2) math.div($size, 2);
+    transform: rotate(0deg) translateY(math.div($size, 2)) translateX(math.div($size, 2)) ;
+  }
+  .minute{
+    background-color: #000;
+    width: 50%;
+    width: 44%;
+    border-radius: 2px;
+    transform-origin:  math.div($size, 2) math.div($size, 2);
+    transform: rotate(0deg) translateY(math.div($size, 2)) translateX(math.div($size, 2)) ;
+  }
+  .second{
+    background-color: #000;
+    top:0px;
+    width: 40%;
+    border-radius: 0%;
+    transform-origin:  math.div($size, 2) math.div($size, 2);
+    transform: rotate(95deg) translateY(math.div($size, 2)) translateX(math.div($size, 2)) ;
+  }
+
+}

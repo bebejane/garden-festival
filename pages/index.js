@@ -9,6 +9,7 @@ import Festival from "/components/views/Festival";
 import About from "/components/views/About";
 import Background from "/components/Background"
 import Content from "/components/Content";
+import Clock from '/components/Clock';
 
 import { useEffect, useState,  } from "react";
 import { withGlobalProps } from "/lib/utils";
@@ -414,6 +415,7 @@ export default function Home(props) {
         symbolSize={symbolSize}
         bounds={bounds}
       />
+			<Clock/>
 			<About about={about}/>
 			<Background view={view} />
     </div>
