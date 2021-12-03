@@ -27,9 +27,8 @@ export default function Background({view}) {
     const next = document.getElementById(`background-${view}`)
     const rest = document.querySelectorAll(`.${styles.image}:not([id='${next?.id}']):not([id='${last?.id}'])`)
     setLastView(view)
-
     anime.set(rest, {opacity:0, rotate:0, scale:1})    
-    anime({targets:next, opacity:1, easing:'easeInOutQuad', duration:2000})
+    anime({targets:next, opacity:1, easing:'easeInOutQuad', duration: !last ? 0 : 2000})
     await anime({
       targets:last, 
       opacity:0, 
