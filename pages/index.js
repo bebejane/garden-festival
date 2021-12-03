@@ -10,13 +10,12 @@ import About from "/components/views/About";
 import Background from "/components/Background"
 import Content from "/components/Content";
 
-import cn from 'classnames';
 import { useEffect, useState,  } from "react";
 import { withGlobalProps } from "/lib/utils";
 import anime from "animejs";
-import useVisibility from "lib/hooks/useVisibility";
+import useVisibility from "/lib/hooks/useVisibility";
 import { useWindowSize, useDebounce  } from "rooks";
-import { nodesToArray, randomInt } from "lib/utils";
+import { nodesToArray, randomInt } from "/lib/utils";
 
 import Path from 'svg-path-generator';
 const SvgPath = require('path-svg/svg-path');
@@ -24,7 +23,18 @@ const SvgPath = require('path-svg/svg-path');
 const symbolsPerPage = 16;
 const symbolSize = 200;
 
-export default function Home({events, participants, participant, event, dayEvents, weekday, abouts, about, defaultView = 'garden'}) {
+export default function Home(props) {
+	const {
+		events,
+		participants,
+		participant,
+		event,
+		dayEvents,
+		weekday,
+		abouts,
+		about,
+		defaultView = "garden",
+	} = props;
   
 	const [view, setView] = useState()
   const [bounds, setBounds] = useState({});
@@ -337,22 +347,13 @@ export default function Home({events, participants, participant, event, dayEvent
 	const toParticipant = async () => {
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
-		console.log(targets, endTarget)
 		return transitionTo(targets, endTarget)
 	};
 
 	const toEvent = async () => {
-		const targets = document.querySelectorAll(`[id^='symbol-']:not([eventid='${event.id}'])`)
-		const endTargets = document.querySelectorAll(`[id^='event-symbol-']:not([eventid='${event.id}'])`)
 		const target = document.getElementById(`symbol-${event.id}`)
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
-		
-		if(!target)
-			anime.set(endTarget, {opacity:1})
-		else
-			transitionTo([target], [endTarget])
-
-		transitionTo(targets, targets, {scale:0})
+		!target ? anime.set(endTarget, {opacity:1}) : transitionTo([target], [endTarget])
 	};
 
 	useEffect(()=> setBounds(getBounds()), [innerWidth])
@@ -403,7 +404,7 @@ export default function Home({events, participants, participant, event, dayEvent
 				/>
         <Community participants={participants} show={view === 'community'}/>
         <Participant participant={participant} events={events} show={view === 'participant'}/>
-        <Event event={event} show={view === 'event'}/>
+        <Event event={event} events={events} show={view === 'event'}/>
       </Content>
       <Garden  
         participant={participant} 
