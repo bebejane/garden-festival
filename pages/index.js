@@ -257,7 +257,8 @@ export default function Home(props) {
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
 
 		const elementByIndex = (i, el) => {
-			return Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
+			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
+			return target;
 		}
 		
 		anime.set(lastTargets, {opacity:0})
@@ -267,7 +268,7 @@ export default function Home(props) {
 		
 		const animation = anime({
 			targets,
-			left: (el, i) => elementByIndex(i, el).getBoundingClientRect().left,
+			left: (el, i) => elementByIndex(i, el).getBoundingClientRect().left + window.scrollX,
 			top: (el, i) => elementByIndex(i, el).getBoundingClientRect().top + window.scrollY,
 			height: (el, i) =>  elementByIndex(i, el).clientHeight,
 			width: (el, i) => elementByIndex(i, el).clientWidth,

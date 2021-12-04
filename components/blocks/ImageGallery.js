@@ -17,16 +17,13 @@ export default function ImageGallery({images}) {
 						<img src={`${image.url}?h=50`} />
 					</div>
 				)}
-				renderIndicator={(onClick, selected, index)=>{
-					console.log(index)
-					return (
+				renderIndicator={(onClick, selected, index)=>
 						<span 
 							key={index}
 							className={cn(styles.indicator, selected && styles.selected)} 
 							onClick={onClick}>
 						</span>
-					)
-				}}
+					}
 			>
 				{images.map((image, i)=>
 					<Image key={i} data={image.responsiveImage}/>
