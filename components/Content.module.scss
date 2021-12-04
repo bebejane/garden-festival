@@ -49,6 +49,7 @@ $top-margin: 90px;
 		border-bottom-left-radius: 0px;
 		border-bottom-right-radius: 0px;
 		transition: transform 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);	
+		
 		transition-delay: 0s;
 		transform: translateY(100%);
 		&.show {

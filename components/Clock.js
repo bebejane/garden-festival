@@ -36,13 +36,13 @@ const generateStyles = (style) => {
 
 export default function Clock() {
 
-  const [ref, hovering] = useHover()
+  const [ ref, hovering ] = useHover()
+  const [ didHover, setDidHover ] = useState(false)
   const [ style, setStyle ] = useState(generateStyles(defaultStyles))
   const { start, stop } = useInterval(() => setStyle(generateStyles(style)), 1000);  
-  useEffect(()=> {
-    start()
-    //return stop
-  }, [])
+
+  useEffect(()=> {start(); return stop;}, [])
+  useEffect(()=> hovering && !didHover && setDidHover(true), [hovering])
 
   const getAngle = (cx, cy, ex, ey) => {
     var dy = ey - cy;
@@ -72,7 +72,6 @@ export default function Clock() {
     return coords;
   }
   
-
 	return (
     <div className={styles.container}>
       <div className={styles.clock} ref={ref}>
@@ -99,7 +98,7 @@ export default function Clock() {
         <div className={styles.second} style={style.second}></div>
         
       </div>
-      <div className={cn(styles.countdown, hovering ? styles.show :  styles.hide)}>
+      <div className={cn(styles.countdown, hovering ? styles.show : didHover && styles.hide)}>
         {differenceInDays(FESTIVAL_START_DATE, new Date())} days and {FESTIVAL_START_DATE.getHours()} hours to go!
       </div>
     </div>

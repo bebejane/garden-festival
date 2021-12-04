@@ -1,16 +1,17 @@
 import styles from "./Content.module.scss"
-import cn from "classnames";
-import Link from "next/link";
-import { useRouter} from "next/router";
-import {useState, useEffect, useLayoutEffect } from 'react'
-
 import Footer from "./Footer";
+import cn from "classnames";
+import { useRouter} from "next/router";
+import { useState, useEffect, useLayoutEffect } from 'react'
+
+const useIsomorphicLayoutEffect = process.browser ? useLayoutEffect : useEffect
 
 export default function Content({show, children, setShow, setAbout, setView, popup = false, abouts}) {
 	const router = useRouter()
-	const [slideUp, setSlideUp] = useState(false)
+	const [slideUp, setSlideUp] = useState()
+	const [isDirectLink, setIsDirectLink] = useState(false)
 
-	useLayoutEffect(() => {
+	useIsomorphicLayoutEffect(() => {
 		setTimeout(()=>setSlideUp(popup), 100)
 		return () => {}
 	}, [popup])
@@ -22,7 +23,7 @@ export default function Content({show, children, setShow, setAbout, setView, pop
 					{children}
 				</div>
 			:
-				<div className={cn(styles.contentPopup, slideUp && styles.show)}>
+				<div className={cn(styles.contentPopup, slideUp && styles.show)} style={isDirectLink ? {transitionDuration:'0s'} : {}}>
 					{children}
 					<div className={styles.close} onClick={router.back}>×</div>
 				</div>
