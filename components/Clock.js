@@ -105,7 +105,7 @@ export default function Clock() {
         
       </div>
       <div className={cn(styles.countdown, hovering ? styles.show : didHover && styles.hide)}>
-        {differenceInDays(FESTIVAL_START_DATE, new Date())} days and {FESTIVAL_START_DATE.getHours()} hours to go!
+        {differenceInDays(FESTIVAL_START_DATE, new Date())} days and {FESTIVAL_START_DATE.getHours()} hours to go
       </div>
     </div>
 	);
