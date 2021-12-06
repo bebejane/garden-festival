@@ -10,11 +10,11 @@
     width:300px;
     height:300px;
   }
-  
   &[hidden=true]{
     visibility: hidden;
   }
   .related{
+    margin-top:2rem;
     .relatedEvent{
       margin-bottom:2rem;
     }

@@ -1,7 +1,7 @@
 import { FESTIVAL_START_DATE } from "lib/utils/constant";
 import styles from "./Clock.module.scss"
 import cn from 'classnames';
-import React, { useState, useEffect, useRef, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import { useInterval } from "rooks";
 import { differenceInDays, differenceInHours } from "date-fns";
 import { useHover } from "lib/hooks";
@@ -21,6 +21,34 @@ const defaultStyles = {
   }
 }
 
+const getAngle = (cx, cy, ex, ey) => {
+  var dy = ey - cy;
+  var dx = ex - cx;
+  var theta = Math.atan2(dy, dx); // range (-PI, PI]
+  theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
+  //if (theta < 0) theta = 360 + theta; // range [0, 360)
+  return theta;
+}
+
+const generateTicks = () => {
+  const centerX = (clockSize-(clockBorder*2))/2
+  const centerY = (clockSize-(clockBorder*2))/2
+  const radius = (clockSize-(clockBorder))/2
+  const steps = 60;
+  const coords = []
+
+  for (var i = 1, angle = 90; i <= steps; i++) {
+    //if([1,14,30,45].includes(i))
+      coords.push({
+        x: (centerX + radius * Math.cos(2 * Math.PI * i / steps)),
+        y: (centerY + radius * Math.sin(2 * Math.PI * i / steps)),
+        a: getAngle((centerX + radius * Math.cos(2 * Math.PI * i / steps)), (centerY + radius * Math.sin(2 * Math.PI * i / steps)), centerX, centerY)
+      })
+  }
+  
+  return coords;
+}
+
 
 const generateStyles = (style) => {
   const d = new Date()
@@ -38,43 +66,21 @@ export default function Clock() {
 
   const [ ref, hovering ] = useHover()
   const [ didHover, setDidHover ] = useState(false)
-  const [ style, setStyle ] = useState(generateStyles(defaultStyles))
+  const [ show, setShow ] = useState(false)
+  const [ style, setStyle ] = useState({})
   const { start, stop } = useInterval(() => setStyle(generateStyles(style)), 1000);  
 
-  useEffect(()=> {start(); return stop;}, [])
+  useEffect(()=> {
+    start(); 
+    setShow(true);
+    setStyle(generateStyles(defaultStyles))
+    return stop;
+  }, [])
   useEffect(()=> hovering && !didHover && setDidHover(true), [hovering])
 
-  const getAngle = (cx, cy, ex, ey) => {
-    var dy = ey - cy;
-    var dx = ex - cx;
-    var theta = Math.atan2(dy, dx); // range (-PI, PI]
-    theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
-    //if (theta < 0) theta = 360 + theta; // range [0, 360)
-    return theta;
-  }
-  
-  const generateTicks = () => {
-    const centerX = (clockSize-(clockBorder*2))/2
-    const centerY = (clockSize-(clockBorder*2))/2
-    const radius = (clockSize-(clockBorder))/2
-    const steps = 60;
-    const coords = []
-
-    for (var i = 1, angle = 90; i <= steps; i++) {
-      //if([1,14,30,45].includes(i))
-        coords.push({
-          x: (centerX + radius * Math.cos(2 * Math.PI * i / steps)),
-          y: (centerY + radius * Math.sin(2 * Math.PI * i / steps)),
-          a: getAngle((centerX + radius * Math.cos(2 * Math.PI * i / steps)), (centerY + radius * Math.sin(2 * Math.PI * i / steps)), centerX, centerY)
-        })
-    }
-    
-    return coords;
-  }
-  
 	return (
     <div className={styles.container}>
-      <div className={styles.clock} ref={ref}>
+      <div className={cn(styles.clock, show && styles.show)} ref={ref}>
         <div className={styles.circle}>
           <div className={styles.center}></div>
           <div className={styles.marks}>

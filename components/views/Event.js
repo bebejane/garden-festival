@@ -8,7 +8,7 @@ import LinkButton from "/components/LinkButton";
 export default function Event({event, events, show}) {
   if(!event) return null
 
-  const related = events.filter((ev) => ev.participant.id === event.participant.id)
+  const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
 
 	return (
 		<div className={cn(styles.event, !show && styles.hide)}>
@@ -19,7 +19,7 @@ export default function Event({event, events, show}) {
         <StructuredContent content={event.content}/>
         <div className={styles.related}>
           <h2>Related</h2>
-          {related.map((ev)=>
+          {related.length ? related.map((ev)=>
             <div className={styles.relatedEvent}>
               <h3>{ev.title}</h3>
               <p>{ev.summary}</p>
@@ -27,7 +27,9 @@ export default function Event({event, events, show}) {
               <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
               </p>
             </div>
-          )}
+          ):
+            <span>There are now realted events...</span>
+          }
         </div>
       </div>
       <div className={styles.symbol}>
