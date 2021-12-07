@@ -55,6 +55,7 @@ const generateStyles = (style) => {
   const h = (d.getHours()/12)*360
   const m = (d.getMinutes()/60)*360
   const s = (d.getSeconds()/60)*360
+  
   return {
     hour: {...style.hour, transform: `rotate(${h}deg) translateY(${(clockSize - style.hour.height)/2}px) translateX(${clockSize/2}px)`},
     minute: {...style.minute, transform: `rotate(${m}deg) translateY(${(clockSize - style.minute.height)/2}px) translateX(${clockSize/2}px)`},
@@ -102,7 +103,6 @@ export default function Clock() {
         <div className={styles.hour} style={style.hour}></div>
         <div className={styles.minute} style={style.minute}></div>
         <div className={styles.second} style={style.second}></div>
-        
       </div>
       <div className={cn(styles.countdown, hovering ? styles.show : didHover && styles.hide)}>
         {differenceInDays(FESTIVAL_START_DATE, new Date())} days and {FESTIVAL_START_DATE.getHours()} hours to go

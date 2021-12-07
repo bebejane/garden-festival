@@ -33,7 +33,7 @@ const Symbol = ((props) => {
 		const popup = document.getElementById(`garden-popup-${event.id}`)
 		popup.classList.remove(styles.show)
 		setDisabled(true)
-		setTimeout(()=>setDisabled(false), 1000)
+		setTimeout(()=>setDisabled(false), 2000)
 	}
 	useEffect(() => {
 		router.events.on('routeChangeStart', disablePopup)
