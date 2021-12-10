@@ -11,25 +11,18 @@
     flex-direction: column;
     position: relative;
     max-width: 100%;
-    //transition: all 1s;
+    overflow: hidden;
+    transition: height .25s ease;
     caption {
-      
       padding-left: $space;
       padding-right: $space;
       padding-top: 1em;
       top: 0;
       left: 0;
       width: 100%;
-      text-align: left;
-      overflow: hidden;
-      transform: scaleY(0);
-      max-height: 0;
-      transform-origin: top;
-      transition: transform 0s ease;
-      &.show {
-        transition: transform 0.2s ease;
-        max-height: unset;
-        transform: scaleY(1);
+      display: none;
+      &.show{ 
+        display: block;
       }
     }
   }

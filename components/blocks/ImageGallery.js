@@ -3,10 +3,14 @@ import cn from "classnames";
 import Image from "./Image";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function ImageGallery({ images }) {
+export default function ImageGallery({ images,  id }) {
+	
 	const [index, setIndex] = useState(0)
+	const [captionHeight, setCaptionHeight] = useState()
+
+	useEffect(()=>setCaptionHeight(document.querySelectorAll(`#ig-${id} > caption`)[index]?.clientHeight), [index])
 	
 	return (
 		<section className={styles.imageGallery}>
@@ -32,9 +36,15 @@ export default function ImageGallery({ images }) {
 					<Image key={i} data={image} showCaption={false} />
 				)}
 			</Carousel>
-			<div className={styles.captions}>
+			<div 
+				className={styles.captions}
+				id={`ig-${id}`}
+				style={{height: captionHeight || 'auto'}}
+			>
 				{images.map((image, i) =>
-					<caption className={i === index && styles.show}>{image.title}</caption>
+					<caption className={cn(styles.caption, i === index && styles.show)}>
+						{image.title}
+					</caption>
 				)}
 			</div>
 		</section>
