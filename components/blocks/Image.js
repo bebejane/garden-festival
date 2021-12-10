@@ -7,7 +7,7 @@ export default function Image({ data, explicitWidth }) {
 	return (
 		<figure className={styles.image}>
 			<DatoImage data={responsiveImage} explicitWidth={explicitWidth} />
-			<caption classNam={styles.caption}>{title}</caption>
+			<caption className={styles.caption}>{title}</caption>
 		</figure>
 	);
 }

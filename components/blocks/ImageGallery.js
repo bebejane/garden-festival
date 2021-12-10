@@ -26,7 +26,7 @@ export default function ImageGallery({ images }) {
 				}
 			>
 				{images.map((image, i) =>
-					<Image key={i} data={image.responsiveImage} />
+					<Image key={i} data={image} />
 				)}
 			</Carousel>
 		</div>
