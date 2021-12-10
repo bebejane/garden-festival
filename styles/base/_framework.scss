@@ -7,6 +7,15 @@ article {
   }
 }
 
+.textWidth {
+  padding-left: $outer-margin;
+  padding-right: $outer-margin;
+}
+
+.fullWidth {
+  margin: $space;
+}
+
 .rounded {
   border: $line;
   border-radius: 20px;

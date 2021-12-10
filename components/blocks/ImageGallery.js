@@ -11,7 +11,7 @@ export default function ImageGallery({ images }) {
 			<Carousel
 				showThumbs={false}
 				showStatus={false}
-				dynamicHeight={true}
+				dynamicHeight={false}
 				renderThumbs={(children) => images.map((image, index) =>
 					<div className={styles.thumbWrap} key={index}>
 						<img src={`${image.url}?h=50`} />
