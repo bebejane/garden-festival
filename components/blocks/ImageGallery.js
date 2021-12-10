@@ -6,9 +6,8 @@ import { Carousel } from 'react-responsive-carousel';
 import { useState } from "react";
 
 export default function ImageGallery({ images }) {
-
 	const [index, setIndex] = useState(0)
-
+	
 	return (
 		<section className={styles.imageGallery}>
 			<Carousel

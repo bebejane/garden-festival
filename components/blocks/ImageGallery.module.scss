@@ -7,11 +7,11 @@
   width: 100%;
 
   .captions {
+    display: flex;
+    flex-direction: column;
     position: relative;
     max-width: 100%;
-
     caption {
-      display: none;
       padding-left: $space;
       padding-right: $space;
       padding-top: 1em;
@@ -19,12 +19,18 @@
       left: 0;
       width: 100%;
       text-align: left;
+      transition: max-height 0s linear;
+      overflow: hidden;
+      max-height: 0px;
+      
       &.show {
-        display: block;
+        transition: max-height 1s linear;
+        opacity: 1;
+        max-height: 1000px;
+        
       }
     }
   }
-
   .indicator {
     display: inline-block;
     width: 20px;
