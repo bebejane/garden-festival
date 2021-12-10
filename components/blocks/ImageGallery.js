@@ -5,7 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 
 export default function ImageGallery({ images }) {
-
+	console.log(images)
 	return (
 		<div className={styles.imageGallery}>
 			<Carousel
