@@ -1,11 +1,29 @@
 .imageGallery{
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   max-width: 100%;
   width:100%;
-  
+  .captions{
+    position: relative;
+    max-width: 100%;
+    
+    caption{
+      display: none;
+      padding-left: $space;
+      padding-right: $space;
+      margin-bottom: 20px;
+      top:0;
+      left:0;
+      width:100%;
+      text-align: left;
+      &.show{
+        display: block;
+      }
+    }
+  }
+    
   .thumbWrap{
     display: flex;
     justify-content: center;
