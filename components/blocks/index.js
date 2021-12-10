@@ -15,7 +15,7 @@ export default function StructuredContent({ content }) {
         renderBlock={({ record }) => {
           switch (record.__typename) {
             case 'ImageRecord':
-              return <Image data={{ ...record.image.responsiveImage, title: record.image.title }} />;
+              return <Image data={record.image} />;
             case 'ImageGalleryRecord':
               return <ImageGallery {...record} />;
             case 'ExternalLinkRecord':

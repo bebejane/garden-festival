@@ -3,10 +3,10 @@ import cn from "classnames";
 import { Image as DatoImage } from 'react-datocms'
 
 export default function Image({ data, explicitWidth }) {
-	const { title } = data;
+	const { title, responsiveImage } = data;
 	return (
 		<figure className={styles.image}>
-			<DatoImage data={data} explicitWidth={explicitWidth} />
+			<DatoImage data={responsiveImage} explicitWidth={explicitWidth} />
 			<caption classNam={styles.caption}>{title}</caption>
 		</figure>
 	);
