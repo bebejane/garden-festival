@@ -6,16 +6,16 @@ import { Carousel } from 'react-responsive-carousel';
 import { useState } from "react";
 
 export default function ImageGallery({ images }) {
-	
+
 	const [index, setIndex] = useState(0)
-	
+
 	return (
-		<div className={styles.imageGallery}>
+		<section className={styles.imageGallery}>
 			<Carousel
 				showThumbs={false}
 				showStatus={false}
 				dynamicHeight={false}
-				onChange={(i)=> setIndex(i)}
+				onChange={(i) => setIndex(i)}
 				renderThumbs={(children) => images.map((image, index) =>
 					<div className={styles.thumbWrap} key={index}>
 						<img src={`${image.url}?h=50`} />
@@ -30,7 +30,7 @@ export default function ImageGallery({ images }) {
 				}
 			>
 				{images.map((image, i) =>
-					<Image key={i} data={image} showCaption={false}/>
+					<Image key={i} data={image} showCaption={false} />
 				)}
 			</Carousel>
 			<div className={styles.captions}>
@@ -38,6 +38,6 @@ export default function ImageGallery({ images }) {
 					<caption className={i === index && styles.show}>{image.title}</caption>
 				)}
 			</div>
-		</div>
+		</section>
 	);
 }

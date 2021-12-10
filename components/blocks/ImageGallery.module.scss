@@ -1,55 +1,40 @@
-.imageGallery{
+.imageGallery {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   max-width: 100%;
-  width:100%;
-  .captions{
+  width: 100%;
+
+  .captions {
     position: relative;
     max-width: 100%;
-    
-    caption{
+
+    caption {
       display: none;
       padding-left: $space;
       padding-right: $space;
-      margin-bottom: 20px;
-      top:0;
-      left:0;
-      width:100%;
+      padding-top: 1em;
+      top: 0;
+      left: 0;
+      width: 100%;
       text-align: left;
-      &.show{
+      &.show {
         display: block;
       }
     }
   }
-    
-  .thumbWrap{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border:1px solid rgb(208, 208, 208);
-    padding:10px;
-    max-width: 70px;
-    max-height: 70px;
-    cursor: pointer;
-    &.selected{
-      border:1px solid rgb(169, 169, 169);
-    }
-    img{
-      width:auto;
-      height: 50px;
-    }
-  }
-  .indicator{
+
+  .indicator {
     display: inline-block;
     width: 20px;
     height: 20px;
-    margin-right: 2px;
-    border: 1px solid rgb(230, 230, 230);
+    border-radius: 10px;
     cursor: pointer;
-    &.selected{
-      background-color: rgb(198, 198, 198);
+    border: 1px solid white;
+    margin-right: 0.5em;
+    &.selected {
+      background-color: rgb(253, 0, 0);
     }
   }
 }

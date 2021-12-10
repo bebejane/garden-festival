@@ -1,0 +1,6 @@
+.mainContent {
+  figure + p,
+  section + p {
+    margin-top: $space;
+  }
+}

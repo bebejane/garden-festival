@@ -5,11 +5,13 @@ import ExternalLink from './ExternalLink'
 import Image from './Image'
 import ImageGallery from './ImageGallery'
 import Video from './Video'
+import styles from "./index.module.scss"
+
 
 export default function StructuredContent({ content }) {
 
   return (
-    <article>
+    <article className={styles.mainContent}>
       <StructuredText
         data={content}
         renderBlock={({ record }) => {
