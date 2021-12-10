@@ -5,40 +5,44 @@ import { format } from "date-fns";
 import StructuredContent from "/components/blocks"
 import LinkButton from "/components/LinkButton";
 
-export default function Event({event, events, show}) {
-  if(!event) return null
+export default function Event({ event, events, show }) {
+  if (!event) return null
 
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
 
-	return (
-		<div className={cn(styles.event, !show && styles.hide)}>
+  return (
+    <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
-        <h1>{event.title}</h1>
-        {format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}
-        <p>{event.summary}</p>
-        <StructuredContent content={event.content}/>
-        <div className={styles.related}>
-          <h2>Related</h2>
-          {related.length ? related.map((ev)=>
-            <div className={styles.relatedEvent}>
-              <h3>{ev.title}</h3>
-              <p>{ev.summary}</p>
-              <p>
-              <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
-              </p>
-            </div>
-          ):
-            <span>There are now realted events...</span>
-          }
-        </div>
+        <header className="contentHeader roundedContent">
+          <section className="rounded meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
+          <h1>{event.title}</h1>
+          <div className={styles.symbol}>
+            <img
+              id={`event-symbol-${event?.id}`}
+              src={event.participant.symbol.url}
+              className={cn(styles.symbol, contentStyles.placeholderSymbol)}
+            />
+          </div>
+        </header>
+        <section className="roundedContent">
+          <p className="summary">{event.summary}</p>
+          <StructuredContent content={event.content} />
+          <div className={styles.related}>
+            <h2>Related</h2>
+            {related.length ? related.map((ev) =>
+              <div className={styles.relatedEvent}>
+                <h3>{ev.title}</h3>
+                <p>{ev.summary}</p>
+                <p>
+                  <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
+                </p>
+              </div>
+            ) :
+              <span>There are now realted events...</span>
+            }
+          </div>
+        </section>
       </div>
-      <div className={styles.symbol}>
-        <img 
-          id={`event-symbol-${event?.id}`} 
-          src={event.participant.symbol.url} 
-          className={cn(styles.symbol, contentStyles.placeholderSymbol)}
-        />
-      </div>
-		</div>
-	);
+    </div>
+  );
 }

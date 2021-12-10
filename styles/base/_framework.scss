@@ -1,27 +1,55 @@
 @use "sass:math";
 
-button {
-  $height: 200px;
-  border-radius: math.div($height, 2);
-  padding-top: 10px;
-  padding-bottom: 12px;
-  padding-left: 1em;
-  padding-right: 1em;
-  width: auto;
-  display: inline-block;
-  color: $black;
-  transition: min-height 0.1s ease-out;
-  background-color: white;
-  transition: all 0.15s ease-in;
-  min-height: 0;
-  cursor: pointer;
-  border: 2px solid $green;
+article {
+  p {
+    padding-left: $outer-margin;
+    padding-right: $outer-margin;
+  }
+}
 
-  @include mq($from: tablet) {
-    border: 3px solid $green;
+.rounded {
+  border: $line;
+  border-radius: 20px;
+  height: 40px;
+  display: flex;
+  width: max-content;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  background-color: white;
+}
+
+.roundedContent {
+  border: $line;
+  border-radius: $radius;
+  background: white;
+}
+
+p.summary {
+  padding-left: $outer-margin;
+  padding-right: $outer-margin;
+
+  &:first-of-type {
+    padding-top: 2em;
+  }
+}
+
+header.contentHeader {
+  min-height: 70vh;
+  padding-left: $outer-margin;
+  padding-right: $outer-margin;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: red;
+
+  section.meta {
+    margin-top: -21px;
   }
 
-  &:hover {
-    background-color: $green;
+  h1 {
+    padding-top: 1em;
   }
 }

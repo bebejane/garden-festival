@@ -1,48 +1,33 @@
 // FONT EMBEDDING & TYPO VARIABLES
-$headline-font: "Signifier Extra";
-$headline-font-mobile: "Signifier Light";
-$headline-font-thin: "Signifier Thin";
-$body-font: "Founders Regular";
-$icon-font: "IconFont";
+$headline-font: "Maxi";
+$mono-font: "Maxi Mono";
+$body-font: "Cooper";
+$headline-font-regular: "Maxi-Regular";
 
 @font-face {
-    font-family: 'Founders Regular';
-    src:          url('../../public/fonts/founders-grotesk-web-regular.woff2') format('woff2');
+    font-family: "Maxi";
+    src: url("../../public/fonts/ABCMaxiSharpVariable.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Signifier Extra';
-    src:          url('../../public/fonts/signifier-web-extralight.woff2') format('woff2');
+    font-family: "Maxi-Regular";
+    src: url("../../public/fonts/ABCMaxiSharp-Regular.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Signifier Thin';
-    src:          url('../../public/fonts/signifier-web-thin.woff2') format('woff2');
+    font-family: "Maxi Mono";
+    src: url("../../public/fonts/ABCMaxiSharpMonoVariable.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Signifier Light';
-    src:          url('../../public/fonts/signifier-web-light.woff2') format('woff2');
+    font-family: "Cooper";
+    src: url("../../public/fonts/d02e214c-1036-412c-a19c-71c32739a0da.woff2") format("woff2");
     font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'IconFont';
-    src:          url('../../public/fonts/icon-font.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Rison';
-    src:          url('../../public/fonts/Rison-Bold.woff') format('woff');
-    font-weight: bold;
     font-style: normal;
 }

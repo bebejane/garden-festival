@@ -5,12 +5,10 @@ $columns: 16;
 $gutter: 1%;
 $column-width: math.div((100% - (($columns - 1) * $gutter)), $columns);
 
-
 // WIDTH OF UNITS IN GRID WITHOUT LAST GUTTER
 @function spanGrid($amount) {
   @return $column-width * $amount + $gutter * ($amount - 1);
 }
-
 
 // WIDTH OF UNITS IN GRID WITH LAST GUTTER
 @function spanGridWithGutter($amount) {
@@ -64,5 +62,4 @@ $column-width: math.div((100% - (($columns - 1) * $gutter)), $columns);
   .text {
     text-align: left;
   }
-
 }

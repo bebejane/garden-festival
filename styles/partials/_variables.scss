@@ -1,7 +1,7 @@
 // COLOR
 $green: #00be73;
 $dark-green: #00955c;
-$black: #444444;
+$black: #161616;
 $white: white;
 $beige: #e1dcd2;
 $light-beige: lighten($beige, 10%);
@@ -12,9 +12,13 @@ $alert-blue: blue;
 $disabled-gray: $light-gray;
 $icon-font: "IconFont";
 
+//BORDER
+$line: 3px solid $black;
+$radius: 20px;
+
 // MARGINS & SPACES
-$outer-margin: 3.7%;
-$space: 30px;
+$outer-margin: 20%;
+$space: 80px;
 $scale-space: 2.5vw;
 $max-width: 1440px;
 

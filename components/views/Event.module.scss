@@ -1,22 +1,27 @@
 .event {
   display: flex;
   flex-direction: row;
-  width: 100%; 
-  flex:  1 1 auto;
-  .info{
-    flex: 0 1 80%;
+  justify-content: center;
+  width: 100%;
+  flex: 1 1 auto;
+  .info {
+    display: flex;
+    flex-direction: column;
   }
-  .symbol{
-    width:300px;
-    height:300px;
+  header {
+    margin-bottom: -3px;
   }
-  &[hidden=true]{
+  .symbol {
+    width: 300px;
+    height: 300px;
+  }
+  &[hidden="true"] {
     visibility: hidden;
   }
-  .related{
-    margin-top:2rem;
-    .relatedEvent{
-      margin-bottom:2rem;
+  .related {
+    margin-top: 2rem;
+    .relatedEvent {
+      margin-bottom: 2rem;
     }
   }
 }
