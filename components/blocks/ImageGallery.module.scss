@@ -11,7 +11,9 @@
     flex-direction: column;
     position: relative;
     max-width: 100%;
+    //transition: all 1s;
     caption {
+      
       padding-left: $space;
       padding-right: $space;
       padding-top: 1em;
@@ -19,15 +21,15 @@
       left: 0;
       width: 100%;
       text-align: left;
-      transition: max-height 0s linear;
       overflow: hidden;
-      max-height: 0px;
-      
+      transform: scaleY(0);
+      max-height: 0;
+      transform-origin: top;
+      transition: transform 0s ease;
       &.show {
-        transition: max-height 1s linear;
-        opacity: 1;
-        max-height: 1000px;
-        
+        transition: transform 0.2s ease;
+        max-height: unset;
+        transform: scaleY(1);
       }
     }
   }
