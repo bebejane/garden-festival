@@ -7,6 +7,7 @@ import LinkButton from "/components/LinkButton";
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 
+
 export default function Event({ event, events, show }) {
   if (!event) return null
 
@@ -15,8 +16,7 @@ export default function Event({ event, events, show }) {
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
-
-        <ContentHeader>
+        <ContentHeader responsiveImage={event.image?.responsiveImage}>
           <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
           <h1>{event.title}</h1>
           <figure>

@@ -6,8 +6,9 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	background: rgb(0, 217, 255);
+	background: transparent;
 	margin-bottom: -4px;
+	position: relative;
 
 	section {
 		@include roundedElement();
@@ -16,10 +17,28 @@
 
 	h1 {
 		padding-top: 1em;
+		-webkit-text-stroke: 1px white;
 	}
 
 	figure img {
 		width: 300px;
 		height: 300px;
 	}
+
+	.bgImage {
+		position: absolute !important;
+		z-index: -1;
+		border-radius: 15px;
+		display: flex;
+		height: 100%;
+
+		img,
+		picture {
+			object-fit: cover;
+		}
+	}
+}
+
+.bgColor {
+	background-color: green;
 }

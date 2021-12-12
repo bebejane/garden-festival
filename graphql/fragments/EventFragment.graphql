@@ -9,7 +9,9 @@ fragment EventFragment on EventRecord {
   startTime
   summary
   title
-  createdAt
+     image {
+          ...ImageFragment
+        }  createdAt
   participant{
     ...ParticipantFragment
   }
