@@ -2,14 +2,14 @@ import { FESTIVAL_START_DATE } from "lib/utils/constant";
 import styles from "./Clock.module.scss"
 import cn from 'classnames';
 import React, { useState, useEffect } from "react";
-import { useInterval } from "rooks";
+import { useIntervalWhen } from "rooks";
 import { differenceInDays, differenceInHours } from "date-fns";
 import { useHover } from "lib/hooks";
 
 const clockSize = 90;
 const clockBorder = 4;
 
-const defaultStyles = {
+let defaultStyles = {
   hour:{
     height:5
   },
@@ -69,13 +69,15 @@ export default function Clock() {
   const [ didHover, setDidHover ] = useState(false)
   const [ show, setShow ] = useState(false)
   const [ style, setStyle ] = useState({})
-  const { start, stop } = useInterval(() => setStyle(generateStyles(style)), 1000);  
+  //const { start, stop } = useIntervalWhen(() => setStyle(generateStyles(style)), 1000);  
+
+
+  useIntervalWhen(() => setStyle(defaultStyles = generateStyles(defaultStyles)),1000, true, true);
 
   useEffect(()=> {
-    start(); 
     setShow(true);
-    setStyle(generateStyles(defaultStyles))
-    return stop;
+    //setStyle(generateStyles(defaultStyles))
+    return () => {};
   }, [])
   useEffect(()=> hovering && !didHover && setDidHover(true), [hovering])
 
@@ -85,7 +87,7 @@ export default function Clock() {
         <div className={styles.circle}>
           <div className={styles.center}></div>
           <div className={styles.marks}>
-            <svg className={styles.ticks} height={clockSize} width={clockSize}>
+            {/*<svg className={styles.ticks} height={clockSize} width={clockSize}>
               {generateTicks().map(({x,y,a}, i) => 
                 <line 
                   x1={x} 
@@ -96,8 +98,8 @@ export default function Clock() {
                   style={{stroke: 'rgb(25,133,145)', opacity:0.0, strokeWidth:2}}
                 />
               )}
-              </svg> 
-              <div className={styles.mask}></div>
+            </svg> */}
+            <div className={styles.mask}></div>
           </div>
         </div>
         <div className={styles.hour} style={style.hour}></div>
