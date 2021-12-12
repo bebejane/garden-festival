@@ -7,9 +7,6 @@ import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useHover } from "/lib/hooks";
 
-
-
-
 const Symbol = (props) => {
 
 	const { event, symbolSize, index } = props;
@@ -22,6 +19,7 @@ const Symbol = (props) => {
 	const togglePopup = (on) => {
 		clearTimeout(to);
 		if (disabled) return;
+		
 		let timeout = setTimeout(
 			() => {
 				const eventId = ref.current.getAttribute("eventid");

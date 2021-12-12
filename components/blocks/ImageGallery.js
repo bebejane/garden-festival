@@ -19,6 +19,9 @@ export default function ImageGallery({ images, id }) {
 				showStatus={false}
 				showArrows={true}
 				dynamicHeight={false}
+				emulateTouch={true}
+				selectedItem={index}
+				onClickItem={()=>setIndex(index+1 < images.length ? index+1 : 0)}
 				onChange={(i) => setIndex(i)}
 				renderThumbs={(children) => images.map((image, index) =>
 					<div className={styles.thumbWrap} key={index}>
@@ -31,6 +34,16 @@ export default function ImageGallery({ images, id }) {
 						className={cn(styles.indicator, selected && styles.selected)}
 						onClick={onClick}>
 					</span>
+				}
+				renderArrowNext={(onClick, haveNext, label) =>
+					<div className={cn(styles.arrow, styles.next, !haveNext && styles.disabled)}onClick={onClick}>
+						⭆
+					</div>
+				}
+				renderArrowPrev={(onClick, havePrevious, label) =>
+					<div className={cn(styles.arrow, styles.prev, !havePrevious && styles.disabled)} onClick={onClick}>
+						⭅
+					</div>
 				}
 			>
 				{images.map((image, i) =>

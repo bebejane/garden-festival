@@ -38,4 +38,34 @@
       background-color: rgb(253, 0, 0);
     }
   }
+  .arrow{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:rgba(255,255,255,0.7);
+    top:50%;
+    height: 40px;
+    transform: translateY(calc(-50% + 20px));
+    z-index: 1;
+    padding-left: $space;
+    padding-right: $space;
+    margin-left: $small-space;
+    margin-right: $small-space;    
+    font-size: 50px;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    
+    &.prev{
+      left:0px;
+    }
+    &.next{
+      right:0px;
+    }
+    &.disabled{
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
 }
