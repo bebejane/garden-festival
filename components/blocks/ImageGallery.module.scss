@@ -12,7 +12,7 @@
     position: relative;
     max-width: 100%;
     overflow: hidden;
-    transition: height .25s ease;
+    transition: height 0.25s ease;
     caption {
       padding-left: $space;
       padding-right: $space;
@@ -21,7 +21,7 @@
       left: 0;
       width: 100%;
       display: none;
-      &.show{ 
+      &.show {
         display: block;
       }
     }
@@ -32,38 +32,48 @@
     height: 20px;
     border-radius: 10px;
     cursor: pointer;
-    border: 1px solid white;
+    border: 4px solid white;
     margin-right: 0.5em;
     &.selected {
-      background-color: rgb(253, 0, 0);
+      background-color: $white;
     }
   }
-  .arrow{
+
+  .carousel .control-dots {
+    @include mq($from: desktop) {
+      display: none !important;
+    }
+    margin-bottom: $space * 3;
+  }
+
+  .arrow {
+    @include roundedElement();
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    color:rgba(255,255,255,0.7);
-    top:50%;
-    height: 40px;
+    color: $black;
+    top: 50%;
+    width: 40px;
+    padding: 0;
     transform: translateY(calc(-50% + 20px));
     z-index: 1;
-    padding-left: $space;
-    padding-right: $space;
+    padding-bottom: 0.1em;
     margin-left: $small-space;
-    margin-right: $small-space;    
-    font-size: 50px;
+    margin-right: $small-space;
     line-height: 1;
     cursor: pointer;
     user-select: none;
-    
-    &.prev{
-      left:0px;
+    font-family: $mono-font;
+    font-variation-settings: "wght" 900;
+
+    &.prev {
+      left: 0px;
     }
-    &.next{
-      right:0px;
+    &.next {
+      right: 0px;
     }
-    &.disabled{
+    &.disabled {
       pointer-events: none;
       opacity: 0.5;
     }

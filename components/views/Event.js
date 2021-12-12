@@ -17,8 +17,10 @@ export default function Event({ event, events, show }) {
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
         <ContentHeader responsiveImage={event.image?.responsiveImage}>
-          <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
-          <h1>{event.title}</h1>
+          <header>
+            <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
+            <h1>{event.title}</h1>
+          </header>
           <figure>
             <img
               id={`event-symbol-${event?.id}`}
@@ -51,7 +53,7 @@ export default function Event({ event, events, show }) {
             </div>
           </section>
         </ContentMain>
-      </div>
+      </div >
     </div >
   );
 }
