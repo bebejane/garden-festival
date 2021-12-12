@@ -1,0 +1,25 @@
+.contentHeader {
+	@include roundedBox();
+	min-height: 70vh;
+	padding-left: $outer-margin;
+	padding-right: $outer-margin;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	background: rgb(0, 217, 255);
+	margin-bottom: -4px;
+
+	section {
+		@include roundedElement();
+		margin-top: $small-space;
+	}
+
+	h1 {
+		padding-top: 1em;
+	}
+
+	figure img {
+		width: 300px;
+		height: 300px;
+	}
+}

@@ -1,4 +1,4 @@
-$top-margin: 90px;
+$top-margin: 80px;
 
 .contentWrap {
 	position: absolute;
@@ -65,42 +65,6 @@ $top-margin: 90px;
 		p {
 			padding-left: $outer-margin;
 			padding-right: $outer-margin;
-		}
-	}
-
-	.textWidth {
-		padding-left: $outer-margin;
-		padding-right: $outer-margin;
-	}
-
-	.fullWidth {
-		margin: $space;
-	}
-
-	p.summary {
-		padding-left: $outer-margin;
-		padding-right: $outer-margin;
-
-		&:first-of-type {
-			padding-top: 2em;
-		}
-	}
-
-	header.contentHeader {
-		min-height: 70vh;
-		padding-left: $outer-margin;
-		padding-right: $outer-margin;
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		background: red;
-
-		section.meta {
-			margin-top: $small-space;
-		}
-
-		h1 {
-			padding-top: 1em;
 		}
 	}
 }

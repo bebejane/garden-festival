@@ -5,18 +5,19 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import { useEffect, useState } from "react";
 
-export default function ImageGallery({ images,  id }) {
-	
+export default function ImageGallery({ images, id }) {
+
 	const [index, setIndex] = useState(0)
 	const [captionHeight, setCaptionHeight] = useState()
 
-	useEffect(()=>setCaptionHeight(document.querySelectorAll(`#ig-${id} > caption`)[index]?.clientHeight), [index])
-	
+	useEffect(() => setCaptionHeight(document.querySelectorAll(`#ig-${id} > caption`)[index]?.clientHeight), [index])
+
 	return (
 		<section className={styles.imageGallery}>
 			<Carousel
 				showThumbs={false}
 				showStatus={false}
+				showArrows={true}
 				dynamicHeight={false}
 				onChange={(i) => setIndex(i)}
 				renderThumbs={(children) => images.map((image, index) =>
@@ -36,10 +37,10 @@ export default function ImageGallery({ images,  id }) {
 					<Image key={i} data={image} showCaption={false} />
 				)}
 			</Carousel>
-			<div 
+			<div
 				className={styles.captions}
 				id={`ig-${id}`}
-				style={{height: captionHeight || 'auto'}}
+				style={{ height: captionHeight || 'auto' }}
 			>
 				{images.map((image, i) =>
 					<caption className={cn(styles.caption, i === index && styles.show)}>

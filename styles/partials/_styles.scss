@@ -18,3 +18,12 @@
   background: white;
   padding-bottom: $small-space * 2;
 }
+
+@mixin textWidth() {
+  padding-left: $outer-margin;
+  padding-right: $outer-margin;
+}
+
+@mixin fullWidth() {
+  margin: $space;
+}

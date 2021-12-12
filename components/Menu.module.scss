@@ -36,6 +36,7 @@
         min-width: 180px;
         text-transform: uppercase;
         user-select: none;
+        background-color: transparent;
 
         &:last-child {
           margin-right: 0px;
@@ -52,21 +53,6 @@
     ul {
       li {
         text-transform: uppercase;
-      }
-      li:nth-child(2) {
-        background-color: #9b31ff;
-      }
-      li:nth-child(3) {
-        background-color: #11b254;
-      }
-      li:nth-child(4) {
-        background-color: #e43c4d;
-      }
-      li:nth-child(5) {
-        background-color: #f9c62e;
-      }
-      li:nth-child(6) {
-        background-color: #1cb5ff;
       }
     }
   }

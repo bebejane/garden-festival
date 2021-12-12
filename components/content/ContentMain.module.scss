@@ -1,0 +1,12 @@
+.contentMain {
+	@include roundedBox();
+
+	header {
+		padding-top: $small-space * 3;
+		@include textWidth();
+	}
+
+	article p {
+		@include textWidth();
+	}
+}

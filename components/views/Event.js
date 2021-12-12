@@ -4,6 +4,8 @@ import cn from "classnames";
 import { format } from "date-fns";
 import StructuredContent from "/components/blocks"
 import LinkButton from "/components/LinkButton";
+import ContentHeader from "/components/content/ContentHeader";
+import ContentMain from "/components/content/ContentMain";
 
 export default function Event({ event, events, show }) {
   if (!event) return null
@@ -13,36 +15,43 @@ export default function Event({ event, events, show }) {
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
-        <header className="contentHeader">
-          <section className="rounded meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
+
+        <ContentHeader>
+          <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
           <h1>{event.title}</h1>
-          <div className={styles.symbol}>
+          <figure>
             <img
               id={`event-symbol-${event?.id}`}
               src={event.participant.symbol.url}
               className={cn(styles.symbol, contentStyles.placeholderSymbol)}
             />
-          </div>
-        </header>
-        <section className={styles.contentBox}>
-          <p className="summary">{event.summary}</p>
-          <StructuredContent content={event.content} />
-          <div className={styles.related}>
-            <h2>Related</h2>
-            {related.length ? related.map((ev) =>
-              <div className={styles.relatedEvent}>
-                <h3>{ev.title}</h3>
-                <p>{ev.summary}</p>
-                <p>
-                  <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
-                </p>
-              </div>
-            ) :
-              <span>There are now realted events...</span>
-            }
-          </div>
-        </section>
+          </figure>
+          <section className={styles.by}><span className="meta">By {event.participant.title}</span></section>
+        </ContentHeader>
+
+        <ContentMain>
+          <section className={styles.contentBox}>
+            <header>
+              <p className="summary">{event.summary}</p>
+            </header>
+            <StructuredContent content={event.content} />
+            <div className={styles.related}>
+              <h2>Related</h2>
+              {related.length ? related.map((ev) =>
+                <div className={styles.relatedEvent}>
+                  <h3>{ev.title}</h3>
+                  <p>{ev.summary}</p>
+                  <p>
+                    <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
+                  </p>
+                </div>
+              ) :
+                <span>There are now realted events...</span>
+              }
+            </div>
+          </section>
+        </ContentMain>
       </div>
-    </div>
+    </div >
   );
 }

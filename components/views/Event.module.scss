@@ -5,27 +5,14 @@
   width: 100%;
   flex: 1 1 auto;
 
+  .by {
+    margin-bottom: -60px;
+    z-index: 10;
+  }
+
   .info {
     display: flex;
     flex-direction: column;
-  }
-
-  header {
-    @include roundedBox();
-    margin-bottom: -3px;
-
-    section {
-      @include roundedElement();
-    }
-  }
-
-  .contentBox {
-    @include roundedBox();
-  }
-
-  .symbol {
-    width: 300px;
-    height: 300px;
   }
 
   &[hidden="true"] {
