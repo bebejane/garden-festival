@@ -4,21 +4,36 @@
   justify-content: center;
   width: 100%;
   flex: 1 1 auto;
+
   .info {
     display: flex;
     flex-direction: column;
   }
+
   header {
+    @include roundedBox();
     margin-bottom: -3px;
+
+    section {
+      @include roundedElement();
+    }
   }
+
+  .contentBox {
+    @include roundedBox();
+  }
+
   .symbol {
     width: 300px;
     height: 300px;
   }
+
   &[hidden="true"] {
     visibility: hidden;
   }
+
   .related {
+    display: none;
     margin-top: 2rem;
     .relatedEvent {
       margin-bottom: 2rem;

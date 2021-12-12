@@ -5,7 +5,7 @@ $top-margin: 90px;
 	left: 0;
 	top: $top-margin;
 	display: flex;
-	flex-direction: column;
+	justify-content: center;
 	min-height: 100vh;
 	padding: 0px;
 	width: 100%;
@@ -29,19 +29,16 @@ $top-margin: 90px;
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		padding-left: 20vw;
-		padding-right: 20vw;
-		flex: 1 1 100%;
+		width: 80vw;
 		min-height: calc(100vh - $top-margin);
 		opacity: 0;
 		&.show {
 			opacity: 1;
 		}
 	}
-	.content {
-		//transform: translateY(0%);
-	}
+
 	.contentPopup {
+		margin-bottom: $space;
 		transition: transform 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
 		transition-delay: 0s;
 		transform: translateY(100%);
@@ -51,14 +48,59 @@ $top-margin: 90px;
 		}
 	}
 	.close {
+		@include roundedElement();
+		width: 40px;
 		position: absolute;
 		top: 0;
 		right: 0;
-		margin: 20px;
+		padding: 0;
+		padding-top: 0.1em;
+		margin: $small-space;
 		cursor: pointer;
-		font-size: 50px;
-		line-height: 0.5;
+		font-variation-settings: "wght" 800;
+		font-family: $mono-font;
 	}
-}
-.placeholderSymbol {
+
+	article {
+		p {
+			padding-left: $outer-margin;
+			padding-right: $outer-margin;
+		}
+	}
+
+	.textWidth {
+		padding-left: $outer-margin;
+		padding-right: $outer-margin;
+	}
+
+	.fullWidth {
+		margin: $space;
+	}
+
+	p.summary {
+		padding-left: $outer-margin;
+		padding-right: $outer-margin;
+
+		&:first-of-type {
+			padding-top: 2em;
+		}
+	}
+
+	header.contentHeader {
+		min-height: 70vh;
+		padding-left: $outer-margin;
+		padding-right: $outer-margin;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		background: red;
+
+		section.meta {
+			margin-top: $small-space;
+		}
+
+		h1 {
+			padding-top: 1em;
+		}
+	}
 }

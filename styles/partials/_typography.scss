@@ -22,6 +22,10 @@ p {
 
 nav {
   font-family: $mono-font;
+  font-variation-settings: "wght" 750;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.03em;
 }
 
 .meta {

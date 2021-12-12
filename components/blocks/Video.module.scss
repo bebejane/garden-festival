@@ -1,4 +1,6 @@
-.video{
+.video {
   display: block;
-  width: 100%;
+  width: calc(100% - 2 * $space);
+  margin: $space;
+  margin-bottom: $space;
 }

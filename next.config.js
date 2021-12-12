@@ -6,8 +6,9 @@ const sassOptions = {
   prependData: `
     @use "sass:math";
     @import "./styles/partials/mediaqueries"; 
+    @import "./styles/partials/styles";
     @import "./styles/partials/variables";
-    @import "./styles/partials/grid";
+    @import "./styles/partials/fonts";
   `
 }
 const nextOptions = {
@@ -16,5 +17,5 @@ const nextOptions = {
   }
 }
 
-const config = withPlugins([graphql], {sassOptions, ...nextOptions})
+const config = withPlugins([graphql], { sassOptions, ...nextOptions })
 module.exports = config

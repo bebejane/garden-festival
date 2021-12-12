@@ -2,13 +2,11 @@
 
 @import "partials/variables";
 
-@import "partials/grid";
-
 @import "partials/fonts";
 
 @import "partials/mixins";
 
-@import "partials/functions";
+@import "partials/styles";
 
 @import "partials/normalize";
 
@@ -19,7 +17,5 @@
 @import "base/framework";
 
 @media print {
-
 	@import "partials/print";
-
 }

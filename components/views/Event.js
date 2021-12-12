@@ -13,7 +13,7 @@ export default function Event({ event, events, show }) {
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
-        <header className="contentHeader roundedContent">
+        <header className="contentHeader">
           <section className="rounded meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
           <h1>{event.title}</h1>
           <div className={styles.symbol}>
@@ -24,7 +24,7 @@ export default function Event({ event, events, show }) {
             />
           </div>
         </header>
-        <section className="roundedContent">
+        <section className={styles.contentBox}>
           <p className="summary">{event.summary}</p>
           <StructuredContent content={event.content} />
           <div className={styles.related}>

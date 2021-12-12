@@ -1,25 +1,15 @@
 // COLOR
-$green: #00be73;
-$dark-green: #00955c;
-$black: #161616;
+$black: #2b2b2b;
 $white: white;
-$beige: #e1dcd2;
-$light-beige: lighten($beige, 10%);
-$light-gray: rgb(133, 133, 133);
-$alert-red: red;
-$alert-green: $green;
-$alert-blue: blue;
-$disabled-gray: $light-gray;
-$icon-font: "IconFont";
 
 //BORDER
-$line: 3px solid $black;
+$line: 4px solid $black;
 $radius: 20px;
 
 // MARGINS & SPACES
 $outer-margin: 20%;
 $space: 80px;
-$scale-space: 2.5vw;
+$small-space: 20px;
 $max-width: 1440px;
 
 // SET OUTER MARGINS ON SECTION
