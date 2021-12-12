@@ -13,7 +13,7 @@ export default function ImageGallery({ images, id }) {
 	useEffect(() => setCaptionHeight(document.querySelectorAll(`#ig-${id} > caption`)[index]?.clientHeight), [index])
 
 	return (
-		<section className={styles.imageGallery} onClick={handleClick}>
+		<section className={styles.imageGallery}>
 			<Carousel
 				showThumbs={false}
 				showStatus={false}
