@@ -10,9 +10,6 @@ export default function ImageGallery({ images, id }) {
 	const [index, setIndex] = useState(0)
 	const [captionHeight, setCaptionHeight] = useState()
 
-	const handleClick = () => {
-
-	}
 	useEffect(() => setCaptionHeight(document.querySelectorAll(`#ig-${id} > caption`)[index]?.clientHeight), [index])
 
 	return (
