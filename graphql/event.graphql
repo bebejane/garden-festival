@@ -11,9 +11,12 @@ query GetEventBySlug ($slug: String ){
     ...EventFragment
   }
 }
-query GetEvents {
-  events: allEvents(first:100){
+query GetEvents ($first : IntType = 100, $skip : IntType = 0) {
+  events: allEvents(first:$first, skip:$skip){
     ...EventFragmentLight
+  }
+  eventsMeta: _allEventsMeta {
+    count
   }
 }
 query GetEventsByRange($startTime: String, $endTime: String ) {

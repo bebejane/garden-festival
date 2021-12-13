@@ -1,9 +1,12 @@
 #import "./fragments/ParticipantFragment.graphql"
 #import "./fragments/ImageFragment.graphql"
 
-query GetParticipants {
-  participants: allParticipants(first:100) {
+query GetParticipants ($first : IntType = 100, $skip : IntType = 0) {
+  participants: allParticipants(first:$first, skip:$skip){
     ...ParticipantFragment
+  }
+  participantsMeta: _allParticipantsMeta {
+    count
   }
 }
 
