@@ -250,7 +250,7 @@ export default function Home(props) {
 		if (currentAnimation) currentAnimation.pause()
 
 		targets = sortTargetsByEventId(targets)
-		endTargets = sortTargetsByEventId(endTargets)
+		endTargets = sortTargetsByEventId(endTargets).filter(t => (t))
 
 		const defaultDuration = 800;
 		const defaultDelay = 0;
@@ -260,7 +260,7 @@ export default function Home(props) {
 			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
 			return target;
 		}
-
+		console.log(endTargets)
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
@@ -268,10 +268,10 @@ export default function Home(props) {
 
 		const animation = anime({
 			targets,
-			left: (el, i) => elementByIndex(i, el).getBoundingClientRect().left + window.scrollX,
-			top: (el, i) => elementByIndex(i, el).getBoundingClientRect().top + window.scrollY,
-			height: (el, i) => elementByIndex(i, el).clientHeight,
-			width: (el, i) => elementByIndex(i, el).clientWidth,
+			left: (el, i) => elementByIndex(i, el)?.getBoundingClientRect().left + window.scrollX,
+			top: (el, i) => elementByIndex(i, el)?.getBoundingClientRect().top + window.scrollY,
+			height: (el, i) => elementByIndex(i, el)?.clientHeight,
+			width: (el, i) => elementByIndex(i, el)?.clientWidth,
 			delay: (el, i) => i * defaultDelay,
 			easing: "easeInOutQuad",//"easeOutExpo",
 			scale: 1,
