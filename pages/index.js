@@ -22,7 +22,7 @@ import Path from 'svg-path-generator';
 const SvgPath = require('path-svg/svg-path');
 
 const symbolsPerPage = 16;
-const symbolSize = 200;
+const symbolSize = 400;
 
 export default function Home(props) {
 	const {
@@ -260,7 +260,7 @@ export default function Home(props) {
 			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
 			return target;
 		}
-		
+
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
