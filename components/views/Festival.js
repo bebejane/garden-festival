@@ -61,7 +61,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
               }
               <h2>{ev.title}</h2>
               <br />
-              {ev.summary}
+              {ev.summary.split(".")[0]}
             </p>
             <p>
               <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>
