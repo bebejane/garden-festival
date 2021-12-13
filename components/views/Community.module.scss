@@ -10,14 +10,16 @@
     width: 100%;
     box-sizing: border-box;
     .participant {
+      @include roundedBox();
+      color: $black;
+      background: transparent;
+      padding: $small-space;
+      padding-top: $small-space * 2;
       display: flex;
       flex-direction: row;
       flex: 0 0 50%;
       max-width: 600px;
       box-sizing: border-box;
-      padding: 20px;
-      border: 2px solid #000;
-      border-radius: 10px;
       margin: 10px;
       transition: background-color 0.5s;
 

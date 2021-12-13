@@ -28,22 +28,17 @@ p {
   }
 }
 
-@mixin navTypo() {
+@mixin nav() {
   font-family: $mono-font;
-  font-variation-settings: "wght" 750;
+  font-variation-settings: "wght" 900;
   font-size: 14px;
   line-height: 1;
   letter-spacing: 0.03em;
 }
 
-nav {
-  @include navTypo();
-}
-
+nav,
 .meta {
-  font-family: $headline-font-regular;
-  font-variation-settings: "wght" 500;
-  font-size: 14px;
+  @include nav();
 }
 
 caption {

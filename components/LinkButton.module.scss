@@ -2,7 +2,7 @@
   cursor: pointer;
   appearance: none;
   @include roundedElement();
-  @include navTypo();
+  //@include nav();
 
   &.monday {
     background-color: #9b31ff;
