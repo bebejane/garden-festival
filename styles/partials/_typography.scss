@@ -1,12 +1,20 @@
 $body-line-height: 1.3em;
 
-h1 {
-  font-size: 4.5vw;
+h1,
+h2 {
   line-height: 1;
   font-family: $headline-font;
   text-transform: uppercase;
   font-variation-settings: "wght" 1000;
+}
+
+h1 {
+  font-size: 4.5vw;
   text-align: center;
+}
+
+h2 {
+  font-size: 2vw;
 }
 
 p {
@@ -20,7 +28,7 @@ p {
   }
 }
 
-nav {
+@mixin navTypo() {
   font-family: $mono-font;
   font-variation-settings: "wght" 750;
   font-size: 14px;
@@ -28,9 +36,14 @@ nav {
   letter-spacing: 0.03em;
 }
 
+nav {
+  @include navTypo();
+}
+
 .meta {
   font-family: $headline-font-regular;
   font-variation-settings: "wght" 500;
+  font-size: 14px;
 }
 
 caption {

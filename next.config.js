@@ -9,6 +9,8 @@ const sassOptions = {
     @import "./styles/partials/styles";
     @import "./styles/partials/variables";
     @import "./styles/partials/fonts";
+    @import "./styles/partials/typography";
+
   `
 }
 const nextOptions = {
