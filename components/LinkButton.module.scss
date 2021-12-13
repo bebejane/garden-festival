@@ -2,7 +2,8 @@
   cursor: pointer;
   appearance: none;
   @include roundedElement();
-  //@include nav();
+  color: $black !important;
+  background-color: transparent;
 
   &.monday {
     background-color: #9b31ff;

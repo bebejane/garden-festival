@@ -1,3 +1,11 @@
+@mixin nav() {
+  font-family: $mono-font;
+  font-variation-settings: "wght" 900;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+
 @mixin roundedElement() {
   border: $line;
   border-radius: 20px;
@@ -10,6 +18,8 @@
   padding-left: 1.5em;
   padding-right: 1.5em;
   background-color: white;
+
+  @include nav();
 }
 
 @mixin roundedBox() {

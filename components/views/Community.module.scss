@@ -2,6 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  h1 {
+    padding-top: $space;
+    padding-bottom: $space;
+  }
+
   .community {
     display: flex;
     flex-direction: row;
@@ -9,6 +15,7 @@
     justify-content: center;
     width: 100%;
     box-sizing: border-box;
+
     .participant {
       @include roundedBox();
       color: $black;
@@ -36,6 +43,7 @@
         img {
           width: 200px;
           height: 200px;
+          margin-top: -30px;
         }
       }
     }

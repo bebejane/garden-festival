@@ -27,14 +27,9 @@ export default function Community({ participants, show }) {
             </div>
             <div className={styles.participantInfo}>
               <h2>{p.title}</h2>
-              <p>{p.summary}</p>
+              <p>{p.summary.split(".")[0]}</p>
               <p>
-                <Link href={p.externalLink}>
-                  <a href={p.externalLink}>{p.externalLink}</a>
-                </Link>
-              </p>
-              <p>
-                <LinkButton href={`/${p.slug}`}>Go to participant</LinkButton>
+                <LinkButton href={`/${p.slug}`}>View</LinkButton>
               </p>
             </div>
           </a>

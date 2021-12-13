@@ -28,14 +28,6 @@ p {
   }
 }
 
-@mixin nav() {
-  font-family: $mono-font;
-  font-variation-settings: "wght" 900;
-  font-size: 14px;
-  line-height: 1;
-  letter-spacing: 0.03em;
-}
-
 nav,
 .meta {
   @include nav();
