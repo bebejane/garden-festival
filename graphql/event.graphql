@@ -12,7 +12,7 @@ query GetEventBySlug ($slug: String ){
   }
 }
 query GetEvents {
-  events: allEvents {
+  events: allEvents(first:100){
     ...EventFragmentLight
   }
 }

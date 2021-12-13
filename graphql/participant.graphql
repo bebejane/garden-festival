@@ -2,7 +2,7 @@
 #import "./fragments/ImageFragment.graphql"
 
 query GetParticipants {
-  participants: allParticipants {
+  participants: allParticipants(first:100) {
     ...ParticipantFragment
   }
 }

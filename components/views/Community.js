@@ -6,7 +6,7 @@ import LinkButton from "../LinkButton";
 
 export default function Community({ participants, show }) {
   if (!show) return null
-
+  
   return (
     <div key={'community'} className={styles.container}>
       <h1>Participants</h1>
