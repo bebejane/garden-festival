@@ -1,8 +1,7 @@
 import styles from "./PopUp.module.scss";
+import format from "date-fns/format";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useHover } from "/lib/hooks";
-import format from "date-fns/format";
 
 const PopUp = ({event, symbolSize, show}) =>{
 

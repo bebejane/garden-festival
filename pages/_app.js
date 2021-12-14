@@ -1,6 +1,4 @@
-import '/styles/globals.css'
 import '/styles/index.scss'
-
 
 import { AppStateProvider } from "/lib/context/appstate";
 

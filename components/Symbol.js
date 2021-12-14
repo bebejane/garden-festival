@@ -1,19 +1,13 @@
 import styles from "./Symbol.module.scss";
 import contentStyles from "./Content.module.scss";
 import PopUp from './PopUp'
-
-import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
-import { format } from "date-fns";
-import { useRouter } from "next/router";
 import { useHover } from "/lib/hooks";
 
 const Symbol = (props) => {
 	const { event, symbolSize, index } = props;
 	const [ref, hovering] = useHover();
-	
-	//useEffect(() => togglePopup(hovering), [hovering]);
 
 	return (
 		<>
