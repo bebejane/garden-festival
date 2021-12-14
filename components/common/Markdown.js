@@ -4,7 +4,6 @@ import Link from "next/link";
 
 const Markdown = ({ children }) => {
   if(!children) return null
-  console.log(children)
   return (
     <ReactMarkdown 
       remarkPlugins={[gfm]} 
