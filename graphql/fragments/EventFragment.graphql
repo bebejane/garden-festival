@@ -8,9 +8,10 @@ fragment EventFragment on EventRecord {
   endTime
   summary
   title
-     image {
-          ...ImageFragment
-        }  createdAt
+  createdAt
+  image {
+      ...ImageFragment
+  }
   participant{
     ...ParticipantFragment
   }
@@ -51,6 +52,12 @@ fragment EventFragment on EventRecord {
           width
         }
       }
+    }
+    links {
+      __typename
+      externalLink
+      slug
+      id
     }
   }
 }

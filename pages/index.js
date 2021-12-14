@@ -22,7 +22,7 @@ import Path from 'svg-path-generator';
 const SvgPath = require('path-svg/svg-path');
 
 const symbolsPerPage = 16;
-const symbolSize = 200;
+const symbolSize = 300;
 
 export default function Home(props) {
 	const {

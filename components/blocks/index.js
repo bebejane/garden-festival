@@ -1,15 +1,15 @@
+import styles from "./index.module.scss"
 import { StructuredText } from 'react-datocms';
-import Annotation from './Annotation'
 import Sound from './Sound'
 import ExternalLink from './ExternalLink'
 import Image from './Image'
 import ImageGallery from './ImageGallery'
 import Video from './Video'
-import styles from "./index.module.scss"
+import LinkButton from "/components/LinkButton";
 
 export default function StructuredContent({ content }) {
-
-  if (!content || !content.blocks.length) return null
+  
+  if (!content || !content.blocks.length) return null //Empty content
 
   return (
     <article className={styles.mainContent}>
@@ -33,6 +33,8 @@ export default function StructuredContent({ content }) {
         }}
         renderInlineRecord={({ record }) => {
           switch (record.__typename) {
+            case 'ParticipantRecord':
+              return <LinkButton href={`/${record.slug}`}>{record.title}</LinkButton>
             default:
               return null;
           }
