@@ -2,11 +2,10 @@
 #import "./ParticipantFragment.graphql"
 
 fragment EventFragment on EventRecord {
-  endTime
   id
-  releaseTime
   slug
   startTime
+  endTime
   summary
   title
      image {

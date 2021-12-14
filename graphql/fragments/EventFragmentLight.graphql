@@ -5,7 +5,6 @@ fragment EventFragmentLight on EventRecord {
   id
   startTime
   endTime
-  releaseTime
   slug
   title
   summary
