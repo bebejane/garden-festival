@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import LinkButton from "../LinkButton";
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
+import Markdown from "/components/common/Markdown";
 
 export default function Participant({ participant, events: evts, show }) {
   if (!show || !participant) return null
@@ -27,7 +28,7 @@ export default function Participant({ participant, events: evts, show }) {
         </figure>
       </ContentHeader>
       <ContentMain>
-        <header><p className="summary">{participant.summary}</p></header>
+        <header><p className="summary"><Markdown>{participant.summary}</Markdown></p></header>
         <article>
           <p>
             <a href={participant.externalLink}>{participant.externalLink}</a>
@@ -41,7 +42,7 @@ export default function Participant({ participant, events: evts, show }) {
           <div className={styles.event}>
             {format(new Date(ev.startTime), 'EEEE MMMM d, yyyy')}
             <h3>{ev.title}</h3>
-            <p>{ev.summary}</p>
+            <p><Markdown>{ev.summary}</Markdown></p>
             <LinkButton href={`${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
           </div>
         )}
