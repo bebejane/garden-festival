@@ -55,9 +55,10 @@ fragment EventFragment on EventRecord {
     }
     links {
       __typename
+      id
+      title
       externalLink
       slug
-      id
     }
   }
 }
