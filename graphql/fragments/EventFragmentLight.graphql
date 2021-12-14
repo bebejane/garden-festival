@@ -9,6 +9,9 @@ fragment EventFragmentLight on EventRecord {
   slug
   title
   summary
+  typeOfEvent {
+    title
+  }
   participant{
     id
     slug

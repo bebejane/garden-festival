@@ -24,7 +24,12 @@
 
 	h1 {
 		padding-top: 1em;
-		-webkit-text-stroke: 1px white;
+		-webkit-text-stroke: 0.17vw black;
+		color: white;
+		font-family: "Maxi Mono Bold";
+		font-variation-settings: "wght" 1000, "MONO" 0;
+		font-feature-settings: "ss01" 1;
+		font-weight: bold;
 	}
 
 	figure {

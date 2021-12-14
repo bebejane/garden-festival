@@ -9,7 +9,7 @@ body {
 	color: $black;
 	background-color: $white;
 	font-family: $body-font;
-	-webkit-font-smoothing: antialiased;
+	//-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-feature-settings: "liga", "kern";
 }

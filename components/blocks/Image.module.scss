@@ -2,8 +2,20 @@
   margin: $space;
   margin-bottom: 0;
 
+  div {
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  img {
+    object-fit: contain;
+  }
+
   caption {
     display: block;
     padding-top: 1em;
+    text-align: center;
+    //@include textWidth();
   }
 }

@@ -1,4 +1,4 @@
-$body-line-height: 1.3em;
+$body-line-height: 1.15em;
 
 h1,
 h2 {
@@ -11,6 +11,7 @@ h2 {
 h1 {
   font-size: 4.5vw;
   text-align: center;
+  font-feature-settings: "ss01" 1;
 }
 
 h2 {
@@ -19,12 +20,13 @@ h2 {
 
 p {
   font-family: $body-font;
-  font-size: 20px;
+  font-size: 18px;
   line-height: $body-line-height;
 
   &.summary {
     font-variation-settings: "wght" 300;
-    font-size: 23px;
+    font-size: 21px;
+    line-height: 1.05;
   }
 }
 

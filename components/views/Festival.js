@@ -7,6 +7,7 @@ import { format, isSameDay } from 'date-fns'
 import { formatToTimeZone } from 'date-fns-timezone'
 import { useEffect } from "react";
 import Link from "next/link"
+import { enCA } from "date-fns/locale";
 
 export default function Festival({ events, dayEvents, participants, date, timeZone, show }) {
   if (!show) return null
@@ -56,7 +57,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
             <p>
               {ev.startTime &&
                 <span class="meta">
-                  {formatToTimeZone(ev.startTime, 'HH:mm z', { timeZone: appState.zone.timeZone })}
+                  {formatToTimeZone(ev.startTime, 'HH:mm z', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent.title}
                 </span>
               }
               <h2>{ev.title}</h2>
