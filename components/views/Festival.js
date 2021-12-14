@@ -36,7 +36,8 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
       <>
         {eventDate &&
           <h1 id={format(eventDate, 'yyyy-MM-d')} className={styles.weekday}>
-            {format(eventDate, 'EEEE MMMM d, yyyy')}
+            {format(eventDate, 'EEEE')}<br />
+            {format(eventDate, 'MMMM d')}
           </h1>
         }
         <a key={idx} className={styles.event} href={`/${ev.participant.slug}/${ev.slug}`}>

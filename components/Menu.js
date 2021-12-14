@@ -19,18 +19,30 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
 
   return (
     <div id="menu" className={styles.container} >
-      <nav className={styles.menu} >
-        <ul>
-          <Link href={'/community'}><li className={pathname === '/community' ? styles.selected : undefined}>Community</li></Link>
-          <Link href={'/'}><li className={pathname === '/' ? styles.selected : undefined}>Garden</li></Link>
-          <Link href={'/festival'}><li className={pathname.startsWith('/festival') ? styles.selected : undefined}>Festival</li></Link>
-        </ul>
-      </nav>
+      <div className={styles.wrapper}>
+        <nav className={styles.menu} >
+          <ul>
+            <li>23:40</li>
+          </ul>
+        </nav>
+        <nav className={styles.menu} >
+          <ul>
+            <Link href={'/community'}><li className={pathname === '/community' ? styles.selected : undefined}>Community</li></Link>
+            <Link href={'/'}><li className={pathname === '/' ? styles.selected : undefined}>Garden</li></Link>
+            <Link href={'/festival'}><li className={pathname.startsWith('/festival') ? styles.selected : undefined}>Festival</li></Link>
+          </ul>
+        </nav>
+        <nav className={styles.menu} >
+          <ul>
+            <Link href={'/about/about-us'}><li>About</li></Link>
+          </ul>
+        </nav>
+      </div>
       {['festival', 'weekday'].includes(view) &&
         <nav className={styles.festivalMenu}>
           <ul>
             <Link href={`/festival/pre-party`}>
-              <li className={weekday === 'pre-party' ? styles.selected : undefined}>Pre<br />Party</li>
+              <li className={weekday === 'pre-party' ? styles.selected : undefined}>Pre Party</li>
             </Link>
             {eachDayOfInterval({ start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE }).map((d, idx) =>
               <Link href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
@@ -38,12 +50,12 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
                   key={idx}
                   className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined}
                 >
-                  {format(d, 'EEEE')}<br />{format(d, 'MMMM dd')}
+                  {format(d, 'EE')} {format(d, 'MMM dd')}
                 </li>
               </Link>
             )}
             <Link href={`/festival/after-party`}>
-              <li className={weekday === 'after-party' ? styles.selected : undefined}>After<br />Party</li>
+              <li className={weekday === 'after-party' ? styles.selected : undefined}>After Party</li>
             </Link>
             {/*<TimeZoneDropdown setTimezone={setTimezone} tz={tz} />*/}
           </ul>

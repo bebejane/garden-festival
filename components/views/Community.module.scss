@@ -15,6 +15,7 @@
     justify-content: center;
     width: 100%;
     box-sizing: border-box;
+    margin-bottom: $space;
 
     .participant {
       @include roundedBox();

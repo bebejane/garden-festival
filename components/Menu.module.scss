@@ -7,13 +7,21 @@
   z-index: 5;
   margin-top: $space/4;
 
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: $small-space;
+    padding-right: $small-space;
+  }
+
   .menu,
   .festivalMenu {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    //width: 100%;
     margin-bottom: $space/4;
 
     ul {
@@ -38,6 +46,10 @@
         user-select: none;
         background-color: transparent;
 
+        &:hover {
+          background-color: $white;
+        }
+
         &:last-child {
           margin-right: 0px;
         }
@@ -45,6 +57,7 @@
         &.selected {
           background-color: $black !important;
           color: $white;
+          -webkit-font-smoothing: antialiased;
         }
       }
     }
