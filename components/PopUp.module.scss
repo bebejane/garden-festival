@@ -9,7 +9,7 @@
 	padding: $small-space;
 	height: auto;
 	z-index: 5;
-	transition: opacity 0.3s linear;
+	transition: opacity 0.2s ease;
 	opacity: 0;
 	pointer-events: none;
 	&.show {

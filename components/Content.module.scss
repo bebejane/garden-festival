@@ -25,7 +25,8 @@ $top-margin: 80px;
 	}
 
 	.content,
-	.contentPopup {
+	.contentPopup,
+	.contentPopupShadow {
 		display: flex;
 		flex-direction: column;
 		position: relative;
@@ -36,7 +37,6 @@ $top-margin: 80px;
 			opacity: 1;
 		}
 	}
-
 	.contentPopup {
 		margin-bottom: $space;
 		transition: transform 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -45,6 +45,15 @@ $top-margin: 80px;
 		&.show {
 			opacity: 1;
 			transform: translateY(0%);
+		}
+	}
+	.contentPopupShadow {
+		position: fixed;
+		visibility: visible;
+		z-index: 0;
+		background-color: rgba(0, 0, 0, 0.1);
+		* {
+			//visibility: hidden
 		}
 	}
 	.close {

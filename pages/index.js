@@ -18,9 +18,6 @@ import useVisibility from "/lib/hooks/useVisibility";
 import { useWindowSize, useDebounce } from "rooks";
 import { nodesToArray, randomInt } from "/lib/utils";
 
-import Path from 'svg-path-generator';
-const SvgPath = require('path-svg/svg-path');
-
 const symbolsPerPage = 16;
 const symbolSize = 300;
 
@@ -119,9 +116,7 @@ export default function Home(props) {
 			}
 			return false;
 		}
-		console.log('start check')
-		for (let el of elements){
-			
+		for (let el of elements){	
 			let randX = 0;
 			let randY = 0;
 			let area;
@@ -137,22 +132,11 @@ export default function Home(props) {
 					height: el.clientHeight
 				};
 			} while (isOverlapping(area) && (++retries < maxRetries));
-			
 			positions.items.push(area);
-			if(retries >= maxRetries){
-				console.log('failed', area)
-			}
-			if(retries >= maxRetries && totalRetries < 10){
-				console.log(positions.items)
+			if(retries >= maxRetries && totalRetries < 10)
 				return generatePositions(++totalRetries)
-			} else if(totalRetries >= 10){
-				console.log('return fucked')
-				break;
-			} else{
-				
-			}
 		}
-		console.log(positions)
+		if(totalRetries >= 10) console.log('failed to randomly position')
 		return positions;
 	}
 
@@ -374,13 +358,13 @@ export default function Home(props) {
 	const toParticipant = async () => {
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
-		return transitionTo(targets, endTarget)
+		return transitionTo(targets, endTarget, {popup:true})
 	};
 
 	const toEvent = async () => {
 		const target = document.getElementById(`symbol-${event.id}`)
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
-		!target ? anime.set(endTarget, { opacity: 1 }) : transitionTo([target], [endTarget])
+		!target ? anime.set(endTarget, { opacity: 1 }) : transitionTo([target], [endTarget], {popup:true})
 	};
 
 	useEffect(() => setBounds(getBounds()), [innerWidth])

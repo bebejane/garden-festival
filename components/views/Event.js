@@ -7,7 +7,6 @@ import LinkButton from "/components/LinkButton";
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 
-
 export default function Event({ event, events, show }) {
   if (!event) return null
 
