@@ -81,7 +81,7 @@ export default function Home(props) {
 		const menu = document.getElementById('menu')
 		const { clientHeight: h, clientWidth: w } = document.body;
 		const top = menu.offsetTop + menu.clientHeight;
-		const pad = 40;
+		const pad = 0;
 		return { width: w - (pad * 2), height: h - (pad) - (top), left: pad, top: top, pad, window: { width: window.innerWidth, height: window.innerHeight } };
 	};
 
@@ -164,12 +164,14 @@ export default function Home(props) {
 
 		anime.set(targets, {
 			opacity: 0,
+			
 			left: (el, i) => positions.items[i].left,
 			top: (el, i) => positions.items[i].top,
 			width: symbolSize,
 		});
 		anime.set(symbols, {
 			opacity: 0,
+			zIndex: 0,
 			left: (el, i) => positions.items[i].left,
 			top: (el, i) => positions.items[i].top,
 			width: symbolSize,

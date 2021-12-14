@@ -19,7 +19,7 @@ export default function Garden({ events, participant, view, symbolSize, bounds }
 					symbolSize={symbolSize}
 				/>
 			)}
-			{view === 'garden' && isDev && <div className={styles.bounds} style={bounds}></div>}
+			{view === 'garden_' && isDev && <div className={styles.bounds} style={bounds}></div>}
 		</>
 	);
 }
