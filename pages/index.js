@@ -22,7 +22,7 @@ import Path from 'svg-path-generator';
 const SvgPath = require('path-svg/svg-path');
 
 const symbolsPerPage = 16;
-const symbolSize = 400;
+const symbolSize = 200;
 
 export default function Home(props) {
 	const {
@@ -85,24 +85,22 @@ export default function Home(props) {
 		return { width: w - (pad * 2), height: h - (pad) - (top), left: pad, top: top, pad, window: { width: window.innerWidth, height: window.innerHeight } };
 	};
 
-	const initSymbols = async () => {
-
+	const generatePositions = (totalRetries = 0) => {
+		
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
-		const symbols = document.querySelectorAll(`[id^='symbol-']`)
+		const elements = nodesToArray(targets).slice(0, symbolsPerPage);
+		const maxRetries = 100000;
 
+		const positions = { bounds, items: []};
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
 		const maxY = bounds.top + bounds.height - symbolSize
 
-		const positions = {
-			bounds,
-			items: []
-		};
-
-		const checkOverlap = (area) => {
-			for (let i = 0; i < positions.length; i++) {
+		const isOverlapping = (area) => {
+			
+			for (let i = 0; i < positions.items.length; i++) {
 				let checkArea = positions.items[i];
 				let bottom1 = area.top + area.height;
 				let bottom2 = checkArea.top + checkArea.height;
@@ -113,18 +111,21 @@ export default function Home(props) {
 				let right1 = area.left + area.width;
 				let right2 = checkArea.left + checkArea.width;
 
-				if (bottom1 <= top2 || top1 >= bottom2 || right1 <= left2 || left1 >= right2)
+				if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2)
 					continue;
-				else
+				else{
 					return true;
+				}	
 			}
 			return false;
 		}
-		nodesToArray(targets).slice(0, symbolsPerPage).forEach((el, idx) => {
+		console.log('start check')
+		for (let el of elements){
+			
 			let randX = 0;
 			let randY = 0;
 			let area;
-			let tries = 0;
+			let retries = 0;
 			do {
 				randX = Math.round(minX + ((maxX - minX) * (Math.random() % 1)));
 				randY = Math.round(minY + ((maxY - minY) * (Math.random() % 1)));
@@ -135,9 +136,31 @@ export default function Home(props) {
 					width: el.clientWidth,
 					height: el.clientHeight
 				};
-			} while (checkOverlap(area));
+			} while (isOverlapping(area) && (++retries < maxRetries));
+			
 			positions.items.push(area);
-		})
+			if(retries >= maxRetries){
+				console.log('failed', area)
+			}
+			if(retries >= maxRetries && totalRetries < 10){
+				console.log(positions.items)
+				return generatePositions(++totalRetries)
+			} else if(totalRetries >= 10){
+				console.log('return fucked')
+				break;
+			} else{
+				
+			}
+		}
+		console.log(positions)
+		return positions;
+	}
+
+	const initSymbols = () => {
+		console.log('init')
+		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
+		const symbols = document.querySelectorAll(`[id^='symbol-']`)
+		const positions = generatePositions()
 
 		anime.set(targets, {
 			opacity: 0,

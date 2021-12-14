@@ -6,18 +6,18 @@
 	],
 	"settings": {
 		"files.exclude": {
-			"node_modules": false,
-			".next": false,
-			"docs": false,
-			"jsconfig.json": false,
-			"package-lock.json": false,
-			"package.json": false,
-			"README.md": false,
-			"next.config.js": false,
-			".gitignore": false,
-			".env.local": false,
-			"Garden Festival.code-workspace": false
+			"node_modules": true,
+			".next": true,
+			"docs": true,
+			"jsconfig.json": true,
+			"package-lock.json": true,
+			"package.json": true,
+			"README.md": true,
+			"next.config.js": true,
+			".gitignore": true,
+			".env.local": true,
+			"Garden Festival.code-workspace": true
 		},
-		"workspace.isHidden": false
+		"workspace.isHidden": true
 	}
 }

@@ -8,14 +8,13 @@ import { useRouter } from "next/router";
 import { useHover } from "/lib/hooks";
 
 const Symbol = (props) => {
-
+	
 	const { event, symbolSize, index } = props;
 	const router = useRouter();
 	const [disabled, setDisabled] = useState(false);
 	const [to, setTo] = useState();
 	const [ref, hovering] = useHover();
 	
-
 	const togglePopup = (on) => {
 		clearTimeout(to);
 		if (disabled) return;
@@ -53,15 +52,15 @@ const Symbol = (props) => {
 
 	return (
 		<>
-			<Link href={`/${event.participant.slug}/${event.slug}`}>
+			<Link href={`/${event.participant?.slug}/${event.slug}`}>
 				<a>
 					<img
 						id={`garden-symbol-${event.id}`}
 						key={`garden-symbol-${index}`}
 						ref={ref}
-						src={`${event.participant.symbol.url}?w=${symbolSize}`}
+						src={`${event.participant?.symbol.url}?w=${symbolSize}`}
 						eventid={event.id}
-						participantid={event.participant.id}
+						participantid={event.participant?.id}
 						className={cn(styles.symbol, styles.garden, contentStyles.placeholderSymbol)}
 					/>
 				</a>
@@ -74,10 +73,10 @@ const Symbol = (props) => {
 			<img
 				id={`symbol-${event.id}`}
 				key={`symbol-${index}`}
-				src={`${event.participant.symbol.url}?w=${symbolSize}`}
+				src={`${event.participant?.symbol.url}?w=${symbolSize}`}
 				eventid={event.id}
 				preload={"true"}
-				participantid={event.participant.id}
+				participantid={event.participant?.id}
 				className={cn(styles.symbol)}
 			/>
 		</>

@@ -7,8 +7,9 @@ import ImageGallery from './ImageGallery'
 import Video from './Video'
 import styles from "./index.module.scss"
 
-
 export default function StructuredContent({ content }) {
+
+  if (!content || !content.blocks.length) return null
 
   return (
     <article className={styles.mainContent}>
