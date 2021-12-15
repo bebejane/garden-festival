@@ -242,7 +242,7 @@ export default function Home(props) {
 			const lastElement = lastView.targets.filter((t) => t.eventId == obj.id || t.eventId == obj.id)[0]
 			if(lastElement){
 				anime.set(target, {
-					top: `${lastElement.y}px`,
+					top: `${lastElement.y+window.scrollY}px`,
 					left:`${lastElement.x}px`,
 				})
 			}else{
@@ -275,6 +275,15 @@ export default function Home(props) {
 	};
 
 	const toFestival = async () => {
+		const lastView = lastViewPositions()
+		console.log(lastView)
+		if(lastView && lastView.targets.length){
+			
+			repositionToLastView(document.getElementById(lastView.targets[0].id), lastView.targets[0])
+		}else{
+			console.log('lastview not found')
+		}
+			
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = document.querySelectorAll("[id^='festival-symbol-']")
 		return transitionTo(targets, endTargets)
@@ -382,7 +391,7 @@ export default function Home(props) {
 				}})
 			}
 			localStorage.setItem('lastView', JSON.stringify(lastView))
-			console.log(defaultView, '>', nextView, lastView)
+			console.log(view, '>', nextView, defaultView, lastView)
 		})
 	},[])
 	useEffect(() => setView(defaultView), [defaultView])
