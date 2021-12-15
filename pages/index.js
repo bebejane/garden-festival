@@ -232,6 +232,26 @@ export default function Home(props) {
 		setCurrentAnimation(animation)
 		return animation.finished
 	}
+	const lastViewPositions = () => {
+		return  localStorage.getItem('lastView') ? JSON.parse(localStorage.getItem('lastView')) : null
+	}
+	const repositionToLastView = (target, obj) => {
+
+		const lastView = lastViewPositions()
+		if(lastView){
+			const lastElement = lastView.targets.filter((t) => t.eventId == obj.id || t.eventId == obj.id)[0]
+			if(lastElement){
+				anime.set(target, {
+					top: `${lastElement.y}px`,
+					left:`${lastElement.x}px`,
+				})
+			}else{
+				console.log('cant find last element')
+			}
+
+			//anime.set(
+		}
+	}
 
 	const sortTargetsByEventId = (targets) => {
 		return nodesToArray(targets).sort((a, b) => parseInt(a.getAttribute('eventid')) < parseInt(b.getAttribute('eventid')))
@@ -296,9 +316,10 @@ export default function Home(props) {
 		return transitionTo(targets, endTarget, {popup:true})
 	};
 
-	const toEvent = async (evt) => {
-		event = evt ? evt : event
+	const toEvent = async () => {
+		
 		const target = document.getElementById(`symbol-${event.id}`)
+		repositionToLastView(target, event)
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
 		!target ? anime.set(endTarget, { opacity: 1 }) : transitionTo([target], [endTarget], {popup:true})
 	};
@@ -328,29 +349,41 @@ export default function Home(props) {
 		})
 	}, [])
 	useEffect(()=>{
-		return
-		router.beforePopState((url, opt) =>{
-			let view = null;
 
+		router.events.on('routeChangeStart', (url, opt) =>{
+
+			let nextView = null;
+			console.log(url)
 			if((url.match(/\//g) || []).length === 2)
-				view = 'event'
+				nextView = 'event'
 			else if(url === '/')
-				view = 'garden'
+				nextView = 'garden'
 			else if(url === '/community')
-				view = 'community'
+				nextView= 'community'
 			else if(url === '/festival')
-				view = 'festival'
+				nextView = 'festival'
 			else if(url === '/about')
-				view = 'about'
+				nextView = 'about'
 			else 
-				view = 'participant'
+				nextView = 'participant'
 
-			//console.log(view)
-			if(view === 'event'){
-				const evt = events.filter(ev => ev.slug === url.split('/')[2])[0]
-				toEvent(evt)
+			const elements = nodesToArray(document.querySelectorAll(`img[id^='${defaultView}-symbol']`))
+			const lastView = {
+				view,
+				scrollX:window.scrollX,
+				scrollY:window.scrollY,
+				targets:elements.map((el)=>{ return {
+					id: el.id,
+					eventId: parseInt(el.getAttribute('eventid')),
+					participantId: parseInt(el.getAttribute('participantid')),
+					left: el.offsetLeft,
+					top: el.offsetTop,
+					x: el.getBoundingClientRect().x,
+					y: el.getBoundingClientRect().y,
+				}})
 			}
-			
+			localStorage.setItem('lastView', JSON.stringify(lastView))
+			console.log(defaultView, '>', nextView, lastView)
 		})
 	},[])
 	useEffect(() => setView(defaultView), [defaultView])
