@@ -1,8 +1,9 @@
-import styles from "./ContentMain.module.scss"
+import styles from "./ContentMain.module.scss";
+import cn from "classnames";
 
-export default function ContentHeader({ children }) {
+export default function ContentHeader({ children, black }) {
 	return (
-		<div className={styles.contentMain}>
+		<div className={cn(styles.contentMain, black && styles.black)}>
 			{children}
 		</div>
 	);
