@@ -31,6 +31,11 @@ export default function Participant({ participant, events: evts, show }) {
         <header><p className="summary"><Markdown>{participant.summary}</Markdown></p></header>
         <article>
           <p>
+            {participant.externalLinks.map((link) =>
+              <a href={link.url}>
+                {link.linkText}
+              </a>
+            )}
             <a href={participant.externalLink}>{participant.externalLink}</a>
           </p>
         </article>

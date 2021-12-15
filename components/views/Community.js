@@ -6,7 +6,7 @@ import LinkButton from "../LinkButton";
 
 export default function Community({ participants, show }) {
   if (!show) return null
-  
+
   return (
     <div key={'community'} className={styles.container}>
       <h1>Participants</h1>
@@ -15,22 +15,18 @@ export default function Community({ participants, show }) {
           <a href={`/${p.slug}`} key={idx} className={styles.participant}>
             <div className={styles.symbols}>
               <Link href={`/${p.slug}`}>
-                <a>
-                  <img
-                    id={`community-symbol-${p.id}`}
-                    participantid={p.id}
-                    src={p.symbol.url}
-                    className={contentStyles.placeholderSymbol}
-                  />
-                </a>
+                <img
+                  id={`community-symbol-${p.id}`}
+                  participantid={p.id}
+                  src={p.symbol.url}
+                  className={contentStyles.placeholderSymbol}
+                />
               </Link>
             </div>
             <div className={styles.participantInfo}>
               <h2>{p.title}</h2>
               <p>{p.summary.split(".")[0]}</p>
-              <p>
-                <LinkButton href={`/${p.slug}`}>View</LinkButton>
-              </p>
+              {/*<LinkButton href={`/${p.slug}`}>View</LinkButton>*/}
             </div>
           </a>
         )}

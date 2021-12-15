@@ -8,6 +8,7 @@ fragment EventFragment on EventRecord {
   endTime
   summary
   title
+  subTitle
   createdAt
   image {
       ...ImageFragment
