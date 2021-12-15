@@ -61,15 +61,17 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                   {formatToTimeZone(ev.startTime, 'HH:mm z', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title}
                 </span>
               }
-              <h2>{ev.title}</h2>
+              <h2>{ev.title}<br />{ev.subTitle}</h2>
               <br />
-              {ev.summary.split(".")[0]}
+              {ev.summary}
             </p>
+            {/*
             <p>
               <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>
                 Go to event
               </LinkButton>
             </p>
+            */}
           </div>
         </a>
       </>

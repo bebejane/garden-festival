@@ -5,7 +5,11 @@ fragment ParticipantFragment on ParticipantRecord {
   slug
   title
   summary(markdown: false)
-  externalLink
+  externalLinks {
+    id
+    url
+    linkText
+  }
   symbol {
     ...ImageFragment
   }

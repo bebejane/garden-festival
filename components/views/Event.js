@@ -18,7 +18,7 @@ export default function Event({ event, events, show }) {
         <ContentHeader responsiveImage={event.image?.responsiveImage}>
           <header>
             <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
-            <h1>{event.title}</h1>
+            <h1>{event.title}<br />{event.subTitle}</h1>
           </header>
           <figure>
             <img
@@ -42,9 +42,11 @@ export default function Event({ event, events, show }) {
                 <div className={styles.relatedEvent}>
                   <h3>{ev.title}</h3>
                   <p>{ev.summary}</p>
+                  {/*
                   <p>
                     <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
                   </p>
+                  */}
                 </div>
               ) :
                 <span>There are now realted events...</span>
