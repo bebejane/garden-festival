@@ -9,7 +9,7 @@ import LinkButton from "/components/LinkButton";
 
 export default function StructuredContent({ content }) {
   
-  if (!content || !content.blocks.length) return null //Empty content
+  if (!content) return null //Empty content
 
   return (
     <article className={styles.mainContent}>
