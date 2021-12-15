@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { format, eachDayOfInterval, isSameDay } from 'date-fns'
 import { useAppState, AppAction } from "/lib/context/appstate";
+import { useIntervalWhen } from "rooks";
 
 export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, showProgram = false }) {
 
@@ -13,16 +14,18 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
   const { pathname } = useRouter()
   const [date, setDate] = useState(FESTIVAL_START_DATE)
   const [tz, setTimezone] = useState(timeZones[0]);
+  const [time, setTime] = useState(format(new Date(), 'HH:mm'))
 
   useEffect(() => setAppState({ type: AppAction.SET_DATE, value: date }), [date])
   useEffect(() => setAppState({ type: AppAction.SET_TIMEZONE, value: tz }), [tz])
+  useIntervalWhen(() => setTime(format(new Date(), 'HH:mm')), 1000, true, true);
 
   return (
     <div id="menu" className={styles.container} >
       <div className={styles.wrapper}>
         <nav className={styles.menu} >
           <ul>
-            <li>23:40</li>
+            <li>{time}</li>
           </ul>
         </nav>
         <nav className={styles.menu} >

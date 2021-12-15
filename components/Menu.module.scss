@@ -5,7 +5,7 @@
   align-items: center;
   width: 100%;
   z-index: 5;
-  margin-top: $space/4;
+  margin-top: math.div($space, 4);
 
   .wrapper {
     display: flex;
@@ -22,7 +22,7 @@
     align-items: center;
     justify-content: center;
     //width: 100%;
-    margin-bottom: $space/4;
+    margin-bottom: math.div($space, 4);
 
     ul {
       display: flex;
@@ -39,7 +39,7 @@
 
       li {
         @include roundedElement();
-        margin-right: $space/4;
+        margin-right:math.div($space, 4);
         cursor: pointer;
         min-width: 180px;
         text-transform: uppercase;
