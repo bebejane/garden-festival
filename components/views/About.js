@@ -3,9 +3,9 @@ import cn from "classnames";
 import {useRouter} from "next/router";
 import StructuredContent from "/components/blocks"
 
-export default function About({about}) {
+export default function About({about, abouts}) {
   const router = useRouter()
-
+  
 	return (
     <div className={cn(styles.about, about && styles.show)}>
       {about &&

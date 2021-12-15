@@ -15,8 +15,9 @@ import { useEffect, useState, } from "react";
 import { withGlobalProps } from "/lib/utils";
 import anime from "animejs";
 import useVisibility from "/lib/hooks/useVisibility";
-import { useWindowSize, useDebounce } from "rooks";
+import { useWindowSize, useDebounce, useForkRef } from "rooks";
 import { nodesToArray, randomInt } from "/lib/utils";
+import { useRouter } from 'next/router';
 
 const symbolsPerPage = 16;
 const symbolSize = 300;
@@ -34,6 +35,7 @@ export default function Home(props) {
 		defaultView = "garden",
 	} = props;
 
+	const router = useRouter()
 	const [view, setView] = useState()
 	const [bounds, setBounds] = useState({});
 	const [loaded, setLoaded] = useState(0);
@@ -42,9 +44,9 @@ export default function Home(props) {
 	const [currentView, setCurrentView] = useState();
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [page, setPage] = useState(1);
-	const [positions, setPositions] = useState();
-	//const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,100);
+	const [positions, setPositions] = useState();	
 	const { innerWidth } = useWindowSize();
+	//const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,100);
 
 	const toggleView = (view, force) => {
 		if (!ready) return
@@ -186,74 +188,7 @@ export default function Home(props) {
 		}
 		setPositions(newPositions)
 	}
-	/*
-		const transitionTo = async (targets, endTargets, opt = {}) => {
-			
-			if(currentAnimation) currentAnimation.pause()
-			
-			targets = sortTargetsByEventId(targets)
-			endTargets = sortTargetsByEventId(endTargets)
-	
-			const defaultDuration = 800;
-			const defaultDelay = 0;
-			const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
-	
-			const elementByIndex = (i, el) => {
-				const endEl =  Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
-				return endEl
-			}
-			
-			const generatePath = (el, i) => {
-				console.log(el)
-				const b1 = el.getBoundingClientRect()
-				const b2 = elementByIndex(i).getBoundingClientRect()
-	
-				console.log(b1.x, b1.y, b2.x, b2.y)
-				var path2 = SvgPath().to(b1).rel().bezier3(b1.x, b1.y, b2.x, b2.y).str();
-				console.log(path2)
-				const p = document.getElementById('svgpath')
-				p.setAttribute('d', path2)
-				
-				const path = Path()
-					.moveTo(b1.x, b1.y)
-					.bezierCurveTo(b2.x, b2.y)
-					.end();
-				console.log(path)
-				
-				return anime.path('#svgpath');
-			}
-			
-			anime.set(lastTargets, {opacity:0})
-			anime.set(endTargets, {opacity:0})
-			anime.set(targets, {opacity:1, zIndex:5})
-			console.log('start', currentView, '>', view)	
-	
-			const animation = anime({
-				targets,
-				//left: (el, i) => elementByIndex(i, el).getBoundingClientRect().left,
-				//top: (el, i) => elementByIndex(i, el).getBoundingClientRect().top + window.scrollY,
-				//height: (el, i) =>  elementByIndex(i, el).clientHeight,
-				//width: (el, i) => elementByIndex(i, el).clientWidth,
-				delay: (el, i) => i * defaultDelay,
-				top: (el, i)=> generatePath(el, i),
-				left: (el, i)=> generatePath(el, i),
-				//rotate: (el, i)=> generatePath(el, i),
-				easing: "linear",//"easeOutExpo",
-				scale: 1,
-				duration: 1000,//!currentView ? 0 : defaultDuration,
-				...opt,
-				complete: () =>{
-					anime.set(targets, {opacity:0, zIndex:0})
-					anime.set(endTargets, {opacity:1})
-					setCurrentAnimation(undefined)
-					setCurrentView(view);
-					console.log('complete', currentView, '>', view)		
-				}
-			})
-			setCurrentAnimation(animation)
-			return animation.finished
-		}
-		*/
+
 	const transitionTo = async (targets, endTargets, opt = {}) => {
 
 		if (currentAnimation) currentAnimation.pause()
@@ -361,7 +296,8 @@ export default function Home(props) {
 		return transitionTo(targets, endTarget, {popup:true})
 	};
 
-	const toEvent = async () => {
+	const toEvent = async (evt) => {
+		event = evt ? evt : event
 		const target = document.getElementById(`symbol-${event.id}`)
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
 		!target ? anime.set(endTarget, { opacity: 1 }) : transitionTo([target], [endTarget], {popup:true})
@@ -391,7 +327,32 @@ export default function Home(props) {
 				ref.onload = () => { setLoaded(++preLoaded) }
 		})
 	}, [])
+	useEffect(()=>{
+		return
+		router.beforePopState((url, opt) =>{
+			let view = null;
 
+			if((url.match(/\//g) || []).length === 2)
+				view = 'event'
+			else if(url === '/')
+				view = 'garden'
+			else if(url === '/community')
+				view = 'community'
+			else if(url === '/festival')
+				view = 'festival'
+			else if(url === '/about')
+				view = 'about'
+			else 
+				view = 'participant'
+
+			//console.log(view)
+			if(view === 'event'){
+				const evt = events.filter(ev => ev.slug === url.split('/')[2])[0]
+				toEvent(evt)
+			}
+			
+		})
+	},[])
 	useEffect(() => setView(defaultView), [defaultView])
 	useEffect(() => ready && view && toggleView(view), [view, ready]);
 
@@ -404,6 +365,7 @@ export default function Home(props) {
 			/>
 			<Content
 				show={view !== 'garden'}
+				view={view}
 				popup={['event', 'participant'].includes(view)}
 				abouts={abouts}
 			>
@@ -426,7 +388,7 @@ export default function Home(props) {
 				bounds={bounds}
 			/>
 			<Clock />
-			<About about={about} />
+			<About about={about} abouts={abouts}/>
 			<Background view={view} />
 		</div>
 	)
