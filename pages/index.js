@@ -317,7 +317,6 @@ export default function Home(props) {
 	};
 
 	const toEvent = async () => {
-		
 		const target = document.getElementById(`symbol-${event.id}`)
 		repositionToLastView(target, event)
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
