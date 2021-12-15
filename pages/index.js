@@ -143,7 +143,7 @@ export default function Home(props) {
 	}
 
 	const initSymbols = () => {
-		console.log('init')
+		console.log('init symbols')
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const symbols = document.querySelectorAll(`[id^='symbol-']`)
 		const positions = generatePositions()
@@ -208,7 +208,7 @@ export default function Home(props) {
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
-		console.log('start', currentView, '>', view)
+		//console.log('start', currentView, '>', view)
 
 		const animation = anime({
 			targets,
@@ -226,31 +226,49 @@ export default function Home(props) {
 				anime.set(endTargets, { opacity: 1 })
 				setCurrentAnimation(undefined)
 				setCurrentView(view);
-				console.log('complete', currentView, '>', view)
+				//console.log('complete', currentView, '>', view)
 			}
 		})
 		setCurrentAnimation(animation)
 		return animation.finished
 	}
+
+	const saveViewPositions = () => {
+		
+		const elements = nodesToArray(document.querySelectorAll(`img[id^='${view}-symbol']`))
+		const viewPositions = {
+			view,
+			scrollX:window.scrollX,
+			scrollY:window.scrollY,
+			targets:elements.map((el)=>{ return {
+				id: el.id,
+				eventId: parseInt(el.getAttribute('eventid')),
+				participantId: parseInt(el.getAttribute('participantid')),
+				left: el.offsetLeft,
+				top: el.offsetTop,
+				x: el.getBoundingClientRect().x,
+				y: el.getBoundingClientRect().y,
+			}})
+		}
+		console.log(viewPositions)
+		localStorage.setItem('lastView', JSON.stringify(viewPositions))
+		return viewPositions
+	}
+
 	const lastViewPositions = () => {
 		return  localStorage.getItem('lastView') ? JSON.parse(localStorage.getItem('lastView')) : null
 	}
-	const repositionToLastView = (target, obj) => {
+
+	const repositionToLastView = (target, opt) => {
 
 		const lastView = lastViewPositions()
-		if(lastView){
-			const lastElement = lastView.targets.filter((t) => t.eventId == obj.id || t.eventId == obj.id)[0]
-			if(lastElement){
-				anime.set(target, {
-					top: `${lastElement.y+window.scrollY}px`,
-					left:`${lastElement.x}px`,
-				})
-			}else{
-				console.log('cant find last element')
-			}
-
-			//anime.set(
-		}
+		if(!lastView) return console.log('no last view')
+		const lastElement = lastView.targets.filter((t) => t.eventId == opt.eventId )[0]
+		if(!lastElement) return console.log('no last element')
+		anime.set(target, {
+			top: `${lastElement.y + window.scrollY}px`,
+			left:`${lastElement.x}px`,
+		})
 	}
 
 	const sortTargetsByEventId = (targets) => {
@@ -278,12 +296,14 @@ export default function Home(props) {
 		const lastView = lastViewPositions()
 		console.log(lastView)
 		if(lastView && lastView.targets.length){
+			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
+			console.log(target)
+			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
 			
-			repositionToLastView(document.getElementById(lastView.targets[0].id), lastView.targets[0])
 		}else{
 			console.log('lastview not found')
 		}
-			
+		//return
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = document.querySelectorAll("[id^='festival-symbol-']")
 		return transitionTo(targets, endTargets)
@@ -322,12 +342,15 @@ export default function Home(props) {
 	const toParticipant = async () => {
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
+		
+		//repositionToLastView(targets, {eventId:event.id})
+
 		return transitionTo(targets, endTarget, {popup:true})
 	};
 
 	const toEvent = async () => {
 		const target = document.getElementById(`symbol-${event.id}`)
-		repositionToLastView(target, event)
+		repositionToLastView(target, {eventId:event.id})
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
 		!target ? anime.set(endTarget, { opacity: 1 }) : transitionTo([target], [endTarget], {popup:true})
 	};
@@ -356,44 +379,10 @@ export default function Home(props) {
 				ref.onload = () => { setLoaded(++preLoaded) }
 		})
 	}, [])
-	useEffect(()=>{
-
-		router.events.on('routeChangeStart', (url, opt) =>{
-
-			let nextView = null;
-			console.log(url)
-			if((url.match(/\//g) || []).length === 2)
-				nextView = 'event'
-			else if(url === '/')
-				nextView = 'garden'
-			else if(url === '/community')
-				nextView= 'community'
-			else if(url === '/festival')
-				nextView = 'festival'
-			else if(url === '/about')
-				nextView = 'about'
-			else 
-				nextView = 'participant'
-
-			const elements = nodesToArray(document.querySelectorAll(`img[id^='${defaultView}-symbol']`))
-			const lastView = {
-				view,
-				scrollX:window.scrollX,
-				scrollY:window.scrollY,
-				targets:elements.map((el)=>{ return {
-					id: el.id,
-					eventId: parseInt(el.getAttribute('eventid')),
-					participantId: parseInt(el.getAttribute('participantid')),
-					left: el.offsetLeft,
-					top: el.offsetTop,
-					x: el.getBoundingClientRect().x,
-					y: el.getBoundingClientRect().y,
-				}})
-			}
-			localStorage.setItem('lastView', JSON.stringify(lastView))
-			console.log(view, '>', nextView, defaultView, lastView)
-		})
-	},[])
+	useEffect(() => {
+		router.events.on('routeChangeStart', saveViewPositions)
+		return () => router.events.off('routeChangeStart', saveViewPositions)
+	},[view])
 	useEffect(() => setView(defaultView), [defaultView])
 	useEffect(() => ready && view && toggleView(view), [view, ready]);
 

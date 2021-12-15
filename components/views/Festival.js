@@ -40,40 +40,38 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
             {format(eventDate, 'MMMM d')}
           </h1>
         }
-        <a key={idx} className={styles.event} href={`/${ev.participant.slug}/${ev.slug}`}>
-          <div className={styles.symbol}>
-            <Link href={`/${ev.participant.slug}/${ev.slug}`}>
-              <a>
-                <img
-                  id={`festival-symbol-${ev.id}`}
-                  eventid={ev.id}
-                  participantid={ev.participant.id}
-                  src={`${ev.participant.symbol.url}?w=200`}
-                  className={contentStyles.placeholderSymbol}
-                />
-              </a>
-            </Link>
-          </div>
-          <div className={styles.info}>
-            <p>
-              {ev.startTime &&
-                <span class="meta">
-                  {formatToTimeZone(ev.startTime, 'HH:mm z', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title}
-                </span>
-              }
-              <h2>{ev.title}<br />{ev.subTitle}</h2>
-              <br />
-              {ev.summary}
-            </p>
-            {/*
-            <p>
-              <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>
-                Go to event
-              </LinkButton>
-            </p>
-            */}
-          </div>
-        </a>
+        <Link href={`/${ev.participant.slug}/${ev.slug}`}>
+          <a key={idx} className={styles.event}>
+            <div className={styles.symbol}>
+              <img
+                id={`festival-symbol-${ev.id}`}
+                eventid={ev.id}
+                participantid={ev.participant.id}
+                src={`${ev.participant.symbol.url}?w=200`}
+                className={contentStyles.placeholderSymbol}
+              />
+            </div>
+            <div className={styles.info}>
+              <p>
+                {ev.startTime &&
+                  <span class="meta">
+                    {formatToTimeZone(ev.startTime, 'HH:mm z', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title}
+                  </span>
+                }
+                <h2>{ev.title}<br />{ev.subTitle}</h2>
+                <br />
+                {ev.summary}
+              </p>
+              {/*
+              <p>
+                <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>
+                  Go to event
+                </LinkButton>
+              </p>
+              */}
+            </div>
+          </a>
+        </Link>
       </>
     )
   })
