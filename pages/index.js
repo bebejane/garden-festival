@@ -18,6 +18,7 @@ import useVisibility from "/lib/hooks/useVisibility";
 import { useWindowSize, useDebounce, useForkRef } from "rooks";
 import { nodesToArray, randomInt } from "/lib/utils";
 import { useRouter } from 'next/router';
+import { sortNodeList } from 'lib/utils';
 
 const symbolsPerPage = 16;
 const symbolSize = 300;
@@ -34,7 +35,7 @@ export default function Home(props) {
 		about,
 		defaultView = "garden",
 	} = props;
-
+	
 	const router = useRouter()
 	const [view, setView] = useState()
 	const [bounds, setBounds] = useState({});
@@ -150,7 +151,6 @@ export default function Home(props) {
 
 		anime.set(targets, {
 			opacity: 0,
-			
 			left: (el, i) => positions.items[i].left,
 			top: (el, i) => positions.items[i].top,
 			width: symbolSize,
@@ -193,9 +193,6 @@ export default function Home(props) {
 
 		if (currentAnimation) currentAnimation.pause()
 
-		targets = sortTargetsByEventId(targets)
-		endTargets = sortTargetsByEventId(endTargets).filter(t => (t))
-
 		const defaultDuration = 800;
 		const defaultDelay = 0;
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
@@ -208,7 +205,6 @@ export default function Home(props) {
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
-		//console.log('start', currentView, '>', view)
 
 		const animation = anime({
 			targets,
@@ -226,7 +222,6 @@ export default function Home(props) {
 				anime.set(endTargets, { opacity: 1 })
 				setCurrentAnimation(undefined)
 				setCurrentView(view);
-				//console.log('complete', currentView, '>', view)
 			}
 		})
 		setCurrentAnimation(animation)
@@ -250,7 +245,7 @@ export default function Home(props) {
 				y: el.getBoundingClientRect().y,
 			}})
 		}
-		console.log(viewPositions)
+		
 		localStorage.setItem('lastView', JSON.stringify(viewPositions))
 		return viewPositions
 	}
@@ -263,7 +258,7 @@ export default function Home(props) {
 
 		const lastView = lastViewPositions()
 		if(!lastView) return console.log('no last view')
-		const lastElement = lastView.targets.filter((t) => t.eventId == opt.eventId )[0]
+		const lastElement = lastView.targets.filter((t) => opt.participantId ? t.participantId == opt.participantId : t.eventId == opt.eventId )[0]
 		if(!lastElement) return console.log('no last element')
 		anime.set(target, {
 			top: `${lastElement.y + window.scrollY}px`,
@@ -294,18 +289,12 @@ export default function Home(props) {
 
 	const toFestival = async () => {
 		const lastView = lastViewPositions()
-		console.log(lastView)
 		if(lastView && lastView.targets.length){
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
-			console.log(target)
 			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
-			
-		}else{
-			console.log('lastview not found')
 		}
-		//return
-		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = document.querySelectorAll("[id^='festival-symbol-']")
+		const targets = sortTargetsByEventId(document.querySelectorAll("[id^='symbol-']"))
+		const endTargets = sortTargetsByEventId(document.querySelectorAll("[id^='festival-symbol-']")).filter(t => (t))
 		return transitionTo(targets, endTargets)
 	};
 
@@ -326,25 +315,28 @@ export default function Home(props) {
 	};
 
 	const toCommunity = async () => {
+		const lastView = lastViewPositions()
+		if(lastView && lastView.targets.length && lastView.view === 'participant'){			
+			const target = document.querySelector(`[id^='symbol-'][participantid='${lastView.targets[0].participantId}']`)
+			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
+		}
 		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = document.querySelectorAll("[id^='community-symbol-']")
-
-		const eTargets = nodesToArray(targets).map(el => {
+		const endTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');
-			for (let i = 0; i < endTargets.length; i++) {
-				if (participantId === endTargets[i].getAttribute('participantid'))
-					return endTargets[i];
+			const eTargets = document.querySelectorAll("[id^='community-symbol-']")
+			for (let i = 0; i < eTargets.length; i++) {
+				if (participantId == eTargets[i].getAttribute('participantid')){
+					return eTargets[i];
+				}
 			}
 		})
-		return transitionTo(targets, eTargets)
+		return transitionTo(targets, endTargets)
 	};
 
 	const toParticipant = async () => {
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
-		
-		//repositionToLastView(targets, {eventId:event.id})
-
+		repositionToLastView(targets[0], {participantId:participant.id})
 		return transitionTo(targets, endTarget, {popup:true})
 	};
 
@@ -356,8 +348,13 @@ export default function Home(props) {
 	};
 
 	useEffect(() => setBounds(getBounds()), [innerWidth])
-	useEffect(() => resizePositions(), [innerWidth])
-
+	useEffect(() => resizePositions(), [innerWidth])	
+	useEffect(() => setView(defaultView), [defaultView])
+	useEffect(() => ready && view && toggleView(view), [view, ready]);
+	useEffect(() => {
+		router.events.on('routeChangeStart', saveViewPositions)
+		return () => router.events.off('routeChangeStart', saveViewPositions)
+	},[view])
 	useEffect(async () => { // wait for images to load then init
 		const images = document.querySelectorAll(`img[preload='true']`)
 		if (loaded < images.length || !loading) return
@@ -368,7 +365,6 @@ export default function Home(props) {
 		}, 200);
 
 	}, [loaded]);
-
 	useEffect(() => { // check loading of images
 		let preLoaded = 0;
 		const images = document.querySelectorAll(`img[preload='true']`)
@@ -379,12 +375,6 @@ export default function Home(props) {
 				ref.onload = () => { setLoaded(++preLoaded) }
 		})
 	}, [])
-	useEffect(() => {
-		router.events.on('routeChangeStart', saveViewPositions)
-		return () => router.events.off('routeChangeStart', saveViewPositions)
-	},[view])
-	useEffect(() => setView(defaultView), [defaultView])
-	useEffect(() => ready && view && toggleView(view), [view, ready]);
 
 	return (
 		<div className={styles.container}>

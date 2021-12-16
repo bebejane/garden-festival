@@ -11,14 +11,14 @@ export default function Community({ participants, show }) {
     <div key={'community'} className={styles.container}>
       <h1>Participants</h1>
       <div className={styles.community}>
-        {participants.map((p, idx) =>
+        {[...participants].map((p, idx) =>
           <a href={`/${p.slug}`} key={idx} className={styles.participant}>
             <div className={styles.symbols}>
               <Link href={`/${p.slug}`}>
                 <img
                   id={`community-symbol-${p.id}`}
                   participantid={p.id}
-                  src={p.symbol.url}
+                  src={`${p.symbol.url}?w=200`}
                   className={contentStyles.placeholderSymbol}
                 />
               </Link>
