@@ -17,7 +17,6 @@ export default function About({ about, abouts }) {
           </ContentHeader>
           <ContentMain black="true" >
             <StructuredContent content={about.content} />
-            <div className={styles.close} onClick={router.back}>×</div>
           </ContentMain>
         </>
       }

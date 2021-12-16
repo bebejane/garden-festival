@@ -386,7 +386,7 @@ export default function Home(props) {
 			<Content
 				show={view !== 'garden'}
 				view={view}
-				popup={['event', 'participant'].includes(view)}
+				popup={['event', 'participant', 'about'].includes(view)}
 				abouts={abouts}
 			>
 				<Festival
@@ -398,6 +398,7 @@ export default function Home(props) {
 				<Community participants={participants} show={view === 'community'} />
 				<Participant participant={participant} events={events} show={view === 'participant'} />
 				<Event event={event} events={events} show={view === 'event'} />
+				<About about={about} abouts={abouts}/>
 			</Content>
 			<Garden
 				participant={participant}
@@ -407,8 +408,6 @@ export default function Home(props) {
 				symbolSize={symbolSize}
 				bounds={bounds}
 			/>
-			<Clock />
-			<About about={about} abouts={abouts}/>
 			<Background view={view} />
 		</div>
 	)
