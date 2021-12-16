@@ -398,7 +398,7 @@ export default function Home(props) {
 				<Community participants={participants} show={view === 'community'} />
 				<Participant participant={participant} events={events} show={view === 'participant'} />
 				<Event event={event} events={events} show={view === 'event'} />
-				<About about={about} abouts={abouts}/>
+				<About about={about} abouts={abouts} show={view === 'about'}/>
 			</Content>
 			<Garden
 				participant={participant}
