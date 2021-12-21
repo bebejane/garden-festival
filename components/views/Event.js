@@ -37,26 +37,31 @@ export default function Event({ event, events, show }) {
             <header>
               <p className="summary">{event.summary}</p>
             </header>
-            <StructuredContent content={event.content} />
-            <div className={styles.related}>
-              <h2>Related</h2>
-              {related.length ? related.map((ev) =>
-                <div className={styles.relatedEvent}>
-                  <h3>{ev.title}</h3>
-                  <p>{ev.summary}</p>
-                  {/*
-                  <p>
-                    <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
-                  </p>
-                  */}
-                </div>
-              ) :
-                <span>There are now realted events...</span>
-              }
-            </div>
+            {process.env.NEXT_PUBLIC_EDITOR_MODE &&
+              <>
+                <StructuredContent content={event.content} />
+                {related.length && 
+                  <div className={styles.related}>
+                    <h2>Related</h2>
+                    {related.map((ev) =>
+                      <div className={styles.relatedEvent}>
+                        <h3>{ev.title}</h3>
+                        <p>{ev.summary}</p>
+                        {/*
+                        <p>
+                          <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
+                        </p>
+                        */}
+                      </div>
+                    )}
+                  </div>
+                }
+              </>
+            }
           </section>
         </ContentMain>
-      </div >
-    </div >
+        
+      </div>
+    </div>
   );
 }

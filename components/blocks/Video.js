@@ -8,6 +8,9 @@ export default function Video({ provider, providerUid, title, url, thumbnailUrl 
 	const [height, setHeight] = useState(360);
 	const { innerWidth } = useWindowSize()
 
+	const vimeoId = provider === 'vimeo' && url.indexOf('/') > -1 ? url.substring(url.lastIndexOf('/')+1) : undefined
+	console.log(vimeoId, `https://player.vimeo.com/video/${providerUid}?h=${vimeoId}`)
+
 	const video = provider === 'youtube' ?
 		<iframe
 			ref={ref}
@@ -24,7 +27,7 @@ export default function Video({ provider, providerUid, title, url, thumbnailUrl 
 			<iframe
 				ref={ref}
 				type="text/html"
-				src={`https://player.vimeo.com/video/${providerUid}`}
+				src={`https://player.vimeo.com/video/${providerUid}?h=${vimeoId}`}
 				width="100%"
 				height={height}
 				frameBorder="0"
