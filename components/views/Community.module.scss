@@ -46,11 +46,20 @@
         }
       }
       .symbols {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         flex: 0 0 200px;
-        img {
-          width: 200px;
-          height: 200px;
+        img { 
+          width: 100px;
+          height: 100px;
           margin-top: -30px;
+        }
+        &.single{
+          img{
+            width: 200px;
+            height: 200px;
+          }
         }
       }
     }

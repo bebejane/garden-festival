@@ -18,14 +18,6 @@ export default function Participant({ participant, events: evts, show }) {
     <div className={styles.container}>
       <ContentHeader>
         <h1>{participant.title}</h1>
-        <figure>
-          <img
-            id={`participant-symbol-${participant.id}`}
-            participantid={participant.id}
-            src={participant.symbol.url}
-            className={contentStyles.placeholderSymbol}
-          />
-        </figure>
       </ContentHeader>
       <ContentMain>
         <header><p className="summary"><Markdown>{participant.summary}</Markdown></p></header>
@@ -45,10 +37,20 @@ export default function Participant({ participant, events: evts, show }) {
         <h2>Events</h2>
         {events.map((ev) =>
           <div className={styles.event}>
-            {format(new Date(ev.startTime), 'EEEE MMMM d, yyyy')}
-            <h3>{ev.title}</h3>
-            <p><Markdown>{ev.summary}</Markdown></p>
-            <LinkButton href={`${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
+            <div className={styles.symbol}>
+              <img
+                id={`participant-symbol-${ev.id}`}
+                participantid={participant.id}
+                src={`${ev.symbol.url}?w=200`}
+                className={contentStyles.placeholderSymbol}
+              />
+            </div>
+            <div className={styles.info}>
+              {format(new Date(ev.startTime), 'EEEE MMMM d, yyyy')}
+              <h3>{ev.title}</h3>
+              <p><Markdown>{ev.summary}</Markdown></p>
+              <LinkButton href={`${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
+            </div>
           </div>
         )}
       </div>

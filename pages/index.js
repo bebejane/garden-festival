@@ -317,27 +317,28 @@ export default function Home(props) {
 	const toCommunity = async () => {
 		const lastView = lastViewPositions()
 		if(lastView && lastView.targets.length && lastView.view === 'participant'){			
-			const target = document.querySelector(`[id^='symbol-'][participantid='${lastView.targets[0].participantId}']`)
+			const target = document.querySelector(`[id^='symbol-'][eventid='${lastView.targets[0].eventId}']`)
 			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
 		}
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = nodesToArray(targets).map(el => {
-			const participantId = el.getAttribute('participantid');
+			const eventId = el.getAttribute('eventid');
 			const eTargets = document.querySelectorAll("[id^='community-symbol-']")
 			for (let i = 0; i < eTargets.length; i++) {
-				if (participantId == eTargets[i].getAttribute('participantid')){
+				if (eventId == eTargets[i].getAttribute('eventid')){
 					return eTargets[i];
 				}
 			}
 		})
+		console.log(targets, endTargets)
 		return transitionTo(targets, endTargets)
 	};
 
 	const toParticipant = async () => {
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
-		const endTarget = document.getElementById(`participant-symbol-${participant.id}`)
+		const endTargets = document.querySelectorAll(`[id^='participant-symbol-'][participantid='${participant.id}']`)
 		repositionToLastView(targets[0], {participantId:participant.id})
-		return transitionTo(targets, endTarget, {popup:true})
+		return transitionTo(targets, endTargets, {popup:true})
 	};
 
 	const toEvent = async () => {
@@ -395,7 +396,7 @@ export default function Home(props) {
 					dayEvents={dayEvents}
 					weekday={weekday}
 				/>
-				<Community participants={participants} show={view === 'community'} />
+				<Community participants={participants} events={events} show={view === 'community'} />
 				<Participant participant={participant} events={events} show={view === 'participant'} />
 				<Event event={event} events={events} show={view === 'event'} />
 				<About about={about} abouts={abouts} show={view === 'about'}/>
