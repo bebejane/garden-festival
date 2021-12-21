@@ -89,7 +89,7 @@ export default function Home(props) {
 		
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
-		const elements = nodesToArray(targets).slice(0, symbolsPerPage);
+		const elements = nodesToArray(targets)
 		const maxRetries = 100000;
 
 		const positions = { bounds, items: []};
@@ -190,7 +190,7 @@ export default function Home(props) {
 	}
 
 	const transitionTo = async (targets, endTargets, opt = {}) => {
-
+		
 		if (currentAnimation) currentAnimation.pause()
 
 		const defaultDuration = 800;
