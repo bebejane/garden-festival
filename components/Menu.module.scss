@@ -39,7 +39,7 @@
 
       li {
         @include roundedElement();
-        margin-right:math.div($space, 4);
+        margin-right: math.div($space, 4);
         cursor: pointer;
         min-width: 180px;
         text-transform: uppercase;
@@ -48,6 +48,8 @@
 
         &:hover {
           background-color: $white;
+          font-feature-settings: "ss01" 1;
+          font-variation-settings: "wght" 800;
         }
 
         &:last-child {

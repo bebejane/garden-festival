@@ -14,7 +14,8 @@ h1 {
   font-size: 50px;
 
   @include mq($from: tablet) {
-    font-size: 4.5vw;
+    font-size: 5.5vw;
+    line-height: 4.8vw;
   }
 }
 
@@ -22,7 +23,11 @@ h2 {
   font-size: 20px;
 
   @include mq($from: tablet) {
-    font-size: 1.7vw;
+    font-size: 3vw;
+  }
+
+  &.sub {
+    font-variation-settings: "wght" 300;
   }
 }
 
@@ -31,16 +36,27 @@ p {
   font-size: 18px;
   line-height: $body-line-height;
 
-  &.summary {
+  &.summary,
+  &.summary p {
     font-variation-settings: "wght" 300;
     font-size: 21px;
     line-height: 1.05;
+  }
+
+  a {
+    font-family: $mono-font;
+    color: $black !important;
   }
 }
 
 nav,
 .meta {
   @include nav();
+}
+
+.metaLight {
+  @include nav();
+  font-variation-settings: "wght" 400;
 }
 
 caption {

@@ -54,13 +54,14 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
             <div className={styles.info}>
               <p>
                 {ev.startTime &&
-                  <span class="meta">
+                  <span class="metaLight">
                     {formatToTimeZone(ev.startTime, 'HH:mm z', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title}
                   </span>
                 }
-                <h2>{ev.title}<br />{ev.subTitle}</h2>
+                <h2>{ev.title}</h2>
+                <h2 className="sub">{ev.subTitle}</h2>
                 <br />
-                {ev.summary}
+                <p className="summary">{ev.summary}</p>
               </p>
               {/*
               <p>
