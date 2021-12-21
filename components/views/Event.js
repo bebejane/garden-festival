@@ -37,7 +37,7 @@ export default function Event({ event, events, show }) {
             <header>
               <p className="summary">{event.summary}</p>
             </header>
-            {process.env.NEXT_PUBLIC_EDITOR_MODE &&
+            {process.env.NEXT_PUBLIC_EDITOR_MODE == 'true' &&
               <>
                 <StructuredContent content={event.content} />
                 {related.length && 
