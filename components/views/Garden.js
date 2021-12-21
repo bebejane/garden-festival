@@ -12,7 +12,7 @@ export default function Garden({ events, participant, view, symbolSize, bounds }
 					<h1>Community</h1>
 					<h2>12 - 17 Feb 2020</h2>
 					<h1>Garden</h1>
-					<h2>By the SeedBox</h2>
+					<h2>Presented by the SeedBox</h2>
 					<h1>Festival</h1>
 				</div>
 			</div>

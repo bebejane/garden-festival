@@ -106,3 +106,16 @@
     }
   }
 }
+
+.invert {
+  li {
+    border-color: white !important;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+
+    &:hover {
+      color: $black;
+      background: $white;
+    }
+  }
+}
