@@ -9,8 +9,9 @@ export default function ImageGallery({ images, id }) {
 
 	const [index, setIndex] = useState(0)
 	const [captionHeight, setCaptionHeight] = useState()
-
+	const [lazyLoad, setLazyLoad] = useState(false)
 	useEffect(() => setCaptionHeight(document.querySelectorAll(`#ig-${id} > caption`)[index]?.clientHeight), [index])
+	useEffect(()=>setTimeout(()=>setLazyLoad(true), 2000), [])
 
 	return (
 		<section className={styles.imageGallery}>
@@ -47,7 +48,7 @@ export default function ImageGallery({ images, id }) {
 				}
 			>
 				{images.map((image, i) =>
-					<Image key={i} data={image} showCaption={false} />
+					<Image key={i} data={image} showCaption={false} lazyLoad={lazyLoad}/>
 				)}
 			</Carousel>
 			<div
@@ -55,8 +56,8 @@ export default function ImageGallery({ images, id }) {
 				id={`ig-${id}`}
 				style={{ height: captionHeight || 'auto' }}
 			>
-				{images.map((image, i) =>
-					<caption className={cn(styles.caption, i === index && styles.show)}>
+				{images.map((image, idx) =>
+					<caption key={idx} className={cn(styles.caption, idx === index && styles.show)}>
 						{image.title}
 					</caption>
 				)}

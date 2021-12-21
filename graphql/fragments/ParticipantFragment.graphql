@@ -10,7 +10,4 @@ fragment ParticipantFragment on ParticipantRecord {
     url
     linkText
   }
-  symbol {
-    ...ImageFragment
-  }
 }

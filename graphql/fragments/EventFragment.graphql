@@ -13,6 +13,9 @@ fragment EventFragment on EventRecord {
   image {
       ...ImageFragment
   }
+  symbol {
+      ...ImageFragment
+  }
   participant{
     ...ParticipantFragment
   }

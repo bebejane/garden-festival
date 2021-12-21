@@ -25,7 +25,7 @@ export default function Event({ event, events, show }) {
               id={`event-symbol-${event?.id}`}
               eventid={event?.id}
               participantid={event?.participant?.id}
-              src={event.participant.symbol.url}
+              src={event.symbol.url}
               className={cn(styles.symbol, contentStyles.placeholderSymbol)}
             />
           </figure>

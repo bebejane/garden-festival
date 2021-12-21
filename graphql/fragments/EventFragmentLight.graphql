@@ -9,14 +9,14 @@ fragment EventFragmentLight on EventRecord {
   title
   subTitle
   summary
+  symbol {
+    ...ImageFragment
+  }
   typeOfEvent {
     title
   }
   participant{
     id
     slug
-    symbol {
-      ...ImageFragment
-    }
   }
 }

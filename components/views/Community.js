@@ -18,7 +18,7 @@ export default function Community({ participants, show }) {
                 <img
                   id={`community-symbol-${p.id}`}
                   participantid={p.id}
-                  src={`${p.symbol.url}?w=200`}
+                  src={`${p.symbol?.url}?w=200`}
                   className={contentStyles.placeholderSymbol}
                 />
               </Link>

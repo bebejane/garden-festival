@@ -13,7 +13,6 @@
 			"package-lock.json": true,
 			"package.json": true,
 			"README.md": true,
-			"next.config.js": true,
 			".gitignore": true,
 			".env.local": true,
 			"Garden Festival.code-workspace": true
