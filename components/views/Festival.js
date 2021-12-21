@@ -47,7 +47,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                 id={`festival-symbol-${ev.id}`}
                 eventid={ev.id}
                 participantid={ev.participant.id}
-                src={`${ev.symbol.url}?w=200`}
+                src={`${ev.symbol.url}?w=400`}
                 className={contentStyles.placeholderSymbol}
               />
             </div>
