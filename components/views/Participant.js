@@ -41,7 +41,7 @@ export default function Participant({ participant, events: evts, show }) {
               <img
                 id={`participant-symbol-${ev.id}`}
                 participantid={participant.id}
-                src={`${ev.symbol.url}?w=200`}
+                src={`${ev.symbol.url}?w=400`}
                 className={contentStyles.placeholderSymbol}
               />
             </div>
