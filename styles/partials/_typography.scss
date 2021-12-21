@@ -9,13 +9,21 @@ h2 {
 }
 
 h1 {
-  font-size: 4.5vw;
   text-align: center;
   font-feature-settings: "ss01" 1;
+  font-size: 50px;
+
+  @include mq($from: tablet) {
+    font-size: 4.5vw;
+  }
 }
 
 h2 {
-  font-size: 1.7vw;
+  font-size: 20px;
+
+  @include mq($from: tablet) {
+    font-size: 1.7vw;
+  }
 }
 
 p {

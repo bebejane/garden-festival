@@ -1,6 +1,9 @@
 .image {
-  margin: $space;
-  margin-bottom: 0;
+  margin-top: $space/ 2;
+  @include mq($from: tablet) {
+    margin: $space;
+    margin-bottom: 0 !important;
+  }
 
   div {
     max-height: 85vh;
@@ -16,6 +19,8 @@
     display: block;
     padding-top: 1em;
     text-align: center;
-    //@include textWidth();
+    @include mq($until: tablet) {
+      @include textWidth();
+    }
   }
 }

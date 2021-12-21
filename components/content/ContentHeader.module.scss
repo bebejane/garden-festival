@@ -1,8 +1,6 @@
 .contentHeader {
 	@include roundedBox();
 	min-height: 80vh;
-	padding-left: $outer-margin;
-	padding-right: $outer-margin;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -10,6 +8,13 @@
 	margin-bottom: -3px;
 	position: relative;
 	justify-content: space-between;
+	padding-left: $outer-margin / 2;
+	padding-right: $outer-margin / 2;
+
+	@include mq($from: tablet) {
+		padding-left: $outer-margin;
+		padding-right: $outer-margin;
+	}
 
 	header {
 		display: flex;

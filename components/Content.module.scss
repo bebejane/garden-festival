@@ -30,9 +30,14 @@ $top-margin: 80px;
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		width: 80vw;
 		min-height: calc(100vh - $top-margin);
 		opacity: 0;
+		width: 95vw;
+
+		@include mq($from: tablet) {
+			width: 80vw;
+		}
+
 		&.show {
 			opacity: 1;
 		}
@@ -78,6 +83,6 @@ $top-margin: 80px;
 	}
 }
 
-.placeholderSymbol{
+.placeholderSymbol {
 	//opacity: 0;
 }

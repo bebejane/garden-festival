@@ -1,6 +1,10 @@
 .mainContent {
   figure + p,
   section + p {
-    margin-top: $space;
+    margin-top: $space / 3;
+
+    @include mq($from: tablet) {
+      margin-top: $space;
+    }
   }
 }
