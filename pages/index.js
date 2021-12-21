@@ -20,7 +20,7 @@ import { nodesToArray, randomInt } from "/lib/utils";
 import { useRouter } from 'next/router';
 import { sortNodeList } from 'lib/utils';
 
-const symbolsPerPage = 16;
+const symbolsPerPage = 8;
 const symbolSize = 300;
 
 export default function Home(props) {
@@ -96,7 +96,7 @@ export default function Home(props) {
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
-		const maxY = bounds.top + bounds.height - symbolSize
+		const maxY = (bounds.top + bounds.height - symbolSize)
 
 		const isOverlapping = (area) => {
 			
@@ -119,14 +119,17 @@ export default function Home(props) {
 			}
 			return false;
 		}
-		for (let el of elements){	
+		
+		for (let i = 0, page = 0; i < elements.length; i++){	
+			let el = elements[i]
 			let randX = 0;
 			let randY = 0;
 			let area;
 			let retries = 0;
+			let pageMargin = (page*bounds.height)
 			do {
 				randX = Math.round(minX + ((maxX - minX) * (Math.random() % 1)));
-				randY = Math.round(minY + ((maxY - minY) * (Math.random() % 1)));
+				randY = Math.round((minY+pageMargin) + (((maxY+pageMargin) - (minY+pageMargin)) * (Math.random() % 1)));
 				area = {
 					id: el.id,
 					left: randX,
@@ -136,8 +139,11 @@ export default function Home(props) {
 				};
 			} while (isOverlapping(area) && (++retries < maxRetries));
 			positions.items.push(area);
+			
 			if(retries >= maxRetries && totalRetries < 10)
 				return generatePositions(++totalRetries)
+			
+			page = Math.floor((i+1)/symbolsPerPage)
 		}
 		if(totalRetries >= 10) console.log('failed to randomly position')
 		return positions;
