@@ -1,25 +1,26 @@
 import styles from "./Garden.module.scss"
 import Symbol from "../Symbol";
 import cn from "classnames";
-import { useVisibility } from "lib/hooks";
 import useScrollPosition from '@react-hook/window-scroll'
 import { useEffect, useState } from "react";
 
 export default function Garden({ events, participant, view, symbolSize }) {
-
+	
 	return (
 		<>
-			<div className={styles.container}>
+			<div className={styles.garden}>
 				<GardenHeader view={view} />
 			</div>
-			{events && events.map((event, index) =>
-				<Symbol
-					key={index}
-					index={index}
-					event={event}
-					symbolSize={symbolSize}
-				/>
-			)}
+			<div className={cn(styles.symbols, view !== 'garden' && styles.inactive)}>
+				{events && events.map((event, index) =>
+					<Symbol
+						key={index}
+						index={index}
+						event={event}
+						symbolSize={symbolSize}
+					/>
+				)}
+			</div>
 		</>
 	);
 }
@@ -58,7 +59,7 @@ const GardenHeader = ({view}) => {
 	useEffect(()=>{
 		const {scrollHeight} = document.documentElement;
 		const ratioTotal = (scrollY+document.body.clientHeight)/scrollHeight
-		const step = ratioTotal*2
+		const step = ratioTotal*1
 		const ratio = step-Math.floor(step)
 		setRatio(ratio > 0.5 ? 0.5-(ratio-0.5) : ratio)
 	}, [scrollY])
