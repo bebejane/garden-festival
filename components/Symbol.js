@@ -18,6 +18,8 @@ const Symbol = (props) => {
 						key={`garden-symbol-${index}`}
 						ref={ref}
 						src={`${event.symbol.url}?w=${symbolSize*2}`}
+						width={symbolSize}
+						height={symbolSize}
 						eventid={event.id}
 						participantid={event.participant?.id}
 						className={cn(styles.symbol, styles.garden, contentStyles.placeholderSymbol)}
@@ -31,6 +33,8 @@ const Symbol = (props) => {
 				src={`${event.symbol.url}?w=${symbolSize*2}`}
 				eventid={event.id}
 				preload={"true"}
+				width={symbolSize}
+				height={symbolSize}
 				participantid={event.participant?.id}
 				className={cn(styles.symbol)}
 			/>

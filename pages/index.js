@@ -9,19 +9,15 @@ import Festival from "/components/views/Festival";
 import About from "/components/views/About";
 import Background from "/components/Background"
 import Content from "/components/Content";
-import Clock from '/components/Clock';
 
-import { useEffect, useState, } from "react";
-import { withGlobalProps } from "/lib/utils";
 import anime from "animejs";
-import useVisibility from "/lib/hooks/useVisibility";
-import { useWindowSize, useDebounce, useForkRef } from "rooks";
-import { nodesToArray, randomInt } from "/lib/utils";
+import { useEffect, useState, } from "react";
+import { useWindowSize } from "rooks";
+import { withGlobalProps, nodesToArray } from "/lib/utils";
 import { useRouter } from 'next/router';
-import { sortNodeList } from 'lib/utils';
 
 const symbolsPerPage = 6;
-const symbolSize = 300;
+const symbolSize = 250;
 
 export default function Home(props) {
 	const {
@@ -47,8 +43,7 @@ export default function Home(props) {
 	const [page, setPage] = useState(1);
 	const [positions, setPositions] = useState();	
 	const { innerWidth } = useWindowSize();
-	//const [scrollRef, { scroll, scrollStep, scrollStepRatio, totalSteps }] = useVisibility("scroller",0,100);
-
+	
 	const toggleView = (view, force) => {
 		if (!ready) return
 		switch (view) {
@@ -82,7 +77,8 @@ export default function Home(props) {
 		const { clientHeight: h, clientWidth: w } = document.body;
 		const top = menu.offsetTop + menu.clientHeight;
 		const pad = 0;
-		return { width: w - (pad * 2), height: h - (pad) - (top), left: pad, top: top, pad, window: { width: window.innerWidth, height: window.innerHeight } };
+		const height =  (h - (pad) - (top))
+		return { width: w - (pad * 2), height, left: pad, top: top, pad, window: { width: window.innerWidth, height: window.innerHeight } };
 	};
 
 	const generatePositions = (totalRetries = 0) => {
@@ -90,7 +86,7 @@ export default function Home(props) {
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const elements = nodesToArray(targets)
-		const maxRetries = 100000;
+		const maxRetries = 10000;
 
 		const positions = { bounds, items: []};
 		const minX = bounds.left
@@ -101,51 +97,47 @@ export default function Home(props) {
 		const isOverlapping = (area) => {
 			
 			for (let i = 0; i < positions.items.length; i++) {
-				let checkArea = positions.items[i];
-				let bottom1 = area.top + area.height;
-				let bottom2 = checkArea.top + checkArea.height;
-				let top1 = area.top;
-				let top2 = checkArea.top;
-				let left1 = area.left;
-				let left2 = checkArea.left;
-				let right1 = area.left + area.width;
-				let right2 = checkArea.left + checkArea.width;
+				const checkArea = positions.items[i];			
+				const rect1VerticalReach = area.top + area.height;
+    		const rect1HorizontalReach = area.left + area.width;
+    		const rect2VerticalReach = checkArea.top + checkArea.height;
+    		const rect2HorizontalReach = checkArea.left + checkArea.width;
 
-				if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2)
-					continue;
-				else{
+    		if((checkArea.top < rect1VerticalReach && area.top < rect2VerticalReach) && (checkArea.left < rect1HorizontalReach && area.left < rect2HorizontalReach))
 					return true;
-				}	
+    		else
+					continue;
 			}
 			return false;
 		}
 		
 		for (let i = 0, page = 0; i < elements.length; i++){	
-			let el = elements[i]
-			let randX = 0;
-			let randY = 0;
+			const el = elements[i]
+			const randX = 0;
+			const randY = 0;
+			const retries = 0;
+			const pageMargin = (page*bounds.height)
 			let area;
-			let retries = 0;
-			let pageMargin = (page*bounds.height)
+
 			do {
 				randX = Math.round(minX + ((maxX - minX) * (Math.random() % 1)));
-				randY = Math.round((minY+pageMargin) + (((maxY+pageMargin) - (minY+pageMargin)) * (Math.random() % 1)));
+				randY = Math.round((minY+pageMargin) + (((maxY+pageMargin) - (minY+pageMargin)) * (Math.random())));
 				area = {
 					id: el.id,
 					left: randX,
 					top: randY,
-					width: el.clientWidth,
-					height: el.clientHeight
+					width: el.height,
+					height: el.width
 				};
 			} while (isOverlapping(area) && (++retries < maxRetries));
-			positions.items.push(area);
 			
 			if(retries >= maxRetries && totalRetries < 10)
 				return generatePositions(++totalRetries)
-			
+			positions.items.push(area);
 			page = Math.floor((i+1)/symbolsPerPage)
 		}
-		if(totalRetries >= 10) console.log('failed to randomly position')
+		if(totalRetries >= 10) 
+			console.log('failed to randomly position')
 		return positions;
 	}
 
