@@ -30,7 +30,6 @@ export default function Community({ participants, events, show }) {
                 <div className={styles.participantInfo}>
                   <h2>{p.title}</h2>
                   <p>{p.summary.split(".")[0]}</p>
-                  {/*<LinkButton href={`/${p.slug}`}>View</LinkButton>*/}
                 </div>
               </a>
             </Link>

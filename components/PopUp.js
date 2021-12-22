@@ -21,7 +21,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 		if (disabled) return;
 
 		let timeout = setTimeout(() => {
-			const pad = -125;
+			const pad = -75;
 			const el = document.getElementById(`garden-symbol-${event.id}`);
 			const popup = document.getElementById(`garden-popup-${event.id}`);
 			const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
