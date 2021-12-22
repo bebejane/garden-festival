@@ -273,6 +273,12 @@ export default function Home(props) {
 	const toGarden = async () => {
 		if (!positions || !positions.items.length) return
 
+		const lastView = lastViewPositions()
+		if(lastView && lastView.targets.length){
+			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
+			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
+		}
+		
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = document.querySelectorAll("[id^='garden-symbol-']")
 
