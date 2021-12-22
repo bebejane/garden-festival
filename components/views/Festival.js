@@ -5,9 +5,7 @@ import cn from "classnames";
 import { useAppState, AppAction } from "/lib/context/appstate"
 import { format, isSameDay } from 'date-fns'
 import { formatToTimeZone } from 'date-fns-timezone'
-import { useEffect } from "react";
 import Link from "next/link"
-import { enCA } from "date-fns/locale";
 
 export default function Festival({ events, dayEvents, participants, date, timeZone, show }) {
   if (!show) return null
@@ -15,7 +13,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
   const [appState, setAppState] = useAppState();  
   let currentDate;
 
-  const schedule = [...(dayEvents || events)].sort((a, b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {
+  const schedule = [...(dayEvents || events)].map((ev, idx) => {
     let eventDate;
     if (!isSameDay(currentDate, new Date(ev.startTime))) {
       currentDate = new Date(ev.startTime);
@@ -43,7 +41,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
             <div className={styles.info}>
               <p>
                 {ev.startTime &&
-                  <span class="metaLight">
+                  <span className="metaLight">
                     {formatToTimeZone(ev.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title}
                   </span>
                 }

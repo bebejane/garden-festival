@@ -6,7 +6,9 @@
 	min-height: 100vh;
 	padding: 0;
 	flex-direction: row;
-
+	img{
+		display: none;
+	}
 	.header {
 		position: fixed;
 		display: flex;

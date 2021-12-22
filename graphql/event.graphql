@@ -12,7 +12,7 @@ query GetEventBySlug ($slug: String ){
   }
 }
 query GetEvents ($first : IntType = 100, $skip : IntType = 0) {
-  events: allEvents(first:$first, skip:$skip){
+  events: allEvents(first:$first, skip:$skip, orderBy:[startTime_ASC]){
     ...EventFragmentLight
   }
   eventsMeta: _allEventsMeta {
