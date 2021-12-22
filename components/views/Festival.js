@@ -55,7 +55,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
               <p>
                 {ev.startTime &&
                   <span class="metaLight">
-                    {formatToTimeZone(ev.startTime, 'HH:mm z', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title}
+                    {formatToTimeZone(ev.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title}
                   </span>
                 }
                 <h2>{ev.title}</h2>

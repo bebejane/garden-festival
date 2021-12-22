@@ -67,7 +67,7 @@
     justify-content: center;
     color: $black;
     top: 50%;
-    width: 40px;
+    width: 34px;
     padding: 0;
     transform: translateY(calc(-50% + 20px));
     z-index: 1;
@@ -79,6 +79,10 @@
     user-select: none;
     font-family: $mono-font;
     font-variation-settings: "wght" 900;
+
+    &:hover {
+      background: $white;
+    }
 
     &.prev {
       left: 0px;
