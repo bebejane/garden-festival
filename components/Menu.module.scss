@@ -57,7 +57,7 @@
         }
 
         &.selected {
-          background-color: $black !important;
+          background-color: $black ;
           color: $white;
           -webkit-font-smoothing: antialiased;
         }
@@ -113,6 +113,10 @@
     border-color: white !important;
     color: white;
     -webkit-font-smoothing: antialiased;
+    &.selected{
+      color: black !important;
+      background-color: white !important;
+    }
 
     &:hover {
       color: $black;

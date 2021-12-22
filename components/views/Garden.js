@@ -25,46 +25,47 @@ export default function Garden({ events, participant, view, symbolSize }) {
 	);
 }
 
-const header = {
-	community:{
-		tag: 'h1',
-		text:'Community'
-	},
-	date: {
-		tag:'h2',
-		text:'12 - 17 Feb 2020',
-	},
-	garden:{
-		tag:'h1',
-		text:'Garden',
-	},
-	presented:{
-		tag:'h2',
-		text:'Presented by the SeedBox',
-	},
-	festival:{
-		tag:'h1',
-		text:'Festival'
-	}
-}
+
 
 const GardenHeader = ({view}) => {
 
 	const maxWeight = 700
 	const minWeight = 200
-
+	const header = {
+		community:{
+			tag: 'h1',
+			text:'Community'
+		},
+		date: {
+			tag:'h2',
+			text:'12 - 17 Feb 2020',
+		},
+		garden:{
+			tag:'h1',
+			text:'Garden',
+		},
+		presented:{
+			tag:'h2',
+			text:'Presented by the SeedBox',
+		},
+		festival:{
+			tag:'h1',
+			text:'Festival'
+		}
+	}
+	
 	const [ratio, setRatio] = useState(1)
 	const scrollY = useScrollPosition(60)
 
 	useEffect(()=>{
-		const {scrollHeight} = document.documentElement;
-		const ratioTotal = (scrollY+document.body.clientHeight)/scrollHeight
+		const { scrollTopMax } = document.documentElement;
+		const ratioTotal = scrollY/scrollTopMax
 		const step = ratioTotal*1
 		const ratio = step-Math.floor(step)
 		setRatio(ratio > 0.5 ? 0.5-(ratio-0.5) : ratio)
 	}, [scrollY])
 	
-	const generateStyles = (head) =>{
+	const generateLetters = (head) =>{
 		return head.text.split('').map((c, idx) => 
 			head.tag === 'h1' ?
 				<span style={ generateWeightStyle(idx % 2 === 0 ? ratio :(0.5-ratio) )}>{c}</span>
@@ -81,9 +82,9 @@ const GardenHeader = ({view}) => {
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
 			{Object.keys(header).map(k => 
 					header[k].tag === 'h1' ? 
-						<h1>{generateStyles(header[k])}</h1> 
+						<h1>{generateLetters(header[k])}</h1> 
 					: 
-						<h2>{generateStyles(header[k])}</h2>
+						<h2>{generateLetters(header[k])}</h2>
 			)}
 		</div>
 	)

@@ -203,6 +203,7 @@ export default function Home(props) {
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
+		anime.set(targets[0].parentNode, { opacity: 1, zIndex: 5 })
 
 		const animation = anime({
 			targets,
@@ -216,8 +217,10 @@ export default function Home(props) {
 			duration: !currentView ? 0 : defaultDuration,
 			...opt,
 			complete: () => {
-				anime.set(targets, { opacity: 0, zIndex: 0 })
 				anime.set(endTargets, { opacity: 1 })
+				anime.set(targets[0].parentNode, { opacity: 1, zIndex: 1 })
+				anime.set(targets, { opacity: 0, zIndex: 0 })
+				
 				setCurrentAnimation(undefined)
 				setCurrentView(view);
 			}
