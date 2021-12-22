@@ -12,20 +12,9 @@ import { enCA } from "date-fns/locale";
 export default function Festival({ events, dayEvents, participants, date, timeZone, show }) {
   if (!show) return null
 
-  const [appState, setAppState] = useAppState();
-  useEffect(() => {
-    return
-    count++;
-    if (count === 1) return
-    const el = document.getElementById(`${format(appState.date, 'yyyy-MM-d')}`)
-    el?.scrollIntoView({ block: "center", behavior: "smooth" })
-    console.log('scroll')
-
-  }, [appState.date])
-
-
-
+  const [appState, setAppState] = useAppState();  
   let currentDate;
+
   const schedule = [...(dayEvents || events)].sort((a, b) => new Date(a.startTime) > new Date(b.startTime)).map((ev, idx) => {
     let eventDate;
     if (!isSameDay(currentDate, new Date(ev.startTime))) {

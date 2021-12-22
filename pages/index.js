@@ -20,7 +20,7 @@ import { nodesToArray, randomInt } from "/lib/utils";
 import { useRouter } from 'next/router';
 import { sortNodeList } from 'lib/utils';
 
-const symbolsPerPage = 8;
+const symbolsPerPage = 6;
 const symbolSize = 300;
 
 export default function Home(props) {
