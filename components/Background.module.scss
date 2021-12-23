@@ -9,7 +9,7 @@
   .image, img[id='background']{
     position: absolute; 
     width: 100vw;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     &.selected{
       line-height: 1;
@@ -21,6 +21,6 @@
     filter:hue-rotate(0deg);
   }
   to{
-    filter:hue-rotate(134deg);
+    filter:hue-rotate(240deg);
   }
 }

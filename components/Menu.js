@@ -48,9 +48,8 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
               <li className={weekday === 'pre-party' ? styles.selected : undefined}>Pre Party</li>
             </Link>
             {eachDayOfInterval({ start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE }).map((d, idx) =>
-              <Link href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
+              <Link key={`wlink-${idx}`} href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
                 <li
-                  key={idx}
                   className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined}
                 >
                   {format(d, 'EE')} {format(d, 'MMM dd')}

@@ -22,13 +22,13 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
     return (
       <>
         {eventDate &&
-          <h1 id={format(eventDate, 'yyyy-MM-d')} className={styles.weekday}>
+          <h1 key={`ehead-${idx}`} id={format(eventDate, 'yyyy-MM-d')} className={styles.weekday}>
             {format(eventDate, 'EEEE')}<br />
             {format(eventDate, 'MMMM d')}
           </h1>
         }
-        <Link href={`/${ev.participant.slug}/${ev.slug}`}>
-          <a key={idx} className={styles.event}>
+        <Link key={`elink-${idx}`} href={`/${ev.participant.slug}/${ev.slug}`}>
+          <a className={styles.event}>
             <div className={styles.symbol}>
               <img
                 id={`festival-symbol-${ev.id}`}

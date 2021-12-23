@@ -16,9 +16,6 @@ import { useWindowSize } from "rooks";
 import { withGlobalProps, nodesToArray } from "/lib/utils";
 import { useRouter } from 'next/router';
 
-const symbolsPerPage = 6;
-const symbolSize = 250;
-
 export default function Home(props) {
 	const {
 		events,
@@ -33,6 +30,7 @@ export default function Home(props) {
 	} = props;
 	
 	const router = useRouter()
+	const [symbolSize, setSymbolSize] = useState(250);
 	const [view, setView] = useState()
 	const [bounds, setBounds] = useState({});
 	const [loaded, setLoaded] = useState(0);
@@ -42,7 +40,7 @@ export default function Home(props) {
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [page, setPage] = useState(1);
 	const [positions, setPositions] = useState();	
-	const { innerWidth } = useWindowSize();
+	const { innerWidth, innerHeight } = useWindowSize();
 	
 	const toggleView = (view, force) => {
 		if (!ready) return
@@ -87,13 +85,13 @@ export default function Home(props) {
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const elements = nodesToArray(targets)
 		const maxRetries = 10000;
-
+		const symbolsPerPage = Math.floor((Math.floor(bounds.height/symbolSize) * Math.floor(bounds.width/symbolSize)/2))
 		const positions = { bounds, items: []};
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
 		const maxY = (bounds.top + bounds.height - symbolSize)
-
+		
 		const isOverlapping = (area) => {
 			
 			for (let i = 0; i < positions.items.length; i++) {
@@ -203,7 +201,7 @@ export default function Home(props) {
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
-		anime.set(targets[0].parentNode, { opacity: 1, zIndex: 5 })
+		anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 5 })
 
 		const animation = anime({
 			targets,
@@ -218,7 +216,7 @@ export default function Home(props) {
 			...opt,
 			complete: () => {
 				anime.set(endTargets, { opacity: 1 })
-				anime.set(targets[0].parentNode, { opacity: 1, zIndex: 1 })
+				anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 1 })
 				anime.set(targets, { opacity: 0, zIndex: 0 })
 				
 				setCurrentAnimation(undefined)
@@ -337,7 +335,7 @@ export default function Home(props) {
 				}
 			}
 		})
-		console.log(targets, endTargets)
+		
 		return transitionTo(targets, endTargets)
 	};
 
@@ -355,8 +353,12 @@ export default function Home(props) {
 		!target ? anime.set(endTarget, { opacity: 1 }) : transitionTo([target], [endTarget], {popup:true})
 	};
 
-	useEffect(() => setBounds(getBounds()), [innerWidth])
-	useEffect(() => resizePositions(), [innerWidth])	
+	useEffect(() => {
+		setSymbolSize(innerWidth > 768 ? innerWidth/6 : innerWidth/4)
+		setBounds(getBounds())
+		resizePositions()
+	}, [innerWidth])
+
 	useEffect(() => setView(defaultView), [defaultView])
 	useEffect(() => ready && view && toggleView(view), [view, ready]);
 	useEffect(() => {
@@ -373,6 +375,7 @@ export default function Home(props) {
 		}, 200);
 
 	}, [loaded]);
+	
 	useEffect(() => { // check loading of images
 		let preLoaded = 0;
 		const images = document.querySelectorAll(`img[preload='true']`)
@@ -383,7 +386,7 @@ export default function Home(props) {
 				ref.onload = () => { setLoaded(++preLoaded) }
 		})
 	}, [])
-
+	
 	return (
 		<div className={styles.container}>
 			<Menu

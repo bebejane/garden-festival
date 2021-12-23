@@ -43,7 +43,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 
 	return (
 		<div id={`garden-popup-${event.id}`} className={styles.popup}>
-			<span class="metaLight">{format(new Date(event.startTime), "EEEE MMMM d ")}</span>
+			<span className="metaLight">{format(new Date(event.startTime), "EEEE MMMM d ")}</span>
 			<h3>{event.title}</h3>
 			<p>{event.summary.split(".")[0]}</p>
 		</div>

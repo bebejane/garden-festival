@@ -6,6 +6,8 @@
 	user-select: none;
 	line-height: 0;
 	opacity: 0;
+	transform:scale(1);
+	
 	&.garden {
 		z-index: 1;
 	}

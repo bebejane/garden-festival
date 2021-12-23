@@ -29,6 +29,7 @@ export default function Garden({ events, participant, view, symbolSize }) {
 
 const GardenHeader = ({view}) => {
 
+	const scrollMargin = 200;
 	const maxWeight = 700
 	const minWeight = 200
 	const header = {
@@ -68,23 +69,23 @@ const GardenHeader = ({view}) => {
 	const generateLetters = (head) =>{
 		return head.text.split('').map((c, idx) => 
 			head.tag === 'h1' ?
-				<span style={ generateWeightStyle(idx % 2 === 0 ? ratio :(0.5-ratio) )}>{c}</span>
+				<span key={idx} style={ generateWeightStyle(idx % 2 === 0 ? ratio : (0.5-ratio) )}>{c}</span>
 			:
-				<span style={ generateWeightStyle((0.5-ratio), 300,700)}>{c}</span>
+				<span key={idx} style={ generateWeightStyle((0.5-ratio), 300,700)}>{c}</span>
 		)
 	}
 	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight) => {
 		const weight = (max-min)*(ratio*2)+min
 		return { fontVariationSettings: '\'wght\' ' +  weight}
 	}
-	
+	//console.log(ratio)
 	return (
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
-			{Object.keys(header).map(k => 
+			{Object.keys(header).map((k, idx) => 
 					header[k].tag === 'h1' ? 
-						<h1>{generateLetters(header[k])}</h1> 
+						<h1 key={idx}>{generateLetters(header[k])}</h1> 
 					: 
-						<h2>{generateLetters(header[k])}</h2>
+						<h2 key={idx}>{generateLetters(header[k])}</h2>
 			)}
 		</div>
 	)
