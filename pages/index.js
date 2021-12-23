@@ -30,7 +30,7 @@ export default function Home(props) {
 	} = props;
 	
 	const router = useRouter()
-	const [symbolSize, setSymbolSize] = useState(250);
+	const [symbolSize, setSymbolSize] = useState();
 	const [view, setView] = useState()
 	const [bounds, setBounds] = useState({});
 	const [loaded, setLoaded] = useState(0);
@@ -139,7 +139,7 @@ export default function Home(props) {
 		return positions;
 	}
 
-	const initSymbols = () => {
+	const initSymbols = (reinit) => {
 		console.log('init symbols')
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const symbols = document.querySelectorAll(`[id^='symbol-']`)
@@ -288,6 +288,7 @@ export default function Home(props) {
 				delay: (el, i) => i * 10,
 				easing: 'spring(0.7, 100, 10, 0)'
 			})
+			
 		}
 		return transitionTo(targets, endTargets)
 	};
@@ -354,9 +355,11 @@ export default function Home(props) {
 	};
 
 	useEffect(() => {
-		setSymbolSize(innerWidth > 768 ? innerWidth/6 : innerWidth/4)
-		setBounds(getBounds())
-		resizePositions()
+		const size = innerWidth > 768 ? innerWidth/6 : innerWidth/4;
+		const symbolSize = Math.floor(size/20)*20;
+		setSymbolSize(symbolSize)
+		if(ready)
+			resizePositions()
 	}, [innerWidth])
 
 	useEffect(() => setView(defaultView), [defaultView])
@@ -368,12 +371,8 @@ export default function Home(props) {
 	useEffect(async () => { // wait for images to load then init
 		const images = document.querySelectorAll(`img[preload='true']`)
 		if (loaded < images.length || !loading) return
-
-		setTimeout(async () => {
-			await initSymbols();
-			setLoading(false)
-		}, 200);
-
+		await initSymbols();
+		setLoading(false)
 	}, [loaded]);
 	
 	useEffect(() => { // check loading of images

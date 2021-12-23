@@ -29,7 +29,6 @@ export default function Garden({ events, participant, view, symbolSize }) {
 
 const GardenHeader = ({view}) => {
 
-	const scrollMargin = 200;
 	const maxWeight = 700
 	const minWeight = 200
 	const header = {
@@ -60,8 +59,7 @@ const GardenHeader = ({view}) => {
 
 	useEffect(()=>{
 		const { scrollTopMax } = document.documentElement;
-		const ratioTotal = scrollY/scrollTopMax
-		const step = ratioTotal*1
+		const step = (scrollY/scrollTopMax)*1
 		const ratio = step-Math.floor(step)
 		setRatio(ratio > 0.5 ? 0.5-(ratio-0.5) : ratio)
 	}, [scrollY])
@@ -78,7 +76,7 @@ const GardenHeader = ({view}) => {
 		const weight = (max-min)*(ratio*2)+min
 		return { fontVariationSettings: '\'wght\' ' +  weight}
 	}
-	//console.log(ratio)
+
 	return (
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
 			{Object.keys(header).map((k, idx) => 
