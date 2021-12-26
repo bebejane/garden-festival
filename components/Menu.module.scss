@@ -4,8 +4,9 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  z-index: 5;
+  z-index: 10;
   margin-top: math.div($space, 4);
+  pointer-events: none;
 
   .wrapper {
     display: flex;
@@ -45,7 +46,7 @@
         text-transform: uppercase;
         user-select: none;
         background-color: transparent;
-
+        pointer-events: all;
         &:hover {
           background-color: $white;
           font-feature-settings: "ss01" 1;

@@ -17,7 +17,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	const [currentView, setCurrentView] = useState();
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [positions, setPositions] = useState();	
-	const { innerWidth } = useWindowSize();
+	const { innerWidth, innerHeight } = useWindowSize();
 
 	const toggleView = (view, force) => {
 		if (!ready) return
@@ -259,14 +259,15 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		const endTargets = document.querySelectorAll("[id^='garden-symbol-']")
 
 		if (!currentView && view === 'garden') {
-			anime.set(targets, { translateY: '-100vh' })
-			await transitionTo(targets, endTargets, {
-				translateY: '0vh',
-				duration: 700,
-				delay: (el, i) => i * 10,
-				easing: 'spring(0.7, 100, 10, 0)'
-			})
+			const maxOffset = nodesToArray(targets).sort((a, b) => a.offsetTop < b.offsetTop)[0].offsetTop
 			
+			anime.set(targets, { opacity:1, translateY: `-${maxOffset+symbolSize}px` })
+			await transitionTo(targets, endTargets, {
+				translateY: '0px',
+				duration: 2000,
+				delay: (el, i) => i * 20,
+				easing: 'spring(0.8, 1000, 10, 0)'
+			})	
 		}
 		return transitionTo(targets, endTargets)
 	};

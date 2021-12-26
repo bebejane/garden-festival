@@ -27,12 +27,12 @@ const PopUp = ({ event, symbolSize, show }) => {
 			const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
 			const { offsetWidth: popupWidth, offsetHeight: popupHeight } = popup
 			const { clientWidth: windowWidth } = document.body;
-			const t = top + symbolSize + pad;
-			const l = left - ((popupWidth - width) / 2);
-			popup.style.top = `${Math.max(t, pad)}px`;
-			popup.style.left = `${Math.min(l, windowWidth - popupWidth)}px`;
+			const t = Math.max(top + symbolSize + pad, pad);
+			const l = Math.min(Math.max(0, left - ((popupWidth - width) / 2)), windowWidth - popupWidth);
+			popup.style.top = `${t}px`;
+			popup.style.left = `${l}px`;
 			popup.classList.toggle(styles.show, on);
-			console.log(popupWidth, Math.min(l, windowWidth - popupWidth), l, windowWidth - popupWidth)
+	
 		}, on ? 100 : 0);
 		setTo(timeout)
 	};
