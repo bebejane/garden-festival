@@ -88,6 +88,9 @@
   @include mq($until: desktop) {
     display: flex !important;  
   }
+  @include mq($from: desktop) {
+    display: none !important;  
+  }
   &.open {
     max-height: 1000px;
     background-color: #fff !important;
