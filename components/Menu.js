@@ -68,6 +68,33 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
   );
 }
 
+function MobileMenu() {
+  const ref = useRef()
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}]
+  const selected = menu.filter( m => router.pathname === `/${m.slug}`)[0]
+  
+  return (
+    <>
+      <li className={cn(styles.mobileMenu, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
+        {selected?.label}
+        <div className={cn(styles.items, open && styles.open)}>
+          {menu.filter(m => m.slug !== selected?.slug).map((m) =>
+            <Link href={`/${m.slug}`}>
+              <div className={cn(styles.item)}>
+                {m.label}
+              </div>
+            </Link>
+          )}
+        </div>
+        <div className={cn(styles.arrow, open && styles.open)}>↓</div>
+      </li>
+    </>
+
+  )
+}
+
 
 function TimeZoneDropdown({ setTimezone, tz }) {
   const ref = useRef()
@@ -90,33 +117,6 @@ function TimeZoneDropdown({ setTimezone, tz }) {
             </div>
           )}
         </div>
-      </li>
-
-    </>
-
-  )
-}
-function MobileMenu() {
-  const ref = useRef()
-  const [open, setOpen] = useState(false)
-  const router = useRouter()
-  const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}]
-  const selected = menu.filter( m => router.pathname === `/${m.slug}`)[0]
-  
-  return (
-    <>
-      <li className={cn(styles.mobileMenu, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
-        {selected.label}
-        <div className={cn(styles.items, open && styles.open)}>
-          {menu.filter(m => m.slug !== selected.slug).map((m) =>
-            <Link href={`/${m.slug}`}>
-              <div className={cn(styles.item)}>
-                {m.label}
-              </div>
-            </Link>
-          )}
-        </div>
-        <div className={cn(styles.arrow, open && styles.open)}>↓</div>
       </li>
 
     </>
