@@ -7,7 +7,7 @@ import { format, isSameDay } from 'date-fns'
 import { formatToTimeZone } from 'date-fns-timezone'
 import Link from "next/link"
 
-export default function Festival({ events, dayEvents, participants, date, timeZone, show }) {
+export default function Festival({ events, dayEvents, participants, date, timeZone, show, symbolSize }) {
   if (!show) return null
 
   const [appState, setAppState] = useAppState();  
@@ -34,7 +34,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                 id={`festival-symbol-${ev.id}`}
                 eventid={ev.id}
                 participantid={ev.participant.id}
-                src={`${ev.symbol.url}?w=400`}
+                src={`${ev.symbol.url}?w=${symbolSize*2}`}
                 className={contentStyles.placeholderSymbol}
               />
             </div>

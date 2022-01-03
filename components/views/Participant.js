@@ -9,7 +9,7 @@ import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 import Markdown from "/components/common/Markdown";
 
-export default function Participant({ participant, events: evts, show }) {
+export default function Participant({ participant, events: evts, show, symbolSize }) {
   if (!show || !participant) return null
 
   const events = evts.filter((ev) => ev.participant.id === participant.id)
@@ -20,7 +20,11 @@ export default function Participant({ participant, events: evts, show }) {
         <h1>{participant.title}</h1>
       </ContentHeader>
       <ContentMain>
-        <header><p className="summary"><Markdown>{participant.summary}</Markdown></p></header>
+        <header>
+          <p className="summary">
+            <Markdown>{participant.summary}</Markdown>
+          </p>
+        </header>
         <article>
           <p>
             {participant.externalLinks.map((link) =>
@@ -41,7 +45,8 @@ export default function Participant({ participant, events: evts, show }) {
               <img
                 id={`participant-symbol-${ev.id}`}
                 participantid={participant.id}
-                src={`${ev.symbol.url}?w=400`}
+                eventid={ev.id}
+                src={`${ev.symbol.url}?w=${symbolSize*2}`}
                 className={contentStyles.placeholderSymbol}
               />
             </div>

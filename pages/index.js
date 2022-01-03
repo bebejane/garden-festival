@@ -56,10 +56,11 @@ export default function Home(props) {
 					events={events}
 					dayEvents={dayEvents}
 					weekday={weekday}
+					symbolSize={symbolSize}
 				/>
-				<Community participants={participants} events={events} show={view === 'community'} />
-				<Participant participant={participant} events={events} show={view === 'participant'} />
-				<Event event={event} events={events} show={view === 'event'} />
+				<Community participants={participants} symbolSize={symbolSize} events={events} show={view === 'community'} />
+				<Participant participant={participant} symbolSize={symbolSize} events={events} show={view === 'participant'} />
+				<Event event={event} events={events} symbolSize={symbolSize} show={view === 'event'} />
 				<About about={about} abouts={abouts} show={view === 'about'}/>
 			</Content>
 			<Garden

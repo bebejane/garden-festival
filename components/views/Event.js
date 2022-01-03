@@ -7,7 +7,7 @@ import LinkButton from "/components/LinkButton";
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 
-export default function Event({ event, events, show }) {
+export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
 
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
@@ -25,7 +25,7 @@ export default function Event({ event, events, show }) {
               id={`event-symbol-${event?.id}`}
               eventid={event?.id}
               participantid={event?.participant?.id}
-              src={event.symbol.url}
+              src={`${event.symbol.url}?w=${symbolSize*2}`}
               className={cn(styles.symbol, contentStyles.placeholderSymbol)}
             />
           </figure>

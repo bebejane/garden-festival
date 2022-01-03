@@ -177,7 +177,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		}
 
 		anime.set(lastTargets, { opacity: 0 })
-		anime.set(endTargets, { opacity: 0 })
+		anime.set(endTargets, { opacity: 0.005 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
 		anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 5 })
 
@@ -188,7 +188,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			height: (el, i) => elementByIndex(i, el)?.clientHeight,
 			width: (el, i) => elementByIndex(i, el)?.clientWidth,
 			delay: (el, i) => i * defaultDelay,
-			easing: "easeInOutQuad",//"easeOutExpo",
+			easing: "easeInOutQuad",
 			scale: 1,
 			duration: !currentView ? 0 : defaultDuration,
 			...opt,
@@ -196,7 +196,6 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				anime.set(endTargets, { opacity: 1 })
 				anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 1 })
 				anime.set(targets, { opacity: 0, zIndex: 0 })
-				
 				setCurrentAnimation(undefined)
 				setCurrentView(view);
 			}
@@ -237,6 +236,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		if(!lastView) return console.log('no last view')
 		const lastElement = lastView.targets.filter((t) => opt.participantId ? t.participantId == opt.participantId : t.eventId == opt.eventId )[0]
 		if(!lastElement) return console.log('no last element')
+		
 		anime.set(target, {
 			top: `${lastElement.y + window.scrollY}px`,
 			left:`${lastElement.x}px`,
@@ -264,9 +264,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			anime.set(targets, { opacity:1, translateY: `-${maxOffset+symbolSize}px` })
 			await transitionTo(targets, endTargets, {
 				translateY: '0px',
-				duration: 2000,
-				delay: (el, i) => i * 20,
-				easing: 'spring(0.8, 1000, 10, 0)'
+				duration: (el, i) => 1000 + (i * 20),
+				delay: (el, i) => 0,
+				easing: 'spring(0.6, 100, 10, 0)'
 			})	
 		}
 		return transitionTo(targets, endTargets)
@@ -320,9 +320,13 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	};
 
 	const toParticipant = async () => {
+		
+		const lastView = lastViewPositions()
+		if(lastView && lastView.targets.length)
+			repositionToLastView(document.getElementById(`symbol-${lastView.targets[0].eventId}`), {eventId: lastView.targets[0].eventId})
+		
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTargets = document.querySelectorAll(`[id^='participant-symbol-'][participantid='${participant.id}']`)
-		repositionToLastView(targets[0], {participantId:participant.id})
 		return transitionTo(targets, endTargets, {popup:true})
 	};
 
@@ -330,7 +334,10 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		const target = document.getElementById(`symbol-${event.id}`)
 		repositionToLastView(target, {eventId:event.id})
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
-		!target ? anime.set(endTarget, { opacity: 1 }) : transitionTo([target], [endTarget], {popup:true})
+		if(!target)
+			anime.set(endTarget, { opacity: 1 })
+		else
+			transitionTo([target], [endTarget], {popup:true})
 	};
 
 	
@@ -340,6 +347,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		router.events.on('routeChangeStart', saveViewPositions)
 		return () => router.events.off('routeChangeStart', saveViewPositions)
 	},[view])
+
 	useEffect(async () => { // wait for images to load then init
 		const images = document.querySelectorAll(`img[preload='true']`)
 		if (loaded < images.length || !loading) return
@@ -357,9 +365,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				ref.onload = () => { setLoaded(++preLoaded) }
 		})
 	}, [])
-
-
+	
 	useEffect(() => resizePositions(), [innerWidth])
+
 	return (
 		<>
 			<div className={styles.garden}>

@@ -69,6 +69,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
 }
 
 function MobileMenu() {
+
   const ref = useRef()
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -80,7 +81,7 @@ function MobileMenu() {
       <li className={cn(styles.mobileMenu, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
         {selected?.label}
         <div className={cn(styles.items, open && styles.open)}>
-          {menu.filter(m => m.slug !== selected?.slug).map((m) =>
+          {menu.map((m) =>
             <Link href={`/${m.slug}`}>
               <div className={cn(styles.item)}>
                 {m.label}

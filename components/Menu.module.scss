@@ -137,6 +137,10 @@
       transform: rotate(180deg);
     }
   }
+  &:hover {
+    font-feature-settings: unset !important;
+    font-variation-settings: unset !important;
+  }
 }
 
 .invert {
