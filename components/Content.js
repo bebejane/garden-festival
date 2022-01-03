@@ -9,7 +9,7 @@ const useIsomorphicLayoutEffect = process.browser ? useLayoutEffect : useEffect
 export default function Content({show, children, setShow, setAbout, setView, popup = false, abouts}) {
 	const router = useRouter()
 	const [slideUp, setSlideUp] = useState()
-	const isDirectLink = process.browser && window.history.state.idx === 0
+	const isDirectLink = process.browser && window.history.state.idx === 0;
 
 	useIsomorphicLayoutEffect(() => {
 		setTimeout(()=>setSlideUp(popup), 100)

@@ -432,11 +432,13 @@ const GardenHeader = ({view}) => {
 	}
 
 	useEffect(()=>{
-		const { scrollTopMax } = document.documentElement;
-		const step = (scrollY/scrollTopMax)
+		const { scrollHeight } = document.documentElement;
+		const step = (scrollY/scrollHeight)
 		const ratio = step-Math.floor(step)
 		const r = 1-((ratio > 0.5 ? 0.5-(ratio-0.5) : ratio)*2)
+		//console.log(r)
 		setRatio(r)
+		
 	}, [scrollY])
 	
 	return (
