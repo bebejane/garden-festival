@@ -14,7 +14,7 @@ import { useEffect, useState, } from "react";
 import { useWindowSize } from "rooks";
 import { withGlobalProps } from "/lib/utils";
 
-export default function Home(props) {
+const Home = (props) => {
 	const {
 		events,
 		participants,
@@ -24,11 +24,11 @@ export default function Home(props) {
 		weekday,
 		abouts,
 		about,
-		defaultView = 'garden',
+		defaultView = 'garden',	
 	} = props;
-	
+
 	const [view, setView] = useState(defaultView)
-	const [symbolSize, setSymbolSize] = useState();
+	const [symbolSize, setSymbolSize] = useState(0);
 	const { innerWidth, innerHeight } = useWindowSize();
 
 	useEffect(() => {
@@ -75,6 +75,8 @@ export default function Home(props) {
 		</div>
 	)
 }
+
+export default Home;
 
 export const getStaticProps = withGlobalProps(async ({ props, revalidate }) => {
 	return {
