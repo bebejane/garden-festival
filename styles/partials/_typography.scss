@@ -19,7 +19,8 @@ h1 {
   }
 }
 
-h2 {
+h2,
+article h1 {
   font-size: 20px;
 
   @include mq($from: tablet) {
@@ -46,7 +47,7 @@ p {
   &.summary p {
     font-variation-settings: "wght" 300;
     font-size: 21px;
-    line-height: 1.05;
+    line-height: 1.15;
   }
 
   a {

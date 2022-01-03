@@ -18,17 +18,17 @@ export default function Event({ event, events, show, symbolSize }) {
         <ContentHeader responsiveImage={event.image?.responsiveImage}>
           <header>
             <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
+            <figure>
+              <img
+                id={`event-symbol-${event?.id}`}
+                eventid={event?.id}
+                participantid={event?.participant?.id}
+                src={`${event.symbol.url}?w=${symbolSize * 2}`}
+                className={cn(styles.symbol, contentStyles.placeholderSymbol)}
+              />
+            </figure>
             <h1>{event.title}<br />{event.subTitle}</h1>
           </header>
-          <figure>
-            <img
-              id={`event-symbol-${event?.id}`}
-              eventid={event?.id}
-              participantid={event?.participant?.id}
-              src={`${event.symbol.url}?w=${symbolSize*2}`}
-              className={cn(styles.symbol, contentStyles.placeholderSymbol)}
-            />
-          </figure>
           <section className={styles.by}><span className="meta">By {event.participant.title}</span></section>
         </ContentHeader>
 
@@ -40,7 +40,7 @@ export default function Event({ event, events, show, symbolSize }) {
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>
                 <StructuredContent content={event.content} />
-                {related.length && 
+                {related.length &&
                   <div className={styles.related}>
                     <h2>Related</h2>
                     {related.map((ev, idx) =>
@@ -60,7 +60,7 @@ export default function Event({ event, events, show, symbolSize }) {
             }
           </section>
         </ContentMain>
-        
+
       </div>
     </div>
   );

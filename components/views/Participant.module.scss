@@ -3,14 +3,59 @@
   flex-direction: column;
 
   .events {
-    @include roundedBox();
     @include textWidth();
     display: block;
 
+    h2.first {
+      border-top: 3px solid $black;
+      margin-top: $space;
+      padding-top: $space;
+      padding-bottom: $space;
+      text-align: center;
+    }
+
     .event {
+      @include roundedBox();
+      color: $black;
       display: flex;
-      flex-direction: row;
-      margin-bottom: 20px;
+      margin-bottom: $small-space * 2;
+      padding-top: $small-space * 2;
+      background-color: transparent;
+      transition: background-color 0.5s;
+      flex-direction: column;
+      padding-left: $small-space;
+      padding-right: $small-space;
+      width: 100%;
+
+      @include mq($until: tablet) {
+        padding-left: $small-space;
+        padding-right: $small-space;
+        align-items: center;
+      }
+
+      @include mq($from: tablet) {
+        flex-direction: row;
+        padding-right: $space;
+      }
+
+      &:hover {
+        background-color: $white;
+      }
+
+      .symbol {
+        display: flex;
+        align-items: flex-start;
+
+        img {
+          width: 150px;
+          height: 150px;
+
+          @include mq($from: tablet) {
+            width: 300px;
+            height: 300px;
+          }
+        }
+      }
     }
   }
 }
