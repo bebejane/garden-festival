@@ -69,4 +69,6 @@
 .black {
 	border-color: white;
 	background-color: black;
+	min-height: auto;
+	padding-bottom: $small-space * 2.5;
 }
