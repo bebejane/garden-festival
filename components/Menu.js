@@ -33,13 +33,15 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
             <Link href={'/community'}><li className={pathname === '/community' ? styles.selected : undefined}>Community</li></Link>
             <Link href={'/'}><li className={pathname === '/' ? styles.selected : undefined}>Garden</li></Link>
             <Link href={'/festival'}><li className={pathname.startsWith('/festival') ? styles.selected : undefined}>Festival</li></Link>
+            <MobileMenu />
           </ul>
         </nav>
         <nav className={styles.menu} >
           <ul>
-            <Link href={'/about/about-us'}><li>About</li></Link>
+            <Link href={'/about/about-us'}><li className={pathname.startsWith('/about') ? styles.selected : undefined}>About</li></Link>
           </ul>
         </nav>
+       
       </div>
       {['festival', 'weekday'].includes(view) &&
         <nav className={styles.festivalMenu}>
@@ -48,9 +50,8 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
               <li className={weekday === 'pre-party' ? styles.selected : undefined}>Pre Party</li>
             </Link>
             {eachDayOfInterval({ start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE }).map((d, idx) =>
-              <Link href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
+              <Link key={`wlink-${idx}`} href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
                 <li
-                  key={idx}
                   className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined}
                 >
                   {format(d, 'EE')} {format(d, 'MMM dd')}
@@ -60,12 +61,39 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
             <Link href={`/festival/after-party`}>
               <li className={weekday === 'after-party' ? styles.selected : undefined}>After Party</li>
             </Link>
-            {/*<TimeZoneDropdown setTimezone={setTimezone} tz={tz} />*/}
           </ul>
         </nav>
       }
     </div>
   );
+}
+
+function MobileMenu() {
+
+  const ref = useRef()
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}]
+  const selected = menu.filter( m => router.pathname === `/${m.slug}`)[0]
+  
+  return (
+    <>
+      <li className={cn(styles.mobileMenu, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
+        {selected?.label}
+        <div className={cn(styles.items, open && styles.open)}>
+          {menu.map((m) =>
+            <Link href={`/${m.slug}`}>
+              <div className={cn(styles.item)}>
+                {m.label}
+              </div>
+            </Link>
+          )}
+        </div>
+        <div className={cn(styles.arrow, open && styles.open)}>↓</div>
+      </li>
+    </>
+
+  )
 }
 
 
@@ -76,14 +104,14 @@ function TimeZoneDropdown({ setTimezone, tz }) {
 
   return (
     <>
-      <li className={cn(styles.timezone, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
+      <li className={cn(styles.mobileMenu, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
         Timezone
         <br />
         {tz.label}
         <div ref={tzRef} className={cn(styles.items, open && styles.open)}>
           {timeZones.map((t) =>
             <div
-              className={cn(styles.item, t.value === tz.value && styles.selected)}
+              className={cn(styles.item)}
               onClick={() => setTimezone(t)}
             >
               {t.city} ({t.label})

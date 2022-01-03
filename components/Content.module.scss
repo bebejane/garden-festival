@@ -43,15 +43,23 @@ $top-margin: 80px;
 		}
 	}
 	.contentPopup {
+		opacity: 0;
 		margin-bottom: $space;
-		transition: transform 0.7s cubic-bezier(0.075, 0.82, 0.165, 1);
-		transition-delay: 0s;
+		transition: transform .7s ease;
 		transform: translateY(100%);
-		&.show {
+		
+		&.slideUp {
 			opacity: 1;
+			transition-duration: .7s;
+			transform: translateY(0%);	
+		}
+		&.direct {
+			opacity: 1;
+			transition-duration: 0s;
 			transform: translateY(0%);
 		}
 	}
+	
 	.contentPopupShadow {
 		position: fixed;
 		visibility: visible;
@@ -73,7 +81,7 @@ $top-margin: 80px;
 		cursor: pointer;
 		font-variation-settings: "wght" 800;
 		font-family: $mono-font;
-
+		
 		&:hover {
 			background-color: $black;
 			color: white;

@@ -4,7 +4,7 @@ import cn from "classnames";
 import Link from "next/link"
 import LinkButton from "../LinkButton";
 
-export default function Community({ participants, events, show }) {
+export default function Community({ participants, events, show, symbolSize }) {
   if (!show) return null
 
   return (
@@ -14,15 +14,16 @@ export default function Community({ participants, events, show }) {
         {[...participants].map((p, idx) => {
           const participantEvents = events.filter(e => e.participant.id === p.id);
           return (
-            <Link href={`/${p.slug}`}>
-              <a key={idx} className={styles.participant}>
+            <Link key={`plink-${idx}`} href={`/${p.slug}`}>
+              <a className={styles.participant}>
                 <div className={cn(styles.symbols, participantEvents.length <= 1 ? styles.single : undefined)}>                
                   {participantEvents.map((event, idx) => 
                     <img
                       id={`community-symbol-${event.id}`}
+                      key={`pimage-${idx}`}
                       eventid={event.id}
                       participantid={event.participant.id}
-                      src={`${event.symbol.url}?w=${participantEvents.length > 1 ? 100 : 200}`}
+                      src={`${event.symbol.url}?w=${symbolSize*2}`}
                       className={contentStyles.placeholderSymbol}
                     />
                   )}

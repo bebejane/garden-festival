@@ -15,7 +15,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
   const eventSlug = slug.length > 1 ? slug[1] : false
   const { participant } = await apiQuery(GetParticipantBySlug, {slug:participantSlug});
   const { event } = eventSlug ? await apiQuery(GetEventBySlug, {slug:eventSlug}) : {};
-  
+
   if(!event && !participant) return { notFound: true } 
 
   return {

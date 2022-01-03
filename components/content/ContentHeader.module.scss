@@ -46,6 +46,7 @@
 	figure img {
 		width: 300px;
 		height: 300px;
+		
 	}
 
 	.bgImage {
@@ -54,10 +55,14 @@
 		border-radius: 15px;
 		display: flex;
 		height: 100%;
+		
 
 		img,
 		picture {
 			object-fit: cover;
+			
+			transition: opacity 0.5s cubic-bezier(0.19, 0.92, 0, 1);
+			transition-delay: 0.5s;
 		}
 	}
 }

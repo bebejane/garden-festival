@@ -1,4 +1,4 @@
-.container {
+.garden {
 	display: flex;
 	align-items: flex-start;
 	height: 100vh;
@@ -6,9 +6,7 @@
 	min-height: 100vh;
 	padding: 0;
 	flex-direction: row;
-	img{
-		display: none;
-	}
+	
 	.header {
 		position: fixed;
 		display: flex;
@@ -32,6 +30,22 @@
 	.scroller {
 		height: 100%;
 		width: 100%;
+	}
+}
+
+.symbols{
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	min-height: 100%;
+	&.inactive{
+		//max-height: 100vh;
+		//max-width: 100vw;
+		//overflow: hidden;
+		*{
+			pointer-events: none;
+		}
+		
 	}
 }
 .diggi {

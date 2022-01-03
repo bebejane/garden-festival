@@ -25,13 +25,14 @@ const PopUp = ({ event, symbolSize, show }) => {
 			const el = document.getElementById(`garden-symbol-${event.id}`);
 			const popup = document.getElementById(`garden-popup-${event.id}`);
 			const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
-			const { clientWidth: popupWidth, clientHeight: popupHeight } = popup
+			const { offsetWidth: popupWidth, offsetHeight: popupHeight } = popup
 			const { clientWidth: windowWidth } = document.body;
-			const t = top + symbolSize + pad;
-			const l = left - ((popupWidth - width) / 2);
-			popup.style.top = `${Math.max(t, pad)}px`;
-			popup.style.left = `${Math.min(l, windowWidth - width)}px`;
+			const t = Math.max(top + symbolSize + pad, pad);
+			const l = Math.min(Math.max(0, left - ((popupWidth - width) / 2)), windowWidth - popupWidth);
+			popup.style.top = `${t}px`;
+			popup.style.left = `${l}px`;
 			popup.classList.toggle(styles.show, on);
+	
 		}, on ? 100 : 0);
 		setTo(timeout)
 	};
@@ -43,7 +44,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 
 	return (
 		<div id={`garden-popup-${event.id}`} className={styles.popup}>
-			<span class="metaLight">{format(new Date(event.startTime), "EEEE MMMM d ")}</span>
+			<span className="metaLight">{format(new Date(event.startTime), "EEEE MMMM d ")}</span>
 			<h3>{event.title}</h3>
 			<p>{event.summary.split(".")[0]}</p>
 		</div>

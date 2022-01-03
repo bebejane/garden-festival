@@ -9,8 +9,7 @@ export default function Video({ provider, providerUid, title, url, thumbnailUrl 
 	const { innerWidth } = useWindowSize()
 
 	const vimeoId = provider === 'vimeo' && url.indexOf('/') > -1 ? url.substring(url.lastIndexOf('/')+1) : undefined
-	console.log(vimeoId, `https://player.vimeo.com/video/${providerUid}?h=${vimeoId}`)
-
+	
 	const video = provider === 'youtube' ?
 		<iframe
 			ref={ref}

@@ -4,8 +4,9 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  z-index: 5;
+  z-index: 10;
   margin-top: math.div($space, 4);
+  pointer-events: none;
 
   .wrapper {
     display: flex;
@@ -23,7 +24,7 @@
     justify-content: center;
     //width: 100%;
     margin-bottom: math.div($space, 4);
-
+    
     ul {
       display: flex;
       flex-direction: row;
@@ -36,7 +37,7 @@
       text-align: center;
       padding-left: 10%;
       padding-right: 10%;
-
+      
       li {
         @include roundedElement();
         margin-right: math.div($space, 4);
@@ -45,7 +46,10 @@
         text-transform: uppercase;
         user-select: none;
         background-color: transparent;
-
+        pointer-events: all;
+        @include mq($until: desktop) {
+          display: none ;  
+        }
         &:hover {
           background-color: $white;
           font-feature-settings: "ss01" 1;
@@ -57,7 +61,7 @@
         }
 
         &.selected {
-          background-color: $black !important;
+          background-color: $black ;
           color: $white;
           -webkit-font-smoothing: antialiased;
         }
@@ -65,6 +69,7 @@
     }
   }
   .festivalMenu {
+    
     ul {
       li {
         text-transform: uppercase;
@@ -72,39 +77,69 @@
       }
     }
   }
-  .timezone {
-    display: flex;
-    justify-content: flex-start !important;
+}
+
+.mobileMenu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: max-height 0.2s linear;
+  padding:0px !important;
+  @include mq($until: desktop) {
+    display: flex !important;  
+  }
+  @include mq($from: desktop) {
+    display: none !important;  
+  }
+  &.open {
+    max-height: 1000px;
+    background-color: #fff !important;
+    padding: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+  .items {
+    position: absolute;
+    top:26px;
+    padding-bottom: 5px;
+    display: none;
     flex-direction: column;
-    transition: max-height 0.2s linear;
-
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    border: 3px solid #000;
+    margin:0px;
+    background-color: #fff;
+    border-top: 0px;
+    border-bottom-left-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
     &.open {
-      max-height: unset;
-    }
-    .items {
       display: flex;
-      flex-direction: column;
-      margin-top: 4px;
-      padding-top: 4px;
-      width: 100%;
-      height: 0px;
-      overflow: hidden;
-
-      &.open {
-        border-top: 4px solid #000;
-        height: unset;
-        overflow: unset;
+      height: unset;
+      overflow: unset;
+    }
+    .item {
+      color: rgb(75, 75, 75);
+      line-height: 1.3em;
+      &.selected {
+        color: #000;
       }
-      .item {
-        color: gray;
-        &.selected {
-          color: #000;
-        }
-        &:hover {
-          color: #000;
-        }
+      &:hover {
+        color: #000;
       }
     }
+  }
+  .arrow{
+    position: absolute;
+    top:6px;
+    right:10px;
+    &.open{
+      transform: rotate(180deg);
+    }
+  }
+  &:hover {
+    font-feature-settings: unset !important;
+    font-variation-settings: unset !important;
   }
 }
 
@@ -113,6 +148,10 @@
     border-color: white !important;
     color: white;
     -webkit-font-smoothing: antialiased;
+    &.selected{
+      color: black !important;
+      background-color: white !important;
+    }
 
     &:hover {
       color: $black;
