@@ -4,13 +4,11 @@ import cn from "classnames";
 import anime from "animejs";
 import useScrollPosition from '@react-hook/window-scroll'
 import { useWindowSize } from "rooks";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { nodesToArray } from "lib/utils";
 
-export default function Garden({ event, events, participant, view, symbolSize, show }) {
-	//if(!show) return null
-
+export default function Garden({ event, events, participant, view, symbolSize}) {
 	const router = useRouter()
 	const [loaded, setLoaded] = useState(0);
 	const [ready, setReady] = useState(false);
@@ -19,10 +17,10 @@ export default function Garden({ event, events, participant, view, symbolSize, s
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [positions, setPositions] = useState();	
 	const { innerWidth } = useWindowSize();
-
+	
 	const toggleView = (view, force) => {
 		if (!ready) return
-	
+		
 		switch (view) {
 			case 'festival':
 				toFestival()
@@ -224,7 +222,7 @@ export default function Garden({ event, events, participant, view, symbolSize, s
 		}
 		
 		localStorage.setItem('lastView', JSON.stringify(viewPositions))
-		if(view === 'garden') localStorage.setItem('lastGardenScroll', window.scrollY)
+		localStorage.setItem(`${view}Scroll`, window.scrollY)
 		return viewPositions
 	}
 
@@ -250,10 +248,9 @@ export default function Garden({ event, events, participant, view, symbolSize, s
 	}
 	const toGarden = async () => {
 		if (!positions || !positions.items.length) return
-
-		window.scrollTo(0, parseInt(localStorage.getItem('lastGardenScroll')) || 0);
-
+		
 		const lastView = lastViewPositions()
+
 		if(lastView && lastView.targets.length){
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
 			repositionToLastView(target, {eventId: lastView.targets[0].eventId})

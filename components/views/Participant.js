@@ -39,31 +39,33 @@ export default function Participant({ participant, events: evts, show, symbolSiz
         <div className={styles.events}>
           <h2 className={styles.first}>Events</h2>
           {events.map((ev) =>
-            <a href={`${ev.participant.slug}/${ev.slug}`} className={styles.event}>
-              <div className={styles.symbol}>
-                <img
-                  id={`participant-symbol-${ev.id}`}
-                  participantid={participant.id}
-                  eventid={ev.id}
-                  src={`${ev.symbol.url}?w=${symbolSize * 2}`}
-                  className={contentStyles.placeholderSymbol}
-                />
-              </div>
-              <div className={styles.info}>
-                <p>
-                  {ev.startTime &&
-                    <span className="metaLight">
-                      {format(new Date(ev.startTime), 'EEEE MMMM d')} • {ev.typeOfEvent?.title}
-                    </span>
-                  }
-                  <br />
-                  <h2>{ev.title}</h2>
-                  <h2 className="sub">{ev.subTitle}</h2>
-                  <br />
-                  <p className="summary">{ev.summary}</p>
-                </p>
-              </div>
-            </a>
+            <Link href={`${ev.participant.slug}/${ev.slug}`}>
+              <a className={styles.event}>
+                <div className={styles.symbol}>
+                  <img
+                    id={`participant-symbol-${ev.id}`}
+                    participantid={participant.id}
+                    eventid={ev.id}
+                    src={`${ev.symbol.url}?w=${symbolSize * 2}`}
+                    className={contentStyles.placeholderSymbol}
+                  />
+                </div>
+                <div className={styles.info}>
+                  <p>
+                    {ev.startTime &&
+                      <span className="metaLight">
+                        {format(new Date(ev.startTime), 'EEEE MMMM d')} • {ev.typeOfEvent?.title}
+                      </span>
+                    }
+                    <br />
+                    <h2>{ev.title}</h2>
+                    <h2 className="sub">{ev.subTitle}</h2>
+                    <br />
+                    <p className="summary">{ev.summary}</p>
+                  </p>
+                </div>
+              </a>
+            </Link>
           )}
         </div>
       </ContentMain>

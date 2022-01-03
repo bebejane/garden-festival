@@ -43,8 +43,8 @@ export default function Event({ event, events, show, symbolSize }) {
                 {related.length &&
                   <div className={styles.related}>
                     <h2>Related</h2>
-                    {related.map((ev) =>
-                      <div className={styles.relatedEvent}>
+                    {related.map((ev, idx) =>
+                      <div key={idx} className={styles.relatedEvent}>
                         <h3>{ev.title}</h3>
                         <p>{ev.summary}</p>
                         {/*

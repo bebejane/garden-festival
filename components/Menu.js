@@ -81,8 +81,8 @@ function MobileMenu() {
       <li className={cn(styles.mobileMenu, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
         {selected?.label}
         <div className={cn(styles.items, open && styles.open)}>
-          {menu.map((m) =>
-            <Link href={`/${m.slug}`}>
+          {menu.map((m, idx) =>
+            <Link key={idx} href={`/${m.slug}`}>
               <div className={cn(styles.item)}>
                 {m.label}
               </div>
