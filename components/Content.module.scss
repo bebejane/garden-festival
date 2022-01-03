@@ -35,7 +35,7 @@ $top-margin: 80px;
 		width: 95vw;
 
 		@include mq($from: tablet) {
-			width: 80vw;
+			width: calc(100% - 40px);
 		}
 
 		&.show {
@@ -45,13 +45,13 @@ $top-margin: 80px;
 	.contentPopup {
 		opacity: 0;
 		margin-bottom: $space;
-		transition: transform .7s ease;
+		transition: transform 0.7s ease;
 		transform: translateY(100%);
-		
+
 		&.slideUp {
 			opacity: 1;
-			transition-duration: .7s;
-			transform: translateY(0%);	
+			transition-duration: 0.7s;
+			transform: translateY(0%);
 		}
 		&.direct {
 			opacity: 1;
@@ -59,7 +59,7 @@ $top-margin: 80px;
 			transform: translateY(0%);
 		}
 	}
-	
+
 	.contentPopupShadow {
 		position: fixed;
 		visibility: visible;
@@ -81,7 +81,7 @@ $top-margin: 80px;
 		cursor: pointer;
 		font-variation-settings: "wght" 800;
 		font-family: $mono-font;
-		
+
 		&:hover {
 			background-color: $black;
 			color: white;

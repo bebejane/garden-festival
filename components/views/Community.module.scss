@@ -21,10 +21,7 @@
       @include roundedBox();
       color: $black;
       background: transparent;
-      padding: $small-space;
-      padding-bottom: $small-space * 2;
-      padding-right: $small-space * 2;
-      padding-left: $small-space * 2;
+      padding: $small-space * 2;
       display: flex;
       flex-direction: column;
       flex: 0 0 45%;
@@ -44,6 +41,7 @@
 
         h2 {
           padding-bottom: 0.5em;
+          text-align: center;
         }
       }
       .symbols {
@@ -52,13 +50,13 @@
         flex-wrap: wrap;
         justify-content: center;
         img {
-          width: 100px;
-          height: 100px;
+          width: 125px;
+          height: 125px;
         }
         &.single {
           img {
-            width: 100px;
-            height: 100px;
+            width: 125px;
+            height: 125px;
           }
         }
       }

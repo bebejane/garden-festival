@@ -39,14 +39,11 @@
 	}
 
 	figure {
-		position: absolute;
-		bottom: 0;
 	}
 
 	figure img {
-		width: 300px;
-		height: 300px;
-		
+		width: 200px;
+		height: 200px;
 	}
 
 	.bgImage {
@@ -55,12 +52,12 @@
 		border-radius: 15px;
 		display: flex;
 		height: 100%;
-		
+		width: 100%;
 
 		img,
 		picture {
 			object-fit: cover;
-			
+
 			transition: opacity 0.5s cubic-bezier(0.19, 0.92, 0, 1);
 			transition-delay: 0.5s;
 		}
