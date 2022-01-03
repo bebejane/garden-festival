@@ -388,7 +388,6 @@ export default function Garden({ event, events, participant, view, symbolSize })
 }
 
 
-
 const GardenHeader = ({view}) => {
 
 	const [ratio, setRatio] = useState(1)
