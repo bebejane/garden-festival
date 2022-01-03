@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { nodesToArray } from "lib/utils";
 
-export default function Garden({ event, events, participant, view, symbolSize }) {
+export default function Garden({ event, events, participant, view, symbolSize, show }) {
+	//if(!show) return null
 
 	const router = useRouter()
 	const [loaded, setLoaded] = useState(0);
@@ -17,10 +18,11 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	const [currentView, setCurrentView] = useState();
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [positions, setPositions] = useState();	
-	const { innerWidth, innerHeight } = useWindowSize();
+	const { innerWidth } = useWindowSize();
 
 	const toggleView = (view, force) => {
 		if (!ready) return
+	
 		switch (view) {
 			case 'festival':
 				toFestival()
@@ -167,15 +169,14 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		
 		if (currentAnimation) currentAnimation.pause()
 
-		const defaultDuration = 800;
-		const defaultDelay = 0;
-		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
-
 		const elementByIndex = (i, el) => {
 			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
 			return target;
 		}
-
+		const defaultDuration = 800;
+		const defaultDelay = 0;
+		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
+		
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0.005 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
@@ -223,6 +224,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		}
 		
 		localStorage.setItem('lastView', JSON.stringify(viewPositions))
+		if(view === 'garden') localStorage.setItem('lastGardenScroll', window.scrollY)
 		return viewPositions
 	}
 
@@ -249,12 +251,15 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	const toGarden = async () => {
 		if (!positions || !positions.items.length) return
 
+		window.scrollTo(0, parseInt(localStorage.getItem('lastGardenScroll')) || 0);
+
 		const lastView = lastViewPositions()
 		if(lastView && lastView.targets.length){
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
 			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
 		}
 		
+
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = document.querySelectorAll("[id^='garden-symbol-']")
 
@@ -340,8 +345,6 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			transitionTo([target], [endTarget], {popup:true})
 	};
 
-	
-
 	useEffect(() => ready && view && toggleView(view), [view, ready]);
 	useEffect(() => {
 		router.events.on('routeChangeStart', saveViewPositions)
@@ -374,7 +377,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				<GardenHeader view={view} />
 			</div>
 			<div className={cn(styles.symbols, view !== 'garden' && styles.inactive)}>
-				{events && events.map((event, index) =>
+				{events?.map((event, index) =>
 					<Symbol
 						key={index}
 						index={index}
@@ -435,10 +438,8 @@ const GardenHeader = ({view}) => {
 		const { scrollHeight } = document.documentElement;
 		const step = (scrollY/scrollHeight)
 		const ratio = step-Math.floor(step)
-		const r = 1-((ratio > 0.5 ? 0.5-(ratio-0.5) : ratio)*2)
-		//console.log(r)
+		const r = 1-((ratio > 0.5 ? 0.5-(ratio-0.5) : ratio)*2)	
 		setRatio(r)
-		
 	}, [scrollY])
 	
 	return (
