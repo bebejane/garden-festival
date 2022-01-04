@@ -14,4 +14,23 @@ fragment ParticipantFragment on ParticipantRecord {
     url
     linkText
   }
+    content{
+    value
+    blocks{
+      __typename
+      ... on ImageGalleryRecord {
+        id
+        images {
+          ...ImageFragment
+        }
+      }
+      ... on ImageRecord {
+        id
+        image {
+          ...ImageFragment
+        }
+      }
+    }
+  }
 }
+
