@@ -15,7 +15,7 @@ export default function Event({ event, events, show, symbolSize }) {
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
-        <ContentHeader responsiveImage={event.image?.responsiveImage}>
+        <ContentHeader responsiveImage={event.image?.responsiveImage} type="event" color={event.participant.color}>
           <header>
             <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d, yyyy ')}</span></section>
             <figure>
