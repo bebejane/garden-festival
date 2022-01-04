@@ -79,6 +79,7 @@ $top-margin: 80px;
 		padding-top: 0.1em;
 		z-index: 10000;
 		margin: $small-space;
+		margin-top: 23px;
 		cursor: pointer;
 		font-variation-settings: "wght" 800;
 		font-family: $mono-font;
@@ -91,9 +92,18 @@ $top-margin: 80px;
 
 	article {
 		p,
-		h2 {
-			padding-left: $outer-margin;
-			padding-right: $outer-margin;
+		h1,
+		h2,
+		ul {
+			@include textWidth();
+		}
+
+		ul {
+			margin-left: 1em;
+		}
+
+		li p {
+			padding: 0;
 		}
 
 		h2 {
