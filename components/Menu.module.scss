@@ -6,7 +6,7 @@
   width: 100%;
   z-index: 10;
   margin-top: math.div($space, 4);
-  //pointer-events: none;
+
   .wrapper {
     display: flex;
     justify-content: space-between;
@@ -22,7 +22,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
     margin-bottom: math.div($space, 4);
 
     ul {
@@ -38,10 +37,16 @@
       padding-left: 10%;
       padding-right: 10%;
       
+      a{
+        margin-right: math.div($space, 4);
+        &:last-child {
+          margin-right: 0px;
+        }
+      }
       li {
         @include roundedElement();
         position: relative;
-        margin-right: math.div($space, 4);
+        
         cursor: pointer;
         min-width: 180px;
         text-transform: uppercase;
@@ -55,9 +60,7 @@
           font-variation-settings: "wght" 800;
         }
 
-        &:last-child {
-          margin-right: 0px;
-        }
+        
 
         &.selected {
           background-color: $black;
@@ -68,7 +71,6 @@
     }
   }
   .festivalMenu {
-    
     ul {
       li {
         text-transform: uppercase;
@@ -83,10 +85,11 @@
       display: none;  
     }
   }
-
+  
   .mobileMenu {
     position: relative;
     flex-direction: column;
+    width: 100%;
     @include mq($from: desktop) {
       display: none;  
     }
