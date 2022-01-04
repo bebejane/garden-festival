@@ -6,8 +6,7 @@
   width: 100%;
   z-index: 10;
   margin-top: math.div($space, 4);
-  pointer-events: none;
-
+  //pointer-events: none;
   .wrapper {
     display: flex;
     justify-content: space-between;
@@ -17,14 +16,15 @@
   }
 
   .menu,
-  .festivalMenu {
+  .festivalMenu,
+  .mobileMenu {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    //width: 100%;
+    width: 100%;
     margin-bottom: math.div($space, 4);
-    
+
     ul {
       display: flex;
       flex-direction: row;
@@ -40,6 +40,7 @@
       
       li {
         @include roundedElement();
+        position: relative;
         margin-right: math.div($space, 4);
         cursor: pointer;
         min-width: 180px;
@@ -47,9 +48,7 @@
         user-select: none;
         background-color: transparent;
         pointer-events: all;
-        @include mq($until: desktop) {
-          display: none ;  
-        }
+        
         &:hover {
           background-color: $white;
           font-feature-settings: "ss01" 1;
@@ -61,7 +60,7 @@
         }
 
         &.selected {
-          background-color: $black ;
+          background-color: $black;
           color: $white;
           -webkit-font-smoothing: antialiased;
         }
@@ -77,85 +76,104 @@
       }
     }
   }
-}
 
-.mobileMenu {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  transition: max-height 0.2s linear;
-  padding:0px !important;
-  @include mq($until: desktop) {
-    display: flex !important;  
+  .menu, 
+  .festivalMenu {
+    @include mq($until: desktop) {
+      display: none;  
+    }
   }
-  @include mq($from: desktop) {
-    display: none !important;  
-  }
-  &.open {
-    max-height: 1000px;
-    background-color: #fff !important;
-    padding: 0px !important;
-    border-bottom-left-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-  }
-  .items {
-    position: absolute;
-    top:26px;
-    padding-bottom: 5px;
-    display: none;
+
+  .mobileMenu {
+    position: relative;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 180px;
-    border: 3px solid #000;
-    margin:0px;
-    background-color: #fff;
-    border-top: 0px;
-    border-bottom-left-radius: 20px !important;
-    border-bottom-right-radius: 20px !important;
+    @include mq($from: desktop) {
+      display: none;  
+    }
+    ul{
+      padding-left: 0%;
+      padding-right: 0%;
+      li{
+        width: 100%;
+      }
+    }
     &.open {
-      display: flex;
-      height: unset;
-      overflow: unset;
+      max-height: 1000px;
+      padding: 0px !important;
+      border-bottom-left-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
     }
-    .item {
-      color: rgb(75, 75, 75);
-      line-height: 1.3em;
-      &.selected {
-        color: #000;
+    .items {
+      @include roundedElement();
+      display: none;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      top:46px;
+      width: 100%;
+      background-color: $white;
+      padding-bottom: 5px;
+      margin-top: math.div($small-space, 2);
+      &.open {
+        display: flex;
+        height: unset;
+        overflow: unset;
       }
-      &:hover {
-        color: #000;
+      a {
+        width: 100%;
+        line-height: 1.3em;
+        li{
+          border: 0px;
+          width: 100%;
+          background-color: transparent;
+          &.selected {
+            //color:pink;
+          }
+        }
+        &:hover {
+          color: #000;
+        }
+        
       }
     }
-  }
-  .arrow{
-    position: absolute;
-    top:6px;
-    right:10px;
-    &.open{
-      transform: rotate(180deg);
+    .arrow{
+      position: absolute;
+      top:6px;
+      right:10px;
+      transition: transform .3s ease;
+      &.open{
+        transform: rotate(180deg);
+      }
     }
-  }
-  &:hover {
-    font-feature-settings: unset !important;
-    font-variation-settings: unset !important;
+    &:hover {
+      font-feature-settings: unset !important;
+      font-variation-settings: unset !important;
+    }
   }
 }
 
 .invert {
-  li {
-    border-color: white !important;
-    color: white;
-    -webkit-font-smoothing: antialiased;
-    &.selected{
-      color: black !important;
-      background-color: white !important;
+  ul{
+    
+    border-color: $white !important;
+    li {
+      border-color: white !important;
+      color: white;
+      -webkit-font-smoothing: antialiased;
+      &.selected{
+        color: black !important;
+        background-color: white !important;
+      }
+      &:hover {
+        color: $black;
+        background: $white;
+      }
     }
-
-    &:hover {
-      color: $black;
-      background: $white;
-    }
+  }
+  .mobileMenu {
+    ul{
+      background-color: #000 !important;
+      border-radius: $radius;
+    } 
   }
 }
