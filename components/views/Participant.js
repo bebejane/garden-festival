@@ -21,7 +21,7 @@ export default function Participant({ participant, events: evts, show, symbolSiz
         <h1>{participant.title}</h1>
         <h1 className="sub">{participant.subTitle}</h1>
       </ContentHeader>
-      <ContentMain>
+      <ContentMain color={participant.color}>
         <header>
           <p className="summary">
             <Markdown>{participant.summary}</Markdown>

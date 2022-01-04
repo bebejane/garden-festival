@@ -4,6 +4,7 @@ fragment ParticipantFragment on ParticipantRecord {
   id
   slug
   title
+  color
   subTitle
    image {
       ...ImageFragment

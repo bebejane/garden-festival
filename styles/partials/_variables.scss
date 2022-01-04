@@ -7,6 +7,22 @@ $c3: #45b181;
 $c4: #e4ae5d;
 $c5: #5282fa;
 
+.Color1 {
+  background: $c1 !important;
+}
+.Color2 {
+  background: $c2;
+}
+.Color3 {
+  background: $c3;
+}
+.Color4 {
+  background: $c4;
+}
+.Color5 {
+  background: $c5;
+}
+
 //BORDER
 $line: 3px solid $black;
 $radius: 20px;

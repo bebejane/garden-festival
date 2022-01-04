@@ -90,9 +90,16 @@ $top-margin: 80px;
 	}
 
 	article {
-		p {
+		p,
+		h2 {
 			padding-left: $outer-margin;
 			padding-right: $outer-margin;
+		}
+
+		h2 {
+			padding-bottom: 0.5em;
+			padding-top: 1em;
+			text-align: center;
 		}
 	}
 }
