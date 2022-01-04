@@ -28,11 +28,8 @@
 	}
 
 	h1 {
-		-webkit-text-stroke: 3px black;
-		color: white;
-		font-family: "Maxi Mono Bold";
-		font-variation-settings: "wght" 900, "MONO" 0;
 		font-feature-settings: "ss01" 1;
+		color: $black;
 		letter-spacing: 0.02em;
 
 		&:first-of-type {
@@ -67,6 +64,29 @@
 
 			transition: opacity 0.5s cubic-bezier(0.19, 0.92, 0, 1);
 			transition-delay: 0.5s;
+		}
+	}
+
+	&.Color1 {
+		//background: $c1;
+	}
+	&.Color2 {
+		background: $c2;
+	}
+	&.Color3 {
+		background: $c3;
+	}
+	&.Color4 {
+		background: $c4;
+	}
+	&.Color5 {
+		background: $c5;
+	}
+
+	&.participant {
+		color: red;
+		&.Color1 {
+			background: $c1o !important;
 		}
 	}
 }

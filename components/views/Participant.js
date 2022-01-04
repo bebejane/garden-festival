@@ -17,7 +17,7 @@ export default function Participant({ participant, events: evts, show, symbolSiz
 
   return (
     <div className={styles.container}>
-      <ContentHeader responsiveImage={participant.image?.responsiveImage}>
+      <ContentHeader responsiveImage={participant.image?.responsiveImage} color={participant.color} type="participant">
         <h1>{participant.title}</h1>
         <h1 className="sub">{participant.subTitle}</h1>
       </ContentHeader>
