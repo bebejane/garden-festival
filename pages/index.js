@@ -61,7 +61,7 @@ const Home = (props) => {
 				<Community participants={participants} symbolSize={symbolSize} events={events} show={view === 'community'} />
 				<Participant participant={participant} symbolSize={symbolSize} events={events} show={view === 'participant'} />
 				<Event event={event} events={events} symbolSize={symbolSize} show={view === 'event'} />
-				<About about={about} abouts={abouts} show={view === 'about'}/>
+				<About abouts={abouts} show={view === 'about'}/>
 			</Content>
 			<Garden
 				participant={participant}

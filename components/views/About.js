@@ -4,9 +4,9 @@ import StructuredContent from "/components/blocks"
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 
-export default function About({ about, abouts, show }) {
+export default function About({ abouts, show }) {
   if(!show) return null
-
+  const about = abouts ? abouts[0] : null
   return (
     <div className={cn(styles.about, about && styles.show)}>
       {about &&

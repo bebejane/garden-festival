@@ -38,7 +38,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
         </nav>
         <nav className={styles.menu} >
           <ul>
-            <a><Link href={'/about/about-us'}><li className={pathname.startsWith('/about') ? styles.selected : undefined}>About</li></Link></a>
+            <a><Link href={'/about'}><li className={pathname.startsWith('/about') ? styles.selected : undefined}>About</li></Link></a>
           </ul>
         </nav>
         
@@ -70,7 +70,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
 
 const MobileMenu = ({view}) => {
 
-  const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about/about-us'}]
+  const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about'}]
   const ref = useRef()
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -80,7 +80,7 @@ const MobileMenu = ({view}) => {
     <nav className={styles.mobileMenu} >
       <ul>
         <li className={cn(open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
-          {selected?.label}
+          {selected ? selected.label : 'Menu' }
           <div className={cn(styles.arrow, open && styles.open)}>↓</div>
         </li>
       </ul>
