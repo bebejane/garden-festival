@@ -6,6 +6,7 @@ h2 {
   font-family: $headline-font;
   text-transform: uppercase;
   font-variation-settings: "wght" 1000;
+  font-weight: normal;
 }
 
 h1 {
@@ -16,6 +17,10 @@ h1 {
   @include mq($from: tablet) {
     font-size: 5.5vw;
     line-height: 4.8vw;
+  }
+
+  &.sub {
+    font-family: "Maxi Mono Regular" !important;
   }
 }
 

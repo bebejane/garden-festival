@@ -10,7 +10,7 @@ import Link from "next/link"
 export default function Festival({ events, dayEvents, participants, date, timeZone, show, symbolSize }) {
   if (!show) return null
 
-  const [appState, setAppState] = useAppState();  
+  const [appState, setAppState] = useAppState();
   let currentDate;
 
   const schedule = [...(dayEvents || events)].map((ev, idx) => {
@@ -34,7 +34,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                 id={`festival-symbol-${ev.id}`}
                 eventid={ev.id}
                 participantid={ev.participant.id}
-                src={`${ev.symbol.url}?w=${symbolSize*2}`}
+                src={`${ev.symbol.url}?w=${symbolSize * 2}`}
                 className={contentStyles.placeholderSymbol}
               />
             </div>
@@ -46,7 +46,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                   </span>
                 }
                 <h2>{ev.title}</h2>
-                <h2 className="sub">{ev.subTitle}</h2>
+                <h2 className={cn(styles.sub, "sub")}>{ev.subTitle}</h2>
                 <br />
                 <p className="summary">{ev.summary}</p>
               </p>

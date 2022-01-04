@@ -4,6 +4,10 @@ fragment ParticipantFragment on ParticipantRecord {
   id
   slug
   title
+  subTitle
+   image {
+      ...ImageFragment
+  }
   summary(markdown: false)
   externalLinks {
     id

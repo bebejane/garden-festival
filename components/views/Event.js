@@ -27,7 +27,8 @@ export default function Event({ event, events, show, symbolSize }) {
                 className={cn(styles.symbol, contentStyles.placeholderSymbol)}
               />
             </figure>
-            <h1>{event.title}<br />{event.subTitle}</h1>
+            <h1>{event.title}</h1>
+            <h1 className={cn(styles.sub, "sub")}>{event.subTitle}</h1>
           </header>
           <section className={styles.by}><span className="meta">By {event.participant.title}</span></section>
         </ContentHeader>

@@ -16,26 +16,27 @@ export default function Community({ participants, events, show, symbolSize }) {
           return (
             <Link key={`plink-${idx}`} href={`/${p.slug}`}>
               <a className={styles.participant}>
-                <div className={cn(styles.symbols, participantEvents.length <= 1 ? styles.single : undefined)}>                
-                  {participantEvents.map((event, idx) => 
+                <div className={cn(styles.symbols, participantEvents.length <= 1 ? styles.single : undefined)}>
+                  {participantEvents.map((event, idx) =>
                     <img
                       id={`community-symbol-${event.id}`}
                       key={`pimage-${idx}`}
                       eventid={event.id}
                       participantid={event.participant.id}
-                      src={`${event.symbol.url}?w=${symbolSize*2}`}
+                      src={`${event.symbol.url}?w=${symbolSize * 2}`}
                       className={contentStyles.placeholderSymbol}
                     />
                   )}
                 </div>
                 <div className={styles.participantInfo}>
                   <h2>{p.title}</h2>
+                  {p.subTitle && <h2 className="sub">{p.subTitle}</h2>}
                   <p>{p.summary.split(".")[0]}</p>
                 </div>
               </a>
             </Link>
-            )
-          }
+          )
+        }
         )}
       </div>
     </div>

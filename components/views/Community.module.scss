@@ -40,8 +40,10 @@
         padding-top: $small-space;
 
         h2 {
-          padding-bottom: 0.5em;
           text-align: center;
+          &:last-of-type {
+            padding-bottom: 0.5em;
+          }
         }
       }
       .symbols {

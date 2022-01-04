@@ -28,22 +28,29 @@
 	}
 
 	h1 {
-		padding-top: 0.5em;
 		-webkit-text-stroke: 3px black;
 		color: white;
 		font-family: "Maxi Mono Bold";
-		font-variation-settings: "wght" 1000, "MONO" 0;
+		font-variation-settings: "wght" 900, "MONO" 0;
 		font-feature-settings: "ss01" 1;
-		font-weight: bold;
 		letter-spacing: 0.02em;
+
+		&:first-of-type {
+			padding-top: 1em;
+		}
+	}
+
+	.sub {
+		font-family: "Maxi Mono Regular";
 	}
 
 	figure {
+		padding-top: $small-space * 2;
 	}
 
 	figure img {
-		width: 200px;
-		height: 200px;
+		width: 180px;
+		height: 180px;
 	}
 
 	.bgImage {
@@ -66,6 +73,21 @@
 
 .bgColor {
 	background-color: white;
+	min-height: 0;
+
+	h1 {
+		-webkit-text-stroke: none;
+		color: $black;
+		font-family: "Maxi Mono";
+
+		&:first-of-type {
+			padding-top: 0.2em;
+		}
+
+		&:last-of-type {
+			padding-bottom: 1em;
+		}
+	}
 }
 
 .black {
