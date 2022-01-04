@@ -7,7 +7,6 @@
   z-index: 10;
   margin-top: math.div($space, 4);
   //pointer-events: none;
-
   .wrapper {
     display: flex;
     justify-content: space-between;
@@ -98,7 +97,6 @@
         width: 100%;
       }
     }
-
     &.open {
       max-height: 1000px;
       padding: 0px !important;
@@ -107,8 +105,6 @@
     }
     .items {
       @include roundedElement();
-      position: absolute;
-      z-index: 100;
       display: none;
       justify-content: center;
       flex-direction: column;
@@ -117,7 +113,7 @@
       width: 100%;
       background-color: $white;
       padding-bottom: 5px;
-
+      margin-top: math.div($small-space, 2);
       &.open {
         display: flex;
         height: unset;
@@ -134,7 +130,6 @@
             //color:pink;
           }
         }
-        
         &:hover {
           color: #000;
         }
@@ -145,6 +140,7 @@
       position: absolute;
       top:6px;
       right:10px;
+      transition: transform .3s ease;
       &.open{
         transform: rotate(180deg);
       }
@@ -156,11 +152,9 @@
   }
 }
 
-
-
 .invert {
   ul{
-    background-color: #000 !important;
+    
     border-color: $white !important;
     li {
       border-color: white !important;
@@ -175,5 +169,11 @@
         background: $white;
       }
     }
+  }
+  .mobileMenu {
+    ul{
+      background-color: #000 !important;
+      border-radius: $radius;
+    } 
   }
 }
