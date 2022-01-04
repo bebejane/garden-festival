@@ -31,8 +31,8 @@
 }
 
 @mixin textWidth() {
-  padding-left: $outer-margin / 3;
-  padding-right: $outer-margin / 3;
+  padding-left: $small-space;
+  padding-right: $small-space;
 
   @include mq($from: tablet) {
     padding-left: $outer-margin;

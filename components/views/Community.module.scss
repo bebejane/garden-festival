@@ -4,8 +4,12 @@
   align-items: center;
 
   h1 {
-    padding-top: $space;
-    padding-bottom: $space;
+    padding-bottom: $small-space/3;
+
+    @include mq($from: tablet) {
+      padding-top: $space;
+      padding-bottom: $space;
+    }
   }
 
   .community {
@@ -21,14 +25,17 @@
       @include roundedBox();
       color: $black;
       background: transparent;
-      padding: $small-space * 2;
       display: flex;
       flex-direction: column;
-      flex: 0 0 45%;
-      max-width: 600px;
       box-sizing: border-box;
       margin: $small-space;
       transition: background-color 0.5s;
+      padding: $small-space;
+
+      @include mq($from: tablet) {
+        flex: 0 0 45%;
+        padding: $small-space * 2;
+      }
 
       &:hover {
         background-color: $white;
@@ -52,11 +59,10 @@
         flex-wrap: wrap;
         justify-content: center;
         img {
-          width: 125px;
-          height: 125px;
-        }
-        &.single {
-          img {
+          width: 100px;
+          height: 100px;
+
+          @include mq($from: tablet) {
             width: 125px;
             height: 125px;
           }

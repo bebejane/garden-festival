@@ -42,12 +42,19 @@
 	}
 
 	figure {
-		padding-top: $small-space * 2;
+		padding-top: $small-space;
+		@include mq($from: tablet) {
+			padding-top: $small-space * 2;
+		}
 	}
 
 	figure img {
-		width: 180px;
-		height: 180px;
+		width: 125px;
+		height: 125px;
+		@include mq($from: tablet) {
+			width: 180px;
+			height: 180px;
+		}
 	}
 
 	.bgImage {
@@ -61,7 +68,6 @@
 		img,
 		picture {
 			object-fit: cover;
-
 			transition: opacity 0.5s cubic-bezier(0.19, 0.92, 0, 1);
 			transition-delay: 0.5s;
 		}
