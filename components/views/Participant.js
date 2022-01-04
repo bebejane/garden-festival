@@ -4,6 +4,7 @@ import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
 import { format } from 'date-fns'
+import StructuredContent from "/components/blocks"
 import LinkButton from "../LinkButton";
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
@@ -26,6 +27,7 @@ export default function Participant({ participant, events: evts, show, symbolSiz
             <Markdown>{participant.summary}</Markdown>
           </p>
         </header>
+        <StructuredContent content={participant.content} />
         <article>
           <p>
             {participant.externalLinks.map((link) =>

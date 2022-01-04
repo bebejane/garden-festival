@@ -42,6 +42,10 @@
         background-color: $white;
       }
 
+      h2:first-of-type {
+        padding-top: 0.5em;
+      }
+
       .symbol {
         display: flex;
         align-items: flex-start;
