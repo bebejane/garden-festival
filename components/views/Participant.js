@@ -35,7 +35,6 @@ export default function Participant({ participant, events: evts, show, symbolSiz
                 {link.linkText}
               </a>
             )}
-            <a href={participant.externalLink}>{participant.externalLink}</a>
           </p>
         </article>
 
