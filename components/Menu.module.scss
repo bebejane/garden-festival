@@ -34,11 +34,10 @@
       margin: 0;
       width: 100%;
       text-align: center;
-      padding-left: 10%;
-      padding-right: 10%;
       
       a{
-        margin-right: math.div($space, 4);
+        display: flex;
+        justify-content: center;
         &:last-child {
           margin-right: 0px;
         }
