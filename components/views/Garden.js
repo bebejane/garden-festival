@@ -421,22 +421,21 @@ const GardenHeader = ({view}) => {
 	const generateLetters = (head) =>{
 		return head.text.split('').map((c, idx) => 
 			head.tag === 'h1' ?
-				<span key={idx} style={ generateWeightStyle(idx % 2 === 0 ? ratio : (1.0-ratio) )}>{c}</span>
+				<span key={idx} style={ generateWeightStyle(ratio)}>{c}</span>
 			:
-				<span key={idx} style={ generateWeightStyle((1.0-ratio), 300,700)}>{c}</span>
+				<span key={idx} style={ generateWeightStyle(ratio, 300,700, true)}>{c}</span>
 		)
 	}
-	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight) => {
-		const weight = (max-min)*(ratio*2)+min
+	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight, reverse) => {
+		const weight = !reverse ? (max-min)*(ratio)+min : (max-min)*(Math.min(1, ratio+0.3))+min
 		return { fontVariationSettings: `'wght' ${weight}`}
 	}
 
 	useEffect(()=>{
 		const { scrollHeight } = document.documentElement;
-		const step = (scrollY/scrollHeight)
-		const ratio = step-Math.floor(step)
-		const r = 1-((ratio > 0.5 ? 0.5-(ratio-0.5) : ratio)*2)	
-		setRatio(r)
+		const { clientHeight } = document.body;
+		const ratio = (scrollY/(scrollHeight-clientHeight))
+		setRatio(1.0-ratio)
 	}, [scrollY])
 	
 	return (

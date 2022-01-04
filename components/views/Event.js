@@ -41,7 +41,7 @@ export default function Event({ event, events, show, symbolSize }) {
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>
                 <StructuredContent content={event.content} />
-                {related.length &&
+                {related.length > 0 &&
                   <div className={styles.related}>
                     <h2>Related</h2>
                     {related.map((ev, idx) =>

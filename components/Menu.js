@@ -51,11 +51,11 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
             </Link>
             {eachDayOfInterval({ start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE }).map((d, idx) =>
               <Link key={`wlink-${idx}`} href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
-                <li
+                <a><li
                   className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined}
                 >
                   {format(d, 'EE')} {format(d, 'MMM dd')}
-                </li>
+                </li></a>
               </Link>
             )}
             <Link href={`/festival/after-party`}>
