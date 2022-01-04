@@ -61,7 +61,6 @@ fragment EventFragment on EventRecord {
       __typename
       id
       title
-      externalLink
       slug
     }
   }
