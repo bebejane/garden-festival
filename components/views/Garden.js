@@ -173,7 +173,7 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 
 	const transitionTo = async (targets, endTargets, opt = {}) => {
 		
-		if (currentAnimation) currentAnimation.pause()
+		//if (currentAnimation) currentAnimation.pause()
 
 		const elementByIndex = (i, el) => {
 			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
@@ -184,7 +184,7 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
 		
 		anime.set(lastTargets, { opacity: 0 })
-		anime.set(endTargets, { opacity: 0.005 })
+		anime.set(endTargets, { opacity: 0.0005 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
 		anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 5 })
 
@@ -330,10 +330,13 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 	};
 
 	const toParticipant = async () => {
-		
 		const lastView = lastViewPositions()
-		if(lastView && lastView.targets.length)
-			repositionToLastView(document.getElementById(`symbol-${lastView.targets[0].eventId}`), {eventId: lastView.targets[0].eventId})
+		if(lastView && lastView.targets.length){
+			nodesToArray(document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)).forEach((p, i)=>{
+				const eventId = parseInt(p.getAttribute('eventid'));
+				repositionToLastView(document.getElementById(`symbol-${eventId}`), {eventId})
+			})
+		}
 		
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTargets = document.querySelectorAll(`[id^='participant-symbol-'][participantid='${participant.id}']`)
