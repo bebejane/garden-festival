@@ -64,12 +64,12 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		const totalPages = Math.ceil(elements.length/symbolsPerPage)
 		const maxCols = Math.floor(bounds.width/symbolSize)
 		const maxRows = symbolsPerPage/maxCols
-		const overflowSpace = (maxRows - ((elements.length-(symbolsPerPage*(totalPages))) / maxCols)) * symbolSize
+		const overflowSpace = (maxRows - ((elements.length-(symbolsPerPage*(totalPages-1))) / maxCols)) * symbolSize
 		const positions = { bounds, items: []};
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
-		const maxY = (bounds.top + bounds.height - symbolSize) 
+		const maxY = (bounds.height - symbolSize) 
 		
 		const isOverlapping = (area) => {
 			
