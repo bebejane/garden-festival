@@ -24,6 +24,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 			const pad = -75;
 			const el = document.getElementById(`garden-symbol-${event.id}`);
 			const popup = document.getElementById(`garden-popup-${event.id}`);
+			popup.classList.toggle(styles.show, on);			
 			const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
 			const { offsetWidth: popupWidth, offsetHeight: popupHeight } = popup
 			const { clientWidth: windowWidth } = document.body;
@@ -31,8 +32,6 @@ const PopUp = ({ event, symbolSize, show }) => {
 			const l = Math.min(Math.max(0, left - ((popupWidth - width) / 2)), windowWidth - popupWidth);
 			popup.style.top = `${t}px`;
 			popup.style.left = `${l}px`;
-			popup.classList.toggle(styles.show, on);
-	
 		}, on ? 100 : 0);
 		setTo(timeout)
 	};

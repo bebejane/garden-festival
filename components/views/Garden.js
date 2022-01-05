@@ -50,10 +50,8 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 	const getBounds = () => {
 		const menu = document.getElementById('menu')
 		const { clientHeight: h, clientWidth: w } = document.body;
-		const top = menu.offsetTop + menu.clientHeight;
-		const pad = 0;
-		const height =  (h - (pad) - (top))
-		return { width: w - (pad * 2), height, left: pad, top: top, pad, window: { width: window.innerWidth, height: window.innerHeight } };
+		const top = menu ? menu.offsetTop + menu.clientHeight : 0;
+		return { width: w, height: h, left: 0, top: top,  window: { width: window.innerWidth, height: window.innerHeight } };
 	};
 
 	const generatePositions = (totalRetries = 0) => {
@@ -62,12 +60,16 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const elements = nodesToArray(targets)
 		const maxRetries = 10000;
-		const symbolsPerPage = Math.floor((Math.floor(bounds.height/symbolSize) * Math.floor(bounds.width/symbolSize)/2))
+		const symbolsPerPage = Math.floor((Math.floor((bounds.height)/symbolSize) * Math.floor(bounds.width/symbolSize)/2))
+		const totalPages = Math.ceil(elements.length/symbolsPerPage)
+		const maxCols = Math.floor(bounds.width/symbolSize)
+		const maxRows = symbolsPerPage/maxCols
+		const overflowSpace = (maxRows - ((elements.length-(symbolsPerPage*(totalPages))) / maxCols)) * symbolSize
 		const positions = { bounds, items: []};
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
-		const maxY = (bounds.top + bounds.height - symbolSize)
+		const maxY = (bounds.top + bounds.height - symbolSize) 
 		
 		const isOverlapping = (area) => {
 			
@@ -93,12 +95,13 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 			const retries = 0;
 			const pageMargin = (page*bounds.height)
 			let area;
-
+			
 			do {
 				randX = Math.round(minX + ((maxX - minX) * (Math.random() % 1)));
-				randY = Math.round((minY+pageMargin) + (((maxY+pageMargin) - (minY+pageMargin)) * (Math.random())));
+				randY = Math.round((minY+pageMargin) + ( ((maxY+pageMargin - (page+1 === totalPages ? overflowSpace : 0)) - (minY+pageMargin) ) * (Math.random())));
 				area = {
 					id: el.id,
+					eventId: parseInt(el.getAttribute('eventid')),
 					left: randX,
 					top: randY,
 					width: el.height,
@@ -149,13 +152,18 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		const heightDiff = bounds.window.height / lastBounds.window.clientHeight
 		const newPositions = {
 			bounds,
-			items: positions.items.map(({ left, top, id }) => {
+			items: positions.items.map(({ left, top, id, eventId }) => {
 				const el = document.getElementById(`${id}`)
+				const symbol = document.getElementById(`symbol-${eventId}`)
 				el.style.left = `${left * widthDiff}px`
-				el.style.top = `${left * heightDiff}px`
+				//el.style.top = `${top * heightDiff}px`
+				symbol.style.left = `${left * widthDiff}px`
+				//symbol.style.top = `${top * heightDiff}px`
+
 				return {
 					left: left * widthDiff,
 					top: top * heightDiff,
+					eventId,
 					id
 				}
 			})

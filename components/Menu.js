@@ -19,7 +19,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
   useEffect(() => setAppState({ type: AppAction.SET_DATE, value: date }), [date])
   useEffect(() => setAppState({ type: AppAction.SET_TIMEZONE, value: tz }), [tz])
   useIntervalWhen(() => setTime(format(new Date(), 'HH:mm')), 1000, true, true);
-
+  
   return (
     <div id="menu" className={cn(styles.container, view === 'about' && styles.invert)} >
       <div className={styles.wrapper}>
