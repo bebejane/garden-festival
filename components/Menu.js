@@ -79,10 +79,12 @@ const MobileMenu = ({view}) => {
   return (
     <nav className={styles.mobileMenu} >
       <ul>
-        <li className={cn(open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
-          {selected ? selected.label : 'Menu' }
-          <div className={cn(styles.arrow, open && styles.open)}>↓</div>
-        </li>
+        <a>
+          <li className={cn(open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
+            {selected ? selected.label : 'Menu' }
+            <div className={cn(styles.arrow, open && styles.open)}>↓</div>
+          </li>
+        </a>
       </ul>
       <ul className={cn(styles.items, open && styles.open)}>
         {menu.map((m, idx) =>
