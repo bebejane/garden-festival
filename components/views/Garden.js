@@ -173,7 +173,7 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 
 	const transitionTo = async (targets, endTargets, opt = {}) => {
 		
-		//if (currentAnimation) currentAnimation.pause()
+		if (currentAnimation) currentAnimation.pause()
 
 		const elementByIndex = (i, el) => {
 			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
