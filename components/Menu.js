@@ -26,7 +26,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
         <MobileMenu view={view}/>
         <nav className={styles.menu} >
           <ul>
-            <li>{time}</li>
+            <a><li>{time}</li></a>
           </ul>
         </nav>
         <nav className={styles.menu} >

@@ -35,34 +35,35 @@
       width: 100%;
       text-align: center;
       
-      a{
+      a {
         display: flex;
         justify-content: center;
+        margin-right: 10px;
+        max-width: 180px;
         &:last-child {
           margin-right: 0px;
         }
-      }
-      li {
-        @include roundedElement();
-        position: relative;
-        
-        cursor: pointer;
-        min-width: 180px;
-        text-transform: uppercase;
-        user-select: none;
-        background-color: transparent;
-        pointer-events: all;
-        
-        &:hover {
-          background-color: $white;
-          font-feature-settings: "ss01" 1;
-          font-variation-settings: "wght" 800;
-        }
+        li {
+          @include roundedElement();
+          position: relative;
+          cursor: pointer;
+          min-width: 180px;
+          text-transform: uppercase;
+          user-select: none;
+          background-color: transparent;
+          pointer-events: all;
+          
+          &:hover {
+            background-color: $white;
+            font-feature-settings: "ss01" 1;
+            font-variation-settings: "wght" 800;
+          }
 
-        &.selected {
-          background-color: $black;
-          color: $white;
-          -webkit-font-smoothing: antialiased;
+          &.selected {
+            background-color: $black;
+            color: $white;
+            -webkit-font-smoothing: antialiased;
+          }
         }
       }
     }
