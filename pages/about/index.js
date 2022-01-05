@@ -9,7 +9,7 @@ export const getStaticProps = withGlobalProps(async ({props, context, revalidate
   return {
     props:{
       ...props,
-      defaultView : 'about'
+      view : 'about'
     },
     revalidate
   };

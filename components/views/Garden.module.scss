@@ -48,6 +48,18 @@
 	width: 100%;
 	min-height: 100%;
 }
+
+.symbols{
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	min-height: 100%;
+	&.inactive{
+		max-height: 100vh;
+		overflow: hidden;
+	}
+}
+
 .diggi {
 	position: fixed;
 	display: flex;
@@ -84,6 +96,7 @@
 		z-index: 1;
 	}
 }
+
 .symbolPopup {
 	position: absolute;
 	display: flex;

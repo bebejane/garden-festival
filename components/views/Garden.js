@@ -183,6 +183,7 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		const defaultDelay = 0;
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
 		
+		
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0.0005 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
@@ -200,11 +201,13 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 			duration: !currentView ? 0 : defaultDuration,
 			...opt,
 			complete: () => {
+				//document.getElementById('garden').classList.add(styles.inactive)
 				anime.set(endTargets, { opacity: 1 })
 				anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 1 })
 				anime.set(targets, { opacity: 0, zIndex: 0 })
 				setCurrentAnimation(undefined)
 				setCurrentView(view);
+				
 			}
 		})
 		setCurrentAnimation(animation)
@@ -378,13 +381,13 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 	}, [])
 	
 	useEffect(() => resizePositions(), [innerWidth])
-
+	
 	return (
 		<>
 			<div className={styles.garden}>
 				<GardenHeader view={view} />
 			</div>
-			<div className={cn(styles.symbols, view !== 'garden' && styles.inactive)}>
+			<div id="garden" className={cn(styles.symbols, view !== 'garden' && !currentAnimation && styles.inactive)}>
 				{events?.map((event, index) =>
 					<Symbol
 						key={index}

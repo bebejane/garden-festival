@@ -10,7 +10,7 @@ import About from "/components/views/About";
 import Background from "/components/Background"
 import Content from "/components/Content";
 
-import { useEffect, useState, } from "react";
+import { useEffect, useLayoutEffect, useState, } from "react";
 import { useWindowSize } from "rooks";
 import { withGlobalProps } from "/lib/utils";
 
@@ -24,10 +24,9 @@ const Home = (props) => {
 		weekday,
 		abouts,
 		about,
-		defaultView = 'garden',	
+		view = 'garden',	
 	} = props;
 
-	const [view, setView] = useState(defaultView)
 	const [symbolSize, setSymbolSize] = useState(0);
 	const { innerWidth, innerHeight } = useWindowSize();
 
@@ -36,9 +35,7 @@ const Home = (props) => {
 		const symbolSize = Math.floor(size/20)*20;
 		setSymbolSize(symbolSize)
 	}, [innerWidth])
-
-	useEffect(() => setView(defaultView), [defaultView])
-
+	
 	return (
 		<div className={styles.container}>
 			<Menu

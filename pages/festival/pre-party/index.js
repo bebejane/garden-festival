@@ -12,7 +12,7 @@ export const getStaticProps = withGlobalProps(async ({ props, context, revalidat
 			...props,
 			weekday: 'pre-party',
 			dayEvents: events.filter((ev) => new Date(ev.startTime) < FESTIVAL_START_DATE),
-			defaultView: "weekday",
+			view: "weekday",
 		},
 		revalidate,
 	};

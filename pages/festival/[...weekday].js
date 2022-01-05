@@ -18,7 +18,7 @@ export const getStaticProps = withGlobalProps(async ({ props, context, revalidat
 			dayEvents: events.filter(
 				(ev) => format(new Date(ev.startTime), "EEEE").toLowerCase() === weekday[0].toLowerCase()
 			),
-			defaultView: "weekday",
+			view: "weekday",
 		},
 		revalidate,
 	};

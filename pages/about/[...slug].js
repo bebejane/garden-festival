@@ -12,7 +12,7 @@ export const getStaticProps = withGlobalProps(async ({props, context, revalidate
     props:{
       ...props,
       about:props.abouts.filter(a => a.slug === slug[0])[0],
-      defaultView : 'about'
+      view : 'about'
     },
     revalidate
   };
