@@ -11,6 +11,13 @@ export default function Content({show, children, setShow, setAbout, setView, pop
 	const [slideUp, setSlideUp] = useState()
 	const isDirectLink = process.browser && window.history.state.idx === 0;
 
+	const handleKeyDown = (e) => e.key === 'Escape' && !isDirectLink && router.back()
+	
+	useEffect(()=>{
+		document.addEventListener('keydown', handleKeyDown)
+		return () => document.removeEventListener('keydown', handleKeyDown)
+	})
+
 	useIsomorphicLayoutEffect(() => {
 		setTimeout(()=>setSlideUp(popup), 100)
 		return () => {}
