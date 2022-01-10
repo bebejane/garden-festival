@@ -71,7 +71,7 @@ $top-margin: 80px;
 	}
 	.close {
 		@include roundedElement();
-		width: 34px;
+		width: 40px;
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -115,5 +115,5 @@ $top-margin: 80px;
 }
 
 .placeholderSymbol {
-	opacity: 0;		
+	opacity: 0;
 }
