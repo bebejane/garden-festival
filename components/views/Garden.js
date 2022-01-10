@@ -187,7 +187,7 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		anime.set(endTargets, { opacity: 0.0005 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
 		anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 5 })
-
+		
 		const animation = anime({
 			targets,
 			left: (el, i) => elementByIndex(i, el)?.getBoundingClientRect().left + window.scrollX,
@@ -264,7 +264,6 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
 			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
 		}
-		
 
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = document.querySelectorAll("[id^='garden-symbol-']")
@@ -295,8 +294,14 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 	};
 
 	const toWeekday = async () => {
+		const lastView = lastViewPositions()
+		if(lastView && lastView.targets.length){
+			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
+			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
+		}
+		
 		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = document.querySelectorAll("[id^='festival-symbol-']")
+		const endTargets = document.querySelectorAll("[id^='weekday-symbol-']")
 
 		const eTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');

@@ -11,6 +11,8 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
   if (!show) return null
 
   const [appState, setAppState] = useAppState();
+  const view = dayEvents ? 'weekday' : 'festival';
+  
   let currentDate;
 
   const schedule = [...(dayEvents || events)].map((ev, idx) => {
@@ -23,15 +25,14 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
       <>
         {eventDate &&
           <h1 key={`ehead-${idx}`} id={format(eventDate, 'yyyy-MM-d')} className={styles.weekday}>
-            {format(eventDate, 'EEEE')}<br />
-            {format(eventDate, 'MMMM d')}
+            {format(eventDate, 'EEEE')}<br />{format(eventDate, 'MMMM d')}
           </h1>
         }
         <Link key={`elink-${idx}`} href={`/${ev.participant.slug}/${ev.slug}`}>
           <a className={styles.event}>
             <div className={styles.symbol}>
               <img
-                id={`festival-symbol-${ev.id}`}
+                id={`${view}-symbol-${ev.id}`}
                 eventid={ev.id}
                 participantid={ev.participant.id}
                 src={`${ev.symbol.url}?w=${symbolSize * 2}`}
@@ -50,13 +51,6 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                 <br />
                 <p className="summary">{ev.summary}</p>
               </p>
-              {/*
-              <p>
-                <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>
-                  Go to event
-                </LinkButton>
-              </p>
-              */}
             </div>
           </a>
         </Link>

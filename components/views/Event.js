@@ -1,9 +1,9 @@
 import styles from "./Event.module.scss"
 import contentStyles from "../Content.module.scss"
+import Link from "next/link";
 import cn from "classnames";
 import { format } from "date-fns";
 import StructuredContent from "/components/blocks"
-import LinkButton from "/components/LinkButton";
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 
@@ -11,7 +11,7 @@ export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
 
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
-
+  
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
@@ -45,15 +45,14 @@ export default function Event({ event, events, show, symbolSize }) {
                   <div className={styles.related}>
                     <h2>Related</h2>
                     {related.map((ev, idx) =>
-                      <div key={idx} className={styles.relatedEvent}>
-                        <h3>{ev.title}</h3>
-                        <p>{ev.summary}</p>
-                        {/*
-                        <p>
-                          <LinkButton href={`/${ev.participant.slug}/${ev.slug}`}>Go to event</LinkButton>
-                        </p>
-                        */}
-                      </div>
+                      <Link key={idx} href={`/${ev.participant.slug}/${ev.slug}`}>
+                        <a>
+                          <div className={styles.relatedEvent}>
+                            <h3>{ev.title}</h3>
+                            <p>{ev.summary}</p>
+                          </div>
+                        </a>
+                      </Link>
                     )}
                   </div>
                 }
@@ -61,7 +60,6 @@ export default function Event({ event, events, show, symbolSize }) {
             }
           </section>
         </ContentMain>
-
       </div>
     </div>
   );
