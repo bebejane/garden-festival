@@ -2,6 +2,7 @@
 $headline-font: "Maxi";
 $mono-font: "Maxi Mono";
 $body-font: "Cooper";
+$body-font-italic: "CooperItalic";
 $headline-font-regular: "Maxi-Regular";
 
 @font-face {
@@ -42,6 +43,13 @@ $headline-font-regular: "Maxi-Regular";
 @font-face {
     font-family: "Maxi Mono Regular";
     src: url("../../public/fonts/ABCMaxiSharpMono-Light.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "CooperItalic";
+    src: url("../../public/fonts/6bc24c95-48a8-445f-8ff8-3455b0dada37.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
 }

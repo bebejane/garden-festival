@@ -28,7 +28,7 @@
 	}
 
 	h1 {
-		font-feature-settings: "ss01" 1;
+		//font-feature-settings: "ss01" 1;
 		color: $black;
 		letter-spacing: 0.02em;
 
@@ -104,7 +104,7 @@
 	h1 {
 		-webkit-text-stroke: none;
 		color: $black;
-		font-family: "Maxi Mono";
+		//font-family: "Maxi Mono";
 
 		&:first-of-type {
 			padding-top: 0.2em;
