@@ -28,7 +28,7 @@
 	}
 
 	h1 {
-		//font-feature-settings: "ss01" 1;
+		font-feature-settings: "ss02" 1;
 		color: $black;
 		letter-spacing: 0.02em;
 
@@ -38,7 +38,8 @@
 	}
 
 	.sub {
-		font-family: "Maxi Mono Regular";
+		//font-family: "Maxi Mono Regular";
+		font-variation-settings: "wght" 300;
 	}
 
 	figure {
