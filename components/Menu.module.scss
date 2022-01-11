@@ -34,7 +34,7 @@
       margin: 0;
       width: 100%;
       text-align: center;
-      
+
       a {
         display: flex;
         justify-content: center;
@@ -52,7 +52,7 @@
           user-select: none;
           background-color: transparent;
           pointer-events: all;
-          
+
           &:hover {
             background-color: $white;
             font-feature-settings: "ss01" 1;
@@ -77,31 +77,30 @@
     }
   }
 
-  .menu, 
+  .menu,
   .festivalMenu {
     @include mq($until: desktop) {
-      display: none;  
+      display: none;
     }
   }
-  
+
   .mobileMenu {
     position: relative;
     flex-direction: column;
     width: 100%;
     @include mq($from: desktop) {
-      display: none;  
+      display: none;
     }
-    ul{
+    ul {
       padding-left: 0%;
       padding-right: 0%;
-      a{
+      a {
         width: 100%;
         max-width: unset;
-        li{
+        li {
           width: 100% !important;
         }
       }
-      
     }
     &.open {
       max-height: 1000px;
@@ -115,7 +114,7 @@
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      top:46px;
+      top: 46px;
       width: 100%;
       background-color: $white;
       padding-bottom: 5px;
@@ -127,9 +126,9 @@
       }
       a {
         width: 100%;
-        margin:0px;
+        margin: 0px;
         line-height: 1.3em;
-        li{
+        li {
           border: 0px;
           width: 100%;
           width: 100% !important;
@@ -141,15 +140,14 @@
         &:hover {
           color: #000;
         }
-        
       }
     }
-    .arrow{
+    .arrow {
       position: absolute;
-      top:6px;
-      right:10px;
-      transition: transform .3s ease;
-      &.open{
+      top: 10px;
+      right: 15px;
+      transition: transform 0.3s ease;
+      &.open {
         transform: rotate(180deg);
       }
     }
@@ -161,14 +159,13 @@
 }
 
 .invert {
-  ul{
-    
+  ul {
     border-color: $white !important;
     li {
       border-color: white !important;
       color: white;
       -webkit-font-smoothing: antialiased;
-      &.selected{
+      &.selected {
         color: black !important;
         background-color: white !important;
       }
@@ -179,9 +176,9 @@
     }
   }
   .mobileMenu {
-    ul{
+    ul {
       background-color: #000 !important;
       border-radius: $radius;
-    } 
+    }
   }
 }

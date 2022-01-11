@@ -16,7 +16,6 @@ h1 {
 
   @include mq($from: tablet) {
     font-size: 5.5vw;
-    line-height: 4.8vw;
   }
 
   &.sub {
@@ -45,14 +44,26 @@ h3 {
 
 p {
   font-family: $body-font;
-  font-size: 22px;
+  font-size: 18px;
   line-height: $body-line-height;
+
+  @include mq($from: tablet) {
+    font-size: 22px;
+  }
+
+  &.small {
+    font-size: 18px;
+  }
 
   &.summary,
   &.summary p {
     font-variation-settings: "wght" 300;
-    font-size: 26px;
+    font-size: 22px;
     line-height: 1.25;
+
+    @include mq($from: tablet) {
+      font-size: 26px;
+    }
   }
 
   a {

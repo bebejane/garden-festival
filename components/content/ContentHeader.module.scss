@@ -11,7 +11,7 @@
 	padding-left: $outer-margin / 2;
 	padding-right: $outer-margin / 2;
 
-	@include mq($from: tablet) {
+	@include mq($from: tablet, $until: wide) {
 		padding-left: $outer-margin;
 		padding-right: $outer-margin;
 	}

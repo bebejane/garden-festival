@@ -24,7 +24,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 			const pad = -75;
 			const el = document.getElementById(`garden-symbol-${event.id}`);
 			const popup = document.getElementById(`garden-popup-${event.id}`);
-			popup.classList.toggle(styles.show, on);			
+			popup.classList.toggle(styles.show, on);
 			const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
 			const { offsetWidth: popupWidth, offsetHeight: popupHeight } = popup
 			const { clientWidth: windowWidth } = document.body;
@@ -45,7 +45,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 		<div id={`garden-popup-${event.id}`} className={styles.popup}>
 			<span className="metaLight">{format(new Date(event.startTime), "EEEE MMMM d ")}</span>
 			<h3>{event.title}</h3>
-			<p>{event.summary.split(".")[0]}</p>
+			<p className="small">{event.summary.split(".")[0]}</p>
 		</div>
 	)
 }
