@@ -78,6 +78,12 @@ p {
     font-family: $body-font-italic;
     font-weight: normal;
   }
+
+  strong {
+    font-family: $headline-font;
+    font-weight: normal;
+    font-variation-settings: "wght" 660;
+  }
 }
 
 nav,
