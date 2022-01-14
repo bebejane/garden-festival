@@ -1,4 +1,16 @@
 .externalLink {
-  @include textWidth();
+  //@include textWidth();
+  color: $black;
+  margin: auto;
   @include roundedElement();
+  margin-bottom: $small-space * 2 !important;
+  background: $black;
+  color: $white;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+
+  &:hover {
+    background: $white;
+    color: $black;
+  }
 }

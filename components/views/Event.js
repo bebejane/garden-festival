@@ -38,10 +38,12 @@ export default function Event({ event, events, show, symbolSize }) {
         <ContentMain>
           <section className={styles.contentBox}>
             <header>
-              <Markdown>
-                {event.summary}
-              </Markdown>
-              {event.register}
+              <p class="summary">
+                <Markdown>
+                  {event.summary}
+                </Markdown>
+              </p>
+              {event.register && "yes"}
             </header>
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>
