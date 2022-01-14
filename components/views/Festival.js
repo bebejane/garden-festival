@@ -21,6 +21,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
+    console.log(eventDate)
     return (
       <>
         {eventDate &&
