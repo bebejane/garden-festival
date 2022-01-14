@@ -131,4 +131,8 @@
 	background-color: black;
 	min-height: auto;
 	padding-bottom: $small-space * 2.5;
+	h1 {
+		padding-top: 1em !important;
+		color: $white;
+	}
 }

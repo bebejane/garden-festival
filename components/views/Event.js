@@ -52,7 +52,7 @@ export default function Event({ event, events, show, symbolSize }) {
                   {event.summary}
                 </Markdown>
               </p>
-              {event.register && "yes"}
+              {event.register && <a className={styles.register} target="new" href="https://gafest-preview.vercel.app/symbiotica/sun-soil-shit-symposium">Register here</a>}
             </header>
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>

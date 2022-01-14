@@ -29,6 +29,20 @@
     visibility: hidden;
   }
 
+  .register {
+    @include roundedElement();
+    margin: auto;
+    background-color: $black;
+    color: $white;
+    -webkit-font-smoothing: antialiased;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: white;
+      color: $black;
+    }
+  }
+
   .related {
     display: none;
     margin-top: 2rem;
