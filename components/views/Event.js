@@ -6,12 +6,14 @@ import { format } from "date-fns";
 import StructuredContent from "/components/blocks"
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
+import Markdown from "/components/common/Markdown";
+
 
 export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
 
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
-  
+
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
@@ -36,7 +38,10 @@ export default function Event({ event, events, show, symbolSize }) {
         <ContentMain>
           <section className={styles.contentBox}>
             <header>
-              <p className="summary">{event.summary}</p>
+              <Markdown>
+                {event.summary}
+              </Markdown>
+              {event.register}
             </header>
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>

@@ -6,10 +6,11 @@ fragment EventFragment on EventRecord {
   slug
   startTime
   endTime
-  summary
+  summary(markdown: false)
   title
   subTitle
   createdAt
+  register
   image {
       ...ImageFragment
   }

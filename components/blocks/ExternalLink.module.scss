@@ -1,4 +1,4 @@
 .externalLink {
   @include textWidth();
-  //background: green;
+  @include roundedElement();
 }
