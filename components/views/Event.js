@@ -32,7 +32,8 @@ export default function Event({ event, events, show, symbolSize }) {
             <h1>{event.title}</h1>
             <h1 className={cn(styles.sub, "sub")}>{event.subTitle}</h1>
           </header>
-          <section className={styles.by}><span className="meta">By {event.participant.title}</span></section>
+          <section className={styles.by}><span className="meta">By <Link href={`/${event.participant.slug}`}>
+            {event.participant.title}</Link></span></section>
         </ContentHeader>
 
         <ContentMain>
