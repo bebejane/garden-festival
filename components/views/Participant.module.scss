@@ -4,8 +4,19 @@
 
   .events {
     margin-top: $space;
-    padding-left: $outer-margin;
-    padding-right: $outer-margin;
+    padding-left: $small-space;
+    padding-right: $small-space;
+
+    @include mq($from: desktop) {
+      padding-left: $outer-margin;
+      padding-right: $outer-margin;
+    }
+
+    @include mq($from: wide) {
+      padding-left: $outer-margin;
+      padding-right: $outer-margin;
+    }
+
     display: block;
 
     .event {
@@ -40,6 +51,10 @@
         padding-top: 0.5em;
       }
 
+      h2.sub {
+        padding-top: 0;
+      }
+
       .symbol {
         display: flex;
         align-items: flex-start;
@@ -50,6 +65,11 @@
           height: 150px;
 
           @include mq($from: tablet) {
+            width: 200px;
+            height: 200px;
+          }
+
+          @include mq($from: wide) {
             width: 300px;
             height: 300px;
           }

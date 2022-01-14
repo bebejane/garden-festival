@@ -8,19 +8,19 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { nodesToArray } from "lib/utils";
 
-export default function Garden({ event, events, participant, view, symbolSize}) {
+export default function Garden({ event, events, participant, view, symbolSize }) {
 	const router = useRouter()
 	const [loaded, setLoaded] = useState(0);
 	const [ready, setReady] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [currentView, setCurrentView] = useState();
 	const [currentAnimation, setCurrentAnimation] = useState();
-	const [positions, setPositions] = useState();	
+	const [positions, setPositions] = useState();
 	const { innerWidth } = useWindowSize();
-	
+
 	const toggleView = (view, force) => {
 		if (!ready) return
-		
+
 		switch (view) {
 			case 'festival':
 				toFestival()
@@ -51,54 +51,54 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		const menu = document.getElementById('menu')
 		const { clientHeight: h, clientWidth: w } = document.body;
 		const top = menu ? menu.offsetTop + menu.clientHeight : 0;
-		return { width: w, height: h, left: 0, top: top,  window: { width: window.innerWidth, height: window.innerHeight } };
+		return { width: w, height: h, left: 0, top: top, window: { width: window.innerWidth, height: window.innerHeight } };
 	};
 
 	const generatePositions = (totalRetries = 0) => {
-		
+
 		const bounds = getBounds();
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const elements = nodesToArray(targets)
 		const maxRetries = 10000;
-		const symbolsPerPage = Math.floor((Math.floor((bounds.height)/symbolSize) * Math.floor(bounds.width/symbolSize)/2))
-		const totalPages = Math.ceil(elements.length/symbolsPerPage)
-		const maxCols = Math.floor(bounds.width/symbolSize)
-		const maxRows = symbolsPerPage/maxCols
-		const overflowSpace = (maxRows - ((elements.length-(symbolsPerPage*(totalPages-1))) / maxCols)) * symbolSize
-		const positions = { bounds, items: []};
+		const symbolsPerPage = Math.floor((Math.floor((bounds.height) / symbolSize) * Math.floor(bounds.width / symbolSize) / 2))
+		const totalPages = Math.ceil(elements.length / symbolsPerPage)
+		const maxCols = Math.floor(bounds.width / symbolSize)
+		const maxRows = symbolsPerPage / maxCols
+		const overflowSpace = (maxRows - ((elements.length - (symbolsPerPage * (totalPages - 1))) / maxCols)) * symbolSize
+		const positions = { bounds, items: [] };
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
-		const maxY = (bounds.height - symbolSize) 
-		
-		const isOverlapping = (area) => {
-			
-			for (let i = 0; i < positions.items.length; i++) {
-				const checkArea = positions.items[i];			
-				const rect1VerticalReach = area.top + area.height;
-    		const rect1HorizontalReach = area.left + area.width;
-    		const rect2VerticalReach = checkArea.top + checkArea.height;
-    		const rect2HorizontalReach = checkArea.left + checkArea.width;
+		const maxY = (bounds.height - symbolSize)
 
-    		if((checkArea.top < rect1VerticalReach && area.top < rect2VerticalReach) && (checkArea.left < rect1HorizontalReach && area.left < rect2HorizontalReach))
+		const isOverlapping = (area) => {
+
+			for (let i = 0; i < positions.items.length; i++) {
+				const checkArea = positions.items[i];
+				const rect1VerticalReach = area.top + area.height;
+				const rect1HorizontalReach = area.left + area.width;
+				const rect2VerticalReach = checkArea.top + checkArea.height;
+				const rect2HorizontalReach = checkArea.left + checkArea.width;
+
+				if ((checkArea.top < rect1VerticalReach && area.top < rect2VerticalReach) && (checkArea.left < rect1HorizontalReach && area.left < rect2HorizontalReach))
 					return true;
-    		else
+				else
 					continue;
 			}
 			return false;
 		}
-		
-		for (let i = 0, page = 0; i < elements.length; i++){	
+
+		for (let i = 0, page = 0; i < elements.length; i++) {
 			const el = elements[i]
 			const randX = 0;
 			const randY = 0;
 			const retries = 0;
-			const pageMargin = (page*bounds.height)
+			const pageMargin = (page * bounds.height)
 			let area;
-			
+
 			do {
 				randX = Math.round(minX + ((maxX - minX) * (Math.random() % 1)));
-				randY = Math.round((minY+pageMargin) + ( ((maxY+pageMargin - (page+1 === totalPages ? overflowSpace : 0)) - (minY+pageMargin) ) * (Math.random())));
+				randY = Math.round((minY + pageMargin) + (((maxY + pageMargin - (page + 1 === totalPages ? overflowSpace : 0)) - (minY + pageMargin)) * (Math.random())));
 				area = {
 					id: el.id,
 					eventId: parseInt(el.getAttribute('eventid')),
@@ -108,14 +108,14 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 					height: el.width
 				};
 			} while (isOverlapping(area) && (++retries < maxRetries));
-			
-			if(retries >= maxRetries && totalRetries < 10)
+
+			if (retries >= maxRetries && totalRetries < 10)
 				return generatePositions(++totalRetries)
-			
-			page = Math.floor((i+1)/symbolsPerPage)
+
+			page = Math.floor((i + 1) / symbolsPerPage)
 			positions.items.push(area);
 		}
-		if(totalRetries >= 10) 
+		if (totalRetries >= 10)
 			console.log('failed to randomly position')
 		return positions;
 	}
@@ -172,7 +172,7 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 	}
 
 	const transitionTo = async (targets, endTargets, opt = {}) => {
-		
+
 		if (currentAnimation) currentAnimation.pause()
 
 		const elementByIndex = (i, el) => {
@@ -182,12 +182,12 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		const defaultDuration = 800;
 		const defaultDelay = 0;
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
-		
+
 		anime.set(lastTargets, { opacity: 0 })
 		anime.set(endTargets, { opacity: 0.0005 })
 		anime.set(targets, { opacity: 1, zIndex: 5 })
 		anime.set(targets[0]?.parentNode, { opacity: 1, zIndex: 5 })
-		
+
 		const animation = anime({
 			targets,
 			left: (el, i) => elementByIndex(i, el)?.getBoundingClientRect().left + window.scrollX,
@@ -213,42 +213,44 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 	}
 
 	const saveViewPositions = () => {
-		
+
 		const elements = nodesToArray(document.querySelectorAll(`img[id^='${view}-symbol']`))
 		const viewPositions = {
 			view,
-			scrollX:window.scrollX,
-			scrollY:window.scrollY,
-			targets:elements.map((el)=>{ return {
-				id: el.id,
-				eventId: parseInt(el.getAttribute('eventid')),
-				participantId: parseInt(el.getAttribute('participantid')),
-				left: el.offsetLeft,
-				top: el.offsetTop,
-				x: el.getBoundingClientRect().x,
-				y: el.getBoundingClientRect().y,
-			}})
+			scrollX: window.scrollX,
+			scrollY: window.scrollY,
+			targets: elements.map((el) => {
+				return {
+					id: el.id,
+					eventId: parseInt(el.getAttribute('eventid')),
+					participantId: parseInt(el.getAttribute('participantid')),
+					left: el.offsetLeft,
+					top: el.offsetTop,
+					x: el.getBoundingClientRect().x,
+					y: el.getBoundingClientRect().y,
+				}
+			})
 		}
-		
+
 		localStorage.setItem('lastView', JSON.stringify(viewPositions))
 		localStorage.setItem(`${view}Scroll`, window.scrollY)
 		return viewPositions
 	}
 
 	const lastViewPositions = () => {
-		return  localStorage.getItem('lastView') ? JSON.parse(localStorage.getItem('lastView')) : null
+		return localStorage.getItem('lastView') ? JSON.parse(localStorage.getItem('lastView')) : null
 	}
 
 	const repositionToLastView = (target, opt) => {
 
 		const lastView = lastViewPositions()
-		if(!lastView) return console.log('no last view')
-		const lastElement = lastView.targets.filter((t) => opt.participantId ? t.participantId == opt.participantId : t.eventId == opt.eventId )[0]
-		if(!lastElement) return console.log('no last element')
-		
+		if (!lastView) return console.log('no last view')
+		const lastElement = lastView.targets.filter((t) => opt.participantId ? t.participantId == opt.participantId : t.eventId == opt.eventId)[0]
+		if (!lastElement) return console.log('no last element')
+
 		anime.set(target, {
 			top: `${lastElement.y + window.scrollY}px`,
-			left:`${lastElement.x}px`,
+			left: `${lastElement.x}px`,
 		})
 	}
 
@@ -257,12 +259,12 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 	}
 	const toGarden = async () => {
 		if (!positions || !positions.items.length) return
-		
+
 		const lastView = lastViewPositions()
 
-		if(lastView && lastView.targets.length){
+		if (lastView && lastView.targets.length) {
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
-			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
+			repositionToLastView(target, { eventId: lastView.targets[0].eventId })
 		}
 
 		const targets = document.querySelectorAll("[id^='symbol-']")
@@ -270,23 +272,23 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 
 		if (!currentView && view === 'garden') {
 			const maxOffset = nodesToArray(targets).sort((a, b) => a.offsetTop < b.offsetTop)[0].offsetTop
-			
-			anime.set(targets, { opacity:1, translateY: `-${maxOffset+symbolSize}px` })
+
+			anime.set(targets, { opacity: 1, translateY: `-${maxOffset + symbolSize}px` })
 			await transitionTo(targets, endTargets, {
 				translateY: '0px',
 				duration: (el, i) => 1000 + (i * 20),
 				delay: (el, i) => 0,
 				easing: 'spring(0.6, 100, 10, 0)'
-			})	
+			})
 		}
 		return transitionTo(targets, endTargets)
 	};
 
 	const toFestival = async () => {
 		const lastView = lastViewPositions()
-		if(lastView && lastView.targets.length){
+		if (lastView && lastView.targets.length) {
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
-			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
+			repositionToLastView(target, { eventId: lastView.targets[0].eventId })
 		}
 		const targets = sortTargetsByEventId(document.querySelectorAll("[id^='symbol-']"))
 		const endTargets = sortTargetsByEventId(document.querySelectorAll("[id^='festival-symbol-']")).filter(t => (t))
@@ -295,11 +297,11 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 
 	const toWeekday = async () => {
 		const lastView = lastViewPositions()
-		if(lastView && lastView.targets.length){
+		if (lastView && lastView.targets.length) {
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
-			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
+			repositionToLastView(target, { eventId: lastView.targets[0].eventId })
 		}
-		
+
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = document.querySelectorAll("[id^='weekday-symbol-']")
 
@@ -317,53 +319,53 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 
 	const toCommunity = async () => {
 		const lastView = lastViewPositions()
-		if(lastView && lastView.targets.length && lastView.view === 'participant'){			
+		if (lastView && lastView.targets.length && lastView.view === 'participant') {
 			const target = document.querySelector(`[id^='symbol-'][eventid='${lastView.targets[0].eventId}']`)
-			repositionToLastView(target, {eventId: lastView.targets[0].eventId})
+			repositionToLastView(target, { eventId: lastView.targets[0].eventId })
 		}
 		const targets = document.querySelectorAll("[id^='symbol-']")
 		const endTargets = nodesToArray(targets).map(el => {
 			const eventId = el.getAttribute('eventid');
 			const eTargets = document.querySelectorAll("[id^='community-symbol-']")
 			for (let i = 0; i < eTargets.length; i++) {
-				if (eventId == eTargets[i].getAttribute('eventid')){
+				if (eventId == eTargets[i].getAttribute('eventid')) {
 					return eTargets[i];
 				}
 			}
 		})
-		
+
 		return transitionTo(targets, endTargets)
 	};
 
 	const toParticipant = async () => {
 		const lastView = lastViewPositions()
-		if(lastView && lastView.targets.length){
-			nodesToArray(document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)).forEach((p, i)=>{
+		if (lastView && lastView.targets.length) {
+			nodesToArray(document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)).forEach((p, i) => {
 				const eventId = parseInt(p.getAttribute('eventid'));
-				repositionToLastView(document.getElementById(`symbol-${eventId}`), {eventId})
+				repositionToLastView(document.getElementById(`symbol-${eventId}`), { eventId })
 			})
 		}
-		
+
 		const targets = document.querySelectorAll(`[id^='symbol-'][participantid='${participant.id}']`)
 		const endTargets = document.querySelectorAll(`[id^='participant-symbol-'][participantid='${participant.id}']`)
-		return transitionTo(targets, endTargets, {popup:true})
+		return transitionTo(targets, endTargets, { popup: true })
 	};
 
 	const toEvent = async () => {
 		const target = document.getElementById(`symbol-${event.id}`)
-		repositionToLastView(target, {eventId:event.id})
+		repositionToLastView(target, { eventId: event.id })
 		const endTarget = document.getElementById(`event-symbol-${event.id}`)
-		if(!target)
+		if (!target)
 			anime.set(endTarget, { opacity: 1 })
 		else
-			transitionTo([target], [endTarget], {popup:true})
+			transitionTo([target], [endTarget], { popup: true })
 	};
 
 	useEffect(() => ready && view && toggleView(view), [view, ready]);
 	useEffect(() => {
 		router.events.on('routeChangeStart', saveViewPositions)
 		return () => router.events.off('routeChangeStart', saveViewPositions)
-	},[view])
+	}, [view])
 
 	useEffect(async () => { // wait for images to load then init
 		const images = document.querySelectorAll(`img[preload='true']`)
@@ -371,7 +373,7 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 		await initSymbols();
 		setLoading(false)
 	}, [loaded]);
-	
+
 	useEffect(() => { // check loading of images
 		let preLoaded = 0;
 		const images = document.querySelectorAll(`img[preload='true']`)
@@ -382,9 +384,9 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 				ref.onload = () => { setLoaded(++preLoaded) }
 		})
 	}, [])
-	
+
 	useEffect(() => resizePositions(), [innerWidth])
-	
+
 	return (
 		<>
 			<div className={styles.garden}>
@@ -405,63 +407,63 @@ export default function Garden({ event, events, participant, view, symbolSize}) 
 }
 
 
-const GardenHeader = ({view}) => {
+const GardenHeader = ({ view }) => {
 
 	const [ratio, setRatio] = useState(1)
 	const scrollY = useScrollPosition(60)
 	const maxWeight = 700
 	const minWeight = 200
-	
+
 	const header = {
-		community:{
+		community: {
 			tag: 'h1',
-			text:'Community'
+			text: 'Community'
 		},
 		date: {
-			tag:'h2',
-			text:'12 - 17 Feb 2020',
+			tag: 'h2',
+			text: '7 - 11 Feb 2020',
 		},
-		garden:{
-			tag:'h1',
-			text:'Garden',
+		garden: {
+			tag: 'h1',
+			text: 'Garden',
 		},
-		presented:{
-			tag:'h2',
-			text:'Presented by the SeedBox',
+		presented: {
+			tag: 'h2',
+			text: 'Presented by the SeedBox',
 		},
-		festival:{
-			tag:'h1',
-			text:'Festival'
+		festival: {
+			tag: 'h1',
+			text: 'Festival'
 		}
 	}
-	
-	const generateLetters = (head) =>{
-		return head.text.split('').map((c, idx) => 
+
+	const generateLetters = (head) => {
+		return head.text.split('').map((c, idx) =>
 			head.tag === 'h1' ?
-				<span key={idx} style={ generateWeightStyle(ratio)}>{c}</span>
-			:
-				<span key={idx} style={ generateWeightStyle(ratio, 300,700, true)}>{c}</span>
+				<span key={idx} style={generateWeightStyle(ratio)}>{c}</span>
+				:
+				<span key={idx} style={generateWeightStyle(ratio, 300, 700, true)}>{c}</span>
 		)
 	}
 	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight, reverse) => {
-		const weight = !reverse ? (max-min)*(ratio)+min : (max-min)*(Math.min(1, ratio+0.3))+min
-		return { fontVariationSettings: `'wght' ${weight}`}
+		const weight = !reverse ? (max - min) * (ratio) + min : (max - min) * (Math.min(1, ratio + 0.3)) + min
+		return { fontVariationSettings: `'wght' ${weight}` }
 	}
 
-	useEffect(()=>{
+	useEffect(() => {
 		const { scrollHeight } = document.documentElement;
 		const { clientHeight } = document.body;
-		const ratio = (scrollY/(scrollHeight-clientHeight))
-		setRatio(1.0-ratio)
+		const ratio = (scrollY / (scrollHeight - clientHeight))
+		setRatio(1.0 - ratio)
 	}, [scrollY])
-	
+
 	return (
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
-			{Object.keys(header).map((k, idx) => 
-					header[k].tag === 'h1' ? 
-						<h1 key={idx}>{generateLetters(header[k])}</h1> 
-					: 
-						<h2 key={idx}>{generateLetters(header[k])}</h2>
+			{Object.keys(header).map((k, idx) =>
+				header[k].tag === 'h1' ?
+					<h1 key={idx}>{generateLetters(header[k])}</h1>
+					:
+					<h2 key={idx}>{generateLetters(header[k])}</h2>
 			)}
 		</div>
 	)

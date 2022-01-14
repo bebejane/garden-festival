@@ -43,10 +43,8 @@ export default function Participant({ participant, events: evts, show, symbolSiz
                         {format(new Date(ev.startTime), 'EEEE MMMM d')} • {ev.typeOfEvent?.title}
                       </span>
                     }
-                    <br />
                     <h2>{ev.title}</h2>
-                    <h2 className="sub">{ev.subTitle}</h2>
-                    <br />
+                    {ev.subTitle && <h2 className="sub">{ev.subTitle}</h2>}
                     <p className="summary">{ev.summary}</p>
                   </p>
                 </div>

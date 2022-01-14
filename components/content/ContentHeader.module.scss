@@ -12,8 +12,8 @@
 	padding-right: $outer-margin / 2;
 
 	@include mq($from: tablet, $until: wide) {
-		padding-left: $outer-margin;
-		padding-right: $outer-margin;
+		padding-left: $space;
+		padding-right: $space;
 	}
 
 	header {
@@ -38,7 +38,6 @@
 	}
 
 	.sub {
-		//font-family: "Maxi Mono Regular";
 		font-variation-settings: "wght" 300;
 	}
 
@@ -75,7 +74,7 @@
 	}
 
 	&.Color1 {
-		//background: $c1;
+		background: $c1;
 	}
 	&.Color2 {
 		background: $c2;
@@ -91,9 +90,20 @@
 	}
 
 	&.participant {
-		color: red;
 		&.Color1 {
 			background: $c1o !important;
+		}
+		&.Color2 {
+			background: $c2o !important;
+		}
+		&.Color3 {
+			background: $c3o !important;
+		}
+		&.Color4 {
+			background: $c4o !important;
+		}
+		&.Color5 {
+			background: $c5o !important;
 		}
 	}
 }
@@ -105,7 +115,6 @@
 	h1 {
 		-webkit-text-stroke: none;
 		color: $black;
-		//font-family: "Maxi Mono";
 
 		&:first-of-type {
 			padding-top: 0.2em;

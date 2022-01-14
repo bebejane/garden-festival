@@ -1,9 +1,12 @@
 .footer {
-  display: none;
   flex-direction: column;
-
-  width: 100%;
-  background-color: #000;
   color: #fff;
   padding: 40px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+
+  a {
+    @include roundedElement();
+  }
 }
