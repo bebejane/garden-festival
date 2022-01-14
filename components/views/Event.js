@@ -11,7 +11,7 @@ import Markdown from "/components/common/Markdown";
 
 export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
-
+  console.log(event)
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
 
   return (
@@ -32,8 +32,11 @@ export default function Event({ event, events, show, symbolSize }) {
             <h1>{event.title}</h1>
             <h1 className={cn(styles.sub, "sub")}>{event.subTitle}</h1>
           </header>
-          <section className={styles.by}><span className="meta">By <Link href={`/${event.participant.slug}`}>
-            {event.participant.title}</Link></span></section>
+          <section className={styles.by}>
+            <span className="meta">
+              By <Link href={`/${event.participant.slug}`}><a>{event.participant.title}</a></Link>
+            </span>
+          </section>
         </ContentHeader>
 
         <ContentMain>
