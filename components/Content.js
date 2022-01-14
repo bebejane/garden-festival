@@ -1,17 +1,26 @@
 import styles from "./Content.module.scss"
-import Footer from "./Footer";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { useState, useEffect, useLayoutEffect } from 'react'
+import { useRouterHistory } from 'lib/hooks';
 
 const useIsomorphicLayoutEffect = process.browser ? useLayoutEffect : useEffect
 
-export default function Content({ show, children, setShow, setAbout, setView, popup = false, abouts }) {
+export default function Content({ view, show, children, popup = false, abouts }) {
+	
 	const router = useRouter()
+	const history = useRouterHistory()
 	const [slideUp, setSlideUp] = useState()
 	const isDirectLink = process.browser && window.history.state.idx === 0;
 
 	const handleKeyDown = (e) => e.key === 'Escape' && !isDirectLink && router.back()
+	const handleClose = () => {
+		if(view === 'about'){
+			const lastUrl = history.filter(url => !url.startsWith('/about')).pop()
+			router.push(lastUrl || '/')
+		}else
+			router.back();
+	}
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown)
@@ -32,10 +41,9 @@ export default function Content({ show, children, setShow, setAbout, setView, po
 				:
 				<div className={cn(styles.contentPopup, slideUp && styles.slideUp, isDirectLink && styles.direct)}>
 					{children}
-					{!isDirectLink && <div className={styles.close} onClick={router.back}>×</div>}
+					{!isDirectLink && <div className={styles.close} onClick={handleClose}>×</div>}
 				</div>
-			}
-			<Footer abouts={abouts} />
+			}			
 		</main>
 	);
 }

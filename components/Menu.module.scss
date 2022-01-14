@@ -6,14 +6,15 @@
   width: 100%;
   z-index: 10;
   margin-top: math.div($space, 4);
-
+  pointer-events: none;
+  
   .wrapper {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     padding-left: $small-space;
-    padding-right: $small-space;
+    padding-right: $small-space; 
   }
 
   .menu,
@@ -196,6 +197,7 @@
         position: relative;
         display: none;
         .city{
+          line-height: 2em;
           &:hover {
             font-feature-settings: "ss01" 1;
             font-variation-settings: "wght" 800;

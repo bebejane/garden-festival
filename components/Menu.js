@@ -37,7 +37,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
         </nav>
         <nav className={styles.menu} >
           <ul>
-            <Link href={'/about'}>
+            <Link href={'/about/about-us'}>
               <a>
                 <li className={pathname.startsWith('/about') ? styles.selected : undefined}>About</li>
               </a>
