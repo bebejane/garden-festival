@@ -1,6 +1,5 @@
 import styles from "./Festival.module.scss"
 import contentStyles from "../Content.module.scss"
-import LinkButton from "../LinkButton";
 import cn from "classnames";
 import { useAppState, AppAction } from "/lib/context/appstate"
 import { format, isSameDay } from 'date-fns'
@@ -12,16 +11,16 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
 
   const [appState, setAppState] = useAppState();
   const view = dayEvents ? 'weekday' : 'festival';
-  
-  let currentDate;
 
+  let currentDate;
+  
   const schedule = [...(dayEvents || events)].map((ev, idx) => {
     let eventDate;
     if (!isSameDay(currentDate, new Date(ev.startTime))) {
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
-    console.log(eventDate)
+    
     return (
       <>
         {eventDate &&

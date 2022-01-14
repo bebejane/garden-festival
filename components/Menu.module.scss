@@ -9,6 +9,7 @@
 
   .wrapper {
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     padding-left: $small-space;
@@ -23,7 +24,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: math.div($space, 4);
-
+    padding-left: $small-space + 180px;
     ul {
       display: flex;
       flex-direction: row;
@@ -88,6 +89,7 @@
     position: relative;
     flex-direction: column;
     width: 100%;
+    padding-left: 0px;
     @include mq($from: desktop) {
       display: none;
     }
@@ -156,6 +158,53 @@
       font-variation-settings: unset !important;
     }
   }
+  .menu{
+    .clock{
+      position: fixed;
+      top:0;
+      left:0;
+      margin:$small-space;
+      z-index: 100;
+    }
+    li {
+      &:hover {
+        font-feature-settings: unset !important;
+        font-variation-settings: unset  !important;
+      }
+      .cities{
+        position: relative;
+        display: none;
+        .city{
+          &:hover {
+            font-feature-settings: "ss01" 1;
+            font-variation-settings: "wght" 800;
+          }
+        }
+      }
+      &.open{
+        padding-top: math.div($small-space, 2);
+        padding-bottom: math.div($small-space, 2);
+        height: auto;
+        max-height: unset;
+        background-color: $white;
+        .cities{
+          display: block;
+          margin-top: math.div($small-space, 4);
+        }
+      }
+      .arrow{
+        position: absolute;
+        right:0;
+        top:0;
+        margin: math.div($small-space, 2);
+        transition: transform 0.3s ease;
+        &.open{
+         transform: rotate(180deg); 
+        }
+      }
+    }
+  }
+  
 }
 
 .invert {

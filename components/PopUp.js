@@ -2,11 +2,14 @@ import styles from "./PopUp.module.scss";
 import format from "date-fns/format";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useAppState } from "/lib/context/appstate";
+import { formatToTimeZone } from "date-fns-timezone";
 
 const PopUp = ({ event, symbolSize, show }) => {
 
 	const [to, setTo] = useState();
 	const [disabled, setDisabled] = useState(false);
+	const [appState, setAppState] = useAppState();
 	const router = useRouter();
 
 	const disablePopup = () => {
@@ -43,7 +46,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 
 	return (
 		<div id={`garden-popup-${event.id}`} className={styles.popup}>
-			<span className="metaLight">{format(new Date(event.startTime), 'EEE MMM d H:mm')}</span>
+			<span className="metaLight">{format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}</span>
 			<h3>{event.title}</h3>
 			<p className="small">{event.summary.split(".")[0]}</p>
 		</div>
