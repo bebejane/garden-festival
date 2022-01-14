@@ -10,6 +10,13 @@ export default function About({ abouts, show }) {
   return (
     <div className={cn(styles.about, about && styles.show)}>
       <ContentHeader black="true">
+        <div className={styles.aboutMenu}>
+          <ul className={styles.aboutMenu}>
+            {abouts.map((a)=>
+              <a><li>{a.title}</li></a>
+            )}
+          </ul>
+        </div>
         <h1>{about.title}</h1>
       </ContentHeader>
       <ContentMain black="true" >
