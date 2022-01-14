@@ -4,25 +4,19 @@ import { FESTIVAL_START_DATE, FESTIVAL_END_DATE, timeZones } from "lib/utils/con
 import Link from "next/link"
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
-import { format, eachDayOfInterval, isSameDay } from 'date-fns'
+import { format, eachDayOfInterval } from 'date-fns'
+import { formatToTimeZone } from "date-fns-timezone";
 import { useAppState, AppAction } from "/lib/context/appstate";
 import { useIntervalWhen } from "rooks";
 
 export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, showProgram = false }) {
-
-  const [appState, setAppState] = useAppState();
   const { pathname } = useRouter()
-  const [date, setDate] = useState(FESTIVAL_START_DATE)
-  const [tz, setTimezone] = useState(timeZones[0]);
-
-  useEffect(() => setAppState({ type: AppAction.SET_DATE, value: date }), [date])
-  useEffect(() => setAppState({ type: AppAction.SET_TIMEZONE, value: tz }), [tz])
   
   return (
     <div id="menu" className={cn(styles.container, view === 'about' && styles.invert)} >
       <div className={styles.wrapper}>
         <MobileMenu view={view}/>
-        <Clock />
+        <TimeZoneDropdown />
         <nav className={styles.menu} >
           <ul>
             <Link href={'/community'}>
@@ -106,15 +100,36 @@ const MobileMenu = ({view}) => {
   )
 }
 
-
-const Clock = () => {
+function TimeZoneDropdown() {
+  const ref = useRef()
+  const tzRef = useRef()
+  const [appState, setAppState] = useAppState();
   const [time, setTime] = useState(format(new Date(), 'HH:mm'))
-  useIntervalWhen(() => setTime(format(new Date(), 'HH:mm')), 1000, true, true);
+  const [open, setOpen] = useState(false)
+  const [tz, setTimezone] = useState(timeZones[0]);
+  
+  useIntervalWhen(() => setTime(formatToTimeZone(new Date(), 'HH:mm', { timeZone: tz.timeZone }), 1000, true, true));
+  useEffect(() => setAppState({ type: AppAction.SET_TIMEZONE, value: tz }), [tz])
 
   return (
-    <nav className={styles.menu} >
+    <nav className={cn(styles.menu, styles.clock)} >
       <ul>
-        <a><li>{time}</li></a>
+        <a>
+          <li className={cn(styles.clock, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
+            {time}
+            <div ref={tzRef} className={cn(styles.cities, open && styles.open)}>
+              {timeZones.map((t) =>
+                <div
+                  className={cn(styles.city)}
+                  onClick={() => setTimezone(t)}
+                >
+                  {t.city}
+                </div>
+              )}
+            </div>
+            <div className={cn(styles.arrow, open && styles.open)}>↓</div>
+          </li>
+        </a>
       </ul>
     </nav>
   )

@@ -11,10 +11,11 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
   if (!show) return null
 
   const [appState, setAppState] = useAppState();
+  
   const view = dayEvents ? 'weekday' : 'festival';
   
   let currentDate;
-
+  console.log(appState)
   const schedule = [...(dayEvents || events)].map((ev, idx) => {
     let eventDate;
     if (!isSameDay(currentDate, new Date(ev.startTime))) {
