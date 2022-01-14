@@ -11,16 +11,17 @@ import { useIntervalWhen } from "rooks";
 
 export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, showProgram = false }) {
   const { pathname } = useRouter()
-  
+  const [mobileOpen, setMobileOpen] = useState(false)
+
   return (
     <div id="menu" className={cn(styles.container, view === 'about' && styles.invert)} >
       <div className={styles.wrapper}>
-        <MobileMenu view={view}/>
-        <TimeZoneDropdown />
+        <MobileMenu view={view} setMobileOpen={setMobileOpen} mobileOpen={mobileOpen}/>
+        <TimeZoneDropdown mobileOpen={mobileOpen}/>
         <nav className={styles.menu} >
           <ul>
             <Link href={'/community'}>
-              <a><li className={pathname === '/community' ? styles.selected : undefined}>Community</li></a>
+              <a><li className={pathname === '/community' || view === 'participant' ? styles.selected : undefined}>Community</li></a>
             </Link>
             <Link href={'/'}>
               <a>
@@ -29,7 +30,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
             </Link>
             <Link href={'/festival'}>
               <a> 
-                <li className={pathname.startsWith('/festival') ? styles.selected : undefined}>Festival</li>
+                <li className={pathname.startsWith('/festival') || view === 'event' ? styles.selected : undefined}>Festival</li>
               </a>
             </Link>
           </ul>
@@ -69,11 +70,10 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
   );
 }
 
-const MobileMenu = ({view}) => {
+const MobileMenu = ({view, setMobileOpen, mobileOpen}) => {
 
   const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about'}]
   const ref = useRef()
-  const [open, setOpen] = useState(false)
   const router = useRouter()
   const selected = menu.filter( m => router.asPath === `/${m.slug}`)[0]
   
@@ -81,13 +81,13 @@ const MobileMenu = ({view}) => {
     <nav className={styles.mobileMenu} >
       <ul>
         <a>
-          <li className={cn(open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
+          <li className={cn(mobileOpen && styles.open)} ref={ref} onClick={() => setMobileOpen(!mobileOpen)}>
             {selected ? selected.label : 'Menu' }
-            <div className={cn(styles.arrow, open && styles.open)}>↓</div>
+            <div className={cn(styles.arrow, mobileOpen && styles.open)}>↓</div>
           </li>
         </a>
       </ul>
-      <ul className={cn(styles.items, open && styles.open)}>
+      <ul className={cn(styles.items, mobileOpen && styles.open)}>
         {menu.map((m, idx) =>
           <Link key={idx} href={`/${m.slug}`}>
             <a onClick={()=>setOpen(false)}>
@@ -100,7 +100,7 @@ const MobileMenu = ({view}) => {
   )
 }
 
-function TimeZoneDropdown() {
+function TimeZoneDropdown({mobileOpen}) {
   const ref = useRef()
   const tzRef = useRef()
   const [appState, setAppState] = useAppState();
@@ -110,9 +110,9 @@ function TimeZoneDropdown() {
   
   useIntervalWhen(() => setTime(formatToTimeZone(new Date(), 'HH:mm', { timeZone: tz.timeZone }), 1000, true, true));
   useEffect(() => setAppState({ type: AppAction.SET_TIMEZONE, value: tz }), [tz])
-
+  
   return (
-    <nav className={cn(styles.menu, styles.clock)} >
+    <nav className={cn(styles.menu, styles.clockMenu, mobileOpen && styles.mobileOpen)} >
       <ul>
         <a>
           <li className={cn(styles.clock, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
