@@ -25,6 +25,11 @@ fragment ParticipantFragment on ParticipantRecord {
           ...ImageFragment
         }
       }
+      ... on ExternalLinkRecord {
+        id
+        linkText
+        url
+      }
       ... on ImageRecord {
         id
         image {

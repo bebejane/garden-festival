@@ -53,6 +53,7 @@
     .symbol {
       display: flex;
       align-items: flex-start;
+      padding-right: $small-space;
 
       img {
         width: 150px;
