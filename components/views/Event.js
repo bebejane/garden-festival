@@ -7,11 +7,12 @@ import StructuredContent from "/components/blocks"
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 import Markdown from "/components/common/Markdown";
-
+import { useAppState } from "/lib/context/appstate";
+import { formatToTimeZone } from "date-fns-timezone";
 
 export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
-  console.log(event)
+  const [appState, setAppState] = useAppState();
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
 
   return (
@@ -19,7 +20,11 @@ export default function Event({ event, events, show, symbolSize }) {
       <div className={styles.info}>
         <ContentHeader responsiveImage={event.image?.responsiveImage} color={event.participant.color}>
           <header>
-            <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEE MMM d H:mm')}</span></section>
+            <section className="meta">
+              <span className="meta">
+                {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}
+              </span>
+            </section>
             <figure>
               <img
                 id={`event-symbol-${event?.id}`}
