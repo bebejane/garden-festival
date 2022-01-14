@@ -3,16 +3,10 @@
   flex-direction: column;
 
   .events {
-    @include textWidth();
+    margin-top: $space;
+    padding-left: $outer-margin;
+    padding-right: $outer-margin;
     display: block;
-
-    h2.first {
-      border-top: 3px solid $black;
-      margin-top: $space;
-      padding-top: $space;
-      padding-bottom: $space;
-      text-align: center;
-    }
 
     .event {
       @include roundedBox();
