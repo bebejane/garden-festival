@@ -15,11 +15,16 @@ export default function Content({ view, show, children, popup = false, abouts })
 
 	const handleKeyDown = (e) => e.key === 'Escape' && !isDirectLink && router.back()
 	const handleClose = () => {
-		if(view === 'about'){
-			const lastUrl = history.filter(url => !url.startsWith('/about')).pop()
-			router.push(lastUrl || '/')
-		}else
-			router.back();
+		if(view !== 'about')
+			return router.back()
+		
+		let count = 0;
+		for(let i = history.length-1; i >= 0; i--, count++){
+			if(!history[i].startsWith('/about'))
+				break
+		}
+		
+		global.history.go(-count)
 	}
 
 	useEffect(() => {

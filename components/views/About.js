@@ -13,11 +13,11 @@ export default function About({ about, abouts, show }) {
   
   return (
     <div className={cn(styles.about, about && styles.show)}>
-      <ContentHeader black="true">
+      <ContentHeader black={true}>
         <div className={styles.aboutMenu}>
           <ul className={styles.aboutMenu}>
-            {abouts.map((a)=>
-              <Link href={`/about/${a.slug}`}>
+            {abouts.map((a, idx)=>
+              <Link key={idx} href={`/about/${a.slug}`}>
                 <a>
                   <li className={pathname === `/about/${a.slug}` && styles.selected}>{a.title}</li>
                 </a>
@@ -27,7 +27,7 @@ export default function About({ about, abouts, show }) {
         </div>
         <h1>{about?.title}</h1>
       </ContentHeader>
-      <ContentMain black="true" >
+      <ContentMain black={true} >
         {about && <StructuredContent content={about.content} />}
       </ContentMain>
     </div>

@@ -78,10 +78,10 @@ const MobileMenu = ({view, setMobileOpen, mobileOpen}) => {
   const selected = menu.filter( m => router.asPath === `/${m.slug}`)[0]
   
   return (
-    <nav className={styles.mobileMenu} >
+    <nav className={cn(styles.mobileMenu, mobileOpen && styles.open)} >
       <ul>
         <a>
-          <li className={cn(mobileOpen && styles.open)} ref={ref} onClick={() => setMobileOpen(!mobileOpen)}>
+          <li ref={ref} onClick={() => setMobileOpen(!mobileOpen)}>
             {selected ? selected.label : 'Menu' }
             <div className={cn(styles.arrow, mobileOpen && styles.open)}>↓</div>
           </li>
@@ -90,7 +90,7 @@ const MobileMenu = ({view, setMobileOpen, mobileOpen}) => {
       <ul className={cn(styles.items, mobileOpen && styles.open)}>
         {menu.map((m, idx) =>
           <Link key={idx} href={`/${m.slug}`}>
-            <a onClick={()=>setOpen(false)}>
+            <a onClick={()=>setMobileOpen(false)}>
               <li>{m.label}</li>
             </a>
           </Link>
@@ -101,6 +101,7 @@ const MobileMenu = ({view, setMobileOpen, mobileOpen}) => {
 }
 
 function TimeZoneDropdown({mobileOpen}) {
+
   const ref = useRef()
   const tzRef = useRef()
   const [appState, setAppState] = useAppState();
@@ -116,10 +117,11 @@ function TimeZoneDropdown({mobileOpen}) {
       <ul>
         <a>
           <li className={cn(styles.clock, open && styles.open)} ref={ref} onClick={() => setOpen(!open)}>
-            {time}
+            {time} ({tz.label})
             <div ref={tzRef} className={cn(styles.cities, open && styles.open)}>
-              {timeZones.map((t) =>
+              {timeZones.map((t, idx) =>
                 <div
+                  key={idx}
                   className={cn(styles.city)}
                   onClick={() => setTimezone(t)}
                 >
