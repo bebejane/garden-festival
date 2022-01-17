@@ -13,6 +13,7 @@
 
   a {
     @include roundedElement();
+    background-color: transparent;
 
     &:hover {
       background-color: $black;

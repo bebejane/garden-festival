@@ -26,7 +26,7 @@ h1 {
 
 h2,
 article h1 {
-  font-size: 20px;
+  font-size: 22px;
   font-feature-settings: "ss02" 1;
 
   @include mq($from: tablet) {
@@ -65,7 +65,7 @@ p {
   &.summary,
   &.summary p {
     font-variation-settings: "wght" 300;
-    font-size: 21px;
+    font-size: 18px;
     line-height: 1.25;
 
     @include mq($from: tablet) {
@@ -87,6 +87,13 @@ p {
     font-family: $headline-font;
     font-weight: normal;
     font-variation-settings: "wght" 660;
+  }
+}
+
+header p.summary,
+header p.summary p {
+  @include mq($until: tablet) {
+    font-size: 21px;
   }
 }
 
