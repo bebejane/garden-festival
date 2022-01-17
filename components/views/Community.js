@@ -9,7 +9,7 @@ export default function Community({ participants, events, show, symbolSize }) {
 
   return (
     <div key={'community'} className={styles.container}>
-      <h1>Participants</h1>
+      <h1>Community</h1>
       <div className={styles.community}>
         {[...participants].map((p, idx) => {
           const participantEvents = events.filter(e => e.participant.id === p.id);
