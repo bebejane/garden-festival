@@ -74,8 +74,11 @@ p {
   }
 
   a {
-    font-family: $mono-font;
+    font-family: $headline-font;
     color: $black !important;
+    &:hover {
+      border-bottom: 1px solid black;
+    }
   }
 
   em {
