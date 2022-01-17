@@ -47,7 +47,7 @@ export default function Event({ event, events, show, symbolSize }) {
         <ContentMain>
           <section className={styles.contentBox}>
             <header>
-              <p class="summary">
+              <p className="summary">
                 <Markdown>
                   {event.summary}
                 </Markdown>

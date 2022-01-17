@@ -89,11 +89,11 @@ function TimeZoneDropdown({mobileOpen, inverted}) {
   
   useIntervalWhen(() => setTime(formatToTimeZone(new Date(), 'HH:mm', { timeZone: tz.timeZone }), 1000, true, true));
   useEffect(() => setAppState({ type: AppAction.SET_TIMEZONE, value: tz }), [tz])
-
+  
   return (
     <DropDown 
       className={cn(styles.timezoneDropDown, mobileOpen && styles.mobileOpen)}
-      options={timeZones.map((t) => { return {label:t.city, slug:''}})}
+      options={timeZones.map((t) => { return {label:t.city}})}
       label={`${time} ${tz.label}`}
       setOpen={setOpen}
       open={open}

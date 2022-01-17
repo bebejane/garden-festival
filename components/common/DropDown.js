@@ -10,11 +10,16 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, open, label,
   const router = useRouter()
   const [internalOpen, setInternalOpen] = useState(false)
   const selected = options.filter( options => router.asPath === (`/${options.slug}`))[0]
+  const handleClick = (option) => {
+    if(onSelect)
+      onSelect(option);
+    setInternalOpen(false)
+  }
 
   useEffect(()=>  setOpen && setOpen(internalOpen), [internalOpen])
 
   if(hide) return null
-
+  
   return (
     <nav className={cn(styles.dropdown, className, inverted && styles.inverted, internalOpen && styles.open)} >
       <ul>
@@ -29,15 +34,12 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, open, label,
         {options.map((a, idx) =>
           {return a.slug !== undefined ?
             <Link key={idx} href={`/${a.slug}`}>
-              <a onClick={()=>setInternalOpen(false)}>
+              <a onClick={()=> handleClick(a)}>
                 <li>{a.label}</li>
               </a>
             </Link>
           :
-            <a onClick={()=>{
-              onSelect && onSelect(a);
-              setInternalOpen(false)
-            }}>
+            <a onClick={()=> handleClick(a)}>
               <li>{a.label}</li>
             </a>
           }
