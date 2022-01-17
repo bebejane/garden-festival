@@ -1,11 +1,16 @@
 .footer {
   flex-direction: column;
   color: #fff;
-  padding: 40px;
   position: fixed;
   bottom: 0;
   right: 0;
   z-index: 10;
+  padding: $small-space;
+
+  @include mq($from: tablet) {
+    padding: $small-space * 2;
+  }
+
   a {
     @include roundedElement();
 

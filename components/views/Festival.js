@@ -13,14 +13,14 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
   const view = dayEvents ? 'weekday' : 'festival';
 
   let currentDate;
-  
+
   const schedule = [...(dayEvents || events)].map((ev, idx) => {
     let eventDate;
     if (!isSameDay(currentDate, new Date(ev.startTime))) {
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
-    
+
     return (
       <>
         {eventDate &&
@@ -43,12 +43,11 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
               <p>
                 {ev.startTime &&
                   <span className="metaLight">
-                    {formatToTimeZone(ev.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title} • By {ev.participant.title}
+                    {formatToTimeZone(ev.startTime, 'ddd HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title} • By {ev.participant.title}
                   </span>
                 }
                 <h2>{ev.title}</h2>
                 <h2 className={cn(styles.sub, "sub")}>{ev.subTitle}</h2>
-                <br />
                 <p className="summary">{ev.summary}</p>
               </p>
             </div>

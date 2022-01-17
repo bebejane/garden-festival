@@ -22,7 +22,7 @@ export default function Participant({ participant, events: evts, show, symbolSiz
         <h1 className="sub">{participant.subTitle}</h1>
       </ContentHeader>
 
-      <ContentMain color={participant.color}>
+      <ContentMain color={participant.color} type="participant">
         <div className={styles.events}>
           {events.map((ev) =>
             <Link href={`${ev.participant.slug}/${ev.slug}`}>
@@ -45,7 +45,7 @@ export default function Participant({ participant, events: evts, show, symbolSiz
                     }
                     <h2>{ev.title}</h2>
                     {ev.subTitle && <h2 className="sub">{ev.subTitle}</h2>}
-                    <p className="summary">{ev.summary}</p>
+                    <p>{ev.summary}</p>
                   </p>
                 </div>
               </a>

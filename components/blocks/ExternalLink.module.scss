@@ -3,6 +3,7 @@
   color: $black;
   margin: auto;
   @include roundedElement();
+  margin-top: $small-space !important;
   margin-bottom: $small-space * 2 !important;
   background: $black;
   color: $white;

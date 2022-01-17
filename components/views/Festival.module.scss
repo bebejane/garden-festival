@@ -60,8 +60,8 @@
         height: 150px;
 
         @include mq($from: tablet) {
-          width: 300px;
-          height: 300px;
+          width: $symbol-big;
+          height: $symbol-big;
         }
       }
     }
@@ -69,8 +69,15 @@
     .info {
       width: 100%;
       span {
-        padding-bottom: 1.5em;
         display: block;
+      }
+
+      h2:first-of-type {
+        padding-top: 0.5em;
+      }
+
+      h2:last-of-type {
+        padding-bottom: 0.3 * em;
       }
 
       p {
