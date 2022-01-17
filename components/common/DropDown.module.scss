@@ -38,23 +38,39 @@
       }
       
     }
-    
+    &:first-child{
+      a > li{
+        &:hover{
+          background-color: $white !important;
+        }
+      }
+    }
   }
   ul, a, li {
     width: 100%;
   }
+  
   &.inverted {
     ul > a > li {
       color: $white !important;
       background-color: $black !important;
       &:hover{
-        background-color: $black !important;
-        color: $white !important;
+        background-color: $black;
+        color: $white;
+      }
+    }
+    ul:first-child{
+      a > li{
+        &:hover{
+          background-color: $white !important;
+          color: $black !important;
+        }
       }
     }
     ul, li{
       border-color: $white !important;
     }
+    
   }
   &.open {
     max-height: 1000px;

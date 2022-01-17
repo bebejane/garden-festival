@@ -9,14 +9,20 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, open, label,
   const ref = useRef()
   const router = useRouter()
   const [internalOpen, setInternalOpen] = useState(false)
-  const selected = options.filter( options => router.asPath === (`/${options.slug}`))[0]
-  const handleClick = (option) => {
-    if(onSelect)
-      onSelect(option);
-    setInternalOpen(false)
-  }
+  let selected = options.filter( option => router.asPath === `/${option.slug}`)[0]
+  if(!selected)
+    selected = options.filter( option => option.slug && router.asPath.startsWith(`/${option.slug.split('/')[0]}`))[0]
 
+  const handleClose = () => setInternalOpen(false);
+  const handleClick = (option) => {
+    if(onSelect && option) onSelect(option);
+    handleClose()
+  }
   useEffect(()=>  setOpen && setOpen(internalOpen), [internalOpen])
+  useEffect(()=> {
+    router.events.on('beforeHistoryChange', handleClose);
+    return () => router.events.off('beforeHistoryChange', handleClose);
+  }, [])
 
   if(hide) return null
   
