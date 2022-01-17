@@ -6,14 +6,15 @@
   width: 100%;
   z-index: 10;
   margin-top: math.div($space, 4);
-
+  pointer-events: none;
+  
   .wrapper {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     padding-left: $small-space;
-    padding-right: $small-space;
+    padding-right: $small-space; 
   }
 
   .menu,
@@ -68,6 +69,7 @@
         }
       }
     }
+    
   }
   .festivalMenu {
     position: fixed;
@@ -112,6 +114,11 @@
       padding: 0px !important;
       border-bottom-left-radius: 0px !important;
       border-bottom-right-radius: 0px !important;
+      a {
+        li{
+          //background-color: #fff;
+        }
+      }
     }
     .items {
       @include roundedElement();
@@ -137,10 +144,6 @@
           border: 0px;
           width: 100%;
           width: 100% !important;
-          background-color: transparent;
-          &.selected {
-            //color:pink;
-          }
         }
         &:hover {
           color: #000;
@@ -195,7 +198,13 @@
       .cities{
         position: relative;
         display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         .city{
+          line-height: 1.3em;
+          height:40px;
+          
           &:hover {
             font-feature-settings: "ss01" 1;
             font-variation-settings: "wght" 800;
@@ -204,13 +213,12 @@
       }
       &.open{
         padding-top: math.div($small-space, 2);
-        padding-bottom: math.div($small-space, 2);
         height: auto;
         max-height: unset;
         background-color: $white;
         .cities{
-          display: block;
-          margin-top: math.div($small-space, 4);
+          display: flex;
+          margin-top: $small-space;
         }
       }
       .arrow{
@@ -231,17 +239,19 @@
 .invert {
   ul {
     border-color: $white !important;
-    li {
-      border-color: white !important;
-      color: white;
-      -webkit-font-smoothing: antialiased;
-      &.selected {
-        color: black !important;
-        background-color: white !important;
-      }
-      &:hover {
-        color: $black;
-        background: $white;
+    a{
+      li {
+        border-color: white !important;
+        color: white;
+        -webkit-font-smoothing: antialiased;
+        &.selected {
+          color: black !important;
+          background-color: white !important;
+        }
+        &:hover {
+          color: $white !important;
+          background: transparent !important;
+        }
       }
     }
   }
@@ -249,6 +259,15 @@
     ul {
       background-color: #000 !important;
       border-radius: $radius;
+    }
+  }
+  .clockMenu{
+    ul {
+      a{
+        li{
+          background-color: #000 !important;
+        }
+      }
     }
   }
 }
