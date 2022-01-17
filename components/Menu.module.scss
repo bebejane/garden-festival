@@ -15,17 +15,21 @@
     width: 100%;
     padding-left: $small-space;
     padding-right: $small-space; 
+    @include mq($until: desktop) {
+      flex-direction: column;
+    }
   }
 
   .menu,
-  .festivalMenu,
-  .mobileMenu {
+  .festivalMenu {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     margin-bottom: math.div($space, 4);
-    
+    @include mq($until: desktop) {
+      display: none;
+    }
     ul {
       display: flex;
       flex-direction: row;
@@ -82,158 +86,6 @@
       }
     }
   }
-
-  .menu,
-  .festivalMenu {
-    @include mq($until: desktop) {
-      display: none;
-    }
-  }
-
-  .mobileMenu {
-    position: relative;
-    flex-direction: column;
-    width: 100%;
-    padding-left: 0px;
-    @include mq($from: desktop) {
-      display: none;
-    }
-    ul {
-      padding-left: 0%;
-      padding-right: 0%;
-      a {
-        width: 100%;
-        max-width: unset;
-        li {
-          width: 100% !important;
-        }
-      }
-    }
-    &.open {
-      max-height: 1000px;
-      padding: 0px !important;
-      border-bottom-left-radius: 0px !important;
-      border-bottom-right-radius: 0px !important;
-      a {
-        li{
-          //background-color: #fff;
-        }
-      }
-    }
-    .items {
-      @include roundedElement();
-      display: none;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      top: 46px;
-      width: 100%;
-      background-color: $white;
-      padding-bottom: 5px;
-      margin-top: math.div($small-space, 2);
-      &.open {
-        display: flex;
-        height: unset;
-        overflow: unset;
-      }
-      a {
-        width: 100%;
-        margin: 0px;
-        line-height: 1.3em;
-        li {
-          border: 0px;
-          width: 100%;
-          width: 100% !important;
-        }
-        &:hover {
-          color: #000;
-        }
-      }
-    }
-    .arrow {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      transition: transform 0.3s ease;
-      &.open {
-        transform: rotate(180deg);
-      }
-    }
-    &:hover {
-      font-feature-settings: unset !important;
-      font-variation-settings: unset !important;
-    }
-  }
-  .menu{
-    &.clockMenu{
-      z-index: 100;
-      @include mq($until: desktop) {
-        position: fixed;
-        top: 240px;
-        left:0;
-        padding:0px;
-        width: 100%;
-        margin: 0px;
-        margin-top: math.div($small-space, 2);
-        padding-left: $small-space;
-        padding-right: $small-space;
-        &.mobileOpen {
-          display: flex !important;
-        }
-        ul > a{
-          max-width: 100%;
-          width:100%;
-          li{
-            background-color: #fff;
-            width:100%;
-          }
-        }
-      }
-    }
-    li {
-      &:hover {
-        font-feature-settings: unset !important;
-        font-variation-settings: unset  !important;
-      }
-      .cities{
-        position: relative;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        .city{
-          line-height: 1.3em;
-          height:40px;
-          
-          &:hover {
-            font-feature-settings: "ss01" 1;
-            font-variation-settings: "wght" 800;
-          }
-        }
-      }
-      &.open{
-        padding-top: math.div($small-space, 2);
-        height: auto;
-        max-height: unset;
-        background-color: $white;
-        .cities{
-          display: flex;
-          margin-top: $small-space;
-        }
-      }
-      .arrow{
-        position: absolute;
-        right:0;
-        top:0;
-        margin: math.div($small-space, 2);
-        transition: transform 0.3s ease;
-        &.open{
-         transform: rotate(180deg); 
-        }
-      }
-    }
-  }
-  
 }
 
 .invert {
@@ -255,19 +107,43 @@
       }
     }
   }
-  .mobileMenu {
-    ul {
-      background-color: #000 !important;
-      border-radius: $radius;
-    }
+}
+
+
+.mobileMenuDropDown{
+  width: 100%;
+  @include mq($from: desktop) {
+    display: none !important;
+  } 
+  ul, a, li {
+    width: 100%;
   }
-  .clockMenu{
-    ul {
-      a{
-        li{
-          background-color: #000 !important;
-        }
-      }
+  .items{
+    width: 100%;
+  }
+}
+
+.timezoneDropDown{
+  display: none !important;
+  z-index: 100;
+  left: 0;
+  top:166px;
+  padding:0px;
+  margin-top: $small-space !important;
+  ul > a > li {
+    background-color: #fff !important;
+  }
+  &.mobileOpen {
+    display: flex !important;
+  }
+  @include mq($from: desktop) {
+    display: flex !important;
+    position: relative;
+    top:0px;
+    margin: 0px !important;
+    width: 180px !important;
+    ul > a > li {
+      background-color: transparent !important;
     }
   }
 }
