@@ -72,7 +72,7 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
 
 const MobileMenu = ({view, setMobileOpen, mobileOpen}) => {
 
-  const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about'}]
+  const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about/about-us'}]
   const ref = useRef()
   const router = useRouter()
   const selected = menu.filter( m => router.asPath === `/${m.slug}`)[0]
