@@ -6,7 +6,7 @@ import Link from "next/link"
 export default function Footer({ abouts, setAbout }) {
 	return (
 		<footer className={styles.footer}>
-			<a href="https://discord.gg/yQAscdHj" target="new">Chat</a>
+			<a href="https://discord.gg/yQAscdHj" target="new">Discuss</a>
 		</footer>
 	);
 }

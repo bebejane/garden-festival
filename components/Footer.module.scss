@@ -8,5 +8,10 @@
 
   a {
     @include roundedElement();
+
+    &:hover {
+      background-color: $black;
+      color: white;
+    }
   }
 }
