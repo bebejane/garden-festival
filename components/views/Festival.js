@@ -5,6 +5,8 @@ import { useAppState, AppAction } from "/lib/context/appstate"
 import { format, isSameDay } from 'date-fns'
 import { formatToTimeZone } from 'date-fns-timezone'
 import Link from "next/link"
+import Markdown from "/components/common/Markdown";
+
 
 export default function Festival({ events, dayEvents, participants, date, timeZone, show, symbolSize }) {
   if (!show) return null
@@ -48,7 +50,10 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                 }
                 <h2>{ev.title}</h2>
                 <h2 className={cn(styles.sub, "sub")}>{ev.subTitle}</h2>
-                <p className="summary">{ev.summary}</p>
+                <p className="summary">
+                  <Markdown>
+                    {ev.summary}
+                  </Markdown></p>
               </p>
             </div>
           </a>

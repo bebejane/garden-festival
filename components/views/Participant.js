@@ -45,7 +45,10 @@ export default function Participant({ participant, events: evts, show, symbolSiz
                     }
                     <h2>{ev.title}</h2>
                     {ev.subTitle && <h2 className="sub">{ev.subTitle}</h2>}
-                    <p>{ev.summary}</p>
+                    <p>
+                      <Markdown>
+                        {ev.summary}
+                      </Markdown></p>
                   </p>
                 </div>
               </a>

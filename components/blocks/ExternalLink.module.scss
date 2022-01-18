@@ -14,4 +14,12 @@
     background: $white;
     color: $black;
   }
+
+  &:visited {
+    color: white;
+
+    &:hover {
+      color: $black;
+    }
+  }
 }
