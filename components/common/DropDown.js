@@ -3,8 +3,9 @@ import cn from 'classnames'
 import Link from 'next/link'
 import {useRef, useState, useEffect}  from 'react';
 import { useRouter } from 'next/router';
+import { useOutsideClick } from 'rooks';
 
-const DropDown = ({options, className, inverted, setOpen, onSelect, open, label, hide}) => {
+const DropDown = ({options, className, inverted, setOpen, onSelect, open, label, hide, }) => {
   
   const ref = useRef()
   const router = useRouter()
@@ -24,13 +25,14 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, open, label,
     return () => router.events.off('beforeHistoryChange', handleClose);
   }, [])
 
+  
   if(hide) return null
   
   return (
-    <nav className={cn(styles.dropdown, className, inverted && styles.inverted, internalOpen && styles.open)} >
+    <nav ref={ref} className={cn(styles.dropdown, className, inverted && styles.inverted, internalOpen && styles.open)} >
       <ul>
         <a>
-          <li ref={ref} onClick={() => setInternalOpen(!internalOpen)}>
+          <li onClick={() => setInternalOpen(!internalOpen)}>
             {label ? label : selected ? selected.label : 'Menu' }
             <div className={cn(styles.arrow, internalOpen && styles.open)}>↓</div>
           </li>
