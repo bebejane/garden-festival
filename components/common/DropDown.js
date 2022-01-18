@@ -5,9 +5,8 @@ import {useRef, useState, useEffect}  from 'react';
 import { useRouter } from 'next/router';
 import { useOutsideClick } from 'rooks';
 
-const DropDown = ({options, className, inverted, setOpen, onSelect, open, label, hide, }) => {
+const DropDown = ({options, className, inverted, setOpen, onSelect, label, hide}) => {
   
-  const ref = useRef()
   const router = useRouter()
   const [internalOpen, setInternalOpen] = useState(false)
   let selected = options.filter( option => router.asPath === `/${option.slug}`)[0]
@@ -25,11 +24,10 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, open, label,
     return () => router.events.off('beforeHistoryChange', handleClose);
   }, [])
 
-  
   if(hide) return null
   
   return (
-    <nav ref={ref} className={cn(styles.dropdown, className, inverted && styles.inverted, internalOpen && styles.open)} >
+    <nav className={cn(styles.dropdown, className, inverted && styles.inverted, internalOpen && styles.open)} >
       <ul>
         <a>
           <li onClick={() => setInternalOpen(!internalOpen)}>

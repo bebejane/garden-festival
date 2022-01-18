@@ -5,15 +5,14 @@ import StructuredContent from "/components/blocks"
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 import {useRouter} from "next/router";
-import { useState, useRef } from "react";
 import DropDown from "/components/common/DropDown";
 
 export default function About({ about, abouts, show }) {
+  
   if (!show) return null
 
   const { asPath: pathname } = useRouter()
-  const [open, setOpen] = useState(false)
-
+  
   return (
     <div className={cn(styles.about, about && styles.show)}>
       <ContentHeader black={true}>
@@ -39,35 +38,5 @@ export default function About({ about, abouts, show }) {
         {about && <StructuredContent content={about.content} />}
       </ContentMain>
     </div>
-  )
-}
-
-const MobileAboutMenu = ({abouts}) => {
-  
-  const ref = useRef()
-  const router = useRouter()
-  const [open, setOpen] = useState(false)
-  const selected = abouts.filter( a => router.asPath === `/about/${a.slug}`)[0]
-
-  return (
-    <nav className={cn(styles.mobileMenu, open && styles.open)} >
-      <ul>
-        <a>
-          <li ref={ref} onClick={() => setOpen(!open)}>
-            {selected ? selected.menuTitle : 'Menu' }
-            <div className={cn(styles.arrow, open && styles.open)}>↓</div>
-          </li>
-        </a>
-      </ul>
-      <ul className={cn(styles.items, open && styles.open)}>
-        {abouts.map((a, idx) =>
-          <Link key={idx} href={`/about/${a.slug}`}>
-            <a onClick={()=>setOpen(false)}>
-              <li>{a.menuTitle}</li>
-            </a>
-          </Link>
-        )}
-      </ul>
-    </nav>
   )
 }
