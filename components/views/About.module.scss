@@ -74,96 +74,11 @@
     }
   }
 }
+
 .aboutMobileDropDown {
   margin-top: $small-space;
+  max-width: 220px;
   @include mq($from: desktop) {
     display: none;
-  }
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0px;
-  margin-top: $small-space;
-  color: $white;
-
-  ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-left: 0%;
-    padding-right: 0%;
-    a {
-      flex: 1 1 auto;
-      li {
-        @include roundedElement();
-        position: relative;
-        min-width: 220px;
-        width: 100%;
-        text-transform: uppercase;
-      }
-    }
-  }
-  &.open {
-    max-height: 1000px;
-    padding: 0px !important;
-    border-bottom-left-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-    a {
-      li {
-        //background-color: #fff;
-      }
-    }
-  }
-  .items {
-    @include roundedElement();
-    position: absolute;
-    display: none;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    top: 46px;
-    background-color: $white;
-    padding-bottom: 5px;
-    margin-top: math.div($small-space, 2);
-    max-width: 220px;
-    overflow: hidden;
-    &.open {
-      display: flex;
-      height: unset;
-    }
-    a {
-      margin: 0px;
-      line-height: 1.3em;
-      li {
-        border-radius: 0px;
-        border: 0px;
-      }
-      &:hover {
-        color: #000;
-      }
-    }
-  }
-  .arrow {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    transition: transform 0.3s ease;
-    &.open {
-      transform: rotate(180deg);
-    }
-  }
-  &:hover {
-    font-feature-settings: unset !important;
-    font-variation-settings: unset !important;
-    display: none;
-  }
-  ul,
-  a,
-  li {
-    max-width: 220px;
-  }
+  } 
 }
