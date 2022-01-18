@@ -1,0 +1,129 @@
+.dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0px;
+  margin-top:0px;
+  color: $white;
+  z-index: 1000;
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0%;
+    padding-right: 0%;
+    a {
+      user-select: none;
+      flex: 1 1 auto;
+      li { 
+        @include roundedElement();
+        background-color: transparent;
+        position: relative;
+        width: 100%;
+        pointer-events: all;
+        text-transform: uppercase;
+        cursor: pointer;
+        &:hover{
+          background-color: $white;
+          color: $black;
+          font-feature-settings: "ss01" 1;
+          font-variation-settings: "wght" 800;
+        
+        }
+        
+      }
+      
+    }
+    &:first-child{
+      a > li{
+        &:hover{
+          background-color: $white !important;
+        }
+      }
+    }
+  }
+  ul, a, li {
+    width: 100%;
+  }
+  
+  &.inverted {
+    ul > a > li {
+      color: $white !important;
+      background-color: $black !important;
+      &:hover{
+        background-color: $black;
+        color: $white;
+      }
+    }
+    ul:first-child{
+      a > li{
+        &:hover{
+          background-color: $white !important;
+          color: $black !important;
+        }
+      }
+    }
+    ul, li{
+      border-color: $white !important;
+    }
+    
+  }
+  &.open {
+    max-height: 1000px;
+    padding: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+  .items {
+    @include roundedElement();
+    position: absolute;
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    top: 40px + math.div($small-space, 2);
+    background-color: $white;
+    overflow: hidden;
+    width: 100%;
+    &.open {
+      display: flex;
+      height: unset;
+    }
+
+    a {
+      margin: 0px;
+      line-height: 1.3em;
+
+      li {
+        border-radius: 0px;  
+        border: 0px;
+      }
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  .arrow {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &:hover {
+    font-feature-settings: unset !important;
+    font-variation-settings: unset !important;
+  }
+}

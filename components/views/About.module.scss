@@ -11,6 +11,9 @@
 }
 
 .aboutMenu {
+  @include mq($from: desktop) {
+    display: flex;
+  }
   display: none;
   flex-direction: row;
   align-items: center;
@@ -71,8 +74,8 @@
     }
   }
 }
-
-.mobileMenu {
+.aboutMobileDropDown {
+  margin-top: $small-space;
   @include mq($from: desktop) {
     display: none;
   }
@@ -156,5 +159,11 @@
   &:hover {
     font-feature-settings: unset !important;
     font-variation-settings: unset !important;
+    display: none;
+  }
+  ul,
+  a,
+  li {
+    max-width: 220px;
   }
 }
