@@ -6,7 +6,7 @@ import useScrollPosition from '@react-hook/window-scroll'
 import { useWindowSize } from "rooks";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { nodesToArray } from "lib/utils";
+import { nodesToArray, randomInt } from "lib/utils";
 
 export default function Garden({ event, events, participant, view, symbolSize }) {
 	const router = useRouter()
@@ -156,10 +156,8 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				const el = document.getElementById(`${id}`)
 				const symbol = document.getElementById(`symbol-${eventId}`)
 				el.style.left = `${left * widthDiff}px`
-				//el.style.top = `${top * heightDiff}px`
 				symbol.style.left = `${left * widthDiff}px`
-				//symbol.style.top = `${top * heightDiff}px`
-
+			
 				return {
 					left: left * widthDiff,
 					top: top * heightDiff,
@@ -281,7 +279,41 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				easing: 'spring(0.6, 100, 10, 0)'
 			})
 		}
-		return transitionTo(targets, endTargets)
+		await transitionTo(targets, endTargets)
+
+
+		nodesToArray(endTargets).forEach( el => {
+			const delay = randomInt(500, 5000)
+			const startTime = new Date(el.getAttribute('startTime'))
+			if(startTime > new Date(2022, 1, 8, 7)) return
+			
+			anime({
+				targets:el,
+				translateY: [
+					{ value: 0, duration: delay},
+					{ value: innerWidth < 768 ? -50 : -randomInt(75,100), duration: 350,  easing: 'easeInOutExpo'},
+					{ value: 0, duration: 700, easing: 'easeOutElastic(0.5,0.4)'},
+					{ value: 0, duration: delay},
+				],
+				scale: [
+					{ value: 1, duration: delay},
+					{ value: 1.3, duration: 250,  easing: 'easeInExpo'},
+					{ value: 0.97, duration: 200, easing: 'easeOutExpo'},
+					{ value: 1, duration: delay+500},
+				],
+				rotate: [
+					{ value: 0, duration: delay},
+					{ value: 0, duration: 350},
+					{ value: 3, duration: 200, easing: 'easeOutExpo'},
+					{ value: -2, duration: 200, easing: 'easeOutExpo'},
+					{ value: 1, duration: 100, easing: 'easeOutExpo'},
+					{ value: 0, duration: 100, easing: 'easeOutExpo'},
+					{ value: 0, duration: 100, easing: 'easeOutExpo'},
+					{ value: 0, duration: delay},
+				],
+				loop:true
+			})
+		})
 	};
 
 	const toFestival = async () => {
