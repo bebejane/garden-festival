@@ -43,6 +43,14 @@ article h1 {
   padding-bottom: 0.5em;
 }
 
+article h2 {
+  font-size: 18px;
+
+  @include mq($from: tablet) {
+    font-size: 22px;
+  }
+}
+
 h3 {
   font-size: 18px;
   text-transform: uppercase;
@@ -91,6 +99,10 @@ p {
     font-weight: normal;
     font-variation-settings: "wght" 660;
   }
+}
+
+article li p {
+  margin-bottom: 0.5em !important;
 }
 
 header p.summary,
