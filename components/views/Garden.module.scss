@@ -30,13 +30,33 @@
 			display: none;
 		}
 		h1 {
+			position: relative;
 			font-family: $mono-font;
-
-			@include mq($until: tablet) {
-				font-size: 14vw;
-			}
 			font-size: 10vw;
+			@include mq($until: desktop) {
+				font-size: 14vw;
+				.the{
+					font-size: 5.3vw !important;
+					transform: rotate(-90deg) translateX(33%) translateY(-0.5vw) !important;
+				}
+			}
+			&:first-child{
+				span{
+					margin-left: -10px;
+				}
+			}
+			.the{
+				display: inline-block;
+				font-family: $mono-font;
+				top:0px;
+				left:0px;
+				font-size: 3.8vw;
+				text-transform: uppercase;
+				transform: rotate(-90deg) translateX(33%) translateY(1vw);
+				line-height: 1;
+			}
 		}
+		
 	}
 	.scroller {
 		height: 100%;
@@ -118,3 +138,5 @@
 		transform: scale(1);
 	}
 }
+
+

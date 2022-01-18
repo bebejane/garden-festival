@@ -280,8 +280,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			})
 		}
 		await transitionTo(targets, endTargets)
-
-
+		return
 		nodesToArray(endTargets).forEach( el => {
 			const delay = randomInt(500, 5000)
 			const startTime = new Date(el.getAttribute('startTime'))
@@ -477,6 +476,14 @@ const GardenHeader = ({ view }) => {
 				<span key={idx} style={generateWeightStyle(ratio, 300, 700, true)}>{c}</span>
 		)
 	}
+	const generateLine = (head, first) => {
+		return (
+			head.tag === 'h1' ?
+				<h1>{first && <div style={generateWeightStyle(ratio)} className={styles.the}>The</div>}<span style={generateWeightStyle(ratio)}>{head.text}</span></h1>
+			:
+				<h2><span  style={generateWeightStyle(ratio, 300, 700, true)}>{head.text}</span></h2>
+		)
+	}
 	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight, reverse) => {
 		const weight = !reverse ? (max - min) * (ratio) + min : (max - min) * (Math.min(1, ratio + 0.3)) + min
 		return { fontVariationSettings: `'wght' ${weight}` }
@@ -492,12 +499,7 @@ const GardenHeader = ({ view }) => {
 
 	return (
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
-			{Object.keys(header).map((k, idx) =>
-				header[k].tag === 'h1' ?
-					<h1 key={idx}>{generateLetters(header[k])}</h1>
-					:
-					<h2 key={idx}>{generateLetters(header[k])}</h2>
-			)}
+			{Object.keys(header).map((k, idx) => generateLine(header[k], idx === 0))}
 		</div>
 	)
 }
