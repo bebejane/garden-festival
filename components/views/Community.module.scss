@@ -4,6 +4,7 @@
   align-items: center;
 
   h1 {
+    font-family: $mono-font;
     padding-bottom: $small-space/3;
 
     @include mq($from: tablet) {

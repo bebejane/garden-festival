@@ -30,6 +30,8 @@
 			display: none;
 		}
 		h1 {
+			font-family: $mono-font;
+
 			@include mq($until: tablet) {
 				font-size: 14vw;
 			}
