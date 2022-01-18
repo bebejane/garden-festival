@@ -12,12 +12,14 @@ import { useIntervalWhen } from "rooks";
 
 const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about/about-us'}]
 
-export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, showProgram = false }) {
+export default function Menu({ view, weekday}) {
+
   const { pathname } = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const inverted = view === 'about';
 
   return (
-    <div id="menu" className={cn(styles.container, view === 'about' && styles.invert)} >
+    <div id="menu" className={cn(styles.container, inverted && styles.invert)} >
       <div className={styles.wrapper}>
         <DropDown
           id="mobile-menu" 
@@ -25,9 +27,9 @@ export default function Menu({ view, onSelectDate, onSelectTimezone, weekday, sh
           options={menu} 
           setOpen={setMobileOpen} 
           open={mobileOpen} 
-          inverted={view === 'about'}
+          inverted={inverted}
         />
-        <TimeZoneDropdown mobileOpen={mobileOpen} inverted={view === 'about'}/>
+        <TimeZoneDropdown mobileOpen={mobileOpen} inverted={inverted}/>
         <nav className={styles.menu} >
           <ul>
             <Link href={'/community'}>
