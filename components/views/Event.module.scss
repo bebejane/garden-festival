@@ -30,7 +30,13 @@
       }
     }
   }
-
+  .calendar {
+    @include roundedElement();
+    position: absolute;
+    bottom:0px;
+    right:0px;
+    margin:$small-space;
+  }
   .info {
     display: flex;
     flex-direction: column;
