@@ -1,5 +1,6 @@
 .footer {
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
   color: #fff;
   position: fixed;
   bottom: 0;
@@ -14,7 +15,7 @@
   a {
     @include roundedElement();
     background-color: transparent;
-
+    margin-left: $small-space/2;
     &:hover {
       background-color: $black;
       color: white;

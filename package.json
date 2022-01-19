@@ -21,6 +21,7 @@
     "graphql-merge-unmerge": "^4.0.0",
     "graphql-request": "^3.6.1",
     "graphql-tag": "^2.12.6",
+    "ical-generator": "^3.2.0",
     "next": "^12.0.7",
     "next-compose-plugins": "^2.2.1",
     "next-plugin-graphql": "^0.0.2",

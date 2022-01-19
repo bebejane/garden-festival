@@ -6,7 +6,7 @@ import useScrollPosition from '@react-hook/window-scroll'
 import { useWindowSize } from "rooks";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { nodesToArray } from "lib/utils";
+import { nodesToArray, randomInt } from "lib/utils";
 
 export default function Garden({ event, events, participant, view, symbolSize }) {
 	const router = useRouter()
@@ -156,10 +156,8 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				const el = document.getElementById(`${id}`)
 				const symbol = document.getElementById(`symbol-${eventId}`)
 				el.style.left = `${left * widthDiff}px`
-				//el.style.top = `${top * heightDiff}px`
 				symbol.style.left = `${left * widthDiff}px`
-				//symbol.style.top = `${top * heightDiff}px`
-
+			
 				return {
 					left: left * widthDiff,
 					top: top * heightDiff,
@@ -281,7 +279,40 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				easing: 'spring(0.6, 100, 10, 0)'
 			})
 		}
-		return transitionTo(targets, endTargets)
+		await transitionTo(targets, endTargets)
+		nodesToArray(endTargets).forEach( el => {
+			const delay = randomInt(500, 5000)
+			const startTime = new Date(el.getAttribute('startTime'))
+			
+			if(startTime > new Date(2022, 1, 8, 7)) return
+			
+			anime({
+				targets:el,
+				translateY: [
+					{ value: 0, duration: delay},
+					{ value: innerWidth < 768 ? -50 : -randomInt(75,100), duration: 350,  easing: 'easeInOutExpo'},
+					{ value: 0, duration: 700, easing: 'easeOutElastic(0.5,0.4)'},
+					{ value: 0, duration: delay},
+				],
+				scale: [
+					{ value: 1, duration: delay},
+					{ value: 1.3, duration: 250,  easing: 'easeInExpo'},
+					{ value: 0.97, duration: 200, easing: 'easeOutExpo'},
+					{ value: 1, duration: delay+500},
+				],
+				rotate: [
+					{ value: 0, duration: delay},
+					{ value: 0, duration: 350},
+					{ value: 3, duration: 200, easing: 'easeOutExpo'},
+					{ value: -2, duration: 200, easing: 'easeOutExpo'},
+					{ value: 1, duration: 100, easing: 'easeOutExpo'},
+					{ value: 0, duration: 100, easing: 'easeOutExpo'},
+					{ value: 0, duration: 100, easing: 'easeOutExpo'},
+					{ value: 0, duration: delay},
+				],
+				loop:true
+			})
+		})
 	};
 
 	const toFestival = async () => {
@@ -445,6 +476,14 @@ const GardenHeader = ({ view }) => {
 				<span key={idx} style={generateWeightStyle(ratio, 300, 700, true)}>{c}</span>
 		)
 	}
+	const generateLine = (head, first) => {
+		return (
+			head.tag === 'h1' ?
+				<h1>{first && <div style={generateWeightStyle(ratio)} className={styles.the}>The</div>}<span style={generateWeightStyle(ratio)}>{head.text}</span></h1>
+			:
+				<h2><span  style={generateWeightStyle(ratio, 300, 700, true)}>{head.text}</span></h2>
+		)
+	}
 	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight, reverse) => {
 		const weight = !reverse ? (max - min) * (ratio) + min : (max - min) * (Math.min(1, ratio + 0.3)) + min
 		return { fontVariationSettings: `'wght' ${weight}` }
@@ -460,12 +499,7 @@ const GardenHeader = ({ view }) => {
 
 	return (
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
-			{Object.keys(header).map((k, idx) =>
-				header[k].tag === 'h1' ?
-					<h1 key={idx}>{generateLetters(header[k])}</h1>
-					:
-					<h2 key={idx}>{generateLetters(header[k])}</h2>
-			)}
+			{Object.keys(header).map((k, idx) => generateLine(header[k], idx === 0))}
 		</div>
 	)
 }

@@ -3,9 +3,10 @@ import cn from "classnames";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
 
-export default function Footer({ abouts, setAbout }) {
+export default function Footer({ view, abouts, setAbout }) {
 	return (
 		<footer className={styles.footer}>
+			{(view === 'festival' ||  view === 'weekday') && <a href="/api/calendar" title="Download festival calendar">Calendar</a>}
 			<a href="https://discord.gg/yQAscdHj" target="new">Discuss</a>
 		</footer>
 	);

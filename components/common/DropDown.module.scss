@@ -28,8 +28,6 @@
         text-transform: uppercase;
         cursor: pointer;
         &:hover{
-          background-color: $white;
-          color: $black;
           font-feature-settings: "ss01" 1;
           font-variation-settings: "wght" 800;
         
@@ -38,13 +36,18 @@
       }
       
     }
-    &:first-child{
-      a > li{
-        &:hover{
-          background-color: $white !important;
-        }
+    ul:first-child{
+      a:first-child{
+        li{
+          &:hover{
+            background-color: $white !important;
+            color: $black !important;
+          }
+        }        
       }
     }
+    
+    
   }
   ul, a, li {
     width: 100%;
@@ -54,16 +57,14 @@
     ul > a > li {
       color: $white !important;
       background-color: $black !important;
-      &:hover{
-        background-color: $black;
-        color: $white;
-      }
     }
     ul:first-child{
-      a > li{
-        &:hover{
-          background-color: $white ;
-          color: $black !important;
+      a {
+        li{
+          &:hover{
+            background-color: $white !important;
+            color: $black !important;
+          }
         }
       }
     }

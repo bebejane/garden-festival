@@ -6,7 +6,7 @@
 	min-height: 100vh;
 	padding: 0;
 	flex-direction: row;
-
+	
 	.header {
 		position: fixed;
 		display: flex;
@@ -30,13 +30,33 @@
 			display: none;
 		}
 		h1 {
+			position: relative;
 			font-family: $mono-font;
-
-			@include mq($until: tablet) {
-				font-size: 14vw;
-			}
 			font-size: 10vw;
+			@include mq($until: desktop) {
+				font-size: 14vw;
+				.the{
+					font-size: 5.3vw !important;
+					margin-right:0px !important;
+				}
+			}
+			&:first-child{
+				span{
+					margin-left: -10px;
+				}
+			}
+			.the{
+				display: inline-block;
+				font-family: $mono-font;
+				top:0px;
+				margin-right:-10px;
+				font-size: 3.8vw;
+				text-transform: uppercase;
+				transform: rotate(-90deg) translateX(33%);
+				line-height: 1;
+			}
 		}
+		
 	}
 	.scroller {
 		height: 100%;
@@ -118,3 +138,5 @@
 		transform: scale(1);
 	}
 }
+
+
