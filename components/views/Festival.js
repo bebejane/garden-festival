@@ -1,18 +1,19 @@
 import styles from "./Festival.module.scss"
 import contentStyles from "../Content.module.scss"
-import LinkButton from "../LinkButton";
 import cn from "classnames";
 import { useAppState, AppAction } from "/lib/context/appstate"
 import { format, isSameDay } from 'date-fns'
 import { formatToTimeZone } from 'date-fns-timezone'
 import Link from "next/link"
+import Markdown from "/components/common/Markdown";
+
 
 export default function Festival({ events, dayEvents, participants, date, timeZone, show, symbolSize }) {
   if (!show) return null
 
   const [appState, setAppState] = useAppState();
   const view = dayEvents ? 'weekday' : 'festival';
-  
+
   let currentDate;
 
   const schedule = [...(dayEvents || events)].map((ev, idx) => {
@@ -21,6 +22,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
+
     return (
       <>
         {eventDate &&
@@ -43,13 +45,15 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
               <p>
                 {ev.startTime &&
                   <span className="metaLight">
-                    {formatToTimeZone(ev.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title} • By {ev.participant.title}
+                    {formatToTimeZone(ev.startTime, 'ddd HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title} • By {ev.participant.title}
                   </span>
                 }
                 <h2>{ev.title}</h2>
                 <h2 className={cn(styles.sub, "sub")}>{ev.subTitle}</h2>
-                <br />
-                <p className="summary">{ev.summary}</p>
+                <p className="summary">
+                  <Markdown>
+                    {ev.summary}
+                  </Markdown></p>
               </p>
             </div>
           </a>

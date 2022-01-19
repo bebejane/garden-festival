@@ -20,10 +20,6 @@ $top-margin: 80px;
 		z-index: 2;
 	}
 
-	a {
-		color: red;
-	}
-
 	.content,
 	.contentPopup,
 	.contentPopupShadow {
@@ -44,7 +40,7 @@ $top-margin: 80px;
 	}
 	.contentPopup {
 		opacity: 0;
-		margin-bottom: $space;
+		margin-bottom: $small-space;
 		transition: transform 0.7s ease;
 		transform: translateY(100%);
 

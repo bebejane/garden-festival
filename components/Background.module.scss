@@ -15,6 +15,10 @@
       line-height: 1;
     }
   } 
+  img[id='background-festival'], img[id='background-event']{
+    object-fit: fill;
+
+  }
 }
 @keyframes pssycco {
   from{

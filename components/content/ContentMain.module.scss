@@ -29,6 +29,12 @@
 
 .black {
 	color: white;
-	background-color: black;
+	background-color: $black;
 	border-color: white;
+}
+
+.participant {
+	header {
+		padding-top: $small-space;
+	}
 }

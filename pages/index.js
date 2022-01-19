@@ -1,5 +1,6 @@
 import styles from '/styles/Home.module.scss'
 
+
 import Menu from "/components/Menu"
 import Garden from "/components/views/Garden"
 import Community from "/components/views/Community";
@@ -9,6 +10,7 @@ import Festival from "/components/views/Festival";
 import About from "/components/views/About";
 import Background from "/components/Background"
 import Content from "/components/Content";
+import Footer from "/components/Footer";
 
 import { useEffect, useLayoutEffect, useState, } from "react";
 import { useWindowSize } from "rooks";
@@ -46,7 +48,6 @@ const Home = (props) => {
 				show={view !== 'garden'}
 				view={view}
 				popup={['event', 'participant', 'about'].includes(view)}
-				abouts={abouts}
 			>
 				<Festival
 					show={view === 'festival' || view === 'weekday'}
@@ -58,7 +59,7 @@ const Home = (props) => {
 				<Community participants={participants} symbolSize={symbolSize} events={events} show={view === 'community'} />
 				<Participant participant={participant} symbolSize={symbolSize} events={events} show={view === 'participant'} />
 				<Event event={event} events={events} symbolSize={symbolSize} show={view === 'event'} />
-				<About abouts={abouts} show={view === 'about'}/>
+				<About about={about} abouts={abouts} show={view === 'about'}/>
 			</Content>
 			<Garden
 				participant={participant}
@@ -69,6 +70,7 @@ const Home = (props) => {
 				symbolSize={symbolSize}
 			/>
 			<Background view={view} />
+			<Footer view={view} />
 		</div>
 	)
 }

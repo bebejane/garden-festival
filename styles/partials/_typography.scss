@@ -15,24 +15,39 @@ h1 {
   font-size: 50px;
 
   @include mq($from: tablet) {
-    font-size: 5.5vw;
+    font-size: 4.2vw;
   }
 
   &.sub {
-    font-family: "Maxi Mono Regular" !important;
+    font-variation-settings: "wght" 300;
+    font-size: 4.2vw;
   }
 }
 
 h2,
 article h1 {
-  font-size: 20px;
+  font-size: 22px;
+  font-feature-settings: "ss02" 1;
 
   @include mq($from: tablet) {
-    font-size: 3vw;
+    font-size: 40px;
   }
 
   &.sub {
     font-variation-settings: "wght" 300;
+  }
+}
+
+article h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+article h2 {
+  font-size: 18px;
+
+  @include mq($from: tablet) {
+    font-size: 22px;
   }
 }
 
@@ -58,7 +73,7 @@ p {
   &.summary,
   &.summary p {
     font-variation-settings: "wght" 300;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1.25;
 
     @include mq($from: tablet) {
@@ -67,13 +82,33 @@ p {
   }
 
   a {
-    font-family: $mono-font;
+    font-family: $headline-font;
     color: $black !important;
+    &:hover {
+      border-bottom: 1px solid black;
+    }
   }
 
   em {
     font-family: $body-font-italic;
     font-weight: normal;
+  }
+
+  strong {
+    font-family: $headline-font;
+    font-weight: normal;
+    font-variation-settings: "wght" 660;
+  }
+}
+
+article li p {
+  margin-bottom: 0.5em !important;
+}
+
+header p.summary,
+header p.summary p {
+  @include mq($until: tablet) {
+    font-size: 21px;
   }
 }
 

@@ -8,6 +8,27 @@
   .by {
     margin-bottom: -60px;
     z-index: 10;
+
+    @include mq($until: tablet) {
+      max-width: 280px;
+    }
+
+    span {
+      overflow: hidden;
+      height: 1em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    &:hover {
+      background: $black;
+      color: $white;
+      a {
+        color: $white;
+        -webkit-font-smoothing: antialiased;
+      }
+    }
   }
 
   .info {
@@ -18,6 +39,20 @@
 
   &[hidden="true"] {
     visibility: hidden;
+  }
+
+  .register {
+    @include roundedElement();
+    margin: auto;
+    background-color: $black;
+    color: $white;
+    -webkit-font-smoothing: antialiased;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: white;
+      color: $black;
+    }
   }
 
   .related {

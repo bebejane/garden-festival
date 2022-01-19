@@ -22,6 +22,7 @@ const Symbol = (props) => {
 						height={symbolSize}
 						eventid={event.id}
 						participantid={event.participant?.id}
+						starttime={event.startTime}
 						className={cn(styles.symbol, styles.garden, contentStyles.placeholderSymbol)}
 					/>
 				</a>

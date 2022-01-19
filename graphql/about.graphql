@@ -4,6 +4,7 @@ query GetAbouts {
     id
     position
     title
+    menuTitle
     slug
     content{
     value

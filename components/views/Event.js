@@ -6,18 +6,25 @@ import { format } from "date-fns";
 import StructuredContent from "/components/blocks"
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
+import Markdown from "/components/common/Markdown";
+import { useAppState } from "/lib/context/appstate";
+import { formatToTimeZone } from "date-fns-timezone";
 
 export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
-
+  const [appState, setAppState] = useAppState();
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
-  
+
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
         <ContentHeader responsiveImage={event.image?.responsiveImage} color={event.participant.color}>
           <header>
-            <section className="meta"><span className="meta">{format(new Date(event.startTime), 'EEEE MMMM d ')}</span></section>
+            <section className="meta">
+              <span className="meta">
+                {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}
+              </span>
+            </section>
             <figure>
               <img
                 id={`event-symbol-${event?.id}`}
@@ -30,13 +37,22 @@ export default function Event({ event, events, show, symbolSize }) {
             <h1>{event.title}</h1>
             <h1 className={cn(styles.sub, "sub")}>{event.subTitle}</h1>
           </header>
-          <section className={styles.by}><span className="meta">By {event.participant.title}</span></section>
+          <section className={styles.by}>
+            <span className="meta">
+              By <Link href={`/${event.participant.slug}`}><a>{event.participant.title}</a></Link>
+            </span>
+          </section>
         </ContentHeader>
 
         <ContentMain>
           <section className={styles.contentBox}>
             <header>
-              <p className="summary">{event.summary}</p>
+              <p className="summary">
+                <Markdown>
+                  {event.summary}
+                </Markdown>
+              </p>
+              {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">Register here</a>}
             </header>
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>

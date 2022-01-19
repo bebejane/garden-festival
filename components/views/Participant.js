@@ -21,25 +21,9 @@ export default function Participant({ participant, events: evts, show, symbolSiz
         <h1>{participant.title}</h1>
         <h1 className="sub">{participant.subTitle}</h1>
       </ContentHeader>
-      <ContentMain color={participant.color}>
-        <header>
-          <p className="summary">
-            <Markdown>{participant.summary}</Markdown>
-          </p>
-        </header>
-        <StructuredContent content={participant.content} />
-        <article>
-          <p>
-            {participant.externalLinks.map((link) =>
-              <a href={link.url}>
-                {link.linkText}
-              </a>
-            )}
-          </p>
-        </article>
 
+      <ContentMain color={participant.color} type="participant">
         <div className={styles.events}>
-          <h2 className={styles.first}>Events</h2>
           {events.map((ev) =>
             <Link href={`${ev.participant.slug}/${ev.slug}`}>
               <a className={styles.event}>
@@ -59,17 +43,34 @@ export default function Participant({ participant, events: evts, show, symbolSiz
                         {format(new Date(ev.startTime), 'EEEE MMMM d')} • {ev.typeOfEvent?.title}
                       </span>
                     }
-                    <br />
                     <h2>{ev.title}</h2>
-                    <h2 className="sub">{ev.subTitle}</h2>
-                    <br />
-                    <p className="summary">{ev.summary}</p>
+                    {ev.subTitle && <h2 className="sub">{ev.subTitle}</h2>}
+                    <p>
+                      <Markdown>
+                        {ev.summary}
+                      </Markdown></p>
                   </p>
                 </div>
               </a>
             </Link>
           )}
         </div>
+        <header>
+          <p className="summary">
+            <Markdown>{participant.summary}</Markdown>
+          </p>
+        </header>
+        <StructuredContent content={participant.content} />
+        <article>
+          <p>
+            {participant.externalLinks.map((link) =>
+              <a href={link.url}>
+                {link.linkText}
+              </a>
+            )}
+          </p>
+        </article>
+
       </ContentMain>
 
 

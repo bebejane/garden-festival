@@ -14,6 +14,10 @@
     margin-top: $space;
   }
 
+  h1 {
+    font-family: $mono-font;
+  }
+
   .weekday {
     text-transform: uppercase;
     margin-bottom: $small-space;
@@ -33,7 +37,7 @@
     padding-left: $small-space;
     padding-right: $small-space;
     background-color: transparent;
-    transition: background-color 0.5s;
+    transition: background-color 0.3s;
     flex-direction: column;
     width: 100%;
 
@@ -53,14 +57,15 @@
     .symbol {
       display: flex;
       align-items: flex-start;
+      padding-right: $small-space;
 
       img {
         width: 150px;
         height: 150px;
 
         @include mq($from: tablet) {
-          width: 300px;
-          height: 300px;
+          width: $symbol-big;
+          height: $symbol-big;
         }
       }
     }
@@ -68,8 +73,15 @@
     .info {
       width: 100%;
       span {
-        padding-bottom: 1.5em;
         display: block;
+      }
+
+      h2:first-of-type {
+        padding-top: 0.5em;
+      }
+
+      h2:last-of-type {
+        padding-bottom: 0.3em;
       }
 
       p {

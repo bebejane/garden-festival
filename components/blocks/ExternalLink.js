@@ -4,7 +4,7 @@ import cn from "classnames";
 
 export default function ExternmalLink({ linkText, url }) {
 	return (
-		<a href={url} className={cn(styles.externalLink, "textWidth")}>
+		<a href={url} className={cn(styles.externalLink, "externalLink")}>
 			{linkText}
 		</a>
 	);

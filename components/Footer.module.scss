@@ -1,9 +1,24 @@
 .footer {
-  display: none;
-  flex-direction: column;
-
-  width: 100%;
-  background-color: #000;
+  display: flex;
+  flex-direction: row;
   color: #fff;
-  padding: 40px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  padding: $small-space;
+
+  @include mq($from: tablet) {
+    padding: $small-space * 2;
+  }
+
+  a {
+    @include roundedElement();
+    background-color: transparent;
+    margin-left: $small-space/2;
+    &:hover {
+      background-color: $black;
+      color: white;
+    }
+  }
 }
