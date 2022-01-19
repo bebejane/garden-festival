@@ -280,10 +280,10 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			})
 		}
 		await transitionTo(targets, endTargets)
-		//return
 		nodesToArray(endTargets).forEach( el => {
 			const delay = randomInt(500, 5000)
 			const startTime = new Date(el.getAttribute('startTime'))
+			
 			if(startTime > new Date(2022, 1, 8, 7)) return
 			
 			anime({
