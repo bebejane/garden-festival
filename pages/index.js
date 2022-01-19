@@ -1,6 +1,5 @@
 import styles from '/styles/Home.module.scss'
 
-
 import Menu from "/components/Menu"
 import Garden from "/components/views/Garden"
 import Community from "/components/views/Community";
@@ -12,7 +11,7 @@ import Background from "/components/Background"
 import Content from "/components/Content";
 import Footer from "/components/Footer";
 
-import { useEffect, useLayoutEffect, useState, } from "react";
+import { useEffect, useState, } from "react";
 import { useWindowSize } from "rooks";
 import { withGlobalProps } from "/lib/utils";
 

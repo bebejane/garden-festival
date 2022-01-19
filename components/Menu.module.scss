@@ -128,11 +128,12 @@
   top: 166px;
   padding: 0px;
   margin-top: $small-space !important;
-  ul > a > li {
-    background-color: #fff !important;
-  }
+  
   &.mobileOpen {
     display: flex !important;
+    ul > a > li {
+      background-color: $white;
+    }
   }
   @include mq($from: desktop) {
     display: flex !important;
@@ -140,8 +141,6 @@
     top: 0px;
     margin: 0px !important;
     width: 180px !important;
-    ul > a > li {
-      background-color: transparent !important;
-    }
+    
   }
 }

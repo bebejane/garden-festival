@@ -35,6 +35,7 @@
     "react-responsive-carousel": "^3.2.22",
     "remark-gfm": "^3.0.1",
     "rooks": "^5.8.0",
+    "sanitize-filename": "^1.6.3",
     "sass": "^1.43.5"
   },
   "devDependencies": {
