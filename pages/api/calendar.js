@@ -14,7 +14,7 @@ export default async function celendar(req, res) {
       summary: event.title,
       description: event.summary,
       location: 'Online',
-      url: `https://communitygardenfestival.comm/${event.participant.slug}/${event.slug}`
+      url: `https://communitygardenfestival.com/${event.participant.slug}/${event.slug}`
     });
   })
 
