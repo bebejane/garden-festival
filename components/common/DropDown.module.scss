@@ -6,7 +6,7 @@
   align-items: center;
   width: 100%;
   padding: 0px;
-  margin-top:0px;
+  margin-top: 0px;
   color: $white;
   z-index: 1000;
   ul {
@@ -19,7 +19,7 @@
     a {
       user-select: none;
       flex: 1 1 auto;
-      li { 
+      li {
         @include roundedElement();
         background-color: transparent;
         position: relative;
@@ -27,51 +27,47 @@
         pointer-events: all;
         text-transform: uppercase;
         cursor: pointer;
-        &:hover{
-          font-feature-settings: "ss01" 1;
-          font-variation-settings: "wght" 800;
-        
+        &:hover {
+          background-color: white;
         }
-        
       }
-      
     }
-    ul:first-child{
-      a:first-child{
-        li{
-          &:hover{
+    ul:first-child {
+      a:first-child {
+        li {
+          &:hover {
             background-color: $white !important;
             color: $black !important;
           }
-        }        
+        }
       }
     }
-    
-    
   }
-  ul, a, li {
+  ul,
+  a,
+  li {
     width: 100%;
   }
-  
+
   &.inverted {
     ul > a > li {
       color: $white !important;
       background-color: $black !important;
     }
-    ul:first-child{
+    ul:first-child {
       a {
-        li{
-          &:hover{
+        li {
+          &:hover {
             background-color: $white !important;
             color: $black !important;
           }
         }
       }
     }
-    ul, li{
+    ul,
+    li {
       border-color: $white !important;
     }
-    
   }
   &.open {
     max-height: 1000px;
@@ -101,7 +97,7 @@
       line-height: 1.3em;
 
       li {
-        border-radius: 0px;  
+        border-radius: 0px;
         border: 0px;
       }
 
