@@ -76,11 +76,16 @@ $top-margin: 80px;
 		padding: 0;
 		padding-top: 0.1em;
 		z-index: 10000;
-		margin: $small-space;
-		margin-top: 23px;
 		cursor: pointer;
 		font-variation-settings: "wght" 800;
 		font-family: $mono-font;
+		margin: calc(#{$small-space} / 2 + 3px);
+		margin-top: 13px;
+
+		@include mq($from: tablet) {
+			margin: $small-space;
+			margin-top: 23px;
+		}
 
 		&.invert {
 			background: $black !important;

@@ -27,7 +27,11 @@
 
 	section {
 		@include roundedElement();
-		margin-top: $small-space;
+		margin-top: $small-space / 2;
+
+		@include mq($from: tablet) {
+			margin-top: $small-space;
+		}
 	}
 
 	h1 {

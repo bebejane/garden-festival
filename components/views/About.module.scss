@@ -76,9 +76,9 @@
 }
 
 .aboutMobileDropDown {
-  margin-top: $small-space;
+  margin-top: $small-space / 2;
   max-width: 220px;
   @include mq($from: desktop) {
     display: none;
-  } 
+  }
 }
