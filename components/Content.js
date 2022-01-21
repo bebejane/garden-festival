@@ -33,7 +33,7 @@ export default function Content({ view, show, children, popup = false, abouts })
 	})
 
 	useIsomorphicLayoutEffect(() => {
-		setTimeout(() => setSlideUp(popup), 100)
+		setTimeout(()=>setSlideUp(popup), 500)
 		return () => { }
 	}, [popup])
 

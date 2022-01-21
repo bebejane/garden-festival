@@ -177,7 +177,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
 			return target;
 		}
-		const defaultDuration = 800;
+		const defaultDuration = 1200;
 		const defaultDelay = 0;
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
 
@@ -482,7 +482,7 @@ const GardenHeader = ({ view }) => {
 			head.tag === 'h1' ?
 				<h1>{first && <div style={generateWeightStyle(ratio)} className={styles.the}>The</div>}<span style={generateWeightStyle(ratio)}>{head.text}</span></h1>
 				:
-				<h2><span style={generateWeightStyle(ratio, 300, 700, true)}>{head.text}</span></h2>
+				<h2><span>{head.text}</span></h2>
 		)
 	}
 	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight, reverse) => {
