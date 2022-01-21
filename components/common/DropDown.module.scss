@@ -51,9 +51,16 @@
 
   &.inverted {
     ul > a > li {
-      color: $white !important;
+      color: $white;
       //background-color: $black !important;
     }
+
+    ul:first-of-type {
+      li {
+        color: $white !important;
+      }
+    }
+
     ul:first-child {
       a {
         li {
@@ -74,6 +81,9 @@
     padding: 0px !important;
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
+    a li {
+      color: black !important;
+    }
   }
   .items {
     @include roundedElement();
@@ -99,7 +109,10 @@
       padding-bottom: 15px;
 
       &:first-of-type {
-        padding-top: 15px;
+        padding-top: 20px;
+      }
+      &:last-of-type {
+        padding-bottom: 20px;
       }
 
       li {
