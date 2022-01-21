@@ -18,10 +18,7 @@ const nextOptions = {
   experimental: {
     scrollRestoration: true
   },
-  onDemandEntries: { 
-    maxInactiveAge: 60 * 1000,
-    pagesBufferLength: 10000
-  }
+  onDemandEntries: { maxInactiveAge: 60 * 1000, pagesBufferLength: 10000}
 }
 
 const config = withPlugins([graphql], { sassOptions, ...nextOptions })
