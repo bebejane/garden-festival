@@ -5,12 +5,6 @@ import { eachDayOfInterval, format, isBefore, isAfter } from "date-fns";
 import Home from "./index";
 export default Home;
 
-const getDayEvents = (weekday) => {
-
-	
-}
-
-
 export const getStaticProps = withGlobalProps(async ({ props, context, revalidate }) => {
 	const { events } = props;
 	const { params: { weekday }} = context;
