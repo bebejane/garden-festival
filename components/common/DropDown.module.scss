@@ -28,7 +28,7 @@
         text-transform: uppercase;
         cursor: pointer;
         &:hover {
-          background-color: white;
+          background-color: $white;
         }
       }
     }
@@ -52,7 +52,7 @@
   &.inverted {
     ul > a > li {
       color: $white !important;
-      background-color: $black !important;
+      //background-color: $black !important;
     }
     ul:first-child {
       a {
@@ -93,12 +93,19 @@
     }
 
     a {
+      //background-color: $black;
       margin: 0px;
       line-height: 1.3em;
+      padding-bottom: 15px;
+
+      &:first-of-type {
+        padding-top: 15px;
+      }
 
       li {
         border-radius: 0px;
         border: 0px;
+        height: auto;
       }
 
       &:hover {
@@ -109,7 +116,7 @@
 
   .arrow {
     position: absolute;
-    top: 10px;
+    top: 9px;
     right: 15px;
     font-size: 16px;
     line-height: 1;

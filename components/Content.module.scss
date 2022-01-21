@@ -88,6 +88,12 @@ $top-margin: 80px;
 		&.invert {
 			background: $black !important;
 			border-color: white;
+			color: white;
+
+			&:hover {
+				color: $black;
+				background-color: white !important;
+			}
 		}
 
 		&:hover {
