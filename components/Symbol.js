@@ -32,7 +32,7 @@ const Symbol = (props) => {
 		const delay = randomInt(1000, 6000)
 		const startTime = new Date(event.startTime)
 
-		if (startTime > new Date(2022, 1, 8, 7)) return
+		if (event.inactive) return
 
 		const animation = anime({
 			targets: target,
