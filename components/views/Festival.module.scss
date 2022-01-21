@@ -103,7 +103,11 @@
 
       .launch {
         padding-top: 1em;
+        text-transform: uppercase;
       }
+    }
+    &.blocked{
+      pointer-events: none;
     }
   }
 }
