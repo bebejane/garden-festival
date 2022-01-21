@@ -17,17 +17,17 @@ import { withGlobalProps } from "/lib/utils";
 
 const Home = (props) => {
 	const {
-		events,
 		participants,
 		participant,
 		event,
+		events,
 		dayEvents,
 		weekday,
 		abouts,
 		about,
-		view = 'garden',	
+		view = 'garden'	
 	} = props;
-
+	
 	const [symbolSize, setSymbolSize] = useState(0);
 	const { innerWidth, innerHeight } = useWindowSize();
 

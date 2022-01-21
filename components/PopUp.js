@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppState } from "/lib/context/appstate";
 import { formatToTimeZone } from "date-fns-timezone";
+import { truncateString } from "/lib/utils";
 
 const PopUp = ({ event, symbolSize, show }) => {
 
@@ -44,7 +45,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 		<div id={`garden-popup-${event.id}`} className={styles.popup}>
 			<span className="metaLight">{format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}</span>
 			<h3>{event.title}</h3>
-			<p className="small">{event.summary}</p>
+			<p className="small">{truncateString(event.summary, 100)}</p>
 		</div>
 	)
 }

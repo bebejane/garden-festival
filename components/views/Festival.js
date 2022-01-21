@@ -7,11 +7,10 @@ import { formatToTimeZone } from 'date-fns-timezone'
 import Link from "next/link"
 import Markdown from "/components/common/Markdown";
 
-
 export default function Festival({ events, dayEvents, participants, date, timeZone, show, symbolSize }) {
   if (!show) return null
 
-  const [appState, setAppState] = useAppState();
+  const [appState] = useAppState();
   const view = dayEvents ? 'weekday' : 'festival';
 
   let currentDate;
@@ -23,7 +22,44 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
       eventDate = currentDate;
     }
     const durationUntil = intervalToDuration({start: new Date(), end: new Date(ev.startTime)})
-    const isLaunched = durationUntil.hours <= 0 && durationUntil.days <= 0;
+    
+    const eventContent = (
+      <a className={cn(styles.event, !ev.register && ev.launched && styles.launched)}>
+        <div className={styles.symbol}>
+          <img
+            id={`${view}-symbol-${ev.id}`}
+            eventid={ev.id}
+            participantid={ev.participant.id}
+            src={`${ev.symbol.url}?w=${symbolSize * 2}`}
+            className={contentStyles.placeholderSymbol}
+          />
+        </div>
+        <div className={styles.info}>
+          <p>
+            {ev.startTime &&
+              <span className="metaLight">
+                {formatToTimeZone(ev.startTime, 'ddd HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title} • By {ev.participant.title}
+              </span>
+            }
+            <h2>{ev.title}</h2>
+            <h2 className={cn(styles.sub, "sub")}>{ev.subTitle}</h2>
+            <p className="summary">
+              <Markdown>
+                {ev.summary}
+              </Markdown></p>
+          </p>
+          {!ev.launched &&
+            <span className={cn(styles.launch, "meta")}>
+              {ev.register ? 
+                <span>PRE REGISTER TO PARTICIPATE IN THIS EVENT</span>
+              :
+                <span>UPCOMING - THIS EVENT WILL BE LAUNCHED IN {formatDuration({days:durationUntil.days})} AND {formatDuration({hours:durationUntil.hours})}</span>
+              }
+            </span>
+          }
+        </div>
+      </a>
+    )
 
     return (
       <>
@@ -32,43 +68,15 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
             {format(eventDate, 'EEEE')}<br />{format(eventDate, 'MMMM d')}
           </h1>
         }
-        <Link key={`elink-${idx}`} href={`/${ev.participant.slug}/${ev.slug}`}>
-          <a className={cn(styles.event, !ev.register && !isLaunched && styles.blocked)}>
-            <div className={styles.symbol}>
-              <img
-                id={`${view}-symbol-${ev.id}`}
-                eventid={ev.id}
-                participantid={ev.participant.id}
-                src={`${ev.symbol.url}?w=${symbolSize * 2}`}
-                className={contentStyles.placeholderSymbol}
-              />
-            </div>
-            <div className={styles.info}>
-              <p>
-                {ev.startTime &&
-                  <span className="metaLight">
-                    {formatToTimeZone(ev.startTime, 'ddd HH:mm', { timeZone: appState.zone.timeZone })} • {ev.typeOfEvent?.title} • By {ev.participant.title}
-                  </span>
-                }
-                <h2>{ev.title}</h2>
-                <h2 className={cn(styles.sub, "sub")}>{ev.subTitle}</h2>
-                <p className="summary">
-                  <Markdown>
-                    {ev.summary}
-                  </Markdown></p>
-              </p>
-              {!isLaunched &&
-                <span className={cn(styles.launch, "meta")}>
-                  {ev.register ? 
-                    <span>PRE REGISTER TO PARTICIPATE IN THIS EVENT</span>
-                  :
-                    <span>UPCOMING - THIS EVENT WILL BE LAUNCHED IN {formatDuration({days:durationUntil.days})} AND {formatDuration({hours:durationUntil.hours})}</span>
-                  }
-                </span>
-              }
-            </div>
-          </a>
-        </Link>
+        {ev.register || ev.launched ?
+          <Link key={`elink-${idx}`} href={`/${ev.participant.slug}/${ev.slug}`}>
+            {eventContent}
+          </Link>
+        :
+          <>
+            {eventContent}
+          </>
+        }
       </>
     )
   })
