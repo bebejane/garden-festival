@@ -24,7 +24,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
     const durationUntil = intervalToDuration({start: new Date(), end: new Date(ev.startTime)})
     
     const eventContent = (
-      <a className={cn(styles.event, !ev.register && ev.launched && styles.launched)}>
+      <a className={cn(styles.event, ev.launched && styles.launched)}>
         <div className={styles.symbol}>
           <img
             id={`${view}-symbol-${ev.id}`}
