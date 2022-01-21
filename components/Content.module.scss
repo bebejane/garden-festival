@@ -80,9 +80,14 @@ $top-margin: 80px;
 		font-variation-settings: "wght" 800;
 		font-family: $mono-font;
 
+		&.invert {
+			background: $black !important;
+			border-color: white;
+		}
+
 		&:hover {
 			background-color: $black;
-			color: white;
+			border-color: white;
 		}
 	}
 

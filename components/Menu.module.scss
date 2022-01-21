@@ -106,6 +106,12 @@
   }
 }
 
+.festivalMenu {
+  @include mq($until: nav-break) {
+    display: none !important;
+  }
+}
+
 .mobileMenuDropDown {
   width: 100%;
   @include mq($from: desktop) {
@@ -128,7 +134,7 @@
   top: 166px;
   padding: 0px;
   margin-top: $small-space !important;
-  
+
   &.mobileOpen {
     display: flex !important;
     ul > a > li {
@@ -141,6 +147,5 @@
     top: 0px;
     margin: 0px !important;
     width: 180px !important;
-    
   }
 }

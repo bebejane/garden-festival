@@ -48,7 +48,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 		<div id={`garden-popup-${event.id}`} className={styles.popup}>
 			<span className="metaLight">{format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}</span>
 			<h3>{event.title}</h3>
-			<p className="small">{event.summary.split(".")[0]}</p>
+			<p className="small">{event.summary}</p>
 		</div>
 	)
 }
