@@ -1,8 +1,8 @@
 import styles from "./Festival.module.scss"
 import contentStyles from "../Content.module.scss"
 import cn from "classnames";
-import { useAppState, AppAction } from "/lib/context/appstate"
-import { format, isSameDay } from 'date-fns'
+import { useAppState } from "/lib/context/appstate"
+import { format, isSameDay, intervalToDuration, formatDuration } from 'date-fns'
 import { formatToTimeZone } from 'date-fns-timezone'
 import Link from "next/link"
 import Markdown from "/components/common/Markdown";
@@ -22,6 +22,8 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
+    const durationUntil = intervalToDuration({start: new Date(), end: new Date(ev.startTime)})
+    const isLaunched = durationUntil.hours <= 0 && durationUntil.days <= 0;
 
     return (
       <>
@@ -31,7 +33,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
           </h1>
         }
         <Link key={`elink-${idx}`} href={`/${ev.participant.slug}/${ev.slug}`}>
-          <a className={styles.event}>
+          <a className={cn(styles.event, !ev.register && !isLaunched && styles.blocked)}>
             <div className={styles.symbol}>
               <img
                 id={`${view}-symbol-${ev.id}`}
@@ -55,9 +57,15 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                     {ev.summary}
                   </Markdown></p>
               </p>
-              <span className={cn(styles.launch, "meta")}>
-                UPCOMING – THIS EVENT WILL BE LAUNCHED IN 4 DAYS AND 4 HOURS
-              </span>
+              {!isLaunched &&
+                <span className={cn(styles.launch, "meta")}>
+                  {ev.register ? 
+                    <span>PRE REGISTER TO PARTICIPATE IN THIS EVENT</span>
+                  :
+                    <span>UPCOMING - THIS EVENT WILL BE LAUNCHED IN {formatDuration({days:durationUntil.days})} AND {formatDuration({hours:durationUntil.hours})}</span>
+                  }
+                </span>
+              }
             </div>
           </a>
         </Link>
