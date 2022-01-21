@@ -10,6 +10,7 @@
     @include mq($from: tablet) {
       padding-top: $space;
       padding-bottom: $space;
+      font-size: 6vw;
     }
   }
 

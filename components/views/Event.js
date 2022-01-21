@@ -20,7 +20,7 @@ export default function Event({ event, events, show, symbolSize }) {
       <div className={styles.info}>
         <ContentHeader responsiveImage={event.image?.responsiveImage} color={event.participant.color}>
           <header>
-            
+
             <section className="meta">
               <span className="meta">
                 {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}
@@ -54,8 +54,8 @@ export default function Event({ event, events, show, symbolSize }) {
                   {event.summary}
                 </Markdown>
               </p>
-              {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">Register here</a>}
-              
+              {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">Register to participate <span>→</span></a>}
+
             </header>
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>

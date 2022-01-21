@@ -33,9 +33,9 @@
   .calendar {
     @include roundedElement();
     position: absolute;
-    bottom:0px;
-    right:0px;
-    margin:$small-space;
+    bottom: 0px;
+    right: 0px;
+    margin: $small-space;
   }
   .info {
     display: flex;
@@ -49,15 +49,24 @@
 
   .register {
     @include roundedElement();
-    height: $small-space * 4;
+    height: $small-space * 3;
     border-radius: $small-space * 2;
+    flex-direction: row;
     margin: auto;
     -webkit-font-smoothing: antialiased;
     text-transform: uppercase;
+    padding-left: 2em;
+    padding-right: 2em;
+    margin-bottom: 2 * $small-space;
 
     &:hover {
-      background-color: white;
-      color: $black;
+      background-color: $black;
+      color: white;
+    }
+
+    span {
+      padding-left: 0.24em;
+      padding-bottom: 3px;
     }
   }
 

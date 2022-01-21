@@ -16,6 +16,9 @@
 
   h1 {
     font-family: $mono-font;
+    @include mq($from: tablet) {
+      font-size: 6vw;
+    }
   }
 
   .weekday {
