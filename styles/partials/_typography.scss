@@ -55,6 +55,7 @@ h3 {
   font-size: 18px;
   text-transform: uppercase;
   font-family: $headline-font;
+  font-weight: normal;
 }
 
 p {
@@ -67,7 +68,7 @@ p {
   }
 
   &.small {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   &.summary,

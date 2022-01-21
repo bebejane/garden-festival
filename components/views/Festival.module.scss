@@ -11,6 +11,9 @@
   @include mq($from: tablet) {
     padding-left: 10%;
     padding-right: 10%;
+  }
+
+  @include mq($from: nav-break) {
     margin-top: $space;
   }
 
