@@ -282,6 +282,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		await transitionTo(targets, endTargets)
 		nodesToArray(endTargets).forEach(el => {
 			const delay = randomInt(500, 5000)
+			const endDelay = 10000;
 			const startTime = new Date(el.getAttribute('startTime'))
 
 			if (startTime > new Date(2022, 1, 8, 7)) return
@@ -292,13 +293,13 @@ export default function Garden({ event, events, participant, view, symbolSize })
 					{ value: 0, duration: delay },
 					{ value: innerWidth < 768 ? -50 : -randomInt(75, 100), duration: 350, easing: 'easeInOutExpo' },
 					{ value: 0, duration: 700, easing: 'easeOutElastic(0.5,0.4)' },
-					{ value: 0, duration: delay },
+					{ value: 0, duration: delay + endDelay },
 				],
 				scale: [
 					{ value: 1, duration: delay },
 					{ value: 1.3, duration: 250, easing: 'easeInExpo' },
 					{ value: 0.97, duration: 200, easing: 'easeOutExpo' },
-					{ value: 1, duration: delay + 500 },
+					{ value: 1, duration: delay + 500 + endDelay },
 				],
 				rotate: [
 					{ value: 0, duration: delay },
@@ -308,7 +309,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 					{ value: 1, duration: 100, easing: 'easeOutExpo' },
 					{ value: 0, duration: 100, easing: 'easeOutExpo' },
 					{ value: 0, duration: 100, easing: 'easeOutExpo' },
-					{ value: 0, duration: delay },
+					{ value: 0, duration: delay + endDelay }
 				],
 				loop: true
 			})

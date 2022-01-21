@@ -20,6 +20,7 @@ export default function Event({ event, events, show, symbolSize }) {
       <div className={styles.info}>
         <ContentHeader responsiveImage={event.image?.responsiveImage} color={event.participant.color}>
           <header>
+            
             <section className="meta">
               <span className="meta">
                 {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}
@@ -42,6 +43,7 @@ export default function Event({ event, events, show, symbolSize }) {
               By <Link href={`/${event.participant.slug}`}><a>{event.participant.title}</a></Link>
             </span>
           </section>
+          <a title="Add to your calendar" className={styles.calendar} href={`/api/calendar/${event.slug}`}>+ Calendar</a>
         </ContentHeader>
 
         <ContentMain>
@@ -53,6 +55,7 @@ export default function Event({ event, events, show, symbolSize }) {
                 </Markdown>
               </p>
               {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">Register here</a>}
+              
             </header>
             {process.env.NEXT_PUBLIC_EDITOR_MODE &&
               <>

@@ -10,15 +10,15 @@ export default async function celendar(req, res) {
   events.forEach( event => {
     cal.createEvent({
       start: new Date(event.startTime),
-      end: new Date(event.endTime),
+      end: event.endTime ? new Date(event.endTime): undefined,
       summary: event.title,
       description: event.summary,
       location: 'Online',
-      url: `https://communitygardenfestival.com/${event.participant.slug}/${event.slug}`
+      url: `https://www.thecommunity.garden/${event.participant.slug}/${event.slug}`
     });
   })
 
   res.setHeader('Content-Type', 'text/calendar')
-  res.setHeader('Content-Disposition', `attachment; filename="GardenFestivalFeb-7th-12th.ics"`)
+  res.setHeader('Content-Disposition', `attachment; filename="Community Garden Festival - Calendar.ics"`)
   res.send(cal.toString())
 }
