@@ -82,7 +82,7 @@ const Symbol = (props) => {
 						eventid={event.id}
 						participantid={event.participant?.id}
 						starttime={event.startTime}
-						className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol)}
+						className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol, event.inactive && styles.inactive)}
 					/>
 				</a>
 			</Link>
@@ -96,7 +96,7 @@ const Symbol = (props) => {
 				width={symbolSize}
 				height={symbolSize}
 				participantid={event.participant?.id}
-				className={cn(styles.symbol)}
+				className={cn(styles.symbol, event.inactive && styles.inactive)}
 			/>
 		</>
 	);

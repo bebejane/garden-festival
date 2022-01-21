@@ -14,5 +14,8 @@
 			visibility: hidden;
 		}
 	}
+	&.inactive{
+		filter:grayscale(1);
+	}
 	
 }
