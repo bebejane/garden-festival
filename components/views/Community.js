@@ -3,6 +3,8 @@ import contentStyles from "../Content.module.scss"
 import cn from "classnames";
 import Link from "next/link"
 import LinkButton from "../LinkButton";
+import Markdown from "/components/common/Markdown";
+
 
 export default function Community({ participants, events, show, symbolSize }) {
   if (!show) return null
@@ -31,7 +33,9 @@ export default function Community({ participants, events, show, symbolSize }) {
                 <div className={styles.participantInfo}>
                   <h2>{p.title}</h2>
                   {p.subTitle && <h2 className="sub">{p.subTitle}</h2>}
-                  <p>{p.summary}</p>
+                  <Markdown>
+                    {p.summary}
+                  </Markdown>
                 </div>
               </a>
             </Link>
@@ -39,6 +43,6 @@ export default function Community({ participants, events, show, symbolSize }) {
         }
         )}
       </div>
-    </div>
+    </div >
   );
 }
