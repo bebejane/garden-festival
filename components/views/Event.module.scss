@@ -43,9 +43,9 @@
 
   .register {
     @include roundedElement();
+    height: $small-space * 4;
+    border-radius: $small-space * 2;
     margin: auto;
-    background-color: $black;
-    color: $white;
     -webkit-font-smoothing: antialiased;
     text-transform: uppercase;
 

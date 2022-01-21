@@ -157,7 +157,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				const symbol = document.getElementById(`symbol-${eventId}`)
 				el.style.left = `${left * widthDiff}px`
 				symbol.style.left = `${left * widthDiff}px`
-			
+
 				return {
 					left: left * widthDiff,
 					top: top * heightDiff,
@@ -280,37 +280,37 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			})
 		}
 		await transitionTo(targets, endTargets)
-		nodesToArray(endTargets).forEach( el => {
+		nodesToArray(endTargets).forEach(el => {
 			const delay = randomInt(500, 5000)
 			const startTime = new Date(el.getAttribute('startTime'))
-			
-			if(startTime > new Date(2022, 1, 8, 7)) return
-			
+
+			if (startTime > new Date(2022, 1, 8, 7)) return
+
 			anime({
-				targets:el,
+				targets: el,
 				translateY: [
-					{ value: 0, duration: delay},
-					{ value: innerWidth < 768 ? -50 : -randomInt(75,100), duration: 350,  easing: 'easeInOutExpo'},
-					{ value: 0, duration: 700, easing: 'easeOutElastic(0.5,0.4)'},
-					{ value: 0, duration: delay},
+					{ value: 0, duration: delay },
+					{ value: innerWidth < 768 ? -50 : -randomInt(75, 100), duration: 350, easing: 'easeInOutExpo' },
+					{ value: 0, duration: 700, easing: 'easeOutElastic(0.5,0.4)' },
+					{ value: 0, duration: delay },
 				],
 				scale: [
-					{ value: 1, duration: delay},
-					{ value: 1.3, duration: 250,  easing: 'easeInExpo'},
-					{ value: 0.97, duration: 200, easing: 'easeOutExpo'},
-					{ value: 1, duration: delay+500},
+					{ value: 1, duration: delay },
+					{ value: 1.3, duration: 250, easing: 'easeInExpo' },
+					{ value: 0.97, duration: 200, easing: 'easeOutExpo' },
+					{ value: 1, duration: delay + 500 },
 				],
 				rotate: [
-					{ value: 0, duration: delay},
-					{ value: 0, duration: 350},
-					{ value: 3, duration: 200, easing: 'easeOutExpo'},
-					{ value: -2, duration: 200, easing: 'easeOutExpo'},
-					{ value: 1, duration: 100, easing: 'easeOutExpo'},
-					{ value: 0, duration: 100, easing: 'easeOutExpo'},
-					{ value: 0, duration: 100, easing: 'easeOutExpo'},
-					{ value: 0, duration: delay},
+					{ value: 0, duration: delay },
+					{ value: 0, duration: 350 },
+					{ value: 3, duration: 200, easing: 'easeOutExpo' },
+					{ value: -2, duration: 200, easing: 'easeOutExpo' },
+					{ value: 1, duration: 100, easing: 'easeOutExpo' },
+					{ value: 0, duration: 100, easing: 'easeOutExpo' },
+					{ value: 0, duration: 100, easing: 'easeOutExpo' },
+					{ value: 0, duration: delay },
 				],
-				loop:true
+				loop: true
 			})
 		})
 	};
@@ -452,7 +452,7 @@ const GardenHeader = ({ view }) => {
 		},
 		date: {
 			tag: 'h2',
-			text: '7 - 11 Feb 2020',
+			text: 'FEBRUARY 7–11 • 2022',
 		},
 		garden: {
 			tag: 'h1',
@@ -480,8 +480,8 @@ const GardenHeader = ({ view }) => {
 		return (
 			head.tag === 'h1' ?
 				<h1>{first && <div style={generateWeightStyle(ratio)} className={styles.the}>The</div>}<span style={generateWeightStyle(ratio)}>{head.text}</span></h1>
-			:
-				<h2><span  style={generateWeightStyle(ratio, 300, 700, true)}>{head.text}</span></h2>
+				:
+				<h2><span style={generateWeightStyle(ratio, 300, 700, true)}>{head.text}</span></h2>
 		)
 	}
 	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight, reverse) => {
@@ -494,7 +494,7 @@ const GardenHeader = ({ view }) => {
 		const { clientHeight } = document.body;
 		const totalHeight = (scrollHeight - clientHeight)
 		const ratio = (scrollY / totalHeight)
-		setRatio(ratio <= 0.5 ? (1.0 - (ratio*2)) : -1.0+(ratio*2))
+		setRatio(ratio <= 0.5 ? (1.0 - (ratio * 2)) : -1.0 + (ratio * 2))
 	}, [scrollY])
 
 	return (
