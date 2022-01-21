@@ -3,7 +3,7 @@
 TODO
 /docs
 .next
-package-lock.json
+# package-lock.json
 Garden Festival.code-workspace
 
 # dependencies
