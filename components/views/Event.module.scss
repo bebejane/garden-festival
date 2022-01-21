@@ -31,6 +31,9 @@
     }
   }
   .calendar {
+    @include mq($until: tablet) {
+      display: none;
+    }
     @include roundedElement();
     position: absolute;
     bottom: 0px;

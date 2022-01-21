@@ -5,16 +5,16 @@
   align-items: center;
   width: 100%;
   z-index: 10;
-  margin-top: math.div($space, 4);
+  margin-top: math.div($small-space, 2);
   pointer-events: none;
 
   .wrapper {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    width: 100%;
-    padding-left: $small-space;
-    padding-right: $small-space;
+    width: 95vw;
+    //padding-left: $small-space;
+    //padding-right: $small-space;
     @include mq($until: desktop) {
       flex-direction: column;
     }
@@ -86,7 +86,7 @@
 }
 
 .invert {
-  nav{
+  nav {
     ul {
       border-color: $white !important;
       a {
@@ -133,7 +133,7 @@
   display: none !important;
   z-index: 100;
   left: 0;
-  top: 166px;
+  top: 158px;
   padding: 0px;
   margin-top: $small-space !important;
 
