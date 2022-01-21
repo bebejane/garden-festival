@@ -14,6 +14,7 @@ const Symbol = (props) => {
 	const [ref, hovering] = useHover();
 	const [bounce, setBounce] = useState()
 	const [hide, setHide] = useState(false)
+	
 	const endDelay = 10000;
 
 	const bounceActive = () => {

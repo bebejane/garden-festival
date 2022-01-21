@@ -16,6 +16,7 @@
     "classnames": "^2.3.1",
     "date-fns": "^2.26.0",
     "date-fns-timezone": "^0.1.4",
+    "detect-it": "^4.0.1",
     "graphql": "^15.7.2",
     "graphql-combine-query": "^1.2.3",
     "graphql-merge-unmerge": "^4.0.0",
