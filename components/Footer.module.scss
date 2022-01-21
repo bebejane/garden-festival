@@ -1,15 +1,24 @@
 .footer {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   color: #fff;
   position: fixed;
   bottom: 0;
   right: 0;
   z-index: 10;
   padding: $small-space;
+  transition: padding-right 0.5s;
+  justify-content: space-between;
+  width: 100%;
 
   @include mq($from: tablet) {
-    padding: $small-space * 2;
+    padding-left: calc(2.5vw - 4px);
+    padding-right: calc(2.5vw - 4px);
+    padding-bottom: calc(#{$small-space} + 1px);
+  }
+
+  &.margin {
+    padding-right: calc(2.5vw - 4px + #{$small-space});
   }
 
   a {

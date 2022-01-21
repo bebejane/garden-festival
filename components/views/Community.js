@@ -31,7 +31,7 @@ export default function Community({ participants, events, show, symbolSize }) {
                 <div className={styles.participantInfo}>
                   <h2>{p.title}</h2>
                   {p.subTitle && <h2 className="sub">{p.subTitle}</h2>}
-                  <p>{p.summary.split(".")[0]}</p>
+                  <p>{p.summary}</p>
                 </div>
               </a>
             </Link>

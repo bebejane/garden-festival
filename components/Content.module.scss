@@ -31,7 +31,7 @@ $top-margin: 80px;
 		width: 95vw;
 
 		@include mq($from: tablet) {
-			width: calc(100% - 40px);
+			width: 95vw;
 		}
 
 		&.show {
@@ -40,9 +40,13 @@ $top-margin: 80px;
 	}
 	.contentPopup {
 		opacity: 0;
-		margin-bottom: $small-space;
 		transition: transform 0.05s;
 		transform: translateY(100%);
+		margin-bottom: $small-space;
+
+		@include mq($from: tablet) {
+			margin-bottom: $small-space * 2;
+		}
 
 		&.slideUp {
 			opacity: 1;

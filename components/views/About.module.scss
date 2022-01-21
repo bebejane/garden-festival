@@ -57,18 +57,17 @@
         pointer-events: all;
         color: $white;
         border-color: $white;
+        -webkit-font-smoothing: antialiased;
 
         &:hover {
           background-color: $white;
           color: $black;
-          font-feature-settings: "ss01" 1;
           font-variation-settings: "wght" 800;
         }
 
         &.selected {
           background-color: $white;
           color: $black;
-          -webkit-font-smoothing: antialiased;
         }
       }
     }

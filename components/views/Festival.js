@@ -55,8 +55,8 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
                     {ev.summary}
                   </Markdown></p>
               </p>
-              <span className={cn(styles.launch, "metaLight")}>
-                THIS EVENT WILL BE LAUNCHED IN 4 DAYS AND 4 HOURS / PRE-REGISTER TO PARTICIPATE IN THIS EVENT
+              <span className={cn(styles.launch, "meta")}>
+                UPCOMING – THIS EVENT WILL BE LAUNCHED IN 4 DAYS AND 4 HOURS
               </span>
             </div>
           </a>

@@ -8,6 +8,10 @@
   margin-top: math.div($small-space, 2);
   pointer-events: none;
 
+  @include mq($from: tablet) {
+    margin-top: $small-space;
+  }
+
   .wrapper {
     display: flex;
     align-items: flex-start;
