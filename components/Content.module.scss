@@ -135,4 +135,7 @@ $top-margin: 80px;
 
 .placeholderSymbol {
 	opacity: 0;
+	&.inactive{
+		filter:grayscale(1);
+	}
 }

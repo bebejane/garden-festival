@@ -1,11 +1,9 @@
 import styles from "./Participant.module.scss"
 import contentStyles from "../Content.module.scss"
 import cn from "classnames";
-import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link"
-import { format } from 'date-fns'
+import { format, formatDuration, intervalToDuration } from 'date-fns'
 import StructuredContent from "/components/blocks"
-import LinkButton from "../LinkButton";
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 import Markdown from "/components/common/Markdown";
@@ -24,9 +22,10 @@ export default function Participant({ participant, events: evts, show, symbolSiz
 
       <ContentMain color={participant.color} type="participant">
         <div className={styles.events}>
-          {events.map((ev) =>
-            <Link href={`${ev.participant.slug}/${ev.slug}`}>
-              <a className={styles.event}>
+          {events.map((ev) => {
+            const durationUntil = intervalToDuration({ start: new Date(), end: new Date(ev.startTime) })
+            const eventContent = (
+              <a className={cn(styles.event, ev.inactive && styles.inactive)}>
                 <div className={styles.symbol}>
                   <img
                     id={`participant-symbol-${ev.id}`}
@@ -50,10 +49,28 @@ export default function Participant({ participant, events: evts, show, symbolSiz
                         {ev.summary}
                       </Markdown></p>
                   </p>
+                  {!ev.launched &&
+                    <span className={cn(styles.launch, "meta")}>
+                      {ev.register ?
+                        <span>PRE REGISTER TO PARTICIPATE IN THIS EVENT</span>
+                        :
+                        <span>THIS EVENT WILL BE LAUNCHED IN {formatDuration({ days: durationUntil.days })} AND {formatDuration({ hours: durationUntil.hours })}</span>
+                      }
+                    </span>
+                  }
                 </div>
+                
               </a>
-            </Link>
-          )}
+            )
+            return (
+              !ev.inactive ? 
+                <Link href={`${ev.participant.slug}/${ev.slug}`}>
+                  {eventContent}
+                </Link>
+              :
+                <>{eventContent}</>
+              )
+          })}
         </div>
         <header>
           <p className="summary">
@@ -70,10 +87,7 @@ export default function Participant({ participant, events: evts, show, symbolSiz
             )}
           </p>
         </article>
-
       </ContentMain>
-
-
-    </div >
+    </div>
   )
 }

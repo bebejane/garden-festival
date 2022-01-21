@@ -32,7 +32,7 @@ const Symbol = (props) => {
 		const delay = randomInt(1000, 6000)
 		const startTime = new Date(event.startTime)
 
-		if (startTime > new Date(2022, 1, 8, 7)) return
+		if (event.inactive) return
 
 		const animation = anime({
 			targets: target,
@@ -68,24 +68,26 @@ const Symbol = (props) => {
 		setHide(view !== 'garden')
 	}, [view])
 	
+	const gardenSymbol = (
+		<a>
+			<img
+				id={`garden-symbol-${event.id}`}
+				key={`garden-symbol-${index}`}
+				ref={ref}
+				src={`${event.symbol.url}?w=${symbolSize*2}`}
+				width={symbolSize}
+				height={symbolSize}
+				eventid={event.id}
+				participantid={event.participant?.id}
+				starttime={event.startTime}
+				className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol, event.inactive && styles.inactive)}
+			/>
+		</a>
+	)
+
 	return (
 		<>
-			<Link href={`/${event.participant?.slug}/${event.slug}`}>
-				<a>
-					<img
-						id={`garden-symbol-${event.id}`}
-						key={`garden-symbol-${index}`}
-						ref={ref}
-						src={`${event.symbol.url}?w=${symbolSize*2}`}
-						width={symbolSize}
-						height={symbolSize}
-						eventid={event.id}
-						participantid={event.participant?.id}
-						starttime={event.startTime}
-						className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol)}
-					/>
-				</a>
-			</Link>
+			{!event.inactive ? <Link href={`/${event.participant?.slug}/${event.slug}`}>{gardenSymbol}</Link> : <>{gardenSymbol}</>}
 			<PopUp event={event} show={hovering} symbolSize={symbolSize}/>
 			<img
 				id={`symbol-${event.id}`}
@@ -96,7 +98,7 @@ const Symbol = (props) => {
 				width={symbolSize}
 				height={symbolSize}
 				participantid={event.participant?.id}
-				className={cn(styles.symbol)}
+				className={cn(styles.symbol, event.inactive && styles.inactive)}
 			/>
 		</>
 	);

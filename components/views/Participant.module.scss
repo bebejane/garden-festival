@@ -81,6 +81,13 @@
           }
         }
       }
+      &.inactive{
+        div{
+          img{
+            filter: grayscale(1);
+          }
+        }
+      }
     }
   }
 }
