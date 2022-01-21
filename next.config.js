@@ -20,7 +20,7 @@ const nextOptions = {
   },
   onDemandEntries: { 
     maxInactiveAge: 60 * 1000,
-    pagesBufferLength: 10
+    pagesBufferLength: 10000
   }
 }
 
