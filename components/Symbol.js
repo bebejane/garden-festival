@@ -13,6 +13,7 @@ const Symbol = (props) => {
 	const { event, symbolSize, index, view } = props;
 	const [ref, hovering] = useHover();
 	const [bounce, setBounce] = useState()
+	const [hide, setHide] = useState(false)
 	const endDelay = 10000;
 
 	const bounceActive = () => {
@@ -61,8 +62,11 @@ const Symbol = (props) => {
 		setBounce(animation)
 	}
 
-	useEffect(()=>bounceActive(), [view])
-
+	useEffect(()=>{
+		bounceActive()
+		setHide(view !== 'garden')
+	}, [view])
+	
 	return (
 		<>
 			<Link href={`/${event.participant?.slug}/${event.slug}`}>
@@ -77,7 +81,7 @@ const Symbol = (props) => {
 						eventid={event.id}
 						participantid={event.participant?.id}
 						starttime={event.startTime}
-						className={cn(styles.symbol, styles.garden, contentStyles.placeholderSymbol)}
+						className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol)}
 					/>
 				</a>
 			</Link>

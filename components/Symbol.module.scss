@@ -10,5 +10,9 @@
 	
 	&.garden {
 		z-index: 1;
+		&.hide{
+			visibility: hidden;
+		}
 	}
+	
 }

@@ -41,17 +41,18 @@ $top-margin: 80px;
 	.contentPopup {
 		opacity: 0;
 		margin-bottom: $small-space;
-		transition: transform 0.8s ease;
+		transition: transform 0.05s;
 		transform: translateY(100%);
 
 		&.slideUp {
 			opacity: 1;
-			transition-duration: 0.8s;
+			transition: transform;
+			transition-duration: 0.7s;
 			transform: translateY(0%);
 		}
 		&.slideDown {
 			opacity: 1;
-			transition-duration: 0.8s;
+			transition-duration: 0.7s;
 			transform: translateY(100%);
 		}
 		&.direct {
