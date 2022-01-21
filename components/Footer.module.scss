@@ -6,10 +6,8 @@
   bottom: 0;
   right: 0;
   z-index: 10;
-  padding: $small-space;
+  padding: $small-space / 2;
   transition: padding-right 0.5s;
-  justify-content: space-between;
-  width: 100%;
 
   @include mq($from: tablet) {
     padding-left: calc(2.5vw - 4px);
@@ -18,13 +16,20 @@
   }
 
   &.margin {
-    padding-right: calc(2.5vw - 4px + #{$small-space});
+    @include mq($from: tablet) {
+      padding-right: calc(2.5vw - 4px + #{$small-space});
+    }
+  }
+
+  &.festival {
+    justify-content: space-between;
+    width: 100%;
+    flex-direction: row;
   }
 
   a {
     @include roundedElement();
     background-color: transparent;
-    margin-left: $small-space/2;
     &:hover {
       background-color: $black;
       color: white;

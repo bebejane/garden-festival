@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default function Footer({ view, abouts, setAbout }) {
 	return (
-		<footer className={cn(styles.footer, view === 'event' || view === 'participant' && styles.margin)}>
+		<footer className={cn(styles.footer, view === 'event' || view === 'participant' && styles.margin, view === 'festival' && styles.festival)}>
 			{(view === 'festival' || view === 'weekday') && <a href="/api/calendar" title="Download festival calendar">Calendar</a>}
 			<a href="https://discord.gg/b4Ys2t7uag" target="new">DISCUSS</a>
 		</footer>
