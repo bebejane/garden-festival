@@ -12,6 +12,7 @@ import { formatToTimeZone } from "date-fns-timezone";
 
 export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
+
   const [appState, setAppState] = useAppState();
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
 
@@ -31,7 +32,7 @@ export default function Event({ event, events, show, symbolSize }) {
                 eventid={event?.id}
                 participantid={event?.participant?.id}
                 src={`${event.symbol.url}?w=${symbolSize * 2}`}
-                className={cn(styles.symbol, contentStyles.placeholderSymbol)}
+                className={cn(styles.symbol, contentStyles.placeholderSymbol, event.inactive && contentStyles.inactive)}
               />
             </figure>
             <h1>{event.title}</h1>
@@ -56,7 +57,7 @@ export default function Event({ event, events, show, symbolSize }) {
               {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">Register to participate <span>→</span></a>}
 
             </header>
-            {process.env.NEXT_PUBLIC_EDITOR_MODE || event.register || event.launched &&
+            {(process.env.NEXT_PUBLIC_EDITOR_MODE || !event.inactive) &&
               <>
                 <StructuredContent content={event.content} />
                 {related.length > 0 &&

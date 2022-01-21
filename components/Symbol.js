@@ -68,24 +68,26 @@ const Symbol = (props) => {
 		setHide(view !== 'garden')
 	}, [view])
 	
+	const gardenSymbol = (
+		<a>
+			<img
+				id={`garden-symbol-${event.id}`}
+				key={`garden-symbol-${index}`}
+				ref={ref}
+				src={`${event.symbol.url}?w=${symbolSize*2}`}
+				width={symbolSize}
+				height={symbolSize}
+				eventid={event.id}
+				participantid={event.participant?.id}
+				starttime={event.startTime}
+				className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol, event.inactive && styles.inactive)}
+			/>
+		</a>
+	)
+
 	return (
 		<>
-			<Link href={`/${event.participant?.slug}/${event.slug}`}>
-				<a>
-					<img
-						id={`garden-symbol-${event.id}`}
-						key={`garden-symbol-${index}`}
-						ref={ref}
-						src={`${event.symbol.url}?w=${symbolSize*2}`}
-						width={symbolSize}
-						height={symbolSize}
-						eventid={event.id}
-						participantid={event.participant?.id}
-						starttime={event.startTime}
-						className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol, event.inactive && styles.inactive)}
-					/>
-				</a>
-			</Link>
+			{!event.inactive ? <Link href={`/${event.participant?.slug}/${event.slug}`}>{gardenSymbol}</Link> : <>{gardenSymbol}</>}
 			<PopUp event={event} show={hovering} symbolSize={symbolSize}/>
 			<img
 				id={`symbol-${event.id}`}
