@@ -11,7 +11,7 @@ export default function Community({ participants, events, show, symbolSize }) {
     <div key={'community'} className={styles.container}>
       <h1>Community</h1>
       <div className={styles.community}>
-        {[...participants].sort((a, b)=> a.title > b.title).map((p, idx) => {
+        {[...participants].map((p, idx) => {
           const participantEvents = events.filter(e => e.participant.id === p.id);
           return (
             <Link key={`plink-${idx}`} href={`/${p.slug}`}>

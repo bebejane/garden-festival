@@ -2,7 +2,7 @@
 #import "./fragments/ImageFragment.graphql"
 
 query GetParticipants ($first : IntType = 100, $skip : IntType = 0) {
-  participants: allParticipants(first:$first, skip:$skip){
+  participants: allParticipants(first:$first, skip:$skip, orderBy: [title_ASC]){
     ...ParticipantFragment
   }
   participantsMeta: _allParticipantsMeta {

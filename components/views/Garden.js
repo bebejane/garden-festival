@@ -177,7 +177,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			const target = Array.isArray(endTargets) || endTargets instanceof NodeList ? endTargets.length === 1 ? endTargets[0] : endTargets[i] : endTargets
 			return target;
 		}
-		const defaultDuration = 1200;
+		const defaultDuration = 800;
 		const defaultDelay = 0;
 		const lastTargets = document.querySelectorAll(`[id^='${currentView}-symbol-']`)
 
