@@ -50,7 +50,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
               </Markdown></p>
           </p>
           {!ev.launched &&
-            <span className={cn(styles.launch, "meta")}>
+            <span className={cn(styles.launch, "metaLight")}>
               {ev.register ?
                 <span>PRE REGISTER TO PARTICIPATE IN THIS EVENT</span>
                 :
