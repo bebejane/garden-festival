@@ -86,20 +86,22 @@
 }
 
 .invert {
-  ul {
-    border-color: $white !important;
-    a {
-      li {
-        border-color: white !important;
-        color: white;
-        -webkit-font-smoothing: antialiased;
-        &.selected {
-          color: black !important;
-          background-color: white !important;
-        }
-        &:hover {
-          color: $white !important;
-          background: transparent !important;
+  nav{
+    ul {
+      border-color: $white !important;
+      a {
+        li {
+          border-color: white !important;
+          color: white;
+          -webkit-font-smoothing: antialiased;
+          &.selected {
+            color: black !important;
+            background-color: white !important;
+          }
+          &:hover {
+            color: $black;
+            background-color: $white;
+          }
         }
       }
     }

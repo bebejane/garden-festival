@@ -7,7 +7,6 @@ import { formatToTimeZone } from "date-fns-timezone";
 
 const PopUp = ({ event, symbolSize, show }) => {
 
-	const [to, setTo] = useState();
 	const [disabled, setDisabled] = useState(false);
 	const [appState, setAppState] = useAppState();
 	const router = useRouter();
@@ -20,23 +19,20 @@ const PopUp = ({ event, symbolSize, show }) => {
 	};
 
 	const togglePopup = (on) => {
-		clearTimeout(to);
 		if (disabled) return;
 
-		let timeout = setTimeout(() => {
-			const pad = -75;
-			const el = document.getElementById(`garden-symbol-${event.id}`);
-			const popup = document.getElementById(`garden-popup-${event.id}`);
-			popup.classList.toggle(styles.show, on);
-			const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
-			const { offsetWidth: popupWidth, offsetHeight: popupHeight } = popup
-			const { clientWidth: windowWidth } = document.body;
-			const t = Math.max(top + symbolSize + pad, pad);
-			const l = Math.min(Math.max(0, left - ((popupWidth - width) / 2)), windowWidth - popupWidth);
-			popup.style.top = `${t}px`;
-			popup.style.left = `${l}px`;
-		}, on ? 100 : 0);
-		setTo(timeout)
+		const pad = -75;
+		const el = document.getElementById(`garden-symbol-${event.id}`);
+		const popup = document.getElementById(`garden-popup-${event.id}`);
+		popup.classList.toggle(styles.show, on);
+		
+		const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
+		const { offsetWidth: popupWidth, offsetHeight: popupHeight } = popup
+		const { clientWidth: windowWidth } = document.body;
+		const t = Math.max(top + symbolSize + pad, pad);
+		const l = Math.min(Math.max(0, left - ((popupWidth - width) / 2)), windowWidth - popupWidth);
+		popup.style.top = `${t}px`;
+		popup.style.left = `${l}px`;
 	};
 	useEffect(() => togglePopup(show), [show])
 	useEffect(() => {
