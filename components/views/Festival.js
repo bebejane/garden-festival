@@ -21,10 +21,11 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
       currentDate = new Date(ev.startTime);
       eventDate = currentDate;
     }
-    const durationUntil = intervalToDuration({start: new Date(), end: new Date(ev.startTime)})
-    
+    const durationUntil = intervalToDuration({ start: new Date(), end: new Date(ev.startTime) })
+
     const eventContent = (
-      <a className={cn(styles.event, !ev.register || !ev.launched && styles.inactive)}>
+      <a className={cn(styles.event, (!ev.register && !ev.launched) && styles.inactive)}>
+        <div className={styles.upcoming}><span class="meta">UPCOMING</span></div>
         <div className={styles.symbol}>
           <img
             id={`${view}-symbol-${ev.id}`}
@@ -50,10 +51,10 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
           </p>
           {!ev.launched &&
             <span className={cn(styles.launch, "meta")}>
-              {ev.register ? 
+              {ev.register ?
                 <span>PRE REGISTER TO PARTICIPATE IN THIS EVENT</span>
-              :
-                <span>UPCOMING - THIS EVENT WILL BE LAUNCHED IN {formatDuration({days:durationUntil.days})} AND {formatDuration({hours:durationUntil.hours})}</span>
+                :
+                <span>THIS EVENT WILL BE LAUNCHED IN {formatDuration({ days: durationUntil.days })} AND {formatDuration({ hours: durationUntil.hours })}</span>
               }
             </span>
           }
@@ -72,7 +73,7 @@ export default function Festival({ events, dayEvents, participants, date, timeZo
           <Link key={`elink-${idx}`} href={`/${ev.participant.slug}/${ev.slug}`}>
             {eventContent}
           </Link>
-        :
+          :
           <>
             {eventContent}
           </>
