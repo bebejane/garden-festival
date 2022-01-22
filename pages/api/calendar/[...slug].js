@@ -1,5 +1,4 @@
 import ical from 'ical-generator';
-import sanitizeFilename from 'sanitize-filename';
 import { apiQuery } from '/lib/api';
 import { GetEventBySlug } from '/graphql';
 
@@ -22,6 +21,6 @@ export default async function celendar(req, res) {
   });
 
   res.setHeader('Content-Type', 'text/calendar')
-  res.setHeader('Content-Disposition', `attachment; filename="Community Garden Festival - ${sanitizeFilename(event.title)}.ics"`)
+  res.setHeader('Content-Disposition', `attachment; filename="Community Garden Festival - ${event.slug}.ics"`)
   res.send(cal.toString())
 }
