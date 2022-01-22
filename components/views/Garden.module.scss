@@ -79,6 +79,9 @@
 	z-index: 1;
 	width: 100%;
 	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	
 	&.inactive {
 		max-height: 100vh;
 		overflow: hidden;

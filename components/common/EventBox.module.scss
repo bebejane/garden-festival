@@ -1,0 +1,120 @@
+.event {
+  @include roundedBox();
+  color: $black;
+  display: flex;
+  margin-bottom: $small-space * 2;
+  padding-top: $small-space * 2;
+  padding-left: $small-space;
+  padding-right: $small-space;
+  background-color: transparent;
+  transition: background-color 0.3s;
+  flex-direction: column;
+  width: 100%;
+
+  @include mq($until: tablet) {
+    align-items: center;
+  }
+
+  @include mq($from: tablet) {
+    flex-direction: row;
+    padding-right: $space;
+  }
+
+  &:hover {
+    background-color: $white;
+  }
+  
+  .upcoming {
+    position: absolute;
+    display: none;
+    padding-left: $small-space;
+  }
+
+  .symbol {
+    display: flex;
+    align-items: flex-start;
+    padding-right: $small-space;
+
+    img {
+      width: 150px;
+      height: 150px;
+
+      @include mq($from: tablet) {
+        width: $symbol-big;
+        height: $symbol-big;
+      }
+    }
+  }
+
+  .info {
+    width: 100%;
+    span {
+      display: block;
+    }
+
+    h2:first-of-type {
+      padding-top: 0.5em;
+    }
+
+    h2:last-of-type {
+      padding-bottom: 0.3em;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .goto {
+      padding: 5px 10px 5px 10px;
+      border: 3px solid #000;
+      border-radius: 30px;
+    }
+
+    .launch {
+      margin-top: 1em;
+      padding-top: 1em;
+      border-top: 1px solid $black;
+      text-transform: uppercase; 
+    }
+  }
+  &.inactive {
+    &:hover {
+      background-color: rgba(253, 253, 253, 0.233);
+      .upcoming {
+        display: block;
+      }
+    }
+    &:active{
+      //opacity: 0.70;
+      background-color: transparent !important;
+      backdrop-filter: hue-rotate(24deg)
+    }
+    .inactive {
+      display: block;
+    }
+
+    .symbol {
+      filter: grayscale(1);
+    }
+    &.remember{
+      .launch{
+        span {
+          animation: dolaa 0.2s steps(4);
+          @keyframes dolaa {
+            0%{
+              transform: scale(1.03) skew(-0.01turn, 0deg);
+              color:#fff;
+            }
+            100%{
+              transform: scale(1.03) skew(-0.01turn, 0deg);
+              color:#fff;
+            }
+          }
+        }
+      }
+    }
+    .info{
+
+    }
+  }
+}

@@ -140,11 +140,13 @@
   top: 158px;
   padding: 0px;
   margin-top: $small-space !important;
-
   &.mobileOpen {
     display: flex !important;
     ul > a > li {
       background-color: $white;
+      &:first-child{
+        color: $black !important;
+      }
     }
   }
   @include mq($from: desktop) {
