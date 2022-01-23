@@ -24,6 +24,7 @@ export default function Menu({ view, weekday}) {
         <DropDown
           id="mobile-menu" 
           className={styles.mobileMenuDropDown} 
+          label={view === 'event' ? 'Festival' : view === 'participant' ? 'Community' : undefined}
           options={menu} 
           setOpen={setMobileOpen} 
           open={mobileOpen} 

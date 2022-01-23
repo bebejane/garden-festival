@@ -7,6 +7,7 @@ import { useWindowSize } from "rooks";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { nodesToArray, randomInt } from "lib/utils";
+import { et } from "date-fns/locale";
 
 export default function Garden({ event, events, participant, view, symbolSize }) {
 	const router = useRouter()
@@ -17,8 +18,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [positions, setPositions] = useState();
 	const { innerWidth } = useWindowSize();
-
+	
 	const toggleView = (view, force) => {
+		
 		if (!ready) return
 
 		switch (view) {
@@ -143,14 +145,15 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		setReady(true)
 		console.log('done init garden')
 	}
-	const resizePositions = () => {
+	const resizePositions = async () => {
+		
 		if (!positions) return
 
 		const bounds = getBounds()
 		const { bounds: lastBounds, items } = positions;
 		const widthDiff = bounds.window.width / lastBounds.window.width
 		const heightDiff = bounds.window.height / lastBounds.window.clientHeight
-		const newPositions = {
+		setPositions({
 			bounds,
 			items: positions.items.map(({ left, top, id, eventId }) => {
 				const el = document.getElementById(`${id}`)
@@ -165,8 +168,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 					id
 				}
 			})
-		}
-		setPositions(newPositions)
+		})
+		await initSymbols()
+		anime.set(document.querySelectorAll(`[id^='garden-symbol-']`), {opacity: 1});
 	}
 
 	const transitionTo = async (targets, endTargets, opt = {}) => {
@@ -194,7 +198,6 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			width: (el, i) => elementByIndex(i, el)?.clientWidth,
 			delay: (el, i) => i * defaultDelay,
 			easing: "easeInOutQuad",
-			//easing: 'spring(1.0, 20, 10, 0)',
 			scale: 1,
 			duration: !currentView ? 0 : defaultDuration,
 			...opt,
@@ -283,6 +286,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	};
 
 	const toFestival = async () => {
+		console.log('festival')
 		const lastView = lastViewPositions()
 		if (lastView && lastView.targets.length) {
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
@@ -294,15 +298,17 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	};
 
 	const toWeekday = async () => {
+		
 		const lastView = lastViewPositions()
 		if (lastView && lastView.targets.length) {
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
 			repositionToLastView(target, { eventId: lastView.targets[0].eventId })
 		}
 
-		const targets = document.querySelectorAll("[id^='symbol-']")
-		const endTargets = document.querySelectorAll("[id^='weekday-symbol-']")
-
+		const targets = document.querySelectorAll("[id^='weekday-symbol-']")
+		anime({targets, opacity:1})
+		setCurrentView(view);
+		/*
 		const eTargets = nodesToArray(targets).map(el => {
 			const participantId = el.getAttribute('participantid');
 			const eventId = el.getAttribute('eventid');
@@ -312,7 +318,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			}
 		}).filter(el => el)
 		const rTargets = nodesToArray(targets).filter((el) => eTargets.filter((elt) => elt.getAttribute('eventid') === el.getAttribute('eventid')).length > 0)
+		
 		return transitionTo(rTargets, eTargets)
+		*/
 	};
 
 	const toCommunity = async () => {
@@ -384,6 +392,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	}, [])
 
 	useEffect(() => resizePositions(), [innerWidth])
+	useEffect(()=> router.asPath.startsWith('/festival/') && toWeekday(), [router.asPath])
 
 	return (
 		<>
