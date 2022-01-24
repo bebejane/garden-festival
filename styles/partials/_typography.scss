@@ -27,7 +27,7 @@ h1 {
 h2,
 article h1 {
   font-size: 26px;
-  font-feature-settings: "ss02" 1;
+  font-feature-settings: "ss00" 1;
 
   @include mq($from: tablet) {
     font-size: 40px;

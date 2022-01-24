@@ -28,6 +28,8 @@
     position: absolute;
     display: none;
     padding-left: $small-space;
+    margin-top: -3px;
+    //z-index: 1000;
   }
 
   .symbol {
@@ -71,9 +73,10 @@
     }
 
     .launch {
-      margin-top: 1em;
+      margin-top: 1.5em;
       padding-top: 1em;
       border-top: 3px solid $black;
+      display: inline-block;
     }
   }
   &.inactive {

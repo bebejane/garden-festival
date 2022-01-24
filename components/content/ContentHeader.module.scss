@@ -11,7 +11,7 @@
 	padding-right: $outer-margin / 2;
 
 	@include mq($from: desktop) {
-		min-height: 80vh;
+		min-height: 70vh;
 	}
 
 	@include mq($from: tablet, $until: wide) {
@@ -75,6 +75,7 @@
 		display: flex;
 		height: 100%;
 		width: 100%;
+		max-width: none !important;
 
 		img,
 		picture {
