@@ -1,6 +1,6 @@
 import styles from "./index.module.scss"
 import { StructuredText, renderNodeRule, renderMarkRule } from 'react-datocms';
-import { isHeading, isCode } from 'datocms-structured-text-utils';
+import { isParagraph, isRoot } from 'datocms-structured-text-utils';
 import Sound from './Sound'
 import ExternalLink from './ExternalLink'
 import Image from './Image'
@@ -50,24 +50,30 @@ export default function StructuredContent({ content }) {
               return null;
           }
         }}
-        renderText={(text)=>sanitizeText(text)}
-        renderNodeRule={(isParagraph, ({ adapter: { renderNode }, node, children, key, ancestors }) => {
-            if (isRoot(ancestors[0])) {
-              // If this paragraph node is a top-level one, give it a special class
-              return renderNode(
-                'p',
-                { key, className: 'top-level-paragraph-container-example' },
-                children,
-              );
-            } else {
-              // Proceed with default paragraph rendering...
-              // return renderNode('p', { key }, children);
-    
-              // Or even completely remove the paragraph and directly render the inner children:
-              return children;
-            }
-          })
-        }
+        renderText={sanitizeText}
+        /*
+        customNodeRules={[
+          renderNodeRule(isParagraph,
+            ({ adapter: { renderNode }, node, children, key, ancestors }) => {
+              if (isRoot(ancestors[0])) {
+                console.log(children)
+                // If this paragraph node is a top-level one, give it a special class
+                return renderNode(
+                  'p',
+                  { key, className: 'top-level-paragraph-container-example' },
+                  children,
+                );
+              } else {
+                // Proceed with default paragraph rendering...
+                // return renderNode('p', { key }, children);
+      
+                // Or even completely remove the paragraph and directly render the inner children:
+                return children;
+              }
+            },
+          ),
+        ]}
+        */
       />
     </article>
   );
