@@ -7,7 +7,7 @@ import { useWindowSize } from "rooks";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { nodesToArray, randomInt } from "lib/utils";
-import { et } from "date-fns/locale";
+import { wait } from "lib/utils";
 
 export default function Garden({ event, events, participant, view, symbolSize }) {
 	const router = useRouter()
@@ -275,6 +275,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			const maxOffset = nodesToArray(targets).sort((a, b) => a.offsetTop < b.offsetTop)[0].offsetTop
 			console.log('dropitdown')
 			anime.set(targets, { opacity: 1, translateY: `-${maxOffset + symbolSize}px` })
+			await wait(500);
 			await transitionTo(targets, endTargets, {
 				translateY: '0px',
 				duration: (el, i) => 1000 + (i * 20),
