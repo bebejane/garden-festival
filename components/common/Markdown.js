@@ -5,8 +5,8 @@ import truncateMarkdown  from 'markdown-truncate'
 
 const Markdown = ({ children, truncate }) => {
   if(!children) return null
-  
-  children = !truncate ? truncate : truncateMarkdown(children, {limit:truncate, ellipsis:true})
+
+  children = !truncate ? children : truncateMarkdown(children, {limit:truncate, ellipsis:true})
 
   return (
     <ReactMarkdown 
