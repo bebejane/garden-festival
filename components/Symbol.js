@@ -31,9 +31,8 @@ const Symbol = (props) => {
 		
 		const target = document.getElementById(`garden-symbol-${event.id}`)
 		const delay = randomInt(1000, 6000)
-		const startTime = new Date(event.startTime)
 
-		if (event.inactive) return
+		if (!event.launched) return
 
 		const animation = anime({
 			targets: target,
