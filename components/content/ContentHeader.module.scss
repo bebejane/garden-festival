@@ -121,7 +121,7 @@
 }
 
 .bgColor {
-	background-color: white;
+	background-color: $white;
 	min-height: 0;
 
 	h1 {
@@ -139,7 +139,7 @@
 }
 
 .black {
-	border-color: white;
+	border-color: $white;
 	background-color: $black;
 	min-height: auto;
 	padding-bottom: $small-space * 2.5;

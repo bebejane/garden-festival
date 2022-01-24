@@ -94,8 +94,8 @@ $top-margin: 80px;
 
 		&.invert {
 			background: $black !important;
-			border-color: white;
-			color: white;
+			border-color: $white;
+			color: $white;
 
 			&:hover {
 				color: $black;
@@ -105,7 +105,7 @@ $top-margin: 80px;
 
 		&:hover {
 			background-color: $black;
-			color: white;
+			color: $white;
 		}
 	}
 
@@ -135,7 +135,7 @@ $top-margin: 80px;
 
 .placeholderSymbol {
 	opacity: 0;
-	&.inactive{
-		filter:grayscale(1);
+	&.inactive {
+		filter: grayscale(1);
 	}
 }

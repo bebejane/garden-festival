@@ -29,8 +29,8 @@
 
   &.invert {
     a {
-      border-color: white;
-      color: white;
+      border-color: $white;
+      color: $white;
     }
   }
 
@@ -39,7 +39,7 @@
     background-color: transparent;
     &:hover {
       background-color: $black;
-      color: white;
+      color: $white;
     }
   }
 }

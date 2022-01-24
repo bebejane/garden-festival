@@ -28,11 +28,11 @@
 }
 
 .black {
-	color: white;
+	color: $white;
 	background-color: $black;
-	border-color: white;
+	border-color: $white;
 	a {
-		color:$white !important;
+		color: $white !important;
 	}
 }
 

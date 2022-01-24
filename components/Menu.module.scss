@@ -83,7 +83,7 @@
     ul {
       li {
         text-transform: uppercase;
-        background-color: white;
+        background-color: $white;
       }
     }
   }
@@ -96,7 +96,7 @@
       a {
         li {
           border-color: white !important;
-          color: white;
+          color: $white;
           -webkit-font-smoothing: antialiased;
           &.selected {
             color: black !important;
@@ -144,7 +144,7 @@
     display: flex !important;
     ul > a > li {
       background-color: $white;
-      &:first-child{
+      &:first-child {
         color: $black !important;
       }
     }
