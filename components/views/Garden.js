@@ -273,7 +273,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 
 		if (!currentView && view === 'garden') {
 			const maxOffset = nodesToArray(targets).sort((a, b) => a.offsetTop < b.offsetTop)[0].offsetTop
-
+			console.log('dropitdown')
 			anime.set(targets, { opacity: 1, translateY: `-${maxOffset + symbolSize}px` })
 			await transitionTo(targets, endTargets, {
 				translateY: '0px',
