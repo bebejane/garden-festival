@@ -50,6 +50,13 @@ export default function StructuredContent({ content }) {
               return null;
           }
         }}
+        customMarkRules={[
+          // convert "strong" marks into <b> tags
+          renderMarkRule('a', ({ mark, children, key }) => {
+            console.log(mark, children, key)
+            return <a key={key}>{children}</a>;
+          }),
+        ]}
         renderText={sanitizeText}
         /*
         customNodeRules={[
