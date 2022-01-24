@@ -9,35 +9,35 @@ import Link from "next/link"
 import Markdown from "/components/common/Markdown";
 import anime from "animejs";
 
-const EventBox = ({event, view, symbolSize}) => {
+const EventBox = ({ event, view, symbolSize }) => {
 
   const [appState] = useAppState();
   const durationUntil = intervalToDuration({ start: new Date(), end: new Date(event.startTime) })
   const [remember, setRemember] = useState(false)
-  
+
   const handleClick = (e) => {
-    if(!event.inactive) return 
-  
+    if (!event.inactive) return
+
     setRemember(event.id)
-    setTimeout(()=>setRemember(false), 1000)
+    setTimeout(() => setRemember(false), 1000)
     const target = document.getElementById(`${view}-symbol-${event.id}`)
     anime({
-      targets:target,
-      scale:[{
-        value: 0.97, 
-        duration:200, 
-        easing:'easeOutElastic(0.1,4)'
+      targets: target,
+      scale: [{
+        value: 0.97,
+        duration: 200,
+        easing: 'easeOutElastic(0.1,4)'
       }, {
-        value: 1, 
-        duration:300, 
-        easing:'easeOutElastic(0.5,0.4)'
+        value: 1,
+        duration: 300,
+        easing: 'easeOutElastic(0.5,0.4)'
       }]
     })
   }
-  
+
   const eventContent = (
     <a className={cn(styles.event, event.inactive && styles.inactive, remember && styles.remember)} onClick={handleClick}>
-      <div className={styles.upcoming}><span class="meta">UPCOMING</span></div>
+      <div className={styles.upcoming}><span class="meta">Upcoming!</span></div>
       <div className={styles.symbol}>
         <img
           id={`${view}-symbol-${event.id}`}
@@ -50,7 +50,7 @@ const EventBox = ({event, view, symbolSize}) => {
       <div className={styles.info}>
         <p>
           {event.startTime &&
-            <span className="metaLight">
+            <span className="meta">
               {formatToTimeZone(event.startTime, 'ddd HH:mm', { timeZone: appState.zone.timeZone })} • {event.typeOfEvent?.title} • By {event.participant.title}
             </span>
           }
@@ -63,13 +63,13 @@ const EventBox = ({event, view, symbolSize}) => {
           </p>
         </p>
         {!event.launched &&
-          <span className={cn(styles.launch, remember === event.id && styles.remember, "metaLight")} onTouchEnd={handleClick}>
+          <span className={cn(styles.launch, remember === event.id && styles.remember, "meta")} onTouchEnd={handleClick}>
             <span>
-            {event.register ?
-              <>PRE REGISTER TO PARTICIPATE IN THIS EVENT</>
-            :
-              <>THIS EVENT WILL BE LAUNCHED IN {formatDuration({ days: durationUntil.days })} AND {formatDuration({ hours: durationUntil.hours })}</>
-            }
+              {event.register ?
+                <>Pre register to participate in this event</>
+                :
+                <>This event will be launched in {formatDuration({ days: durationUntil.days })} and {formatDuration({ hours: durationUntil.hours })}</>
+              }
             </span>
           </span>
         }

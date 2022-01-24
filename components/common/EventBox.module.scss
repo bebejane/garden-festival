@@ -23,7 +23,7 @@
   &:hover {
     background-color: $white;
   }
-  
+
   .upcoming {
     position: absolute;
     display: none;
@@ -66,28 +66,27 @@
 
     .goto {
       padding: 5px 10px 5px 10px;
-      border: 3px solid #000;
+      border: 3px solid $black;
       border-radius: 30px;
     }
 
     .launch {
       margin-top: 1em;
       padding-top: 1em;
-      border-top: 1px solid $black;
-      text-transform: uppercase; 
+      border-top: 3px solid $black;
     }
   }
   &.inactive {
     &:hover {
-      background-color: rgba(253, 253, 253, 0.233);
+      background-color: $gray;
       .upcoming {
         display: block;
       }
     }
-    &:active{
+    &:active {
       //opacity: 0.70;
       background-color: transparent !important;
-      backdrop-filter: hue-rotate(24deg)
+      backdrop-filter: hue-rotate(24deg);
     }
     .inactive {
       display: block;
@@ -96,26 +95,24 @@
     .symbol {
       filter: grayscale(1);
     }
-    &.remember{
-      .launch{
+    &.remember {
+      .launch {
         span {
           animation: dolaa 0.2s steps(4);
           @keyframes dolaa {
-            0%{
+            0% {
               transform: skew(-0.05turn, 0deg);
-              color:#fff;
+              color: #fff;
             }
-            100%{
+            100% {
               transform: skew(-0.05turn, 0deg);
-              color:#fff;
+              color: #fff;
             }
           }
-          
         }
       }
     }
-    .info{
-
+    .info {
     }
   }
 }

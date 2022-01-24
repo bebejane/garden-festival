@@ -67,7 +67,8 @@ p {
     font-size: 22px;
   }
 
-  &.small {
+  &.small,
+  &.small p {
     font-size: 16px;
   }
 
