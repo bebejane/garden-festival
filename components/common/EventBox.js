@@ -34,7 +34,11 @@ const EventBox = ({ event, view, symbolSize }) => {
       }]
     })
   }
-
+  const releaseInfo = event.register ?
+    'Pre register to participate in this event'
+  :
+    `This event will be launched in ${formatDuration({ days: durationUntil.days })} ${durationUntil.hours && ` and ${formatDuration({ hours: durationUntil.hours })}`}`
+  
   const eventContent = (
     <a className={cn(styles.event, event.inactive && styles.inactive, remember && styles.remember)} onClick={handleClick}>
       <div className={styles.upcoming}><span class="meta">Upcoming!</span></div>
@@ -65,11 +69,7 @@ const EventBox = ({ event, view, symbolSize }) => {
         {!event.launched &&
           <span className={cn(styles.launch, remember === event.id && styles.remember, "meta")} onTouchEnd={handleClick}>
             <span>
-              {event.register ?
-                <>Pre register to participate in this event</>
-                :
-                <>This event will be launched in {formatDuration({ days: durationUntil.days })} and {formatDuration({ hours: durationUntil.hours })}</>
-              }
+              {releaseInfo}
             </span>
           </span>
         }
