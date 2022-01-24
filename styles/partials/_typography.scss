@@ -100,10 +100,11 @@ p {
 em {
   font-family: $body-font-italic;
   font-weight: normal;
+  font-style: normal;
 }
 
 article li p {
-  margin-bottom: 0.5em !important;
+  margin-bottom: 0.3em !important;
 }
 
 header p.summary,
