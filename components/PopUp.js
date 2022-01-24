@@ -52,7 +52,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 	return (
 		<div 
 			id={`garden-popup-${event.id}`} 
-			className={cn(styles.popup, primaryInput === 'touch' && styles.touch)} 
+			className={cn(styles.popup, event.inactive && styles.inactive)} 
 			onTouchStart={(e)=>togglePopup(false)}
 			onTouchEnd={(e)=>e.preventDefault()}
 			onClick={()=>primaryInput !== 'touch' && !event.inactive  && router.push(`/${event.participant.slug}/${event.slug}`)}
