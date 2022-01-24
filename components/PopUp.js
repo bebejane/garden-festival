@@ -55,7 +55,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 			className={cn(styles.popup, primaryInput === 'touch' && styles.touch)} 
 			onTouchStart={(e)=>togglePopup(false)}
 			onTouchEnd={(e)=>e.preventDefault()}
-			onClick={()=>primaryInput !== 'touch' && (!event.inactive || !event.register) && router.push(`/${event.participant.slug}/${event.slug}`)}
+			onClick={()=>primaryInput !== 'touch' && !event.inactive  && router.push(`/${event.participant.slug}/${event.slug}`)}
 			onMouseEnter={handleMouse}
 			onMouseLeave={handleMouse}
 		>
