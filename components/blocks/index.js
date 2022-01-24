@@ -8,7 +8,7 @@ import Video from './Video'
 import LinkButton from "/components/LinkButton";
 
 const sanitizeText = (text) => {
-  return text?.replace(/\ /g, '')
+  return text?.replace(/\ /g, ' ')
 }
 
 export default function StructuredContent({ content }) {
@@ -49,7 +49,7 @@ export default function StructuredContent({ content }) {
               return null;
           }
         }}
-        renderText={sanitizeText}
+        renderText={(text)=>sanitizeText(text)}
       />
     </article>
   );
