@@ -31,9 +31,8 @@ const Symbol = (props) => {
 		
 		const target = document.getElementById(`garden-symbol-${event.id}`)
 		const delay = randomInt(1000, 6000)
-		const startTime = new Date(event.startTime)
 
-		if (event.inactive) return
+		if (!event.launched) return
 
 		const animation = anime({
 			targets: target,
@@ -70,11 +69,7 @@ const Symbol = (props) => {
 	}, [view])
 
 	useEffect(()=> setShowPopup(hovering), [hovering])	
-	const handleClick = (e) => {
-		
-
-	}
-
+	
 	const gardenSymbol = (
 		<a>
 			<img
@@ -87,7 +82,7 @@ const Symbol = (props) => {
 				eventid={event.id}
 				participantid={event.participant?.id}
 				starttime={event.startTime}
-				onTouchEnd={()=>setShowPopup(!showPopup)}
+				onTouchStart={()=> event.inactive && setShowPopup(!showPopup)}
 				className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol, event.inactive && styles.inactive)}
 			/>
 		</a>
@@ -95,12 +90,12 @@ const Symbol = (props) => {
 
 	return (
 		<>
+			<PopUp event={event} show={showPopup} symbolSize={symbolSize}/>
 			{!event.inactive ? 
 				<Link href={`/${event.participant?.slug}/${event.slug}`}>{gardenSymbol}</Link> 
 			: 
 				<>{gardenSymbol}</>
 			}
-			<PopUp event={event} show={hovering || showPopup} symbolSize={symbolSize}/>
 			<img
 				id={`symbol-${event.id}`}
 				key={`symbol-${index}`}

@@ -7,6 +7,10 @@ import ImageGallery from './ImageGallery'
 import Video from './Video'
 import LinkButton from "/components/LinkButton";
 
+const sanitizeText = (text) => {
+  return text?.replace(/\ /g, ' ')
+}
+
 export default function StructuredContent({ content }) {
   
   if (!content) return null //Empty content
@@ -45,6 +49,7 @@ export default function StructuredContent({ content }) {
               return null;
           }
         }}
+        renderText={(text)=>sanitizeText(text)}
       />
     </article>
   );

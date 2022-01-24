@@ -85,13 +85,17 @@ export default function Menu({ view, weekday}) {
 
 function TimeZoneDropdown({mobileOpen, inverted}) {
 
+  const defaultTimezone = process.browser && localStorage?.getItem('tz') ? JSON.parse(localStorage?.getItem('tz')) : timeZones[0]
   const [appState, setAppState] = useAppState();
   const [time, setTime] = useState(format(new Date(), 'HH:mm'))
   const [open, setOpen] = useState(false)
-  const [tz, setTimezone] = useState(timeZones[0]);
+  const [tz, setTimezone] = useState(defaultTimezone);
   
   useIntervalWhen(() => setTime(formatToTimeZone(new Date(), 'HH:mm', { timeZone: tz.timeZone }), 1000, true, true));
-  useEffect(() => setAppState({ type: AppAction.SET_TIMEZONE, value: tz }), [tz])
+  useEffect(() => {
+    localStorage?.setItem('tz', JSON.stringify(tz));
+    setAppState({ type: AppAction.SET_TIMEZONE, value: tz })
+  }, [tz])
   
   return (
     <DropDown 
