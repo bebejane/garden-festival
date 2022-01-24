@@ -104,12 +104,10 @@
           animation: dolaa 0.2s steps(4);
           @keyframes dolaa {
             0% {
-              transform: skew(-0.05turn, 0deg);
-              color: #fff;
+              //color: #fff;
             }
             100% {
-              transform: skew(-0.05turn, 0deg);
-              color: #fff;
+              //color: #fff;
             }
           }
         }
