@@ -16,6 +16,7 @@
     "classnames": "^2.3.1",
     "date-fns": "^2.26.0",
     "date-fns-timezone": "^0.1.4",
+    "date-fns-tz": "^1.2.2",
     "datocms-structured-text-utils": "^2.0.0",
     "detect-it": "^4.0.1",
     "graphql": "^15.7.2",

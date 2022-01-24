@@ -7,7 +7,6 @@ export default Home;
 
 export const getStaticProps = withGlobalProps(async ({ props, context, revalidate }) => {
 	const { events } = props;
-	
 	return {
 		props: {
 			...props,

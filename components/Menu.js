@@ -13,7 +13,7 @@ import { useIntervalWhen } from "rooks";
 const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about/about-us'}]
 
 export default function Menu({ view, weekday}) {
-
+  
   const { pathname } = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
   const inverted = view === 'about';
