@@ -45,6 +45,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 		router.events.on("routeChangeStart", disablePopup);
 		return () => router.events.off("routeChangeStart", disablePopup);
 	}, []);
+
 	const handleMouse = ({type}) =>{
 		setInternalShow(type === 'mouseenter')
 	}
@@ -52,7 +53,8 @@ const PopUp = ({ event, symbolSize, show }) => {
 		<div 
 			id={`garden-popup-${event.id}`} 
 			className={cn(styles.popup, primaryInput === 'touch' && styles.touch)} 
-			onTouchEnd={()=>togglePopup(false)}
+			onTouchEnd={(e)=>togglePopup(false)}
+			onClick={()=>primaryInput !== 'touch' && router.push(`/${event.participant.slug}/${event.slug}`)}
 			onMouseEnter={handleMouse}
 			onMouseLeave={handleMouse}
 		>
