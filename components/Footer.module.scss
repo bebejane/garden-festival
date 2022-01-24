@@ -27,6 +27,13 @@
     flex-direction: row;
   }
 
+  &.invert {
+    a {
+      border-color: white;
+      color: white;
+    }
+  }
+
   a {
     @include roundedElement();
     background-color: transparent;
