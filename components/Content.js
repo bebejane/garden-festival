@@ -6,6 +6,7 @@ import { useRouterHistory } from 'lib/hooks';
 
 const useIsomorphicLayoutEffect = process.browser ? useLayoutEffect : useEffect
 
+
 export default function Content({ view, show, children, popup = false, abouts }) {
 
 	const router = useRouter()
@@ -16,14 +17,16 @@ export default function Content({ view, show, children, popup = false, abouts })
 	const handleKeyDown = (e) => e.key === 'Escape' && !isDirectLink && router.back()
 	const handleClose = () => {
 		if (view !== 'about') return router.back()
-
+		
 		let count = 0;
 		for (let i = history.length - 1; i >= 0; i--, count++) {
-			if (!history[i].startsWith('/about'))
+			if (!history[i].startsWith('/about')){
 				break
+			}
 		}
-
+		console.log(count)
 		global.history.go(-count)
+
 	}
 
 	useEffect(() => {
