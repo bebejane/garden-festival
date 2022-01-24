@@ -1,6 +1,7 @@
 import { withGlobalProps } from "lib/utils";
 import { GetParticipants, GetEvents, GetEventBySlug, GetParticipantBySlug } from "/graphql";
 import { apiQuery } from "lib/api";
+import { isAfter } from "date-fns";
 
 import Home from "./index"
 export default Home;
@@ -15,15 +16,14 @@ export const getStaticProps = withGlobalProps(async (data) => {
   const eventSlug = slug.length > 1 ? slug[1] : false
   const { participant } = await apiQuery(GetParticipantBySlug, {slug:participantSlug});
   const { event } = eventSlug ? await apiQuery(GetEventBySlug, {slug:eventSlug}) : {};
-
-  if(!event && !participant) 
-    return { notFound: true } 
+  
+  if(!event && !participant) return { notFound: true } 
 
   return {
     props :{
       ...data.props,
       participant,
-      event : event || null,
+      event : event ? {...event, launched: isAfter(new Date(), new Date(event.startTime)), inactive: (!event.register && !isAfter(new Date(), new Date(event.startTime)))} : null,
       view : event ? 'event' : 'participant',
       defaultEvent : event || null
     },
