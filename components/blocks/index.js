@@ -50,7 +50,6 @@ export default function StructuredContent({ content }) {
           }
         }}
         renderText={sanitizeText}
-
       />
     </article>
   );

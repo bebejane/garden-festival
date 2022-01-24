@@ -15,7 +15,7 @@ import { useEffect, useState, } from "react";
 import { useWindowSize } from "rooks";
 import { withGlobalProps } from "/lib/utils";
 import { useIntervalWhen } from 'rooks';
-import {transformEventWithTiming} from '/lib/utils'
+import { transformEventWithTiming } from '/lib/utils'
 
 const Home = (props) => {
 	const {
@@ -40,7 +40,7 @@ const Home = (props) => {
 		setSymbolSize(symbolSize)
 	}, [innerWidth])
 	
-	useIntervalWhen(() => setEvents(evts.map(transformEventWithTiming)),60*1000, true, true);
+	useIntervalWhen(() => setEvents(evts.map(transformEventWithTiming)),60*1000, true, false); // Update active state of events client side
 
 	return (
 		<div className={styles.container}>
