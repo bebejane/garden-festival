@@ -70,11 +70,7 @@ const Symbol = (props) => {
 	}, [view])
 
 	useEffect(()=> setShowPopup(hovering), [hovering])	
-	const handleClick = (e) => {
-		
-
-	}
-
+	
 	const gardenSymbol = (
 		<a>
 			<img
@@ -95,12 +91,12 @@ const Symbol = (props) => {
 
 	return (
 		<>
+			<PopUp event={event} show={showPopup} symbolSize={symbolSize}/>
 			{!event.inactive ? 
 				<Link href={`/${event.participant?.slug}/${event.slug}`}>{gardenSymbol}</Link> 
 			: 
 				<>{gardenSymbol}</>
 			}
-			<PopUp event={event} show={hovering || showPopup} symbolSize={symbolSize}/>
 			<img
 				id={`symbol-${event.id}`}
 				key={`symbol-${index}`}

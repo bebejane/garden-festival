@@ -9,14 +9,16 @@
 	max-width: 300px;
 	padding: $small-space;
 	height: auto;
-	z-index: 5;
+	z-index: 10;
 	transition: opacity 0.2s ease;
 	opacity: 0;
-	pointer-events: none;
+	
 	text-align: left;
 
 	&.touch {
+		background-color: $gray !important;
 	}
+		
 	&.show {
 		display: block;
 		opacity: 1;

@@ -12,6 +12,7 @@ import Markdown from '/components/common/Markdown'
 const PopUp = ({ event, symbolSize, show }) => {
 
 	const [disabled, setDisabled] = useState(false);
+	const [internalShow, setInternalShow] = useState(false);
 	const [appState, setAppState] = useAppState();
 	const router = useRouter();
 
@@ -24,28 +25,37 @@ const PopUp = ({ event, symbolSize, show }) => {
 
 	const togglePopup = (on) => {
 		if (disabled) return;
-
+		
 		const pad = -75;
 		const el = document.getElementById(`garden-symbol-${event.id}`);
 		const popup = document.getElementById(`garden-popup-${event.id}`);
 		popup.classList.toggle(styles.show, on);
+		popup.classList.toggle(styles.touch, primaryInput === 'touch');
 		
 		const { offsetTop: top, offsetLeft: left, clientWidth: width, clientHeight: height } = el;
 		const { offsetWidth: popupWidth, offsetHeight: popupHeight } = popup
 		const { clientWidth: windowWidth } = document.body;
 		const t = Math.max(top + symbolSize + pad, pad);
-		const l = Math.min(Math.max(0, left - ((popupWidth - width) / 2)), windowWidth - popupWidth);
+		const l = Math.min(Math.max(10, left - ((popupWidth - width) / 2)), windowWidth - popupWidth -10 );
 		popup.style.top = `${t}px`;
 		popup.style.left = `${l}px`;
 	};
-	useEffect(() => togglePopup(show), [show])
+	useEffect(() => togglePopup(internalShow || show), [internalShow, show])
 	useEffect(() => {
 		router.events.on("routeChangeStart", disablePopup);
 		return () => router.events.off("routeChangeStart", disablePopup);
 	}, []);
-	
+	const handleMouse = ({type}) =>{
+		setInternalShow(type === 'mouseenter')
+	}
 	return (
-		<div id={`garden-popup-${event.id}`} className={cn(styles.popup, primaryInput === 'touch' && styles.touch)} onTouchEnd={()=>togglePopup(false)}>
+		<div 
+			id={`garden-popup-${event.id}`} 
+			className={cn(styles.popup, primaryInput === 'touch' && styles.touch)} 
+			onTouchEnd={()=>togglePopup(false)}
+			onMouseEnter={handleMouse}
+			onMouseLeave={handleMouse}
+		>
 			<span className="metaLight">
 			{!event.register && event.inactive && 'Upcoming – '} {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })} {event.register && ' – Register now!'}
 			</span>
