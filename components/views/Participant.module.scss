@@ -81,13 +81,19 @@
           }
         }
       }
-      &.inactive{
-        div{
-          img{
+      &.inactive {
+        div {
+          img {
             filter: grayscale(1);
           }
         }
       }
     }
+  }
+
+  .externalLinks {
+    display: table;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid;
   }
 }

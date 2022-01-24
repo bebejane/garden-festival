@@ -59,11 +59,13 @@
     &:hover {
       background-color: $white;
     }
-    
+
     .upcoming {
       position: absolute;
       display: none;
       padding-left: $small-space;
+      z-index: 1000;
+      color: red;
     }
 
     .symbol {
@@ -112,20 +114,18 @@
         padding-top: 1em;
         border-top: 1px solid $black;
         text-transform: uppercase;
-        
       }
     }
     &.inactive {
       &:hover {
-        background-color: rgba(253, 253, 253, 0.233);
+        background-color: rgb(109, 96, 96);
         .upcoming {
           display: block;
         }
       }
-      &:active{
-        //opacity: 0.70;
+      &:active {
         background-color: transparent !important;
-        backdrop-filter: hue-rotate(24deg)
+        backdrop-filter: hue-rotate(24deg);
       }
       .inactive {
         display: block;
@@ -134,30 +134,24 @@
       .symbol {
         filter: grayscale(1);
       }
-      &.remember{
-        .launch{
-          
+      &.remember {
+        .launch {
           span {
             animation: dolaa 0.2s steps(4);
-            
+
             @keyframes dolaa {
-              0%{
+              0% {
                 transform: scale(1.03) skew(-0.01turn, 0deg);
-                color:#fff;
+                color: #fff;
               }
-              100%{
+              100% {
                 transform: scale(1.03) skew(-0.01turn, 0deg);
-                color:#fff;
+                color: #fff;
               }
             }
           }
-          
         }
       }
-      .info{
-
-      }
-       
     }
   }
 }

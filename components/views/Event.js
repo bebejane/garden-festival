@@ -43,7 +43,6 @@ export default function Event({ event, events, show, symbolSize }) {
               By <Link href={`/${event.participant.slug}`}><a>{event.participant.title}</a></Link>
             </span>
           </section>
-          <a title="Add to your calendar" className={styles.calendar} href={`/api/calendar/${event.slug}`}>+ Calendar</a>
         </ContentHeader>
 
         <ContentMain>

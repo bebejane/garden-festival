@@ -19,8 +19,8 @@ export default function Participant({ participant, events: evts, show, symbolSiz
 
       <ContentMain color={participant.color} type="participant">
         <div className={styles.events}>
-          {events.map((ev) =>            
-            <EventBox event={ev} view={'participant'} symbolSize={symbolSize}/>
+          {events.map((ev) =>
+            <EventBox event={ev} view={'participant'} symbolSize={symbolSize} />
           )}
         </div>
         <header>
@@ -32,7 +32,7 @@ export default function Participant({ participant, events: evts, show, symbolSiz
         <article>
           <p>
             {participant.externalLinks.map((link) =>
-              <a href={link.url}>
+              <a className={styles.externalLinks} target="new" href={link.url}>
                 {link.linkText}
               </a>
             )}
