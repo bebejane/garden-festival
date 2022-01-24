@@ -14,6 +14,8 @@ import Footer from "/components/Footer";
 import { useEffect, useState, } from "react";
 import { useWindowSize } from "rooks";
 import { withGlobalProps } from "/lib/utils";
+import { useIntervalWhen } from 'rooks';
+import {transformEventWithTiming} from '/lib/utils'
 
 const Home = (props) => {
 	const {
@@ -28,7 +30,8 @@ const Home = (props) => {
 		view = 'garden'	
 	} = props;
 	
-	const [symbolSize, setSymbolSize] = useState(0);
+	const [ evts, setEvents] = useState(events);
+	const [ symbolSize, setSymbolSize] = useState(0);
 	const { innerWidth, innerHeight } = useWindowSize();
 
 	useEffect(() => {
@@ -37,6 +40,8 @@ const Home = (props) => {
 		setSymbolSize(symbolSize)
 	}, [innerWidth])
 	
+	useIntervalWhen(() => setEvents(evts.map(transformEventWithTiming)),60*1000, true, true);
+
 	return (
 		<div className={styles.container}>
 			<Menu
@@ -50,21 +55,21 @@ const Home = (props) => {
 			>
 				<Festival
 					show={view === 'festival' || view === 'weekday'}
-					events={events}
+					events={evts}
 					dayEvents={dayEvents}
 					weekday={weekday}
 					symbolSize={symbolSize}
 				/>
-				<Community participants={participants} symbolSize={symbolSize} events={events} show={view === 'community'} />
-				<Participant participant={participant} symbolSize={symbolSize} events={events} show={view === 'participant'} />
-				<Event event={event} events={events} symbolSize={symbolSize} show={view === 'event'} />
+				<Community participants={participants} symbolSize={symbolSize} events={evts} show={view === 'community'} />
+				<Participant participant={participant} symbolSize={symbolSize} events={evts} show={view === 'participant'} />
+				<Event event={event} events={evts} symbolSize={symbolSize} show={view === 'event'} />
 				<About about={about} abouts={abouts} show={view === 'about'}/>
 			</Content>
 			<Garden
 				participant={participant}
 				participants={participants}
 				event={event}
-				events={events}
+				events={evts}
 				view={view}
 				symbolSize={symbolSize}
 			/>
