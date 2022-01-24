@@ -50,7 +50,9 @@ const PopUp = ({ event, symbolSize, show }) => {
 			{!event.register && event.inactive && 'Upcoming – '} {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })} {event.register && ' – Register now!'}
 			</span>
 			<h3>{event.title}</h3>
-			<p className="small"><Markdown truncate={150}>{ event.summary}</Markdown></p>
+			<p className="small">
+				<Markdown truncate={150}>{event.summary}</Markdown>
+			</p>
 		</div>
 	)
 }
