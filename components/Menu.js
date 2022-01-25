@@ -1,14 +1,15 @@
 import styles from "./Menu.module.scss";
 import cn from "classnames";
-import { FESTIVAL_START, FESTIVAL_END, FESTIVAL_START_DATE, FESTIVAL_END_DATE, timeZones } from "lib/utils/constant";
+import { FESTIVAL_START, FESTIVAL_END, timeZones } from "lib/utils/constant";
 import Link from "next/link"
 import DropDown from "./common/DropDown";
 import { useRouter } from "next/router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { format, eachDayOfInterval } from 'date-fns'
-import { formatInTimeZone,toDate, utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
+import { formatInTimeZone,toDate, utcToZonedTime} from "date-fns-tz";
 import { useAppState, AppAction } from "/lib/context/appstate";
 import { useIntervalWhen } from "rooks";
+import { getDefaultTimezone } from "/lib/utils";
 
 const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, {label:'Festival', slug:'festival'}, {label:'About', slug:'about/about-us'}]
 
@@ -87,7 +88,7 @@ export default function Menu({ view, weekday}) {
 
 function TimeZoneDropdown({mobileOpen, inverted}) {
 
-  const defaultTimezone = process.browser && localStorage?.getItem('tz') ? JSON.parse(localStorage?.getItem('tz')) : timeZones[0]
+  const defaultTimezone = getDefaultTimezone()
   const [appState, setAppState] = useAppState();
   const [time, setTime] = useState(format(new Date(), 'HH:mm'))
   const [open, setOpen] = useState(false)

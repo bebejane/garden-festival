@@ -13,13 +13,13 @@ export const getStaticProps = withGlobalProps(async ({ props, context, revalidat
 	const { events } = props;
 	const { params: { path }} = context;
 
-	//if(path?.length !== 2 ) return {notFound:true}
+	if(path?.length !== 2 ) return {notFound:true}
 
 	const weekday = path[0].toLowerCase()
 	const timeZoneCode = path[1]
 	const tz = timeZones.filter( t => t.label.toLowerCase() === timeZoneCode.toLowerCase())[0]
 	
-	//if(!tz) return {notFound:true}
+	if(!tz) return {notFound:true}
 
 	const dayEvents = events.filter((ev) => {	
 		if(weekday === 'pre-party')
