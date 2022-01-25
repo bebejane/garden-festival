@@ -6,44 +6,49 @@ query GetAbouts {
     title
     menuTitle
     slug
-    content{
-    value
-    blocks{
-      __typename
-      ... on ImageGalleryRecord {
-        id
-        images {
-          ...ImageFragment
+    content {
+      value
+      blocks {
+        __typename
+        ... on ImageGalleryRecord {
+          id
+          images {
+            ...ImageFragment
+          }
         }
-      }
-      ... on ImageRecord {
-        id
-        image {
-          ...ImageFragment
+        ... on ImageRecord {
+          id
+          image {
+            ...ImageFragment
+          }
         }
-      }
-      ... on ExternalLinkRecord {
-        id
-        linkText
-        url
-      }
-      ... on SoundRecord {
-        id
-        soundcloudUrl
-      }
-      ... on VideoRecord {
-        id
-        url {
-          height
-          provider
-          providerUid
-          thumbnailUrl
-          title
+        ... on ExternalLinkRecord {
+          id
+          linkText
           url
-          width
+        }
+        ... on SoundRecord {
+          id
+          soundcloudUrl
+        }
+        ... on VideoRecord {
+          id
+          url {
+            height
+            provider
+            providerUid
+            thumbnailUrl
+            title
+            url
+            width
+          }
         }
       }
     }
-  }
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
   }
 }

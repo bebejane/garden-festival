@@ -12,7 +12,6 @@ import { formatInTimeZone } from "date-fns-tz";
 
 export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
-
   const [appState, setAppState] = useAppState();
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
 

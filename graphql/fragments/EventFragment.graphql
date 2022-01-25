@@ -65,4 +65,9 @@ fragment EventFragment on EventRecord {
       slug
     }
   }
+  seo: _seoMetaTags {
+    attributes
+    content
+    tag
+  }
 }

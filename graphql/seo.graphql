@@ -1,0 +1,9 @@
+query GetSEO {
+  seo: $model {
+    tags: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+}

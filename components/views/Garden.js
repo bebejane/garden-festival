@@ -123,7 +123,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	}
 
 	const initSymbols = (reinit) => {
-		console.log('init symbols')
+		
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const symbols = document.querySelectorAll(`[id^='symbol-']`)
 		const positions = generatePositions()
@@ -143,7 +143,6 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		});
 		setPositions(positions);
 		setReady(true)
-		console.log('done init garden')
 	}
 	const resizePositions = async () => {
 		
@@ -273,7 +272,6 @@ export default function Garden({ event, events, participant, view, symbolSize })
 
 		if (!currentView && view === 'garden') {
 			const maxOffset = nodesToArray(targets).sort((a, b) => a.offsetTop < b.offsetTop)[0].offsetTop
-			console.log('dropitdown')
 			anime.set(targets, { opacity: 1, translateY: `-${maxOffset + symbolSize}px` })
 			await wait(500);
 			await transitionTo(targets, endTargets, {

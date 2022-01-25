@@ -82,6 +82,7 @@ const Home = (props) => {
 export default Home;
 
 export const getStaticProps = withGlobalProps(async ({ props, revalidate }) => {
+	
 	return {
 		props,
 		revalidate,

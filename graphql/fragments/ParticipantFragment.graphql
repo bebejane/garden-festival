@@ -38,5 +38,9 @@ fragment ParticipantFragment on ParticipantRecord {
       }
     }
   }
+  seo: _seoMetaTags {
+    attributes
+    content
+    tag
+  }
 }
-
