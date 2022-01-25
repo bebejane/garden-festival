@@ -5,15 +5,15 @@ import { useRouter } from 'next/router';
 import DatoSEO from 'lib/dato/seo';
 
 function MyApp({ Component, pageProps }) {
-  
+
   const router = useRouter()
   const { seo, site } = pageProps;
-	const { pathname, route } = router
-	const pageTitle = `Community Garden Festival · February 07th - 12th · 2022`
+  const { pathname, route } = router
+  const pageTitle = `The Community Garden Festival · February 7–11 · 2022`
 
   return (
     <>
-      <DatoSEO seo={seo} site={site} pathname={pathname} title={pageTitle} key={pathname}/>
+      <DatoSEO seo={seo} site={site} pathname={pathname} title={pageTitle} key={pathname} />
       <AppStateProvider>
         <Component {...pageProps} />
       </AppStateProvider>

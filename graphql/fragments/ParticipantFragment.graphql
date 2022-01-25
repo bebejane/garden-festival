@@ -6,6 +6,7 @@ fragment ParticipantFragment on ParticipantRecord {
   title
   color
   subTitle
+  additional
    image {
       ...ImageFragment
   }

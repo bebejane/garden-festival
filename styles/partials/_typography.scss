@@ -48,6 +48,7 @@ article h1 {
 article h2 {
   font-size: 18px;
   font-variation-settings: "wght" 500;
+  text-align: left !important;
 
   @include mq($from: tablet) {
     font-size: 22px;

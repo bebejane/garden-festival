@@ -30,15 +30,19 @@ export default function Participant({ participant, events: evts, show, symbolSiz
         </header>
         <StructuredContent content={participant.content} />
         <article>
-          <p>
-            {participant.externalLinks.map((link) =>
-              <a className={styles.externalLinks} target="new" href={link.url}>
-                {link.linkText}
-              </a>
-            )}
-          </p>
+          {participant.externalLinks.length > 0 &&
+            <p className={styles.externalLinks}>
+              <strong>EXTERNAL LINKS</strong><br />
+              {participant.externalLinks.map((link) =>
+                <a className={styles.externalLink} target="new" href={link.url}>
+                  {link.linkText}
+                </a>
+              )}
+            </p>
+          }
+          {participant.additional && <p className={styles.additional}><span class="metaLight">{participant.additional}</span></p>}
         </article>
       </ContentMain>
-    </div>
+    </div >
   )
 }

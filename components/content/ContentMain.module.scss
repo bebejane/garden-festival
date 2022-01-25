@@ -1,6 +1,10 @@
 .contentMain {
 	@include roundedBox();
-	padding-bottom: $small-space * 3;
+	padding-bottom: $small-space * 2;
+
+	@include mq($from: tablet) {
+		padding-bottom: $small-space * 3;
+	}
 
 	header {
 		padding-top: $small-space * 3;
