@@ -92,8 +92,18 @@
   }
 
   .externalLinks {
-    display: table;
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid;
+    padding-top: 1em;
+
+    a {
+      display: inline;
+      margin-right: 0.5em;
+    }
+  }
+
+  .additional span {
+    display: block;
+    margin-top: 3em;
+    border-top: 3px solid $black;
+    padding-top: 1em;
   }
 }
