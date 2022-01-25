@@ -4,7 +4,7 @@ import cn from 'classnames'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppState } from "/lib/context/appstate";
-import { formatToTimeZone } from "date-fns-timezone";
+import { formatInTimeZone } from "date-fns-tz";
 import { truncateString } from "/lib/utils";
 import { primaryInput } from 'detect-it';
 import Markdown from '/components/common/Markdown'
@@ -60,7 +60,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 			onMouseLeave={handleMouse}
 		>
 			<span className="metaLight">
-			{!event.register && event.inactive && 'Upcoming – '} {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })} {event.register && ' – Register now!'}
+			{!event.register && event.inactive && 'Upcoming – '} {formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'EEE MMM d ')} {formatInTimeZone(new Date(event.startTime),appState.zone.timeZone, 'HH:mm' )} {event.register && ' – Register now!'}
 			</span>
 			<h3>{event.title}</h3>
 			<p className="small">

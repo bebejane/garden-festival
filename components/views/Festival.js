@@ -1,18 +1,29 @@
 import styles from "./Festival.module.scss"
 import { format, isSameDay } from 'date-fns'
 import EventBox from "/components/common/EventBox";
+import { useAppState } from "/lib/context/appstate";
+import { utcToZonedTime } from "date-fns-tz";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export default function Festival({ events, dayEvents, participants, date, timeZone, show, symbolSize }) {
+export default function Festival({ events, dayEvents, participants, date, show, symbolSize }) {
+  
   if (!show) return null
 
+  const [ appState ] = useAppState();
+  const { timeZone } = appState.zone;
+  const router = useRouter()
+
+  // Go to root festival page when change timezone
+  useEffect(()=>router.asPath.toLowerCase().startsWith('/festival/') && router.push('/festival'), [appState.zone]) 
+
   let currentDate;
-  
   return (
     <div className={styles.festival}>
       {[...(dayEvents || events)].map((ev, idx) => {
         let eventDate;
-        if (!isSameDay(currentDate, new Date(ev.startTime))) {
-          currentDate = new Date(ev.startTime);
+        if (!isSameDay(currentDate, utcToZonedTime(ev.startTime, timeZone) )) {
+          currentDate = utcToZonedTime(ev.startTime, timeZone);
           eventDate = currentDate;
         }
         return (

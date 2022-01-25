@@ -8,7 +8,7 @@ import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 import Markdown from "/components/common/Markdown";
 import { useAppState } from "/lib/context/appstate";
-import { formatToTimeZone } from "date-fns-timezone";
+import { formatInTimeZone } from "date-fns-tz";
 
 export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
@@ -23,7 +23,7 @@ export default function Event({ event, events, show, symbolSize }) {
           <header>
             <section className="meta">
               <span className="meta">
-                {format(new Date(event.startTime), 'EEE MMM d ')} {formatToTimeZone(event.startTime, 'HH:mm', { timeZone: appState.zone.timeZone })}
+                {format(new Date(event.startTime), 'EEE MMM d ')} {formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'HH:mm')}
               </span>
             </section>
             <figure>

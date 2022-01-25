@@ -1,12 +1,12 @@
 import styles from "./Menu.module.scss";
 import cn from "classnames";
-import { FESTIVAL_START_DATE, FESTIVAL_END_DATE, timeZones } from "lib/utils/constant";
+import { FESTIVAL_START, FESTIVAL_END, FESTIVAL_START_DATE, FESTIVAL_END_DATE, timeZones } from "lib/utils/constant";
 import Link from "next/link"
 import DropDown from "./common/DropDown";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { format, eachDayOfInterval } from 'date-fns'
-import { formatToTimeZone } from "date-fns-timezone";
+import { formatInTimeZone,toDate, utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import { useAppState, AppAction } from "/lib/context/appstate";
 import { useIntervalWhen } from "rooks";
 
@@ -14,10 +14,14 @@ const menu = [{label:'Community', slug:'community'}, {label:'Garden', slug:''}, 
 
 export default function Menu({ view, weekday}) {
   
-  const { pathname } = useRouter()
+  const [appState] = useAppState();
+  const router = useRouter()
+  const { pathname } = router;
+  const { timeZone } = appState.zone;
+  const timeZoneCode = appState.zone.label.toLowerCase();
   const [mobileOpen, setMobileOpen] = useState(false)
   const inverted = view === 'about';
-
+  
   return (
     <div id="menu" className={cn(styles.container, inverted && styles.invert)} >
       <div className={styles.wrapper}>
@@ -61,19 +65,17 @@ export default function Menu({ view, weekday}) {
       {['festival', 'weekday'].includes(view) &&
         <nav className={styles.festivalMenu}>
           <ul>
-            <Link href={`/festival/pre-party`}>
+            <Link href={`/festival/pre-party/${timeZoneCode}`}>
               <a><li className={weekday === 'pre-party' ? styles.selected : undefined}>Pre Party</li></a>
             </Link>
-            {eachDayOfInterval({ start: FESTIVAL_START_DATE, end: FESTIVAL_END_DATE }).map((d, idx) =>
-              <Link key={`wlink-${idx}`} href={`/festival/${format(d, 'EEEE').toLowerCase()}`}>
-                <a><li
-                  className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined}
-                >
-                  {format(d, 'EE')} {format(d, 'MMM dd')}
+            {eachDayOfInterval({ start: utcToZonedTime(toDate(FESTIVAL_START), timeZone), end: utcToZonedTime(toDate(FESTIVAL_END), timeZone)}).map((d, idx) =>
+              <Link key={`wlink-${idx}`} href={`/festival/${format(d, 'EEEE').toLowerCase()}/${timeZoneCode}`}>
+                <a><li className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined}>
+                  { format(d, 'EE')} { format(d, 'MMM dd')}
                 </li></a>
               </Link>
             )}
-            <Link href={`/festival/after-party`}>
+            <Link href={`/festival/after-party/${timeZoneCode}`}>
               <a><li className={weekday === 'after-party' ? styles.selected : undefined}>After Party</li></a>
             </Link>
           </ul>
@@ -91,7 +93,7 @@ function TimeZoneDropdown({mobileOpen, inverted}) {
   const [open, setOpen] = useState(false)
   const [tz, setTimezone] = useState(defaultTimezone);
   
-  useIntervalWhen(() => setTime(formatToTimeZone(new Date(), 'HH:mm', { timeZone: tz.timeZone }), 1000, true, true));
+  useIntervalWhen(() => setTime(formatInTimeZone(new Date(), appState.zone.timeZone , 'HH:mm'), 1000, true, true));
   useEffect(() => {
     localStorage?.setItem('tz', JSON.stringify(tz));
     setAppState({ type: AppAction.SET_TIMEZONE, value: tz })

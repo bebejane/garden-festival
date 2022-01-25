@@ -3,7 +3,7 @@ import contentStyles from "../Content.module.scss"
 import cn from "classnames";
 import { useAppState } from "/lib/context/appstate"
 import { intervalToDuration, formatDuration } from 'date-fns'
-import { formatToTimeZone } from 'date-fns-timezone'
+import { formatInTimeZone } from "date-fns-tz";
 import { useState } from "react";
 import Link from "next/link"
 import Markdown from "/components/common/Markdown";
@@ -55,7 +55,7 @@ const EventBox = ({ event, view, symbolSize }) => {
         <p>
           {event.startTime &&
             <span className="meta">
-              {formatToTimeZone(event.startTime, 'ddd HH:mm', { timeZone: appState.zone.timeZone })} • {event.typeOfEvent?.title} • By {event.participant.title}
+              {formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'EEE HH:mm')} • {event.typeOfEvent?.title} • By {event.participant.title}
             </span>
           }
           <h2>{event.title}</h2>
