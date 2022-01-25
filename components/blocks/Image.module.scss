@@ -1,7 +1,8 @@
 .image {
-  margin-top: $space/ 2;
+  margin-top: $space / 2;
   @include mq($from: tablet) {
     margin: $space;
+    margin-top: $space * 0.5;
     margin-bottom: 0 !important;
   }
 
