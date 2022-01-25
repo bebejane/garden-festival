@@ -448,16 +448,16 @@ const GardenHeader = ({ view }) => {
 		return head.text.split('').map((c, idx) =>
 			head.tag === 'h1' ?
 				<span key={idx} style={generateWeightStyle(ratio)}>{c}</span>
-				:
+			:
 				<span key={idx} style={generateWeightStyle(ratio, 300, 700, true)}>{c}</span>
 		)
 	}
-	const generateLine = (head, first) => {
+	const generateLine = (head, first, idx) => {
 		return (
 			head.tag === 'h1' ?
-				<h1>{first && <div style={generateWeightStyle(ratio)} className={styles.the}>The</div>}<span style={generateWeightStyle(ratio)}>{head.text}</span></h1>
-				:
-				<h2><span>{head.text}</span></h2>
+				<h1 key={idx}>{first && <div style={generateWeightStyle(ratio)} className={styles.the}>The</div>}<span style={generateWeightStyle(ratio)}>{head.text}</span></h1>
+			:
+				<h2 key={idx}><span>{head.text}</span></h2>
 		)
 	}
 	const generateWeightStyle = (ratio, min = minWeight, max = maxWeight, reverse) => {
@@ -475,7 +475,7 @@ const GardenHeader = ({ view }) => {
 
 	return (
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
-			{Object.keys(header).map((k, idx) => generateLine(header[k], idx === 0))}
+			{Object.keys(header).map((k, idx) => generateLine(header[k], idx === 0, idx))}
 		</div>
 	)
 }

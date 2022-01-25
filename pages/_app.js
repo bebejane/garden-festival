@@ -13,8 +13,10 @@ function MyApp({ Component, pageProps }) {
 
 	const { asPath : pathname, route } = router
 	const pageTitle = `Community Garden Festival – February 07th - 12th · 2022`
-  
-	usePagesViews() // Google Analytics page view tracker
+	
+  // Google Analytics page view tracker
+  usePagesViews();
+
   return (
     <>
       <GoogleAnalytics />

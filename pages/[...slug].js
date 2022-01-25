@@ -15,15 +15,19 @@ export const getStaticProps = withGlobalProps(async (data) => {
   const participantSlug = slug[0]
   const eventSlug = slug.length > 1 ? slug[1] : false
   const { participant } = await apiQuery(GetParticipantBySlug, {slug:participantSlug});
-  const { event } = eventSlug ? await apiQuery(GetEventBySlug, {slug:eventSlug}) : {};
+  let { event } = eventSlug ? await apiQuery(GetEventBySlug, {slug:eventSlug}) : {};
+  event = transformEventWithTiming(event);
   
-  if(!event && !participant) return { notFound: true } 
+  if(!event && !participant) 
+    return { notFound: true } 
+  else if(event && event.inactive && !process.env.NEXT_PUBLIC_EDITOR_MODE) 
+    return { notFound: true } 
 
   return {
     props :{
       ...data.props,
       participant,
-      event : event ?  transformEventWithTiming(event) : null,
+      event : event || null,
       view : event ? 'event' : 'participant',
       defaultEvent : event || null
     },

@@ -31,7 +31,7 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, label, hide}
       <ul>
         <a>
           <li onClick={() => setInternalOpen(!internalOpen)}>
-            {label ? label : selected ? selected.label : 'Menu' }
+            {label ? label : selected ? selected.label : 'Menu'}
             <div className={cn(styles.arrow, internalOpen && styles.open)}>↓</div>
           </li>
         </a>
@@ -45,7 +45,7 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, label, hide}
               </a>
             </Link>
           :
-            <a onClick={()=> handleClick(a)}>
+            <a key={idx} onClick={()=> handleClick(a)}>
               <li>{a.label}</li>
             </a>
           }
