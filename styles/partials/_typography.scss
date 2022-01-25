@@ -28,7 +28,7 @@ h2,
 article h1 {
   font-size: 26px;
   font-feature-settings: "ss00" 1;
-  font-variation-settings: "wght" 500;
+  font-variation-settings: "wght" 600;
 
   @include mq($from: tablet) {
     font-size: 40px;
@@ -40,12 +40,14 @@ article h1 {
 }
 
 article h1 {
+  font-variation-settings: "wght" 500;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
 
 article h2 {
   font-size: 18px;
+  font-variation-settings: "wght" 500;
 
   @include mq($from: tablet) {
     font-size: 22px;

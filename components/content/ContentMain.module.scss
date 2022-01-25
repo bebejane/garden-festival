@@ -1,5 +1,6 @@
 .contentMain {
 	@include roundedBox();
+	padding-bottom: $small-space * 3;
 
 	header {
 		padding-top: $small-space * 3;
@@ -33,6 +34,7 @@
 	border-color: $white;
 	a {
 		color: $white !important;
+		border-color: $white;
 	}
 }
 
