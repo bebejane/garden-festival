@@ -6,7 +6,7 @@
   bottom: 0;
   right: 0;
   z-index: 10;
-  padding: $small-space / 2;
+  padding: math.div($small-space, 2);
   transition: padding-right 0.5s;
 
   @include mq($from: tablet) {

@@ -1,5 +1,5 @@
 .image {
-  margin-top: $space / 2;
+  margin-top: math.div($space, 2);
   @include mq($from: tablet) {
     margin: $space;
     margin-top: $space * 0.5;

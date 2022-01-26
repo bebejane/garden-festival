@@ -79,7 +79,7 @@
 }
 
 .aboutMobileDropDown {
-  margin-top: $small-space / 2;
+  margin-top: math.div($small-space, 2);
   max-width: 220px;
   @include mq($from: desktop) {
     display: none;

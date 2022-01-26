@@ -7,8 +7,8 @@
 	margin-bottom: -3px;
 	position: relative;
 	justify-content: space-between;
-	padding-left: $outer-margin / 2;
-	padding-right: $outer-margin / 2;
+	padding-left: math.div($outer-margin, 2);
+	padding-right: math.div($outer-margin, 2);
 
 	@include mq($from: desktop) {
 		min-height: 70vh;
@@ -27,7 +27,7 @@
 
 	section {
 		@include roundedElement();
-		margin-top: $small-space / 2;
+		margin-top: math.div($small-space, 2);
 
 		@include mq($from: tablet) {
 			margin-top: $small-space;
