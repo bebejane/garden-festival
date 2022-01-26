@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 120vh;
   overflow: hidden;
   .image,
   img[id="background"] {
@@ -20,7 +20,12 @@
   img[id="background-event"] {
     object-fit: fill;
   }
+
+  @include mq($from: tablet) {
+    height: 100%;
+  }
 }
+
 @keyframes pssycco {
   from {
     filter: hue-rotate(0deg);
