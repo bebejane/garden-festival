@@ -89,7 +89,7 @@
     @include roundedElement();
     position: absolute;
     display: none;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     align-items: center;
     padding: 0px;

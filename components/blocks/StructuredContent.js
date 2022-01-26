@@ -53,18 +53,18 @@ export default function StructuredContent({ content }) {
           renderNodeRule(isParagraph, ({ adapter: { renderNode }, node, children, key, ancestors }) => {
             
               // Remove trailing <br>
-              if (isRoot(ancestors[0]) && node.children[node.children.length-1].value.endsWith('\n')) {
+              if (isRoot(ancestors[0]) && node.children[node.children.length-1].value?.endsWith('\n')) {
                 let index = node.children.length;
                 while(index >= 0  && node.children[0].value[index] === '\n') index--;
-                console.log('remove trailing br', index)
+                //console.log('remove trailing br', index)
                 children = children.slice(0,index);
               } 
 
               // Remove leading <br>
-              if (isRoot(ancestors[0]) && node.children[0].value.startsWith('\n')) {
+              if (isRoot(ancestors[0]) && node.children[0].value?.startsWith('\n')) {
                 let index = 0;
                 while(index < node.children[0].value.length && node.children[0].value[index] === '\n') index++;
-                console.log('remove leading br', index)
+                //console.log('remove leading br', index)
                 children = children.slice(index)
               }
 

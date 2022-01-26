@@ -142,15 +142,17 @@
   margin-top: $small-space !important;
   &.mobileOpen {
     display: flex !important;
-    ul{
-      max-height: calc(100vh - 300px);
-      overflow-y:auto;
-    }
     ul > a > li {
       background-color: $white;
       &:first-child {
         color: $black !important;
       }
+    }
+  }
+  @include mq($until: desktop) {
+    ul:last-child{
+      max-height: calc(100vh - 300px);
+      overflow-y:auto;
     }
   }
   @include mq($from: desktop) {
@@ -159,5 +161,6 @@
     top: 0px;
     margin: 0px !important;
     width: 180px !important;
+    
   }
 }
