@@ -92,7 +92,7 @@ const Symbol = (props) => {
 		<>
 			<PopUp event={event} show={showPopup} symbolSize={symbolSize}/>
 			{!event.inactive ? 
-				<Link href={`/${event.participant?.slug}/${event.slug}`}>{gardenSymbol}</Link> 
+				<Link prefetch={false} href={`/${event.participant?.slug}/${event.slug}`}>{gardenSymbol}</Link> 
 			: 
 				<>{gardenSymbol}</>
 			}

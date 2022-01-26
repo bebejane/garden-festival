@@ -25,7 +25,7 @@ export default function About({ about, abouts, show }) {
         <div className={styles.aboutMenu}>
           <ul className={styles.aboutMenu}>
             {abouts.map((a, idx) =>
-              <Link key={idx} href={`/about/${a.slug}`}>
+              <Link prefetch={false} key={idx} href={`/about/${a.slug}`}>
                 <a>
                   <li className={pathname === `/about/${a.slug}` && styles.selected}>{a.menuTitle}</li>
                 </a>

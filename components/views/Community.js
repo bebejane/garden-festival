@@ -17,7 +17,7 @@ export default function Community({ participants, events, show, symbolSize }) {
           const participantEvents = events.filter(e => e.participant.id === p.id);
           
           return (
-            <Link key={`plink-${idx}`} href={`/${p.slug}`}>
+            <Link prefetch={false} key={`plink-${idx}`} href={`/${p.slug}`}>
               <a className={styles.participant}>
                 <div className={cn(styles.symbols, participantEvents.length <= 1 ? styles.single : undefined)}>
                   {participantEvents.map((event, idx) =>

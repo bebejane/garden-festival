@@ -5,7 +5,7 @@ import anime from "animejs";
 
 export default function LinkButton({children, href, className, weekday}) {
 	return (
-    <Link href={href}>
+    <Link prefetch={false} href={href}>
       <a className={cn(styles.button, weekday && styles[weekday.toLowerCase()], className)}>
         {children}
       </a>

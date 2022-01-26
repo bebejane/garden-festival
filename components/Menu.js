@@ -38,15 +38,15 @@ export default function Menu({ view, weekday}) {
         <TimeZoneDropdown mobileOpen={mobileOpen} inverted={inverted}/>
         <nav className={styles.menu} >
           <ul>
-            <Link href={'/community'}>
+            <Link prefetch={false} href={'/community'}>
               <a><li className={pathname === '/community' || view === 'participant' ? styles.selected : undefined}>Community</li></a>
             </Link>
-            <Link href={'/'}>
+            <Link prefetch={false} href={'/'}>
               <a>
                 <li className={pathname === '/' ? styles.selected : undefined}>Garden</li>
               </a>
             </Link>
-            <Link href={'/festival'}>
+            <Link prefetch={false} href={'/festival'}>
               <a> 
                 <li className={pathname.startsWith('/festival') || view === 'event' ? styles.selected : undefined}>Festival</li>
               </a>
@@ -55,7 +55,7 @@ export default function Menu({ view, weekday}) {
         </nav>
         <nav className={styles.menu} >
           <ul>
-            <Link href={'/about/about-us'}>
+            <Link prefetch={false} href={'/about/about-us'}>
               <a>
                 <li className={pathname.startsWith('/about') ? styles.selected : undefined}>About</li>
               </a>
@@ -66,17 +66,17 @@ export default function Menu({ view, weekday}) {
       {['festival', 'weekday'].includes(view) &&
         <nav className={styles.festivalMenu}>
           <ul>
-            <Link href={`/festival/pre-party/${timeZoneCode}`}>
+            <Link prefetch={false} href={`/festival/pre-party/${timeZoneCode}`}>
               <a><li className={weekday === 'pre-party' ? styles.selected : undefined}>Pre Party</li></a>
             </Link>
             {eachDayOfInterval({ start: utcToZonedTime(toDate(FESTIVAL_START), timeZone), end: utcToZonedTime(toDate(FESTIVAL_END), timeZone)}).map((d, idx) =>
-              <Link key={`wlink-${idx}`} href={`/festival/${format(d, 'EEEE').toLowerCase()}/${timeZoneCode}`}>
+              <Link prefetch={false} key={`wlink-${idx}`} href={`/festival/${format(d, 'EEEE').toLowerCase()}/${timeZoneCode}`}>
                 <a><li className={weekday === format(d, 'EEEE').toLowerCase() ? styles.selected : undefined}>
                   { format(d, 'EE')} { format(d, 'MMM dd')}
                 </li></a>
               </Link>
             )}
-            <Link href={`/festival/after-party/${timeZoneCode}`}>
+            <Link prefetch={false} href={`/festival/after-party/${timeZoneCode}`}>
               <a><li className={weekday === 'after-party' ? styles.selected : undefined}>After Party</li></a>
             </Link>
           </ul>

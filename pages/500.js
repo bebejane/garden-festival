@@ -13,7 +13,7 @@ export default function FiveZeroZero() {
   return (
     <div style={errorStyles}>
       <h1>500 - Server-side error occurred</h1>
-      <Link href="/">
+      <Link prefetch={false} href="/">
         <a>
           Go back home
         </a>

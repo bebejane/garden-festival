@@ -14,7 +14,7 @@ const Markdown = ({ children, truncate }) => {
       children={children}
       components={{
         a: ({ node, ...props }) => 
-        <Link 
+        <Link prefetch={false} 
           href={props.href} 
           scroll={false}
         >

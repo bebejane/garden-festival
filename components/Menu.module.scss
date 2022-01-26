@@ -142,6 +142,10 @@
   margin-top: $small-space !important;
   &.mobileOpen {
     display: flex !important;
+    ul{
+      max-height: calc(100vh - 300px);
+      overflow-y:scroll;
+    }
     ul > a > li {
       background-color: $white;
       &:first-child {

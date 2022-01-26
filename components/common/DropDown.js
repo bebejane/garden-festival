@@ -39,7 +39,7 @@ const DropDown = ({options, className, inverted, setOpen, onSelect, label, hide}
       <ul className={cn(styles.items, internalOpen && styles.open)}>
         {options.map((a, idx) =>
           {return a.slug !== undefined ?
-            <Link key={idx} href={`/${a.slug}`}>
+            <Link prefetch={false} key={idx} href={`/${a.slug}`}>
               <a onClick={()=> handleClick(a)}>
                 <li>{a.label}</li>
               </a>

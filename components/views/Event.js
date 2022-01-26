@@ -39,7 +39,7 @@ export default function Event({ event, events, show, symbolSize }) {
           </header>
           <section className={styles.by}>
             <span className="meta">
-              By <Link href={`/${event.participant.slug}`}><a>{event.participant.title}</a></Link>
+              By <Link prefetch={false} href={`/${event.participant.slug}`}><a>{event.participant.title}</a></Link>
             </span>
           </section>
         </ContentHeader>
@@ -61,7 +61,7 @@ export default function Event({ event, events, show, symbolSize }) {
                   <div className={styles.related}>
                     <h2>Related</h2>
                     {related.map((ev, idx) =>
-                      <Link key={idx} href={`/${ev.participant.slug}/${ev.slug}`}>
+                      <Link prefetch={false} key={idx} href={`/${ev.participant.slug}/${ev.slug}`}>
                         <a>
                           <div className={styles.relatedEvent}>
                             <h3>{ev.title}</h3>
