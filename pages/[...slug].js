@@ -11,7 +11,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
     context : { params : { slug }},
     revalidate
   } = data;
-
+  
   const participantSlug = slug[0]
   const eventSlug = slug.length > 1 ? slug[1] : false
   const { participant } = await apiQuery(GetParticipantBySlug, {slug:participantSlug});

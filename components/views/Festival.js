@@ -22,15 +22,18 @@ export default function Festival({ events, dayEvents, participants, date, show, 
     <div className={styles.festival}>
       {[...(dayEvents || events)].map((ev, idx) => {
         let eventDate;
+        let header;
+        let isPreParty, isAfterParty;
         if (!isSameDay(currentDate, utcToZonedTime(ev.startTime, timeZone) )) {
           currentDate = utcToZonedTime(ev.startTime, timeZone);
           eventDate = currentDate;
+          header = ev.isPreParty ? 'Pre Party' : ev.isAfterParty ? 'After Party' : <>{format(eventDate, 'EEEE')}<br />{format(eventDate, 'MMMM d')}</>
         }
         return (
           <>
             {eventDate &&
               <h1 key={`ehead-${idx}`} id={format(eventDate, 'yyyy-MM-d')} className={styles.weekday}>
-                {format(eventDate, 'EEEE')}<br />{format(eventDate, 'MMMM d')}
+                {header}
               </h1>
             }
             <EventBox event={ev} view={dayEvents ? 'weekday' : 'festival'} symbolSize={symbolSize}/>

@@ -1,6 +1,7 @@
 import { GetEvent, GetEventBySlug, GetEvents} from  "./event.graphql";
 import { GetAbouts } from  "./about.graphql";
 import { GetParticipants, GetParticipantBySlug } from  "./participant.graphql";
+import { GetGlobal } from  "./global.graphql";
 
 export { 
   GetEvent, 
@@ -8,5 +9,6 @@ export {
   GetEvents, 
   GetAbouts,
   GetParticipants,
-  GetParticipantBySlug
+  GetParticipantBySlug,
+  GetGlobal
 }

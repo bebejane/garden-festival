@@ -55,7 +55,7 @@ const EventBox = ({ event, view, symbolSize }) => {
         <p>
           {event.startTime &&
             <span className="meta">
-              {event.isPreParty ? 'Pre Party' : event.isAfterParty ? 'After party' : formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'EEE HH:mm')} • {event.typeOfEvent?.title} • By {event.participant.title}
+              {formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'EEE HH:mm')} • {event.typeOfEvent?.title} • By {event.participant.title}
             </span>
           }
           <h2>{event.title}</h2>
