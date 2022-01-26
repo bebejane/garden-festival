@@ -1,6 +1,6 @@
 import styles from "./index.module.scss"
 import { StructuredText, renderNodeRule, renderMarkRule } from 'react-datocms';
-import { isParagraph, isRoot } from 'datocms-structured-text-utils';
+//import { isParagraph, isRoot } from 'datocms-structured-text-utils';
 import Sound from './Sound'
 import ExternalLink from './ExternalLink'
 import Image from './Image'
@@ -9,7 +9,7 @@ import Video from './Video'
 import LinkButton from "/components/LinkButton";
 
 const sanitizeText = (text) => {
-  return text?.replace(/\ /g, ' ')
+  return text?.replace(/\s/g, ' ');
 }
 
 export default function StructuredContent({ content }) {
@@ -53,7 +53,6 @@ export default function StructuredContent({ content }) {
         customMarkRules={[
           // convert "strong" marks into <b> tags
           renderMarkRule('a', ({ mark, children, key }) => {
-            console.log(mark, children, key)
             return <a key={key}>{children}</a>;
           }),
         ]}

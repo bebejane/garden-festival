@@ -21,4 +21,7 @@
       @include textWidth();
     }
   }
+  p + br{
+    display: none;
+  }
 }
