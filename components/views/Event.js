@@ -52,7 +52,7 @@ export default function Event({ event, events, show, symbolSize }) {
                   {event.summary}
                 </Markdown>
               </p>
-              {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">To the festival registration <span>→</span></a>}
+              {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">festival registration <span>→</span></a>}
             </header>
             {(process.env.NEXT_PUBLIC_EDITOR_MODE || !event.inactive) &&
               <>
