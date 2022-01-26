@@ -5,7 +5,7 @@ import { apiQuery } from "lib/api";
 import Home from "../index"
 export default Home;
 
-export const getStaticProps = withGlobalProps(async ({props, context, revalidate}) => {
+export const getStaticProps = withGlobalProps({queries:[GetAbouts]}, async ({props, context, revalidate}) => {
   return {
     props:{
       ...props,
