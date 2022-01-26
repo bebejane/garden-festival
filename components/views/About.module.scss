@@ -6,7 +6,11 @@
   color: $white;
 
   article {
-    padding-top: $space;
+    padding-top: $small-space * 2;
+
+    @include mq($from: tablet) {
+      padding-top: $space;
+    }
   }
 }
 

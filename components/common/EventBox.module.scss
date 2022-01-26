@@ -2,7 +2,7 @@
   @include roundedBox();
   color: $black;
   display: flex;
-  margin-bottom: $small-space * 2;
+  margin-bottom: $small-space;
   padding-top: $small-space * 2;
   padding-left: $small-space;
   padding-right: $small-space;
@@ -16,6 +16,7 @@
   }
 
   @include mq($from: tablet) {
+    margin-bottom: $small-space * 2;
     flex-direction: row;
     padding-right: $space;
   }

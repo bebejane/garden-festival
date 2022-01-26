@@ -6,7 +6,6 @@ $top-margin: 80px;
 	top: $top-margin;
 	display: flex;
 	justify-content: center;
-	min-height: 100vh;
 	padding: 0px;
 	width: 100%;
 	box-sizing: border-box;
@@ -14,6 +13,11 @@ $top-margin: 80px;
 	transition-delay: 0.3;
 	opacity: 0;
 	z-index: 0;
+	min-height: 100%;
+
+	@include mq($from: tablet) {
+		min-height: 100vh;
+	}
 
 	&.show {
 		opacity: 1;
