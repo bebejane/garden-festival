@@ -49,6 +49,12 @@ const PopUp = ({ event, symbolSize, show }) => {
 	const handleMouse = ({type}) =>{
 		setInternalShow(type === 'mouseenter')
 	}
+	const date = `${formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'EEE MMM d ')} ${formatInTimeZone(new Date(event.startTime),appState.zone.timeZone, 'HH:mm')}`
+	const prefix = (!event.register && event.inactive) ? 'Upcoming – ' : '';
+	const suffix = event.register ? ' – Register now!' : '';
+
+	const header =  event.isPreParty ? 'Pre Party' : event.isAfterParty ? 'After Party' :  <>{prefix}{date}{suffix}</>
+
 	return (
 		<div 
 			id={`garden-popup-${event.id}`} 
@@ -60,7 +66,7 @@ const PopUp = ({ event, symbolSize, show }) => {
 			onMouseLeave={handleMouse}
 		>
 			<span className="metaLight">
-			{!event.register && event.inactive && 'Upcoming – '} {formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'EEE MMM d ')} {formatInTimeZone(new Date(event.startTime),appState.zone.timeZone, 'HH:mm' )} {event.register && ' – Register now!'}
+				{header}
 			</span>
 			<h3>{event.title}</h3>
 			<p className="small">

@@ -14,6 +14,7 @@ export default function Event({ event, events, show, symbolSize }) {
   if (!event) return null
   const [appState, setAppState] = useAppState();
   const related = events.filter((ev) => ev.participant.id === event.participant.id && ev.id !== event.id)
+  const dateHeader = event.isPreParty ? 'Pre Party' : event.isAfterParty ? 'After Party' : `${format(new Date(event.startTime), 'EEE MMM d ')} ${formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'HH:mm')}`
 
   return (
     <div className={cn(styles.event, !show && styles.hide)}>
@@ -22,7 +23,7 @@ export default function Event({ event, events, show, symbolSize }) {
           <header>
             <section className="meta">
               <span className="meta">
-                {format(new Date(event.startTime), 'EEE MMM d ')} {formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'HH:mm')}
+                {dateHeader}
               </span>
             </section>
             <figure>

@@ -23,7 +23,7 @@ export default function Festival({ events, dayEvents, participants, date, show, 
       {[...(dayEvents || events)].map((ev, idx) => {
         let eventDate;
         let header;
-        let isPreParty, isAfterParty;
+        
         if (!isSameDay(currentDate, utcToZonedTime(ev.startTime, timeZone) )) {
           currentDate = utcToZonedTime(ev.startTime, timeZone);
           eventDate = currentDate;
