@@ -11,7 +11,7 @@ export const getStaticProps = withGlobalProps({queries:[GetAbouts]}, async ({pro
   return {
     props:{
       ...props,
-      about:props.abouts.filter(a => a.slug === slug[0])[0],
+      about: props.abouts.filter(a => a.slug === slug[0])[0],
       view : 'about'
     },
     revalidate
@@ -19,14 +19,13 @@ export const getStaticProps = withGlobalProps({queries:[GetAbouts]}, async ({pro
 });
 
 export async function getStaticPaths() {
-
-  const {abouts} = await apiQuery(GetAbouts, {}, false);
+  const { abouts } = await apiQuery(GetAbouts, {}, false);
   const paths = [];
   
   abouts.forEach(a => paths.push({ params: { slug: [a.slug] }}))
 
   return {
 		paths:paths,
-		fallback: true,
+		fallback: 'blocking',
 	};
 }

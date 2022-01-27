@@ -14,9 +14,16 @@ export const getStaticProps = withGlobalProps(async (data) => {
   
   const participantSlug = slug[0]
   const eventSlug = slug.length > 1 ? slug[1] : false
-  const { participant } = await apiQuery(GetParticipantBySlug, {slug:participantSlug});
-  let { event } = eventSlug ? await apiQuery(GetEventBySlug, {slug:eventSlug}) : {};
-  event = transformEventWithTiming(event);
+  
+  const queries = [GetParticipantBySlug]
+  const params = [{slug:participantSlug}]
+  if(eventSlug){
+    queries.push(GetEventBySlug)
+    params.push({slug:eventSlug})
+  }
+
+  let { participant, event } = await apiQuery(queries, params);
+  event = event ? transformEventWithTiming(event) : null
   
   if(!event && !participant) 
     return { notFound: true } 
@@ -27,7 +34,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
     props :{
       ...data.props,
       participant,
-      event : event || null,
+      event,
       view : event ? 'event' : 'participant',
       defaultEvent : event || null
     },
@@ -36,9 +43,8 @@ export const getStaticProps = withGlobalProps(async (data) => {
 });
 
 export async function getStaticPaths() {
-
-  const { participants } = await apiQuery(GetParticipants);
-  const { events } = await apiQuery(GetEvents);
+  console.log('paths')
+  const { participants, events } = await apiQuery([GetParticipants,GetEvents]);
   const paths = [];
 
   participants.forEach((participant) => {
@@ -49,6 +55,6 @@ export async function getStaticPaths() {
   
 	return {
 		paths:paths,
-		fallback: true,
+		fallback: 'blocking',
 	};
 }
