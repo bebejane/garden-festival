@@ -17,6 +17,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
   
   const queries = [GetParticipantBySlug]
   const params = [{slug:participantSlug}]
+  
   if(eventSlug){
     queries.push(GetEventBySlug)
     params.push({slug:eventSlug})

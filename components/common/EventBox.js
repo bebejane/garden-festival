@@ -41,7 +41,7 @@ const EventBox = ({ event, view, symbolSize }) => {
   
   const eventContent = (
     <a className={cn(styles.event, event.inactive && styles.inactive, remember && styles.remember)} onClick={handleClick}>
-      <div className={styles.upcoming}><span class="meta">Upcoming!</span></div>
+      <div className={styles.upcoming}><span className="meta">Upcoming!</span></div>
       <div className={styles.symbol}>
         <img
           id={`${view}-symbol-${event.id}`}

@@ -1,6 +1,5 @@
 import { withGlobalProps } from "lib/utils";
 import { GetAbouts } from "/graphql";
-import { apiQuery } from "lib/api";
 
 import Home from "../index"
 export default Home;
