@@ -44,7 +44,7 @@ $top-margin: 80px;
 	}
 	.contentPopup {
 		opacity: 0;
-		transition: transform 0.05s;
+		transition: transform 0.001s;
 		transform: translateY(100%);
 		margin-bottom: $small-space;
 
