@@ -4,9 +4,9 @@ import cn from "classnames";
 import anime from "animejs";
 import useScrollPosition from '@react-hook/window-scroll'
 import { useWindowSize } from "rooks";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { nodesToArray, randomInt } from "lib/utils";
+import { nodesToArray } from "lib/utils";
 import { wait } from "lib/utils";
 
 export default function Garden({ event, events, participant, view, symbolSize }) {
@@ -17,6 +17,8 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	const [currentView, setCurrentView] = useState();
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [positions, setPositions] = useState();
+	const [gardenHeight, setGardenHeight] = useState(0);
+  
 	const { innerWidth } = useWindowSize();
 	
 	const toggleView = (view, force) => {
@@ -67,12 +69,12 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		const maxCols = Math.floor(bounds.width / symbolSize)
 		const maxRows = symbolsPerPage / maxCols
 		const overflowSpace = (maxRows - ((elements.length - (symbolsPerPage * (totalPages - 1))) / maxCols)) * symbolSize
-		const positions = { bounds, items: [] };
+		const positions = { bounds, items: [], totalHeight:0};
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
 		const maxY = (bounds.height - symbolSize)
-
+		
 		const isOverlapping = (area) => {
 
 			for (let i = 0; i < positions.items.length; i++) {
@@ -96,8 +98,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			const randY = 0;
 			const retries = 0;
 			const pageMargin = (page * bounds.height)
+		
 			let area;
-
+			
 			do {
 				randX = Math.round(minX + ((maxX - minX) * (Math.random() % 1)));
 				randY = Math.round((minY + pageMargin) + (((maxY + pageMargin - (page + 1 === totalPages ? overflowSpace : 0)) - (minY + pageMargin)) * (Math.random())));
@@ -115,7 +118,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 				return generatePositions(++totalRetries)
 
 			page = Math.floor((i + 1) / symbolsPerPage)
+
 			positions.items.push(area);
+			positions.totalHeight =  positions.totalHeight < (area.top+symbolSize) ? (area.top+symbolSize) : positions.totalHeight
 		}
 		if (totalRetries >= 10)
 			console.log('failed to randomly position')
@@ -143,11 +148,11 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		});
 		setPositions(positions);
 		setReady(true)
+		setGardenHeight(positions.totalHeight)
 	}
 	const resizePositions = async () => {
-		
 		if (!positions) return
-
+		
 		const bounds = getBounds()
 		const { bounds: lastBounds, items } = positions;
 		const widthDiff = bounds.window.width / lastBounds.window.width
@@ -390,15 +395,15 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		})
 	}, [])
 
-	useEffect(() => resizePositions(), [innerWidth])
+	useEffect(()=>resizePositions(), [innerWidth])
 	useEffect(()=> router.asPath.startsWith('/festival/') && toWeekday(), [router.asPath])
 
 	return (
 		<>
 			<div className={styles.garden}>
-				<GardenHeader view={view} />
+				<GardenHeader view={view} ready={ready}/>
 			</div>
-			<div id="garden" className={cn(styles.symbols, view !== 'garden' && !currentAnimation && styles.inactive)}>
+			<div id="garden" style={view === 'garden' ? {minHeight:`${gardenHeight+60}px`} : {} } className={cn(styles.symbols, view !== 'garden' && !currentAnimation && styles.inactive)}>
 				{events?.map((event, index) =>
 					<Symbol
 						key={index}
@@ -414,10 +419,11 @@ export default function Garden({ event, events, participant, view, symbolSize })
 }
 
 
-const GardenHeader = ({ view }) => {
+const GardenHeader = ({ view, ready }) => {
 
 	const [ratio, setRatio] = useState(1)
 	const scrollY = useScrollPosition(60)
+
 	const maxWeight = 700
 	const minWeight = 200
 

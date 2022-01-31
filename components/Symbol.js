@@ -82,7 +82,7 @@ const Symbol = (props) => {
 				eventid={event.id}
 				participantid={event.participant?.id}
 				starttime={event.startTime}
-				onTouchStart={()=> event.inactive && setShowPopup(!showPopup)}
+				onTouchEnd={()=> event.inactive && setShowPopup(!showPopup)}
 				className={cn(styles.symbol, styles.garden, hide && styles.hide, contentStyles.placeholderSymbol, event.inactive && styles.inactive)}
 			/>
 		</a>
