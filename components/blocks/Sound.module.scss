@@ -1,8 +1,11 @@
 .sound {
-  margin-top: $space / 2;
+  margin-top: $small-space * 1.2;
 
   @include mq($from: tablet) {
-    margin-top: $space;
     @include textWidth();
+  }
+
+  & + p {
+    padding-top: 1em;
   }
 }

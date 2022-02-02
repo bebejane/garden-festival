@@ -3,23 +3,31 @@
   color: $black;
   margin: auto;
   @include roundedElement();
-  margin-top: $small-space * 2 !important;
-  margin-bottom: $small-space * 2 !important;
-  background: $black;
-  color: $white;
-  text-transform: uppercase;
+  height: $small-space * 3;
+  border-radius: $small-space * 2;
+  flex-direction: row;
+  margin: auto;
   -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  padding-left: 2em;
+  padding-right: 2em;
+  margin-bottom: 2 * $small-space;
 
   &:hover {
-    background: $white;
-    color: $black;
+    background-color: $black;
+    color: $white;
+  }
+
+  &:hover {
+    background: $black;
+    color: $white;
   }
 
   &:visited {
-    color: $white;
+    color: $black;
 
     &:hover {
-      color: $black;
+      color: $white;
     }
   }
 }

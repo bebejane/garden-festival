@@ -80,4 +80,17 @@
       margin-bottom: 2rem;
     }
   }
+
+  .additional {
+    p {
+      padding: 0 !important;
+    }
+
+    span {
+      display: block;
+      margin-top: 3em;
+      border-top: 3px solid $black;
+      padding-top: 1em;
+    }
+  }
 }

@@ -11,6 +11,7 @@ fragment EventFragment on EventRecord {
   subTitle
   createdAt
   register
+  additional
   image {
       ...ImageFragment
   }

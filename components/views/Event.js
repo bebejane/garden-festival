@@ -75,6 +75,9 @@ export default function Event({ event, events, show, symbolSize }) {
                 }
               </>
             }
+            <article>
+              {event.additional && <p className={styles.additional}><span class="metaLight"><Markdown>{event.additional}</Markdown></span></p>}
+            </article>
           </section>
         </ContentMain>
       </div>

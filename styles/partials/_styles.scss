@@ -45,6 +45,21 @@
   }
 }
 
+@mixin textWidthMargin() {
+  margin-left: $small-space;
+  margin-right: $small-space;
+
+  @include mq($from: tablet) {
+    margin-left: $outer-margin;
+    margin-right: $outer-margin;
+  }
+
+  @include mq($from: wide) {
+    margin-left: $outer-margin * 1.3;
+    margin-right: $outer-margin * 1.3;
+  }
+}
+
 @mixin fullWidth() {
   margin: $space;
 }

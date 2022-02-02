@@ -49,6 +49,7 @@ article h2 {
   font-size: 18px;
   font-variation-settings: "wght" 500;
   text-align: left !important;
+  line-height: 1.2;
 
   @include mq($from: tablet) {
     font-size: 22px;
@@ -101,6 +102,10 @@ p {
     font-weight: normal;
     font-variation-settings: "wght" 400;
   }
+
+  u {
+    text-decoration: none;
+  }
 }
 
 em {
@@ -125,7 +130,8 @@ nav,
   @include nav();
 }
 
-.metaLight {
+.metaLight,
+.metaLight p {
   @include nav();
   font-variation-settings: "wght" 400;
 }
