@@ -77,7 +77,7 @@ const EventBox = ({ event, view, symbolSize }) => {
     </a>
   )
 
-  return event.register || event.launched ?
+  return !event.inactive ?
     <Link prefetch={false} href={`/${event.participant.slug}/${event.slug}`}>
       {eventContent}
     </Link>
