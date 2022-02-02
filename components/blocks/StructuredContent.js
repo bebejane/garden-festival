@@ -63,7 +63,7 @@ export default function StructuredContent({ content }) {
             // Remove trailing <br>
             if (isRoot(ancestors[0]) && node.children[node.children.length-1].value?.endsWith('\n')) {
               let index = node.children.length;
-              while(index >= 0  && node.children[0].value[index] === '\n') index--;
+              while(index >= 0 && node.children[0].value && node.children[0].value[index] === '\n') index--;
               //console.log('remove trailing br', index)
               children = children.slice(0,index);
             } 
