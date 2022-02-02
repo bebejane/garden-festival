@@ -1,6 +1,8 @@
 import styles from "./index.module.scss"
 import { StructuredText, renderNodeRule, renderMarkRule } from 'react-datocms';
-import { isParagraph, isRoot } from 'datocms-structured-text-utils';
+import { isParagraph, isLink, isThematicBreak, isRoot } from 'datocms-structured-text-utils';
+import Link from "next/link";
+
 import Sound from './Sound'
 import ExternalLink from './ExternalLink'
 import Image from './Image'
@@ -10,7 +12,7 @@ import LinkButton from "/components/LinkButton";
 
 export default function StructuredContent({ content }) {
   
-  if (!content) return null //Empty content
+  if (!content) return null 
 
   return (
     <article className={styles.mainContent}>
@@ -47,37 +49,43 @@ export default function StructuredContent({ content }) {
           }
         }}
         renderText={(text)=>{
+          // Replace nbsp
           return text?.replace(/\s/g, ' ');
         }}
         customNodeRules={[
-          renderNodeRule(isParagraph, ({ adapter: { renderNode }, node, children, key, ancestors }) => {
-            
-              // Remove trailing <br>
-              if (isRoot(ancestors[0]) && node.children[node.children.length-1].value?.endsWith('\n')) {
-                let index = node.children.length;
-                while(index >= 0  && node.children[0].value[index] === '\n') index--;
-                //console.log('remove trailing br', index)
-                children = children.slice(0,index);
-              } 
+          // Wrap <a> with nextjs Link
+          renderNodeRule(isLink, ({ adapter: { renderNode }, node, children, key, ancestors }) => {
+            return <Link href={node.url}>{renderNode('a', {key}, children)}</Link>
+          }),
+          // Clenup paragraphs
+          renderNodeRule(isParagraph, ({ adapter: { renderNode }, node, children, key, ancestors }) => { 
 
-              // Remove leading <br>
-              if (isRoot(ancestors[0]) && node.children[0].value?.startsWith('\n')) {
-                let index = 0;
-                while(index < node.children[0].value.length && node.children[0].value[index] === '\n') index++;
-                //console.log('remove leading br', index)
-                children = children.slice(index)
-              }
+            // Remove trailing <br>
+            if (isRoot(ancestors[0]) && node.children[node.children.length-1].value?.endsWith('\n')) {
+              let index = node.children.length;
+              while(index >= 0  && node.children[0].value[index] === '\n') index--;
+              //console.log('remove trailing br', index)
+              children = children.slice(0,index);
+            } 
 
-              // Filter out empty paragraphs
-              children = children.filter(c => !(c.props.children.length === 1 && !c.props.children[0]))
+            // Remove leading <br>
+            if (isRoot(ancestors[0]) && node.children[0].value?.startsWith('\n')) {
+              let index = 0;
+              while(index < node.children[0].value.length && node.children[0].value[index] === '\n') index++;
+              //console.log('remove leading br', index)
+              children = children.slice(index)
+            }
 
-              // If no children remove tag completely
-              if(!children.length) return null
+            // Filter out empty paragraphs
+            children = children.filter(c => !(c.props.children.length === 1 && !c.props.children[0]))
 
-              // Return paragraph with sanitized children
-              return renderNode('p', { key }, children)
-            },
-          ),
+            // If no children remove tag completely
+            if(!children.length) return null
+
+            // Return paragraph with sanitized children
+            return renderNode('p', { key }, children)
+          
+          }),
         ]}
       />
     </article>
