@@ -7,6 +7,7 @@ import StructuredContent from "/components/blocks"
 import ContentHeader from "/components/content/ContentHeader";
 import ContentMain from "/components/content/ContentMain";
 import Markdown from "/components/common/Markdown";
+import TextTraces from "/components/TextTraces";
 import { useAppState } from "/lib/context/appstate";
 import { formatInTimeZone } from "date-fns-tz";
 
@@ -17,6 +18,7 @@ export default function Event({ event, events, show, symbolSize }) {
   const dateHeader = event.isPreParty ? 'Pre Party' : event.isAfterParty ? 'After Party' : `${format(new Date(event.startTime), 'EEE MMM d ')} ${formatInTimeZone(new Date(event.startTime), appState.zone.timeZone, 'HH:mm')}`
 
   return (
+    
     <div className={cn(styles.event, !show && styles.hide)}>
       <div className={styles.info}>
         <ContentHeader responsiveImage={event.image?.responsiveImage} color={event.participant.color}>

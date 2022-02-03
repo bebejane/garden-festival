@@ -1,0 +1,21 @@
+.textTraces{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  bottom:0;
+  padding:0;
+  margin-bottom: $small-space;
+  color:$white;
+  font-size: 1.5rem;
+  @include mq($until: desktop) {
+    font-size: 1rem;
+  }
+  .line{
+    flex: 0 0;
+    white-space: pre;
+    background-color: purple;
+    padding:10px;
+  }
+}

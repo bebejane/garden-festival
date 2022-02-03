@@ -74,7 +74,7 @@ const Home = (props) => {
 				symbolSize={symbolSize}
 			/>
 			<Background view={view} />
-			<Footer view={view} />
+			<Footer event={event} view={view} />
 		</div>
 	)
 }
