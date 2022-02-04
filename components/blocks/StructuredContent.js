@@ -65,7 +65,7 @@ export default function StructuredContent({ content }) {
               let index = node.children.length;
               while(index >= 0 && node.children[0].value && node.children[0].value[index] === '\n') index--;
               //console.log('remove trailing br', index)
-              children[0].props.children.splice(index)
+              Array.isArray(children[0].props.children) && children[0].props.children.splice(index)
             }
 
             // Remove leading <br>
@@ -73,7 +73,8 @@ export default function StructuredContent({ content }) {
               let index = 0;
               while(index < node.children[0].value.length && node.children[0].value[index] === '\n') index++;
               //console.log('remove leading br', index)
-              children[0].props.children.splice(0, index+1)
+              Array.isArray(children[0].props.children) &&  children[0].props.children?.splice(0, index+1)
+              
             }
 
             // Filter out empty paragraphs
