@@ -59,21 +59,21 @@ export default function StructuredContent({ content }) {
           }),
           // Clenup paragraphs
           renderNodeRule(isParagraph, ({ adapter: { renderNode }, node, children, key, ancestors }) => { 
-
+            //return renderNode('p', { key }, children)
             // Remove trailing <br>
             if (isRoot(ancestors[0]) && node.children[node.children.length-1].value?.endsWith('\n')) {
               let index = node.children.length;
               while(index >= 0 && node.children[0].value && node.children[0].value[index] === '\n') index--;
               //console.log('remove trailing br', index)
-              children = children.slice(0,index);
-            } 
+              children[0].props.children.splice(index)
+            }
 
             // Remove leading <br>
             if (isRoot(ancestors[0]) && node.children[0].value?.startsWith('\n')) {
               let index = 0;
               while(index < node.children[0].value.length && node.children[0].value[index] === '\n') index++;
               //console.log('remove leading br', index)
-              children = children.slice(index)
+              children[0].props.children.splice(0, index+1)
             }
 
             // Filter out empty paragraphs
