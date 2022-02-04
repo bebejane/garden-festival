@@ -48,7 +48,14 @@ export default function ImageGallery({ images, id }) {
 				}
 			>
 				{images.map((image, i) =>
-					<Image key={i} data={image} showCaption={false} lazyLoad={lazyLoad}/>
+					<Image 
+						key={i} 
+						data={image} 
+						showCaption={false} 
+						lazyLoad={lazyLoad}
+						usePlaceholder={true} 
+						blurupClassName={undefined}
+					/>
 				)}
 			</Carousel>
 			<div
