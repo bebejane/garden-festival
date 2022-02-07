@@ -40,7 +40,7 @@ const Home = (props) => {
 		setSymbolSize(symbolSize)
 	}, [innerWidth])
 	
-	useIntervalWhen(() => setEvents(evts.map(transformEventWithTiming)),10*1000, true, false); // Update active state of events client side
+	//useIntervalWhen(() => setEvents(evts.map(transformEventWithTiming)),10*1000, true, false); // Update active state of events client side
 
 	return (
 		<div className={styles.container}>
@@ -85,6 +85,6 @@ export const getStaticProps = withGlobalProps(async ({ props, revalidate }) => {
 	
 	return {
 		props,
-		revalidate,
+		revalidate:10,
 	};
 });
