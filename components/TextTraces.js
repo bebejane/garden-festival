@@ -17,6 +17,7 @@ export default function TextTraces({ event, view }) {
 	);
 }
 
+
 const traces = ['Your time might be running out but Time itself never runs out.',
 	'“Time is not even, Space is not empty.” Eiko & Koma',
 	'You are not the violence you suffer.',
