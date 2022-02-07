@@ -27,7 +27,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
   event = event ? transformEventWithTiming(event) : null
   
   if(!event && !participant) 
-    return { notFound: true, revalidate:10} 
+    return { notFound: true, revalidate:30} 
   // else if(event && event.inactive && !process.env.NEXT_PUBLIC_EDITOR_MODE) return { notFound: true, revalidate:10} 
 
   return {

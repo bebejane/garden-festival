@@ -57,25 +57,21 @@ export default function Event({ event, events, show, symbolSize }) {
               </p>
               {event.register && <a className={styles.register} target="new" href="https://www.trippus.net/the-community-garden-festival">festival registration <span>→</span></a>}
             </header>
-            {(process.env.NEXT_PUBLIC_EDITOR_MODE || !event.inactive) &&
-              <>
-                <StructuredContent content={event.content} />
-                {related.length > 0 &&
-                  <div className={styles.related}>
-                    <h2>Related</h2>
-                    {related.map((ev, idx) =>
-                      <Link prefetch={false} key={idx} href={`/${ev.participant.slug}/${ev.slug}`}>
-                        <a>
-                          <div className={styles.relatedEvent}>
-                            <h3>{ev.title}</h3>
-                            <p>{ev.summary}</p>
-                          </div>
-                        </a>
-                      </Link>
-                    )}
-                  </div>
-                }
-              </>
+            <StructuredContent content={event.content} />
+            {related.length > 0 &&
+              <div className={styles.related}>
+                <h2>Related</h2>
+                {related.map((ev, idx) =>
+                  <Link prefetch={false} key={idx} href={`/${ev.participant.slug}/${ev.slug}`}>
+                    <a>
+                      <div className={styles.relatedEvent}>
+                        <h3>{ev.title}</h3>
+                        <p>{ev.summary}</p>
+                      </div>
+                    </a>
+                  </Link>
+                )}
+              </div>
             }
             <article>
               {event.additional && <p className={styles.additional}><span class="metaLight"><Markdown>{event.additional}</Markdown></span></p>}
