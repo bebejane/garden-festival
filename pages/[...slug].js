@@ -28,8 +28,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
   
   if(!event && !participant) 
     return { notFound: true, revalidate:10} 
-  else if(event && event.inactive && !process.env.NEXT_PUBLIC_EDITOR_MODE) 
-    return { notFound: true, revalidate:10} 
+  // else if(event && event.inactive && !process.env.NEXT_PUBLIC_EDITOR_MODE) return { notFound: true, revalidate:10} 
 
   return {
     props :{
@@ -43,7 +42,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
   };
 });
 
-export async function getStaticPaths() {
+export async function _getStaticPaths() {
   const { participants, events } = await apiQuery([GetParticipants,GetEvents]);
   const paths = [];
 
