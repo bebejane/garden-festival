@@ -42,7 +42,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
   };
 });
 
-export async function _getStaticPaths() {
+export async function getStaticPaths() {
   const { participants, events } = await apiQuery([GetParticipants,GetEvents]);
   const paths = [];
 
