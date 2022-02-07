@@ -29,7 +29,7 @@ export const getStaticProps = withGlobalProps(async (data) => {
   if(!event && !participant) 
     return { notFound: true } 
   else if(event && event.inactive && !process.env.NEXT_PUBLIC_EDITOR_MODE) 
-    return { notFound: true } 
+    return { notFound: true, revalidate:5} 
 
   return {
     props :{
