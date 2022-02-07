@@ -27,9 +27,9 @@ export const getStaticProps = withGlobalProps(async (data) => {
   event = event ? transformEventWithTiming(event) : null
   
   if(!event && !participant) 
-    return { notFound: true } 
+    return { notFound: true, revalidate:10} 
   else if(event && event.inactive && !process.env.NEXT_PUBLIC_EDITOR_MODE) 
-    return { notFound: true, revalidate:5} 
+    return { notFound: true, revalidate:10} 
 
   return {
     props :{
@@ -44,7 +44,6 @@ export const getStaticProps = withGlobalProps(async (data) => {
 });
 
 export async function getStaticPaths() {
-  console.log('paths')
   const { participants, events } = await apiQuery([GetParticipants,GetEvents]);
   const paths = [];
 
