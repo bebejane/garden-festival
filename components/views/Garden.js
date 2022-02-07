@@ -18,11 +18,11 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	const [currentAnimation, setCurrentAnimation] = useState();
 	const [positions, setPositions] = useState();
 	const [gardenHeight, setGardenHeight] = useState(0);
-  
+
 	const { innerWidth } = useWindowSize();
-	
+
 	const toggleView = (view, force) => {
-		
+
 		if (!ready) return
 
 		switch (view) {
@@ -69,12 +69,12 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		const maxCols = Math.floor(bounds.width / symbolSize)
 		const maxRows = symbolsPerPage / maxCols
 		const overflowSpace = (maxRows - ((elements.length - (symbolsPerPage * (totalPages - 1))) / maxCols)) * symbolSize
-		const positions = { bounds, items: [], totalHeight:0};
+		const positions = { bounds, items: [], totalHeight: 0 };
 		const minX = bounds.left
 		const maxX = bounds.left + bounds.width - symbolSize
 		const minY = bounds.top
 		const maxY = (bounds.height - symbolSize)
-		
+
 		const isOverlapping = (area) => {
 
 			for (let i = 0; i < positions.items.length; i++) {
@@ -98,9 +98,9 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			const randY = 0;
 			const retries = 0;
 			const pageMargin = (page * bounds.height)
-		
+
 			let area;
-			
+
 			do {
 				randX = Math.round(minX + ((maxX - minX) * (Math.random() % 1)));
 				randY = Math.round((minY + pageMargin) + (((maxY + pageMargin - (page + 1 === totalPages ? overflowSpace : 0)) - (minY + pageMargin)) * (Math.random())));
@@ -120,7 +120,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			page = Math.floor((i + 1) / symbolsPerPage)
 
 			positions.items.push(area);
-			positions.totalHeight =  positions.totalHeight < (area.top+symbolSize) ? (area.top+symbolSize) : positions.totalHeight
+			positions.totalHeight = positions.totalHeight < (area.top + symbolSize) ? (area.top + symbolSize) : positions.totalHeight
 		}
 		if (totalRetries >= 10)
 			console.log('failed to randomly position')
@@ -128,7 +128,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	}
 
 	const initSymbols = (reinit) => {
-		
+
 		const targets = document.querySelectorAll(`[id^='garden-symbol-']`)
 		const symbols = document.querySelectorAll(`[id^='symbol-']`)
 		const positions = generatePositions()
@@ -152,7 +152,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	}
 	const resizePositions = async () => {
 		if (!positions) return
-		
+
 		const bounds = getBounds()
 		const { bounds: lastBounds, items } = positions;
 		const widthDiff = bounds.window.width / lastBounds.window.width
@@ -174,7 +174,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 			})
 		})
 		await initSymbols()
-		anime.set(document.querySelectorAll(`[id^='garden-symbol-']`), {opacity: 1});
+		anime.set(document.querySelectorAll(`[id^='garden-symbol-']`), { opacity: 1 });
 	}
 
 	const transitionTo = async (targets, endTargets, opt = {}) => {
@@ -302,7 +302,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 	};
 
 	const toWeekday = async () => {
-		
+
 		const lastView = lastViewPositions()
 		if (lastView && lastView.targets.length) {
 			const target = document.getElementById(`symbol-${lastView.targets[0].eventId}`)
@@ -310,7 +310,7 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		}
 
 		const targets = document.querySelectorAll("[id^='weekday-symbol-']")
-		anime({targets, opacity:1})
+		anime({ targets, opacity: 1 })
 		setCurrentView(view);
 		/*
 		const eTargets = nodesToArray(targets).map(el => {
@@ -395,15 +395,15 @@ export default function Garden({ event, events, participant, view, symbolSize })
 		})
 	}, [])
 
-	useEffect(()=>resizePositions(), [innerWidth])
-	useEffect(()=> router.asPath.startsWith('/festival/') && toWeekday(), [router.asPath])
+	useEffect(() => resizePositions(), [innerWidth])
+	useEffect(() => router.asPath.startsWith('/festival/') && toWeekday(), [router.asPath])
 
 	return (
 		<>
 			<div className={styles.garden}>
-				<GardenHeader view={view} ready={ready}/>
+				<GardenHeader view={view} ready={ready} />
 			</div>
-			<div id="garden" style={view === 'garden' ? {minHeight:`${gardenHeight+60}px`} : {} } className={cn(styles.symbols, view !== 'garden' && !currentAnimation && styles.inactive)}>
+			<div id="garden" style={view === 'garden' ? { minHeight: `${gardenHeight + 60}px` } : {}} className={cn(styles.symbols, view !== 'garden' && !currentAnimation && styles.inactive)}>
 				{events?.map((event, index) =>
 					<Symbol
 						key={index}
@@ -454,7 +454,7 @@ const GardenHeader = ({ view, ready }) => {
 		return head.text.split('').map((c, idx) =>
 			head.tag === 'h1' ?
 				<span key={idx} style={generateWeightStyle(ratio)}>{c}</span>
-			:
+				:
 				<span key={idx} style={generateWeightStyle(ratio, 300, 700, true)}>{c}</span>
 		)
 	}
@@ -462,7 +462,7 @@ const GardenHeader = ({ view, ready }) => {
 		return (
 			head.tag === 'h1' ?
 				<h1 key={idx}>{first && <div style={generateWeightStyle(ratio)} className={styles.the}>The</div>}<span style={generateWeightStyle(ratio)}>{head.text}</span></h1>
-			:
+				:
 				<h2 key={idx}><span>{head.text}</span></h2>
 		)
 	}
@@ -482,6 +482,8 @@ const GardenHeader = ({ view, ready }) => {
 	return (
 		<div className={cn(styles.header, view !== 'garden' && styles.hidden)} >
 			{Object.keys(header).map((k, idx) => generateLine(header[k], idx === 0, idx))}
+
+			<img src="/images/tcgf-logos.png" />
 		</div>
 	)
 }

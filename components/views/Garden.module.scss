@@ -6,7 +6,7 @@
 	min-height: 100vh;
 	padding: 0;
 	flex-direction: row;
-	
+
 	.header {
 		position: fixed;
 		display: flex;
@@ -18,11 +18,11 @@
 		height: 100vh;
 		left: 0;
 		z-index: 1;
-		padding-bottom: $space * 1.2;
+		padding-bottom: $space * 1.5;
 		padding-top: $space * 1.2;
 
 		@include mq($from: tablet) {
-			padding-bottom: $space;
+			padding-bottom: $space * 0.8;
 			padding-top: $space * 1.5;
 		}
 
@@ -60,13 +60,20 @@
 		h2 {
 			white-space: nowrap;
 		}
+
+		img {
+			display: none;
+			@include mq($from: tablet) {
+				display: block;
+				height: 20px;
+			}
+		}
 	}
 	.scroller {
 		height: 100%;
 		width: 100%;
 	}
 }
-
 
 .symbols {
 	position: absolute;
@@ -75,10 +82,10 @@
 	min-height: 100%;
 	margin: 0;
 	padding: 0;
-	a{
+	a {
 		position: absolute;
-		img{
-			&:last-child{
+		img {
+			&:last-child {
 				margin-bottom: 100px;
 			}
 		}
@@ -88,7 +95,7 @@
 		overflow: hidden;
 	}
 	.bottom {
-		padding:100px;
+		padding: 100px;
 	}
 }
 
@@ -149,13 +156,11 @@
 	}
 }
 
-
-.bottomSpacer{
+.bottomSpacer {
 	position: absolute;
-	left:0;
-	bottom:0;
-	height:$space;
+	left: 0;
+	bottom: 0;
+	height: $space;
 	width: 100%;
 	background-color: pink;
-
 }
