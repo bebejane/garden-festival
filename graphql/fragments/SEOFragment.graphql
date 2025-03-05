@@ -1,5 +1,0 @@
-fragment SEOFragment on Tag {
-  attributes
-  content
-  tag
-}
